@@ -12,6 +12,9 @@
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
 }
+#sideBarBtn{
+    -fx-background-color:  transparent;
+}
 
 
 
