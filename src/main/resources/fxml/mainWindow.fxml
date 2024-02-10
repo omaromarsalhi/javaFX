@@ -1,89 +1,197 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPain" prefHeight="600.0" prefWidth="950.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.MainWindowController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="690.0" prefWidth="1230.0" styleClass="borderPane" stylesheets="@../Style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.MainWindowController">
    <left>
-      <VBox fx:id="sideBar" prefHeight="550.0" prefWidth="134.0" style="-fx-background-color: #69818D;" BorderPane.alignment="CENTER">
+      <VBox fx:id="sideBar" prefHeight="890.0" prefWidth="235.0" stylesheets="@../Style/style.css" BorderPane.alignment="CENTER">
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="6.0" style="-fx-background-color: #69818D;">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="235.0">
                <children>
-                  <Button fx:id="showEmp" mnemonicParsing="false" onAction="#onShowEmpClicked" prefWidth="110.0" text="show " textAlignment="CENTER">
+                  <ImageView fitHeight="52.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/nameApp.png" />
+                     </image>
+                  </ImageView>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </HBox>
+            <VBox alignment="CENTER" prefHeight="286.0" prefWidth="235.0" spacing="15.0">
+               <children>
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="209.0" text="  DashBoard" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/4.png" />
+                              <Image url="@../icon/dashBoard.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btn2" mnemonicParsing="false" onAction="#onBtn2Clicked" prefWidth="110.0" text="Button 2">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="209.0" text="  Facture" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/17.png" />
+                              <Image url="@../icon/facture.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="btn3" mnemonicParsing="false" prefWidth="110.0" text="Button 3">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="209.0" text="  Transport" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/33.png" />
+                              <Image url="@../icon/transport.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Button>
-                  <Button mnemonicParsing="false" prefWidth="110.0" text="Button">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#onBlogClicked" prefHeight="52.0" prefWidth="210.0" text="  fil d’actualité" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/79.png" />
+                              <Image url="@../icon/icons8-nouvelles-50.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Button>
-                  <Button fx:id="marketPlaceBtn" mnemonicParsing="false" onAction="#onMarketPlaceBtnClicked" prefHeight="30.0" prefWidth="110.0" text="MarketPlace">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="210.0" text="  Market Place" textFill="WHITE">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/4.png" />
+                              <Image url="@../icon/marketSpace.png" />
                            </image>
                         </ImageView>
                      </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="210.0" text="  Demande" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/demande.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="1.0" />
+                     </VBox.margin>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </VBox>
-            <Separator orientation="VERTICAL" prefHeight="300.0" style="-fx-background-color: #69818D; -fx-border-color: #69818D; -fx-color: #69818D;" />
-            <VBox alignment="CENTER" prefHeight="80.0" prefWidth="100.0" spacing="7.0" style="-fx-background-color: #69818D;">
+            <VBox alignment="CENTER" prefHeight="59.0" prefWidth="235.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Account">
+                  <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="209.0" text="  Compte" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../icons/15.png" />
+                              <Image url="@../icon/compte.png" />
                            </image>
                         </ImageView>
                      </graphic>
-                  </Button>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Settings">
-                     <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/398.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
                   </Button>
                </children>
+               <padding>
+                  <Insets top="165.0" />
+               </padding>
             </VBox>
          </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" />
+         </BorderPane.margin>
       </VBox>
    </left>
+   <center>
+      <AnchorPane fx:id="mainBorderPain" prefHeight="200.0" prefWidth="200.0" styleClass="mainWindow" stylesheets="@../Style/style.css" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </center>
+   <top>
+      <HBox fx:id="header" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="650.0" spacing="8.0" BorderPane.alignment="CENTER_LEFT">
+         <BorderPane.margin>
+            <Insets right="15.0" />
+         </BorderPane.margin>
+         <children>
+            <Label alignment="CENTER" prefHeight="18.0" prefWidth="95.0" text="CitizenHub">
+               <font>
+                  <Font size="13.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="1015.0" />
+               </HBox.margin>
+            </Label>
+            <Button fx:id="reduireBtn" mnemonicParsing="false" onAction="#onReduireBtnClicked" prefHeight="17.0" prefWidth="23.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/reduire.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="agrendirBtn" mnemonicParsing="false" onAction="#onAgrendirBtnClicked" prefHeight="16.0" prefWidth="26.0">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/resize.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#onCloseBtnClicked" prefHeight="17.0" prefWidth="24.0" styleClass="button-close">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/close.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </top>
 </BorderPane>

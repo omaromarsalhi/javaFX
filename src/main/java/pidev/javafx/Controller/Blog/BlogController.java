@@ -2,18 +2,12 @@ package pidev.javafx.Controller.Blog;
 
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
-
-
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import pidev.javafx.Utils.DataSource;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -24,11 +18,21 @@ import java.util.ResourceBundle;
 
 public class BlogController implements Initializable {
 
+    @FXML
+    private VBox postsContainer;
+
+    @FXML
+    private ChoiceBox choiceBox;
+
+    List<Post> posts;
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle)  {
         choiceBox.getItems().addAll("Tous", "Municipalité", "Citoyens");
         choiceBox.setValue("Tous");
+
         posts = new ArrayList<>(getPost());
+
         try {
             for (Post post : posts) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
@@ -42,23 +46,6 @@ public class BlogController implements Initializable {
             e.printStackTrace();
         }
     }
-
-    @FXML
-    private Button closeBtn;
-
-    @FXML
-    private Button reduireBtn;
-
-    @FXML
-    private Button agrendirBtn;
-
-    @FXML
-    private VBox postsContainer;
-
-    @FXML
-    private ChoiceBox choiceBox;
-
-    List<Post> posts;
 
     public List<Post> getPost(){
         DataSource.getInstance();
@@ -95,26 +82,6 @@ public class BlogController implements Initializable {
         ls.add(post);
 
         return ls;
-    }
-
-    @FXML
-    void onCloseBtnClicked() {
-        closeBtn.setOnMouseClicked(event -> {
-            System.exit(0);
-        });
-    }
-
-    @FXML
-    void onReduireBtnClicked(ActionEvent event) {
-        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
-        currentStage.setIconified(true);
-    }
-
-    @FXML
-    void onAgrendirBtnClicked(ActionEvent event) {
-        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
-        boolean etatFenetre = currentStage.isMaximized();
-        currentStage.setMaximized(!etatFenetre);
     }
 
 }
