@@ -23,9 +23,9 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable {
+public class MainWindowController {
 
-    private boolean isSideBarOpen;
+    /*private boolean isSideBarOpen;
     @FXML
     private Button sideBarBtn;
     @FXML
@@ -67,6 +67,6 @@ public class MainWindowController implements Initializable {
         scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
         scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
         mainBorderPain.setCenter(scrollPane);
-    }
+    }*/
 
 }

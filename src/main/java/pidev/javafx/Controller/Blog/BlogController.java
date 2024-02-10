@@ -32,7 +32,7 @@ public class BlogController implements Initializable {
         try {
             for (Post post : posts) {
                 FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/com/example/blogtest1/post.fxml"));
+                fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
                 VBox vBox = fxmlLoader.load();
                 PostController postController = fxmlLoader.getController();
                 postController.setData(post);
