@@ -12,9 +12,8 @@ public class DataSource {
     private Connection cnx;
 
     private DataSource(){
-        Connection connect;
         try {
-            connect = DriverManager.getConnection(URL,USER, PASSWORD);
+            cnx = DriverManager.getConnection(URL,USER, PASSWORD);
             System.out.println("connection etablie");
         }catch (Exception e){
             System.out.println(e.getMessage());

@@ -1,14 +1,57 @@
 package pidev.javafx.Models;
 
 import pidev.javafx.Models.Account;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Post {
+    private int id;
     private Account account;
-    private String date;
+    private LocalDateTime date;
     private String caption;
     private String image;
     private int totalReactions;
     private int nbComments;
+
+    public Post () {}
+
+    public Post(int id , LocalDateTime date, String caption, String image, int totalReactions, int nbComments) {
+        this.id = id;
+        this.date = date;
+        this.caption = caption;
+        this.image = image;
+        this.totalReactions = totalReactions;
+        this.nbComments = nbComments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Post post = (Post) o;
+        return id == post.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "account=" + account +
+                ", date=" + date +
+                ", caption='" + caption + '\'' +
+                ", image='" + image + '\'' +
+                ", totalReactions=" + totalReactions +
+                ", nbComments=" + nbComments +
+                '}';
+    }
+
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
 
     public Account getAccount() {
         return account;
@@ -18,11 +61,11 @@ public class Post {
         this.account = account;
     }
 
-    public String getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

@@ -1,5 +1,7 @@
 package pidev.javafx.Controller.Blog;
 
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Models.Reactions;
@@ -159,35 +161,28 @@ public class PostController {
     public void setData(Post post){
         this.post = post;
         Image img;
-        img = new Image(getClass().getResourceAsStream(post.getAccount().getProfileImg()));
-        imgProfile.setImage(img);
-        username.setText(post.getAccount().getName());
-        if(post.getAccount().isVerified()){
+        //img = new Image(getClass().getResourceAsStream(post.getAccount().getProfileImg()));
+        //imgProfile.setImage(img);
+        //username.setText(post.getAccount().getName());
+        /*if(post.getAccount().isVerified()){
             imgVerified.setVisible(true);
         }else{
             imgVerified.setVisible(false);
-        }
+        }*/
 
-        date.setText(post.getDate());
+        date.setText(post.getDate().toString());
 
         if(post.getCaption() != null && !post.getCaption().isEmpty()){
             caption.setText(post.getCaption());
         }else{
             postContainer.setPrefHeight(postContainer.getPrefHeight() - (caption.getPrefHeight() - 10));
-
             caption.setVisible(false);
             caption.setManaged(false);
         }
 
         if(post.getImage() != null && !post.getImage().isEmpty()){
-            img = new Image(getClass().getResourceAsStream(post.getImage()),551,291,false,false);
+            img = new Image(getClass().getResourceAsStream(post.getImage()));
             imgPost.setImage(img);
-            Rectangle clip = new Rectangle(0,0,imgPost.getFitWidth(), imgPost.getFitHeight());
-            clip.setArcWidth(20);
-            clip.setArcHeight(20);
-            imgPost.setClip(clip);
-            DropShadow dropShadow = new DropShadow();
-            imgPost.setEffect(dropShadow);
         }else{
             postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight());
 
