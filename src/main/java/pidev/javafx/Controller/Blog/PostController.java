@@ -19,6 +19,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+import java.text.SimpleDateFormat;
+
 public class PostController {
     @FXML
     private ImageView imgProfile;
@@ -161,16 +163,18 @@ public class PostController {
     public void setData(Post post){
         this.post = post;
         Image img;
-        //img = new Image(getClass().getResourceAsStream(post.getAccount().getProfileImg()));
-        //imgProfile.setImage(img);
-        //username.setText(post.getAccount().getName());
-        /*if(post.getAccount().isVerified()){
+        /*img = new Image(getClass().getResourceAsStream(post.getAccount().getProfileImg()));
+        imgProfile.setImage(img);
+        username.setText(post.getAccount().getName());
+        if(post.getAccount().isVerified()){
             imgVerified.setVisible(true);
         }else{
             imgVerified.setVisible(false);
         }*/
 
-        date.setText(post.getDate().toString());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, yyyy/MM/dd, HH:mm");
+        String formattedDate = dateFormat.format(post.getDate());
+        date.setText(formattedDate);
 
         if(post.getCaption() != null && !post.getCaption().isEmpty()){
             caption.setText(post.getCaption());

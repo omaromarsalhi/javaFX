@@ -6,7 +6,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,15 +13,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.Services.BlogService;
-import pidev.javafx.Utils.DataSource;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -44,7 +41,7 @@ public class BlogController implements Initializable {
     @FXML
     private TextArea captionText;
 
-    Set<Post> posts;
+    List<Post> posts;
 
     String SourceString;
 
@@ -55,7 +52,7 @@ public class BlogController implements Initializable {
         choiceBox.getItems().addAll("Tous", "Municipalité", "Citoyens");
         choiceBox.setValue("Tous");
 
-        posts = new HashSet<>(getPost());
+        posts = new ArrayList<>(getPost());
 
             for (Post post : posts) {
                 try {
@@ -77,7 +74,18 @@ public class BlogController implements Initializable {
         postsContainer.getChildren().add(vBox);
     }
 
-    public Set<Post> getPost(){
+    public void loadPostAbove(Post post) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
+        VBox vBox = fxmlLoader.load();
+
+        PostController postController = fxmlLoader.getController();
+        postController.setData(post);
+
+        postsContainer.getChildren().add(2, vBox);
+    }
+
+    public List<Post> getPost(){
         BlogService bs = new BlogService();
         return bs.getAll();
     }
@@ -107,7 +115,9 @@ public class BlogController implements Initializable {
         Post p = new Post();
         BlogService bs = new BlogService();
 
-        p.setDate(LocalDateTime.now());
+        long currentTimeMillis = System.currentTimeMillis();
+        Timestamp timestamp = new Timestamp(currentTimeMillis);
+        p.setDate(timestamp);
 
         if(captionText.getText().isEmpty()) {
             p.setCaption(null);
@@ -137,11 +147,16 @@ public class BlogController implements Initializable {
         p.setTotalReactions(0);
 
         bs.ajouter(p);
-        posts.add(p);
+
+        captionText.clear();
+        SourceString = null;
+        addImgBtn.setText("Ajouter une Photo");
+
+        posts.add(0, p);
         System.out.println(posts);
 
         try {
-            loadPost(p);
+            loadPostAbove(p);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

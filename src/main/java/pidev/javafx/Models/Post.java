@@ -1,13 +1,15 @@
 package pidev.javafx.Models;
 
 import pidev.javafx.Models.Account;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Post {
     private int id;
     private Account account;
-    private LocalDateTime date;
+    private Timestamp date;
     private String caption;
     private String image;
     private int totalReactions;
@@ -15,7 +17,7 @@ public class Post {
 
     public Post () {}
 
-    public Post(int id , LocalDateTime date, String caption, String image, int totalReactions, int nbComments) {
+    public Post(int id , Timestamp date, String caption, String image, int totalReactions, int nbComments) {
         this.id = id;
         this.date = date;
         this.caption = caption;
@@ -61,11 +63,11 @@ public class Post {
         this.account = account;
     }
 
-    public LocalDateTime getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

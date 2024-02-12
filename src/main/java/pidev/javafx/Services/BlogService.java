@@ -6,9 +6,8 @@ import pidev.javafx.Utils.DataSource;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.*;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class BlogService implements IService<Post> {
 
@@ -50,10 +49,10 @@ public class BlogService implements IService<Post> {
     }
 
     @Override
-    public Set<Post> getAll() {
-        Set<Post> posts = new HashSet<>();
+    public List<Post> getAll() {
+        List<Post> posts = new ArrayList<>();
 
-        String req = "SELECT * FROM `post`";
+        String req = "SELECT * FROM `post` ORDER BY id DESC";
         try {
             Statement st = cnx.createStatement();
             ResultSet res = st.executeQuery(req);
@@ -62,7 +61,7 @@ public class BlogService implements IService<Post> {
                 int id = res.getInt(1);
 
                 Timestamp timestamp = res.getTimestamp(2);
-                LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                //Timestamp timestamp = timestamp.toLocalDateTime();
 
                 String caption = res.getString(3);
                 String img = res.getString(4);
@@ -70,7 +69,7 @@ public class BlogService implements IService<Post> {
                 int nbComments = res.getInt(6);
 
 
-                Post p = new Post(id,localDateTime,caption,img, nbReactions, nbComments);
+                Post p = new Post(id,timestamp,caption,img, nbReactions, nbComments);
                 posts.add(p);
             }
         } catch (SQLException e) {

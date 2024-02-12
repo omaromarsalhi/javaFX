@@ -132,3 +132,7 @@
 .choice-box .label {
     -fx-font-size: 10px;
 }
+
+.scroll-pane {
+    -fx-background: transperent;
+}
