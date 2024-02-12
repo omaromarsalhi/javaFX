@@ -1,5 +1,6 @@
 package pidev.javafx.Controller.Blog;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -55,20 +56,25 @@ public class BlogController implements Initializable {
         choiceBox.setValue("Tous");
 
         posts = new HashSet<>(getPost());
-        try {
+
             for (Post post : posts) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
-                VBox vBox = fxmlLoader.load();
-
-                PostController postController = fxmlLoader.getController();
-                postController.setData(post);
-
-                postsContainer.getChildren().add(vBox);
+                try {
+                    loadPost(post);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
             }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+    }
+
+    public void loadPost (Post post) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
+        VBox vBox = fxmlLoader.load();
+
+        PostController postController = fxmlLoader.getController();
+        postController.setData(post);
+
+        postsContainer.getChildren().add(vBox);
     }
 
     public Set<Post> getPost(){
@@ -97,7 +103,7 @@ public class BlogController implements Initializable {
     @FXML
     void onPublierClicked(MouseEvent event) {
         String imgPath = null;
-        String randomFileName;
+        String randomFileName = null;
         Post p = new Post();
         BlogService bs = new BlogService();
 
@@ -112,42 +118,32 @@ public class BlogController implements Initializable {
         if(SourceString != null) {
             try {
                 Path sourcePath = Paths.get(SourceString);
-
-                if (SourceString.endsWith(".png"))
+                if (SourceString.endsWith(".png")) {
                     randomFileName = UUID.randomUUID().toString() + ".png";
-                else
+                }else {
                     randomFileName = UUID.randomUUID().toString() + ".jpg";
-
+                }
                 Path destinationPath = Paths.get(destinationString, randomFileName);
-
                 Files.copy(sourcePath, destinationPath);
-
                 imgPath = "/blogImgPosts" + "/" + randomFileName;
-
             } catch (IOException e) {
                 System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
             }
             p.setImage(imgPath);
-        }else{
+        }else {
             p.setImage(imgPath);
         }
-
         p.setNbComments(0);
         p.setTotalReactions(0);
 
         bs.ajouter(p);
+        posts.add(p);
+        System.out.println(posts);
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml") );
-            VBox vBox = fxmlLoader.load();
-            PostController postController = fxmlLoader.getController();
-            postController.setData(p);
-            postsContainer.getChildren().add(vBox);
-        }catch (IOException e){
-            e.printStackTrace();
+            loadPost(p);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
-        posts.add(p);
-
     }
 }

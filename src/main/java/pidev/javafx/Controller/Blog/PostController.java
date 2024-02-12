@@ -181,7 +181,9 @@ public class PostController {
         }
 
         if(post.getImage() != null && !post.getImage().isEmpty()){
-            img = new Image(getClass().getResourceAsStream(post.getImage()));
+            System.out.println(post.getImage());
+            //img = new Image(getClass().getResourceAsStream(post.getImage()));
+            img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
         }else{
             postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight());
