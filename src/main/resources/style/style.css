@@ -16,7 +16,7 @@
 
 @font-face {
     font-family: 'sofia';
-    src: url('../fonts/SofiaProSoftLight.ttf');
+    src: url('/fonts/SofiaProSoftLight.ttf');
 }
 #sideBar .text {
     -fx-font-family: "sofia";
@@ -24,7 +24,7 @@
 
 @font-face {
     font-family: 'Souliyo';
-    src: url('../fonts/Souliyo-Regular.ttf');
+    src: url('/fonts/Souliyo-Regular.ttf');
 }
 #blogPane .text {
     -fx-font-family: "Souliyo";
@@ -135,4 +135,28 @@
 
 .scroll-pane {
     -fx-background: transperent;
+}
+
+.menu-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0px;
+}
+.menu-button .arrow {
+    -fx-background-color: transparent;
+}
+.menu-button .context-menu {
+    -fx-background-radius: 10;
+}
+.menu-item:hover  {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+    -fx-padding: 5px;
+    -fx-background-radius: 10;
+}
+
+.menu-item:selected {
+    -fx-background-color: transparent; /* Empêche l'affichage de la sélection lorsque la souris est éloignée */
+}
+
+.menu-item:selected:hover {
+    -fx-background-color: transparent; /* Réinitialise le hover lorsque la souris est éloignée */
 }

@@ -1,6 +1,8 @@
 package pidev.javafx.Controller.Blog;
 
-import javafx.geometry.Pos;
+
+import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -20,7 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -28,6 +29,9 @@ public class BlogController implements Initializable {
 
     @FXML
     private VBox postsContainer;
+
+    @FXML
+    private VBox postContainer;
 
     @FXML
     private ChoiceBox choiceBox;
@@ -43,6 +47,8 @@ public class BlogController implements Initializable {
 
     List<Post> posts;
 
+    List<PostController> postControllers;
+
     String SourceString;
 
     final String destinationString = "C:/Users/Omar Marrakchi/Desktop/javaFX/src/main/resources/blogImgPosts";
@@ -53,6 +59,7 @@ public class BlogController implements Initializable {
         choiceBox.setValue("Tous");
 
         posts = new ArrayList<>(getPost());
+        postControllers = new ArrayList<>();
 
             for (Post post : posts) {
                 try {
@@ -67,10 +74,10 @@ public class BlogController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
         VBox vBox = fxmlLoader.load();
-
         PostController postController = fxmlLoader.getController();
+        postController.setIdPost(post.getId());
+        postControllers.add(postController);
         postController.setData(post);
-
         postsContainer.getChildren().add(vBox);
     }
 
@@ -78,10 +85,10 @@ public class BlogController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
         VBox vBox = fxmlLoader.load();
-
         PostController postController = fxmlLoader.getController();
+        postController.setIdPost(post.getId());
+        postControllers.add(postController);
         postController.setData(post);
-
         postsContainer.getChildren().add(2, vBox);
     }
 
@@ -152,8 +159,9 @@ public class BlogController implements Initializable {
         SourceString = null;
         addImgBtn.setText("Ajouter une Photo");
 
+        int id = bs.getLastId();
+        p.setId(id);
         posts.add(0, p);
-        System.out.println(posts);
 
         try {
             loadPostAbove(p);
@@ -161,4 +169,27 @@ public class BlogController implements Initializable {
             System.out.println(e.getMessage());
         }
     }
+
+    public void supprimerPost(int idPost) {
+        BlogService bs = new BlogService();
+        bs.supprimer(idPost);
+        Optional<Post> optionalPost = posts.stream()
+                .filter(obj -> obj.getId() == idPost)
+                .findFirst();
+        if (optionalPost.isPresent()) {
+            Post p = optionalPost.get();
+            posts.remove(p);
+        } else {
+            System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
+        }
+        for (PostController postController : postControllers) {
+            if (postController.getIdPost() == idPost) {
+                System.out.println("YA ZEEEEEBI");
+                postsContainer.getChildren().remove(postController);
+                break;
+            }
+        }
+    }
+
+
 }

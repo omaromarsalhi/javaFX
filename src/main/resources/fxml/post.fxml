@@ -2,6 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
@@ -14,12 +16,15 @@
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0">
             <children>
-                <ImageView fx:id="imgProfile" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="imgProfile" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/profilImg.png" />
+               </image></ImageView>
                 <VBox alignment="CENTER" prefHeight="60.0">
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label fx:id="username">
+                                <Label fx:id="username" text="Omar Marrakchi">
                                     <font>
                                         <Font name="Segoe UI Semibold" size="18.0" />
                                     </font>
@@ -53,12 +58,42 @@
                         </HBox>
                     </children>
                 </VBox>
-                <Pane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
+                <Pane prefHeight="200.0" prefWidth="397.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Pane>
+            <MenuButton fx:id="menuBtnPost" mnemonicParsing="false" prefHeight="34.0" prefWidth="7.0">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Modifier le post">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/modifier.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+                  <MenuItem fx:id="supprimerPostBtn" mnemonicParsing="false" onAction="#suppHandel" text="Supprimer le post">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/supprimer.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </MenuItem>
+              </items>
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
                         <Image url="@../img/ic_more.png" />
-                    </image>
-                </ImageView>
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </MenuButton>
             </children>
             <padding>
                 <Insets left="20.0" right="20.0" />

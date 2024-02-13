@@ -42,6 +42,7 @@ public class Post {
     @Override
     public String toString() {
         return "Post{" +
+                "id : " + id +
                 "account=" + account +
                 ", date=" + date +
                 ", caption='" + caption + '\'' +

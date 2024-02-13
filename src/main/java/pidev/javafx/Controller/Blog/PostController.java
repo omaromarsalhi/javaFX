@@ -1,13 +1,14 @@
 package pidev.javafx.Controller.Blog;
 
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.control.*;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Models.Reactions;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,9 +20,12 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+import java.io.IOException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ResourceBundle;
 
-public class PostController {
+public class PostController extends VBox implements Initializable {
     @FXML
     private ImageView imgProfile;
 
@@ -90,8 +94,32 @@ public class PostController {
 
     private long startTime = 0;
     private Reactions currentReaction;
+
+    @FXML
+    private MenuButton menuBtnPost;
+
+    @FXML
+    private MenuItem supprimerPostBtn;
+
     private Post post;
 
+    private int idPost;
+
+    public int getIdPost() {return idPost;}
+
+    public void setIdPost(int idPost) {this.idPost = idPost;}
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+    @Override
+    public String toString() {
+        return "PostController{" +
+                "idPost=" + idPost +
+                '}';
+    }
 
     @FXML
     public void onLikeContainerPressed(MouseEvent me){
@@ -163,6 +191,7 @@ public class PostController {
     public void setData(Post post){
         this.post = post;
         Image img;
+
         /*img = new Image(getClass().getResourceAsStream(post.getAccount().getProfileImg()));
         imgProfile.setImage(img);
         username.setText(post.getAccount().getName());
@@ -172,7 +201,7 @@ public class PostController {
             imgVerified.setVisible(false);
         }*/
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, yyyy/MM/dd, HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());
         date.setText(formattedDate);
 
@@ -185,8 +214,6 @@ public class PostController {
         }
 
         if(post.getImage() != null && !post.getImage().isEmpty()){
-            System.out.println(post.getImage());
-            //img = new Image(getClass().getResourceAsStream(post.getImage()));
             img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
         }else{
@@ -201,4 +228,17 @@ public class PostController {
 
         currentReaction = Reactions.NON;
     }
+
+    public void suppHandel() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/blog.fxml"));
+            Parent root = fxmlLoader.load();
+            BlogController blogController = fxmlLoader.getController();
+            blogController.supprimerPost(idPost);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
