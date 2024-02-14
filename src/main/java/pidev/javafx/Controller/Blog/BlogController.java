@@ -95,7 +95,7 @@ public class BlogController implements Initializable {
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopup(post.getId());
+            afficherPopup(post.getId(), postsContainer, vBox);
         });
     }
 
@@ -115,7 +115,7 @@ public class BlogController implements Initializable {
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopup(post.getId());
+            afficherPopup(post.getId(), postsContainer, vBox);
         });
     }
 
@@ -210,7 +210,7 @@ public class BlogController implements Initializable {
         }
     }
 
-    public void afficherPopup(int idPost) {
+    public void afficherPopup(int idPost, VBox postsContainer, VBox postVbox) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/popUpModifierPost.fxml"));
             Parent parent = fxmlLoader.load();
@@ -230,16 +230,33 @@ public class BlogController implements Initializable {
             stage.setY(200);
             stage.setX(650);
             parent.setVisible(true);
-
             /*TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), parent);
             transition.setFromY(400);
             transition.setToY(100); // Position finale du popup
             transition.play();*/
-
             popUpController.getData(idPost);
-
             popUpController.getPublierBtn().setOnAction(actionEvent -> {
-
+                BlogService bs = new BlogService();
+                popUpController.modifierPost();
+                postsContainer.getChildren().remove(postVbox);
+                int idPostUpdeted = popUpController.getId();
+                Post psotUpdeted =  bs.getOneById(idPostUpdeted);
+                Optional<Post> optionalPost = posts.stream()
+                        .filter(obj -> obj.getId() == idPostUpdeted)
+                        .findFirst();
+                if (optionalPost.isPresent()) {
+                    Post oldPost = optionalPost.get();
+                    posts.remove(oldPost);
+                    posts.add(0, psotUpdeted);
+                    System.out.println(posts);
+                } else {
+                    System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
+                }
+                try {
+                    loadPostAbove(psotUpdeted);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             });
 
         } catch (Exception e) {

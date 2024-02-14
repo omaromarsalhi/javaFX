@@ -52,7 +52,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="publierBtn" mnemonicParsing="false" onMouseClicked="#onModifierClicked" prefHeight="34.0" prefWidth="142.0" styleClass="ModifierBtn" text="Enregistrer" textFill="#fafafa" />
+                  <Button fx:id="publierBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="142.0" styleClass="ModifierBtn" text="Enregistrer" textFill="#fafafa" />
                </children>
             </HBox>
          </children>

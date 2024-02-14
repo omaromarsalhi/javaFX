@@ -1,6 +1,7 @@
 package pidev.javafx.Controller.Blog;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -36,6 +37,8 @@ public class PopUpModifierPostController {
 
     String SourceString;
     private int id;
+    private int nbComments;
+    private int nbReaction;
     private String imgPath;
     final String destinationString = "C:/Users/Omar Marrakchi/Desktop/javaFX/src/main/resources/blogImgPosts";
 
@@ -88,10 +91,12 @@ public class PopUpModifierPostController {
             imgPost.setManaged(false);
             addImgBtn.setText("ajouter une photo");
         }
+        nbReaction = post.getTotalReactions();
+        nbComments = post.getNbComments();
     }
 
     @FXML
-    void onModifierClicked(MouseEvent event) {
+    void modifierPost() {
         String randomFileName = null;
         Post p = new Post();
         BlogService bs = new BlogService();
@@ -106,7 +111,6 @@ public class PopUpModifierPostController {
         }else {
             p.setCaption(caption.getText());
         }
-
         if(SourceString != null) {
             try {
                 Path sourcePath = Paths.get(SourceString);
@@ -125,8 +129,8 @@ public class PopUpModifierPostController {
         }else {
             p.setImage(imgPath);
         }
-        p.setNbComments(0);
-        p.setTotalReactions(0);
+        p.setNbComments(nbComments);
+        p.setTotalReactions(nbReaction);
         bs.modifier(p);
         SourceString = null;
         Stage stage = (Stage) closeBtn.getScene().getWindow();
