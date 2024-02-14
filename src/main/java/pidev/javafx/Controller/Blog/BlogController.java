@@ -1,13 +1,22 @@
 package pidev.javafx.Controller.Blog;
 
 
+import javafx.animation.TranslateTransition;
+import javafx.event.Event;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import pidev.javafx.Models.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,6 +88,15 @@ public class BlogController implements Initializable {
         postControllers.add(postController);
         postController.setData(post);
         postsContainer.getChildren().add(vBox);
+
+        postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
+            supprimerPost(post.getId());
+            postsContainer.getChildren().remove(vBox);
+        });
+
+        postController.getModifierPost().setOnAction(actionEvent -> {
+            afficherPopup(post.getId());
+        });
     }
 
     public void loadPostAbove(Post post) throws IOException{
@@ -90,6 +108,15 @@ public class BlogController implements Initializable {
         postControllers.add(postController);
         postController.setData(post);
         postsContainer.getChildren().add(2, vBox);
+
+        postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
+            supprimerPost(post.getId());
+            postsContainer.getChildren().remove(vBox);
+        });
+
+        postController.getModifierPost().setOnAction(actionEvent -> {
+            afficherPopup(post.getId());
+        });
     }
 
     public List<Post> getPost(){
@@ -111,7 +138,6 @@ public class BlogController implements Initializable {
         if (selectedFile != null) {
             SourceString = selectedFile.getAbsolutePath();
             addImgBtn.setText(SourceString);
-            //System.out.println("Fichier sélectionné : " + selectedFile.getAbsolutePath());
         }
     }
 
@@ -182,14 +208,43 @@ public class BlogController implements Initializable {
         } else {
             System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
         }
-        for (PostController postController : postControllers) {
-            if (postController.getIdPost() == idPost) {
-                System.out.println("YA ZEEEEEBI");
-                postsContainer.getChildren().remove(postController);
-                break;
-            }
-        }
     }
 
+    public void afficherPopup(int idPost) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/popUpModifierPost.fxml"));
+            Parent parent = fxmlLoader.load();
+            PopUpModifierPostController popUpController = fxmlLoader.getController();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            Scene sc = new Scene(parent);
+            stage.setScene(sc);
+            stage.setTitle("Modifier la Publication");
+            sc.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+
+            parent.setVisible(false);
+            stage.show();
+            stage.setY(200);
+            stage.setX(650);
+            parent.setVisible(true);
+
+            /*TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), parent);
+            transition.setFromY(400);
+            transition.setToY(100); // Position finale du popup
+            transition.play();*/
+
+            popUpController.getData(idPost);
+
+            popUpController.getPublierBtn().setOnAction(actionEvent -> {
+
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

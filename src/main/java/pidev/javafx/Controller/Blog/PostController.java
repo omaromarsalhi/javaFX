@@ -101,6 +101,9 @@ public class PostController extends VBox implements Initializable {
     @FXML
     private MenuItem supprimerPostBtn;
 
+    @FXML
+    private MenuItem ModifierPost;
+
     private Post post;
 
     private int idPost;
@@ -108,6 +111,10 @@ public class PostController extends VBox implements Initializable {
     public int getIdPost() {return idPost;}
 
     public void setIdPost(int idPost) {this.idPost = idPost;}
+
+    public MenuItem getSupprimerPostBtn() {return supprimerPostBtn;}
+
+    public MenuItem getModifierPost() {return ModifierPost;}
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -218,7 +225,6 @@ public class PostController extends VBox implements Initializable {
             imgPost.setImage(img);
         }else{
             postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight());
-
             imgPost.setVisible(false);
             imgPost.setManaged(false);
         }
@@ -228,17 +234,4 @@ public class PostController extends VBox implements Initializable {
 
         currentReaction = Reactions.NON;
     }
-
-    public void suppHandel() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/fxml/blog.fxml"));
-            Parent root = fxmlLoader.load();
-            BlogController blogController = fxmlLoader.getController();
-            blogController.supprimerPost(idPost);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

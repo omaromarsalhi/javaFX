@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="popUpPane" prefHeight="507.0" prefWidth="437.0" styleClass="AnchorPane" stylesheets="@../Style/popUpModifierPost.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.PopUpModifierPostController">
+   <children>
+      <VBox fx:id="popUpVbox" alignment="TOP_CENTER" layoutX="13.800000190734863" prefHeight="507.0" prefWidth="437.0" spacing="30.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="423.0">
+               <children>
+                  <Label prefHeight="22.0" prefWidth="152.0" text="Modifier la publication" textFill="#f2f2f2">
+                     <HBox.margin>
+                        <Insets right="115.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="closeBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClosedBtn" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/closePopUp.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets right="8.0" />
+                     </HBox.margin>
+                  </ImageView>
+               </children>
+            </HBox>
+            <TextArea fx:id="caption" maxWidth="400.0" prefHeight="84.0" prefWidth="380.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextArea>
+            <ImageView fx:id="imgPost" fitHeight="207.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
+            <HBox alignment="CENTER" prefHeight="58.0" prefWidth="438.0" spacing="90.0">
+               <children>
+                  <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="37.0" prefWidth="143.0" style="-fx-background-color: transperent;" text="Changer la photo" textFill="#c7c7c7">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/addImg.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="publierBtn" mnemonicParsing="false" onMouseClicked="#onModifierClicked" prefHeight="34.0" prefWidth="142.0" styleClass="ModifierBtn" text="Enregistrer" textFill="#fafafa" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

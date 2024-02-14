@@ -52,9 +52,9 @@
                   <Separator blendMode="EXCLUSION" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2.0" prefWidth="881.0" style="-fx-background-color: black;" />
                </children>
             </VBox>
-            <ScrollPane prefHeight="546.0" prefWidth="962.0" style="-fx-background: transperent;">
+            <ScrollPane prefHeight="547.0" prefWidth="962.0" style="-fx-background: transperent;">
                <content>
-                  <VBox fx:id="postsContainer" alignment="TOP_CENTER" prefHeight="511.0" prefWidth="944.0" spacing="15.0">
+                  <VBox fx:id="postsContainer" alignment="TOP_CENTER" prefHeight="545.0" prefWidth="944.0" spacing="15.0">
                      <children>
                         <HBox alignment="CENTER" prefHeight="0.0" prefWidth="944.0" spacing="450.0">
                            <children>

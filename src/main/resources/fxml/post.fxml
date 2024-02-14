@@ -62,9 +62,9 @@
                <HBox.margin>
                   <Insets />
                </HBox.margin></Pane>
-            <MenuButton fx:id="menuBtnPost" mnemonicParsing="false" prefHeight="34.0" prefWidth="7.0">
+            <MenuButton fx:id="menuBtnPost" minWidth="40.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="31.0">
               <items>
-                <MenuItem mnemonicParsing="false" text="Modifier le post">
+                <MenuItem fx:id="ModifierPost" mnemonicParsing="false" text="Modifier le post">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -73,7 +73,7 @@
                         </ImageView>
                      </graphic>
                   </MenuItem>
-                  <MenuItem fx:id="supprimerPostBtn" mnemonicParsing="false" onAction="#suppHandel" text="Supprimer le post">
+                  <MenuItem fx:id="supprimerPostBtn" mnemonicParsing="false" text="Supprimer le post">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>

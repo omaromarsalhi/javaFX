@@ -93,7 +93,7 @@ public class BlogService implements IService<Post> {
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
 
-        String req = "SELECT * FROM `post` ORDER BY id DESC";
+        String req = "SELECT * FROM `post` ORDER BY date_post DESC";
         try {
             Statement st = cnx.createStatement();
             ResultSet res = st.executeQuery(req);
