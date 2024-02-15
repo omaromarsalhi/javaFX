@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.StackedBarChart?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="653.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.helpfullBarController">
+   <children>
+      <AnchorPane prefHeight="220.0" prefWidth="200.0" style="-fx-background-radius: 10;">
+         <children>
+            <ImageView fitHeight="31.0" fitWidth="155.0" layoutX="67.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../appLogo/appNameWhite.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="56.0" fitWidth="53.0" layoutX="14.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../appLogo/whiteLogo.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+      <AnchorPane prefHeight="276.0" prefWidth="234.0">
+         <children>
+            <StackedBarChart fx:id="stachBarChart" layoutX="3.0" layoutY="2.0" prefHeight="230.0" prefWidth="230.0">
+               <xAxis>
+                  <CategoryAxis tickLabelFill="#1b1a1a" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis prefHeight="200.0" prefWidth="40.0" side="LEFT" tickLabelFill="#181717" />
+               </yAxis>
+               <padding>
+                  <Insets left="-10.0" />
+               </padding>
+            </StackedBarChart>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="220.0" prefWidth="200.0">
+         <children>
+            <LineChart fx:id="lineChart" layoutX="1.0" layoutY="1.0" prefHeight="230.0" prefWidth="230.0" title="New Products/Day ">
+               <xAxis>
+                  <CategoryAxis side="BOTTOM" tickLabelFill="#101010" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis side="LEFT" tickLabelFill="#1e1d1d" />
+               </yAxis>
+               <padding>
+                  <Insets left="-10.0" />
+               </padding>
+            </LineChart>
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="6.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

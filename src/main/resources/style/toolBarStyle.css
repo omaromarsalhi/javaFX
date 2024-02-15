@@ -1,0 +1,87 @@
+
+#searchHbox .button{
+    -fx-background-color:  #f4f4f4;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0 20 20 0;
+    -fx-border-color: black ;
+}
+#searchHbox .text-field{
+    -fx-background-color:  white;
+    -fx-border-color: black transparent black black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20 0 0 20 ;
+}
+
+
+.menu-bar{
+    -fx-background-color: transparent;
+    -fx-border-color:  black;
+    -fx-border-radius:20;
+}
+
+.menu-bar .label {
+    -fx-font-size: 14 pt;
+    -fx-text-fill: black;
+    -fx-border-color:  transparent;
+    -fx-border-width: 2;
+}
+
+/*.menu-item .label:hover{*/
+/*    !*-fx-font-size: 25 pt;*!*/
+/*    !*-fx-label-line-length: 8;*!*/
+/*    -fx-background-color:transparent;*/
+/*}*/
+
+/*.menu-bar .menu-button:hover{*/
+/*    */
+/*}*/
+
+.menu-bar .label:hover {
+    -fx-background-color: transparent;
+    -fx-border-color:  transparent transparent #fdc847 transparent;
+    -fx-border-width: 2;
+}
+
+.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
+    -fx-background-color:transparent;
+}
+
+.menu-item .label{
+    /*-fx-font-size: 25 pt;*/
+    /*-fx-label-line-length: 8;*/
+    -fx-background-color:transparent;
+    -fx-border-color:  transparent ;
+    -fx-border-width: 2;
+}
+
+/*.menu-item .menu-button:hover{*/
+/*    !*-fx-font-size: 25 pt;*!*/
+/*    !*-fx-label-line-length: 8;*!*/
+/*    -fx-background-color:transparent;*/
+/*    -fx-border-color:  transparent transparent #fdc847 transparent;*/
+/*    -fx-border-width: 2;*/
+/*}*/
+
+.context-menu {
+    /*-fx-border-width: 2;*/
+    /*-fx-padding:0 0 0 10;*/
+
+}
+
+/*.context-menu:hover{*/
+/*    -fx-border-color:  transparent transparent #fdc847 transparent;*/
+/*    -fx-border-width: 2;*/
+/*    -fx-background-color:red;*/
+/*}*/
+
+
+.menu-item:focused {
+    -fx-background-color: darkgray;
+}
+
+/*.context-menu .context-button:hover, .context-menu .context-button:focused, .context-menu .context-button:showing {*/
+/*    -fx-background-color:red;*/
+/*}*/
+
+
+

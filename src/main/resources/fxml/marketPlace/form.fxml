@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="formBox" alignment="CENTER" minWidth="-Infinity" prefHeight="296.0" prefWidth="267.0" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.FormController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="392.0">
+         <children>
+            <Label prefHeight="60.0" prefWidth="160.0" text="Name">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <HBox>
+               <children>
+                  <TextField fx:id="Pname" onMouseClicked="#onNameSelected" prefHeight="60.0" prefWidth="220.0" styleClass="text-field">
+                     <font>
+                        <Font name="Candara Bold" size="19.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="392.0">
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="60.0" prefWidth="160.0" text="Price" textAlignment="CENTER">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <HBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <TextField fx:id="Price" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="220.0" styleClass="text-field">
+                           <font>
+                              <Font name="Candara Bold" size="19.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="TEXT" />
+                           </cursor>
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="392.0">
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="60.0" prefWidth="160.0" text="Quantity" textAlignment="CENTER">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="Quantity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="220.0" styleClass="text-field">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="392.0">
+         <children>
+            <Label prefHeight="60.0" prefWidth="160.0" text="Image">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="Image" prefHeight="60.0" prefWidth="220.0" styleClass="text-field">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="392.0">
+         <children>
+            <Label prefHeight="60.0" prefWidth="160.0" text="Category">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="Category1" prefHeight="60.0" prefWidth="220.0" styleClass="text-field">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="392.0">
+         <children>
+            <Label prefHeight="60.0" prefWidth="160.0" text="Category">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="Category" prefHeight="60.0" prefWidth="220.0" styleClass="text-field">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<TableView fx:id="ProductTable" editable="true" pickOnBounds="false" prefHeight="468.0" prefWidth="722.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.TableViewController">
+   <columns>
+      <TableColumn fx:id="imgCol" editable="false" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" text="IMG" />
+      <TableColumn fx:id="nameCol" prefWidth="89.59996795654297" text="Name" />
+      <TableColumn fx:id="descCol" prefWidth="133.59994506835938" text="Description" />
+      <TableColumn fx:id="priceCol" prefWidth="64.7999267578125" text="Price" />
+      <TableColumn fx:id="quantityCol" prefWidth="102.4000244140625" text="Quantity" />
+      <TableColumn fx:id="stateCol" prefWidth="60.7999267578125" text="State" />
+      <TableColumn fx:id="timestampCol" prefWidth="114.39993286132812" text="Creation Time" />
+      <TableColumn fx:id="categoryCol" prefWidth="123.2000732421875" text="Ctegory" />
+   </columns>
+   <columnResizePolicy>
+      <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+   </columnResizePolicy>
+   <stylesheets>
+      <URL value="@../../style/tableview.css" />
+      <URL value="@../../style/scrollBarStlyle.css" />
+   </stylesheets>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</TableView>

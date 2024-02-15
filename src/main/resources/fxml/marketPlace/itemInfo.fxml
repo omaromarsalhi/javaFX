@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="itemDeatails" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefHeight="590.0" prefWidth="250.0" spacing="6.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.ItemInfoController">
+   <children>
+      <HBox alignment="CENTER">
+         <children>
+            <Button fx:id="exit" mnemonicParsing="false" onAction="#onExitBtnClicked" prefHeight="35.0" prefWidth="56.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="25.0" fitWidth="25.0" onDragDetected="#onExitBtnClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../namedIcons/exit.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="openChatBtn" mnemonicParsing="false" onMouseClicked="#onOpenChatBtnClicked" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../namedIcons/chat.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+      <Label fx:id="prodName" alignment="CENTER" prefHeight="22.0" prefWidth="271.0">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="itemImage" fitHeight="183.0" fitWidth="162.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: -15;">
+         <image>
+            <Image url="@../../img/mySelf.jpg" />
+         </image>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </ImageView>
+      <HBox fx:id="userInfo" alignment="CENTER_LEFT" prefHeight="87.0" prefWidth="250.0">
+         <children>
+            <ImageView fx:id="userImage" fitHeight="86.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: 10;">
+               <image>
+                  <Image url="@../../img/mySelf.jpg" />
+               </image>
+            </ImageView>
+            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="166.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="166.0" text="Owner Name ">
+                     <font>
+                        <Font name="Cambria Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="userName" alignment="CENTER" prefHeight="32.0" prefWidth="166.0">
+                     <font>
+                        <Font name="Cambria Bold" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets top="6.0" />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="218.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="State :">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="stateLabel" alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="in Stock">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Price :">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="priceLable" alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="\$0.99">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Quantity :">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="quantityLable" alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="\$0.99">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+         <children>
+            <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Category :">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="categoryLable" alignment="CENTER" prefHeight="26.0" prefWidth="134.0" text="sport">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <Label alignment="CENTER" prefHeight="66.0" prefWidth="230.0" text="DESCREPTION" textAlignment="CENTER">
+         <font>
+            <Font name="Cambria Bold" size="18.0" />
+         </font></Label>
+      <TextArea fx:id="itemDesc" editable="false" prefHeight="58.0" prefWidth="220.0" wrapText="true" />
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+   </padding>
+   <stylesheets>
+      <URL value="@../../style/Buttons.css" />
+      <URL value="@../../style/formLayout.css" />
+   </stylesheets>
+</VBox>

@@ -1,0 +1,98 @@
+#ImageAnchorPane .button{
+    -fx-background-color:  transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+    -fx-background-radius:10;
+    -fx-border-radius: 10;
+}
+
+#ImageAnchorPane .button:hover{
+    -fx-border-color: black;
+}
+
+
+#sideBar .button,#zipSideBar .button{
+        -fx-background-color:  #deddd9;
+        -fx-border-color: grey black grey black;
+        -fx-border-width: 1px;
+        -fx-background-radius: 10px;
+        -fx-border-radius: 10px;
+}
+#sideBar .button:hover,#zipSideBar .button:hover{
+    -fx-background-color:  white;
+    -fx-border-color: black;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+#sideBarBtn{
+    -fx-background-color:  transparent;
+}
+#exit{
+    -fx-background-color:  transparent;
+}
+
+#exit:hover{
+    -fx-background-color:  red;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+}
+
+#itemInfo .button , #btnHolder .button {
+    -fx-background-color:  white;
+    -fx-border-color: black;
+    -fx-border-width: 1px;
+    -fx-background-radius:20;
+    -fx-border-radius: 20;
+}
+
+#itemInfo .button:hover , #btnHolder .button:hover {
+    -fx-border-color: #fdc847;
+}
+
+#purshaseDetailsBox .button{
+    -fx-background-color:  transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+    -fx-background-radius:10;
+    -fx-border-radius: 10;
+}
+
+#purshaseDetailsBox .button:hover{
+    -fx-border-color: #fdc847;
+}
+
+
+
+
+
+
+
+/*#formBox .text-field {*/
+/*    -fx-background-color:  #deddd9;*/
+/*    -fx-border-color: grey;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-background-radius: 10px;*/
+/*    -fx-border-radius: 10px;*/
+
+/*}*/
+
+/*#formBox .label{*/
+/*    -fx-padding: 0 0 0 8px;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: transparent transparent black transparent;*/
+/*}*/
+
+/*#dob .text-field,#sDate .text-field {*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: transparent;*/
+/*    -fx-border-radius: 10px 0 0 10px;*/
+/*}*/
+
+/*#dob,#sDate{*/
+/*    -fx-background-color:  #deddd9;*/
+/*    -fx-background-radius: 10px 0 0 10px;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: grey;*/
+/*    -fx-border-radius: 10px 0 0 10px;*/
+/*}*/

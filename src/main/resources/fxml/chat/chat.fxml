@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="itemDeatails" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefHeight="632.0" prefWidth="250.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.chat.ChatController">
+    <stylesheets>
+        <URL value="@../../style/Buttons.css" />
+        <URL value="@../../style/chatStyle.css" />
+    </stylesheets>
+   <children>
+      <AnchorPane prefHeight="174.0" prefWidth="242.0">
+         <children>
+            <VBox fx:id="topBox" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children></AnchorPane>
+      <StackPane fx:id="chatStackPane">
+         <children>
+            <AnchorPane fx:id="ancherPaneOfgridPaneMain" style="-fx-background-color: transparent;">
+               <children>
+                  <AnchorPane fx:id="ancherPaneOfgridPane" layoutX="6.0" layoutY="234.0">
+                     <children>
+                        <GridPane alignment="CENTER" prefHeight="174.0" prefWidth="191.0">
+                          <columnConstraints>
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <padding>
+                              <Insets bottom="45.0" left="8.0" right="6.0" top="8.0" />
+                           </padding>
+                           <children>
+                              <Button fx:id="emojie00" mnemonicParsing="false" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/angry.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie22" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/surprised.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie12" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/sad.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie02" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.rowIndex="2">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/party.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie21" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/nerd.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie11" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/laugh.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie01" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.rowIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/in-love.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie20" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="2">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/smiling.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="emojie10" mnemonicParsing="false" style="-fx-background-color: transparent;" GridPane.columnIndex="1">
+                                 <graphic>
+                                    <ImageView fitHeight="32.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../emojies/cool.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+                  <Button fx:id="moreOptions2" contentDisplay="CENTER" graphicTextGap="0.0" layoutY="420.0" mnemonicParsing="false" onAction="#onMoreOptionsClick" prefHeight="28.0" prefWidth="11.0" style="-fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="6.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../namedIcons/threeDots.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <VBox fx:id="chat" stylesheets="@../../style/scrollBarStlyle.css">
+               <children>
+                  <HBox fx:id="userBox" alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="249.0">
+                     <children>
+                        <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../img/latifa.png" />
+                           </image>
+                        </ImageView>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="166.0" text="Latefa  Ben Zaied">
+                           <font>
+                              <Font name="Protest Riot Regular" size="18.0" />
+                           </font></Label>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../namedIcons/button.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <padding>
+                        <Insets left="8.0" />
+                     </padding>
+                  </HBox>
+                  <ScrollPane hbarPolicy="NEVER" prefHeight="361.0" prefWidth="232.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                     <content>
+                        <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" prefHeight="354.0" prefWidth="238.0" spacing="6.0" style="-fx-background-color: transparent;">
+                           <padding>
+                              <Insets bottom="10.0" right="2.0" top="10.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </ScrollPane>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="249.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Button fx:id="moreOptions" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#onMoreOptionsClick" prefHeight="28.0" prefWidth="11.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="6.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../namedIcons/threeDots.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="addImageBtn" mnemonicParsing="false" onAction="#chooseImage" prefHeight="28.0" prefWidth="31.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../namedIcons/image.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <TextField fx:id="messageTextField" prefHeight="36.0" prefWidth="146.0" style="-fx-background-color: white; -fx-border-radius: 10; -fx-background-radius: 10; -fx-border-color: black;" />
+                        <HBox alignment="CENTER" prefHeight="38.0" prefWidth="4.0">
+                           <children>
+                              <Button fx:id="sendMsgBtn" mnemonicParsing="false" onAction="#onSendMsgBtnClicked" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/direct.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="clearMsgBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="23.0" style="-fx-background-color: transparent;">
+                                 <graphic>
+                                    <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/broom24.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+   <padding>
+      <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+   </padding>
+</VBox>

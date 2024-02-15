@@ -1,0 +1,17 @@
+.scroll-pane{
+    /*-fx-border-color: black transparent black transparent;*/
+    /*-fx-border-color:white;*/
+    /*-fx-border-width: 1px;*/
+}
+
+#userBox , #topBox{
+    -fx-border-color: transparent transparent black transparent;
+    -fx-border-width: 1px;
+    /*-fx-border-radius: 0 0 20 20;*/
+    /*-fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.5), 10.0 , 0.0 , 1.0 ,10.0);*/
+}
+
+#ancherPaneOfgridPane {
+    -fx-background-image: url('../namedIcons/bubble3.png');
+    -fx-background-size: cover;
+}
