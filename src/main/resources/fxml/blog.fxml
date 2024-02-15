@@ -85,9 +85,9 @@
                         </HBox>
                         <VBox fx:id="vboxStatutBlog" prefHeight="130.0" prefWidth="744.0" spacing="15.0" styleClass="post-background" stylesheets="@../Style/style.css">
                            <children>
-                              <HBox alignment="CENTER" prefHeight="66.0" prefWidth="921.0" spacing="20.0">
+                              <HBox alignment="TOP_CENTER" prefHeight="66.0" prefWidth="921.0" spacing="10.0">
                                  <children>
-                                    <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../img/profilImg.png" />
                                        </image>

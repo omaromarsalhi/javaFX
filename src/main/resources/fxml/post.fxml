@@ -143,22 +143,22 @@
                 </HBox>
                 <HBox fx:id="reactionsContainer" maxWidth="-Infinity" prefHeight="34.0" prefWidth="125.0" spacing="5.0" styleClass="reactions-container" stylesheets="@../Style/style.css" visible="false">
                     <children>
-                        <ImageView fx:id="imgLike" fitHeight="25.0" fitWidth="25.0" onMousePressed="#onReactionImgPressed" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgLike" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../img/ic_like.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="imgHaha" fitHeight="25.0" fitWidth="25.0" onMousePressed="#onReactionImgPressed" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgHaha" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../img/ic_haha.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="imgSad" fitHeight="25.0" fitWidth="25.0" onMousePressed="#onReactionImgPressed" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgSad" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../img/ic_sad.png" />
                             </image>
                         </ImageView>
-                        <ImageView fx:id="imgAngry" fitHeight="25.0" fitWidth="25.0" onMousePressed="#onReactionImgPressed" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="imgAngry" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
                                 <Image url="@../img/ic_angry.png" />
                             </image>

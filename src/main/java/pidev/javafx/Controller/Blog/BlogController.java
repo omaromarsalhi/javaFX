@@ -97,6 +97,10 @@ public class BlogController implements Initializable {
         postController.getModifierPost().setOnAction(actionEvent -> {
             afficherPopup(post.getId(), postsContainer, vBox);
         });
+
+        postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
+            postController.onAngryClicked();
+        });
     }
 
     public void loadPostAbove(Post post) throws IOException{
@@ -230,10 +234,11 @@ public class BlogController implements Initializable {
             stage.setY(200);
             stage.setX(650);
             parent.setVisible(true);
-            /*TranslateTransition transition = new TranslateTransition(Duration.seconds(0.5), parent);
-            transition.setFromY(400);
-            transition.setToY(100); // Position finale du popup
-            transition.play();*/
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
+            transition.setFromY(600);
+            transition.setToY(0); // Position finale du popup
+            transition.play();
+
             popUpController.getData(idPost);
             popUpController.getPublierBtn().setOnAction(actionEvent -> {
                 BlogService bs = new BlogService();
@@ -263,5 +268,7 @@ public class BlogController implements Initializable {
             e.printStackTrace();
         }
     }
+
+
 
 }

@@ -19,6 +19,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import pidev.javafx.Services.ReactionService;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,16 +67,7 @@ public class PostController extends VBox implements Initializable {
     private ImageView imgLike;
 
     @FXML
-    private ImageView imgLove;
-
-    @FXML
-    private ImageView imgCare;
-
-    @FXML
     private ImageView imgHaha;
-
-    @FXML
-    private ImageView imgWow;
 
     @FXML
     private ImageView imgSad;
@@ -107,6 +99,17 @@ public class PostController extends VBox implements Initializable {
     private Post post;
 
     private int idPost;
+
+    public ImageView getImgLike() {return imgLike;}
+    public ImageView getImgAngry() {
+        return imgAngry;
+    }
+    public ImageView getImgHaha() {
+        return imgHaha;
+    }
+    public ImageView getImgSad() {
+        return imgSad;
+    }
 
     public int getIdPost() {return idPost;}
 
@@ -156,7 +159,7 @@ public class PostController extends VBox implements Initializable {
         }
     }
 
-    @FXML
+    /*@FXML
     public void onReactionImgPressed(MouseEvent me){
         switch (((ImageView) me.getSource()).getId()){
             case "imgHaha":
@@ -172,6 +175,28 @@ public class PostController extends VBox implements Initializable {
                 setReaction(Reactions.LIKE);
                 break;
         }
+        reactionsContainer.setVisible(false);
+        iconLikeContainer.setVisible(true);
+    }*/
+
+    @FXML
+    public void onLikePressed() {
+        setReaction(Reactions.LIKE);
+        reactionsContainer.setVisible(false);
+        iconLikeContainer.setVisible(true);
+    }
+    public void onHahaClicked() {
+        setReaction(Reactions.HAHA);
+        reactionsContainer.setVisible(false);
+        iconLikeContainer.setVisible(true);
+    }
+    public void onSadClicked() {
+        setReaction(Reactions.SAD);
+        reactionsContainer.setVisible(false);
+        iconLikeContainer.setVisible(true);
+    }
+    public void onAngryClicked() {
+        setReaction(Reactions.ANGRY);
         reactionsContainer.setVisible(false);
         iconLikeContainer.setVisible(true);
     }

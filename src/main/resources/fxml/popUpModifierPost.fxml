@@ -35,12 +35,33 @@
                   </ImageView>
                </children>
             </HBox>
-            <TextArea fx:id="caption" maxWidth="400.0" prefHeight="84.0" prefWidth="380.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;">
+            <VBox>
                <VBox.margin>
                   <Insets />
                </VBox.margin>
-            </TextArea>
-            <ImageView fx:id="imgPost" fitHeight="207.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
+               <children>
+                  <Label fx:id="dateLabel" prefHeight="18.0" prefWidth="182.0" text="Label" textFill="#cfcfcf">
+                     <VBox.margin>
+                        <Insets left="75.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_RIGHT" prefHeight="63.0" prefWidth="438.0" spacing="10.0">
+                     <children>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../img/profilImg.png" />
+                           </image>
+                        </ImageView>
+                        <TextArea fx:id="caption" maxWidth="400.0" prefHeight="63.0" prefWidth="350.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;">
+                           <HBox.margin>
+                              <Insets right="18.0" />
+                           </HBox.margin>
+                        </TextArea>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <ImageView fx:id="imgPost" fitHeight="227.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
             <HBox alignment="CENTER" prefHeight="58.0" prefWidth="438.0" spacing="90.0">
                <children>
                   <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="37.0" prefWidth="143.0" style="-fx-background-color: transperent;" text="Changer la photo" textFill="#c7c7c7">

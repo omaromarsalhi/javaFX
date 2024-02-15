@@ -8,17 +8,30 @@ public enum Reactions {
     ANGRY(7,"Angry","#f2b548","/icon/ic_angry.png");
 
     private int id;
+    private int idPost;
     private String name;
     private String color;
     private String imgSrc;
 
-    Reactions(int id, String name, String color, String imgSrc) {
+    Reactions(int id, int idPost, String name, String color, String imgSrc) {
         this.id = id;
+        this.idPost = idPost;
         this.name = name;
         this.color = color;
         this.imgSrc = imgSrc;
     }
 
+    Reactions(int id, String name, String color, String imgSrc) {
+        this.id = id;
+        this.idPost = idPost;
+        this.name = name;
+        this.color = color;
+        this.imgSrc = imgSrc;
+    }
+
+    public int getIdPost() {
+        return idPost;
+    }
     public int getId() {
         return id;
     }

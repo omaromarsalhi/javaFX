@@ -3,6 +3,7 @@ package pidev.javafx.Controller.Blog;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.UUID;
 
 public class PopUpModifierPostController {
@@ -34,6 +36,9 @@ public class PopUpModifierPostController {
     private Button addImgBtn;
     @FXML
     private Button publierBtn;
+    @FXML
+    private Label dateLabel;
+
 
     String SourceString;
     private int id;
@@ -80,7 +85,9 @@ public class PopUpModifierPostController {
         id = idPost;
         caption.setText(post.getCaption());
         imgPath = post.getImage();
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
+        String formattedDate = dateFormat.format(post.getDate());
+        dateLabel.setText(formattedDate);
         if(post.getImage() != null && !post.getImage().isEmpty()){
             img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
