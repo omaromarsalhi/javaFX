@@ -221,6 +221,10 @@ public class PostController extends VBox implements Initializable {
        // nbReactions.setText(String.valueOf(post.getTotalReactions()));
     }
 
+    public void setNbReactions(int nbr) {
+        nbReactions.setText(String.valueOf(nbr));
+    }
+
     public void setData(Post post){
         this.post = post;
         Image img;
