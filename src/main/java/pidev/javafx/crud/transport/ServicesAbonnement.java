@@ -1,21 +1,18 @@
 package pidev.javafx.crud.transport;
-
-import javafx.fxml.FXMLLoader;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
-import pidev.javafx.Controller.ConnectionDB;
-import pidev.javafx.entities.Transport.Abonnement;
-import pidev.javafx.entities.Transport.Transport;
-import pidev.javafx.utils.DataSource;
+import pidev.javafx.crud.CrudInterface;
+import pidev.javafx.crud.DataSource;
+import pidev.javafx.crud.marketplace.ConnectionDB;
+import pidev.javafx.model.Transport.Abonnement;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 
-public class ServicesAbonnement implements IServices <Abonnement> {
+public class ServicesAbonnement implements CrudInterface<Abonnement> {
 
     Connection cnx = DataSource.GetInstance().getCnx();
     private PreparedStatement prepare;
@@ -127,6 +124,36 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
         return abonnementList;
 
+
+    }
+
+    @Override
+    public void addItem(Abonnement variable) {
+
+    }
+
+    @Override
+    public void updateItem(Abonnement variable) {
+
+    }
+
+    @Override
+    public ObservableList<Abonnement> selectItems() {
+        return null;
+    }
+
+    @Override
+    public Abonnement findById(int id) {
+        return null;
+    }
+
+    @Override
+    public Abonnement selectFirstItem() {
+        return null;
+    }
+
+    @Override
+    public void deleteItem(int id) {
 
     }
 }

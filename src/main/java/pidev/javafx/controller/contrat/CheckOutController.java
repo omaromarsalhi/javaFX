@@ -7,10 +7,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pidev.javafx.crud.marketplace.CrudContract;
-import pidev.javafx.crud.marketplace.CrudTransaction;
+//import pidev.javafx.crud.marketplace.CrudContract;
+//import pidev.javafx.crud.marketplace.CrudTransaction;
 import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyTools;
 import pidev.javafx.model.Contrat.Contract;
 import pidev.javafx.model.Contrat.PaymentMethod;
 import pidev.javafx.model.MarketPlace.Bien;
@@ -64,19 +63,19 @@ public class CheckOutController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        contract =CrudContract.getInstance().selectLastItem();
-        System.out.println(contract);
-        exit.setOnAction( event -> EventBus.getInstance().publish( "laodMarketPlace", event ) );
-        generatePDFbtn.setOnAction( event -> {
-            bien.setQuantity( Float.parseFloat( Pquantity.getText() ) );
-            contract =prepareContrat();
-            MyTools.getInstance().generatePDF(contract);
-            CrudContract.getInstance().addItem( contract );
-            contract =CrudContract.getInstance().selectLastItem();
-            System.out.println(contract);
-            CrudTransaction.getInstance().addItem( prepareTransaction() );
-        });
-        PpayementChoice.getItems().addAll( PaymentMethod.values());
+//        contract =CrudContract.getInstance().selectLastItem();
+//        System.out.println(contract);
+//        exit.setOnAction( event -> EventBus.getInstance().publish( "laodMarketPlace", event ) );
+//        generatePDFbtn.setOnAction( event -> {
+//            bien.setQuantity( Float.parseFloat( Pquantity.getText() ) );
+//            contract =prepareContrat();
+//            MyTools.getInstance().generatePDF(contract);
+//            CrudContract.getInstance().addItem( contract );
+//            contract =CrudContract.getInstance().selectLastItem();
+//            System.out.println(contract);
+//            CrudTransaction.getInstance().addItem( prepareTransaction() );
+//        });
+//        PpayementChoice.getItems().addAll( PaymentMethod.values());
     }
 
     public void setData(Bien bien) {

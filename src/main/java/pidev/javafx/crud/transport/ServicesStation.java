@@ -1,10 +1,11 @@
 package pidev.javafx.crud.transport;
 
-import pidev.javafx.Controller.ConnectionDB;
-import pidev.javafx.entities.Transport.Abonnement;
-import pidev.javafx.entities.Transport.Station;
-import pidev.javafx.entities.Transport.Transport;
-import pidev.javafx.utils.DataSource;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+import pidev.javafx.crud.CrudInterface;
+import pidev.javafx.crud.DataSource;
+import pidev.javafx.crud.marketplace.ConnectionDB;
+import pidev.javafx.model.Transport.Station;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ServicesStation implements IServices<Station>{
+public class ServicesStation implements CrudInterface<Station>{
     Connection cnx = DataSource.GetInstance().getCnx();;
     private PreparedStatement prepare;
 
@@ -81,5 +82,35 @@ public class ServicesStation implements IServices<Station>{
         }
 
         return abonnementList;
+    }
+
+    @Override
+    public void addItem(Station variable) {
+
+    }
+
+    @Override
+    public void updateItem(Station variable) {
+
+    }
+
+    @Override
+    public ObservableList<Station> selectItems() {
+        return null;
+    }
+
+    @Override
+    public Station findById(int id) {
+        return null;
+    }
+
+    @Override
+    public Station selectFirstItem() {
+        return null;
+    }
+
+    @Override
+    public void deleteItem(int id) {
+
     }
 }

@@ -1,0 +1,168 @@
+.hbox {
+    -fx-background-color: #2f4f4f;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.anchor-pane {
+    -fx-background-color: #F1F1F1;
+
+}
+
+.pane {
+    -fx-background-color: #D9D9D9;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+}
+
+.SearchBar {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: #474749;
+}
+.FormInputs{
+    -fx-border-radius: 5px;
+    -fx-border-color: #494949;
+    -fx-border-width: 1px;
+    -fx-background-color: transparent;
+
+
+}
+.Image-View{
+    -fx-border-radius: 50%; /* Set to 50% to create a circular shape */
+    -fx-background-radius: 50%; /* Additional property for background */
+    -fx-background-color: #bb2020;
+}
+.TableView {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: #474749;
+}
+
+
+
+
+.TableView .column-header-background {
+    -fx-alignment:center;
+
+    -fx-background-color: #333;
+    -fx-border-color: transparent;
+}
+
+
+
+.TableView .column-header,
+.TableView .filler,
+.TableView .column-header-background {
+    -fx-alignment: center;
+    -fx-font-size: 25px;
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.5px;
+}
+
+/*.TableView .table-row-cell:odd {*/
+/*    -fx-font-size: 20px;*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-border-color: transparent;*/
+/*    -fx-text-fill: #000000;*/
+
+/*    -fx-border-width: 0.5px;*/
+/*    -fx-font-family: "Souliyo Unicode", sans-serif;*/
+/*    -fx-background-radius: 20px;*/
+/*    -fx-border-radius: 10;*/
+/* }*/
+
+/*.TableView .table-row-cell {*/
+
+
+/*    -fx-font-family: "Souliyo Unicode", sans-serif;*/
+/*    -fx-background-color: #C8C8C8;*/
+/*    -fx-font-size: 20px;*/
+/*    -fx-text-fill: #000000;*/
+/*    -fx-border-radius: 20px;*/
+/*    -fx-border: transparent;*/
+/*    -fx-background-radius: 10;*/
+
+/*}*/
+.TableView .table-row-cell {
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-font-size: 20px;
+    -fx-text-fill: #000000;
+    -fx-background-color: #C8C8C8;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 10;
+ }
+
+.TableView .table-row-cell:odd {
+    -fx-background-color: transparent;
+}
+
+
+.TableView .table-row-cell:selected {
+
+
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-background-color: #ffce1a;
+    -fx-font-size: 20px;
+    -fx-text-fill: #000000;
+    -fx-border-radius: 20px;
+    -fx-border: transparent;
+    -fx-background-radius: 10;
+
+}
+
+.TableView .table-cell{
+    -fx-alignment:center;
+    -fx-border-color: transparent;
+
+}
+
+.Spinner{
+
+    -fx-background-color: transparent;
+    -fx-border-radius: 15;
+}
+.Button_abonnement {
+    -fx-background-color: transparent;
+}
+
+.rounded-image {
+    -fx-background-radius: 200px;
+}
+
+.Button_ajouter {
+    -fx-background-color: #20749C;
+    -fx-border-radius: 15px;
+    -fx-border-color: transparent;
+}
+.paney{
+    -fx-background-color: #20749C;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+}
+.dialog{
+    -fx-background-color: #ffce1b;
+    -fx-border-radius: 19px;
+}
+.form{
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 19px;
+    -fx-background-radius: 19px;
+}
+
+
+.stat-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+/* The style for the progress bar */
+.stat-bar {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 20px;
+    -fx-accent: green;
+    -fx-background-color: black;
+}

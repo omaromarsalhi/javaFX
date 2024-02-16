@@ -1,12 +1,12 @@
 package pidev.javafx.crud.transport;
 
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pidev.javafx.Controller.ConnectionDB;
-import pidev.javafx.entities.Transport.Abonnement;
-import pidev.javafx.entities.Transport.Transport;
-import pidev.javafx.utils.DataSource;
+import javafx.scene.control.Alert;
+import pidev.javafx.crud.CrudInterface;
+import pidev.javafx.crud.DataSource;
+import pidev.javafx.crud.marketplace.ConnectionDB;
+import pidev.javafx.model.Transport.Transport;
 
 //import javax.swing.*;
 import java.sql.*;
@@ -14,12 +14,42 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class ServicesTransport implements IServices <Transport> {
+public class ServicesTransport implements CrudInterface <Transport> {
 
     Connection cnx = DataSource.GetInstance().getCnx();
     private PreparedStatement prepare;
     private Set abonnementList;
 
+
+    @Override
+    public void addItem(Transport variable) {
+
+    }
+
+    @Override
+    public void updateItem(Transport variable) {
+
+    }
+
+    @Override
+    public ObservableList<Transport> selectItems() {
+        return null;
+    }
+
+    @Override
+    public Transport findById(int id) {
+        return null;
+    }
+
+    @Override
+    public Transport selectFirstItem() {
+        return null;
+    }
+
+    @Override
+    public void deleteItem(int id) {
+
+    }
 
     @Override
     public void ajouter(Transport transport) {

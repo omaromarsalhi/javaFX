@@ -60,6 +60,33 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#onTransportClicked" prefWidth="110.0" textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/4.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="GareBtn" mnemonicParsing="false" onAction="#onGareClicked" prefWidth="110.0" text="show " textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/4.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="StationBtn" mnemonicParsing="false" onAction="#onStationClicked" prefWidth="110.0" text="show " textAlignment="CENTER">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/4.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </VBox>
             <Separator blendMode="OVERLAY" orientation="VERTICAL" prefHeight="360.0" style="-fx-background-color: #69818D; -fx-border-color: #69818D; -fx-color: #69818D;" />
