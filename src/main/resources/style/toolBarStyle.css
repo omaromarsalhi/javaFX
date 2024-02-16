@@ -4,12 +4,19 @@
     -fx-border-width: 1px;
     -fx-border-radius: 0 20 20 0;
     -fx-border-color: black ;
+    -fx-background-radius: 0 20 20 0 ;
 }
 #searchHbox .text-field{
     -fx-background-color:  white;
     -fx-border-color: black transparent black black;
     -fx-border-width: 1px;
     -fx-border-radius: 20 0 0 20 ;
+    -fx-background-radius: 20 0 0 20 ;
+}
+
+#searchHbox .button:hover {
+    -fx-border-color:  #fdc847 ;
+    -fx-background-color:  #fdc847 ;
 }
 
 

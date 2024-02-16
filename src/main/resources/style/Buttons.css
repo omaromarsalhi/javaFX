@@ -1,4 +1,4 @@
-#ImageAnchorPane .button{
+#ImageAnchorPane .button ,#filterAnchorPane .button{
     -fx-background-color:  transparent;
     -fx-border-color: transparent;
     -fx-border-width: 2px;
@@ -36,6 +36,7 @@
     -fx-background-color:  red;
     -fx-background-radius: 10px;
     -fx-border-radius: 10px;
+
 }
 
 #itemInfo .button , #btnHolder .button {
@@ -46,8 +47,20 @@
     -fx-border-radius: 20;
 }
 
-#itemInfo .button:hover , #btnHolder .button:hover {
+#itemInfo .button:hover , #btnHolder .button:hover,#filterAnchorPane .button:hover {
     -fx-border-color: #fdc847;
+}
+
+#filterAnchorPane .button {
+    -fx-background-color:  transparent;
+    -fx-border-color: black;
+    -fx-border-width: 0.04em;
+    -fx-background-radius:10;
+    -fx-border-radius: 10;
+}
+
+#filterAnchorPane .button:hover {
+    -fx-border-color: white;
 }
 
 #purshaseDetailsBox .button{
@@ -58,7 +71,7 @@
     -fx-border-radius: 10;
 }
 
-#purshaseDetailsBox .button:hover{
+#purshaseDetailsBox .button:hover {
     -fx-border-color: #fdc847;
 }
 

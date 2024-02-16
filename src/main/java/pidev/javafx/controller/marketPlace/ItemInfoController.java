@@ -12,7 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pidev.javafx.crud.CrudBien;
+import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.tools.MyListener;

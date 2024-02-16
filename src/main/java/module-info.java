@@ -8,8 +8,6 @@ module pidev.javafx{
     requires itextpdf;
 
 
-    exports pidev.javafx.controller;
-    opens pidev.javafx.controller to javafx.fxml;
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
     exports pidev.javafx.model.MarketPlace;
     opens pidev.javafx.model.MarketPlace to javafx.fxml;
@@ -26,5 +24,9 @@ module pidev.javafx{
     exports pidev.javafx.controller.chat;
     exports pidev.javafx.test;
     opens pidev.javafx.test to javafx.fxml;
+    exports pidev.javafx.controller.mainWindow;
+    opens pidev.javafx.controller.mainWindow to javafx.fxml;
+    exports pidev.javafx.crud.marketplace;
+    opens pidev.javafx.crud.marketplace to javafx.fxml;
 }
 

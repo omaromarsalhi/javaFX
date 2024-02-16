@@ -50,9 +50,8 @@
     -fx-background-radius: 30;
 }
 .fruit-item:hover{
-    -fx-effect: dropShadow(three-pass-box,rgba(32,116,156,0.3), 10.0 , 0.0 , 1.0 ,10.0);
-    -fx-scale-x: 1.1;
-    -fx-scale-y: 1.1;
-    /*-fx-border-color: #20749c;*/
+    -fx-effect: dropShadow(three-pass-box,rgba(32,116,156,0.5), 10.0 , 0.0 , 1.0 ,10.0);
+    -fx-scale-x: 1.07;
+    -fx-scale-y: 1.07;
     -fx-border-radius: 30;
 }

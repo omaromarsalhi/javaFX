@@ -2,19 +2,20 @@ package pidev.javafx.controller.marketPlace;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import pidev.javafx.crud.CrudBien;
+import pidev.javafx.crud.marketplace.CrudBien;
+import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.tools.MyListener;
 import pidev.javafx.model.MarketPlace.Bien;
@@ -22,6 +23,8 @@ import pidev.javafx.model.MarketPlace.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,17 +52,27 @@ public class MarketController implements Initializable {
     private Button rightArrow;
     @FXML
     private Button exitImageBtn;
+    @FXML
+    private Button searchBtn;
+    @FXML
+    private HBox searchHbox;
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private MenuBar menuBar;
+    @FXML
+    private Menu filter;
 
     private VBox vBox;
     private VBox chatBox;
-
-
-
-    private List<Bien> biens = new ArrayList<>();
+    private Timer animTimer;
     private Image image;
     private MyListener myListener;
     private MyListener MainWindowListener;
     private Timeline fiveSecondsWonder;
+    private String searchBarState;
+    private int idProd4nextSelection;
+    private boolean isChatActivated;
 
 
 
@@ -68,15 +81,16 @@ public class MarketController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fiveSecondsWonder=new Timeline();
+        isChatActivated=false;
         vBox=null;
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
-//        try {
-//            VBox chatBox = fxmlLoader.load();
-//            animateChanges(hepfullBar,chatBox);
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
+        try {
+            VBox chatBox = fxmlLoader.load();
+            animateChanges(hepfullBar,chatBox);
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
         try {
             hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
             chatBox = FXMLLoader.load(getClass().getResource( "/fxml/chat/chat.fxml" ));
@@ -85,8 +99,8 @@ public class MarketController implements Initializable {
         }
 
 
-        showGridPane();
-
+        showGridPane(CrudBien.getInstance().selectItems() );
+        setMenueBar();
 
         ImageAnchorPane.setVisible( false );
         exitImageBtn.setOnAction( event -> {
@@ -94,7 +108,91 @@ public class MarketController implements Initializable {
             grid.setOpacity( 1 );
         } );
 
+        searchBarState="closed";
+        animTimer = new Timer();
+        searchTextField.setVisible( false );
+        searchBtn.setStyle( "-fx-border-radius: 20;" +
+                "-fx-background-radius:20;" );
+
+        searchBtn.setOnMouseClicked(event -> animateSearchBar());
+
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
+        EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
+    }
+
+
+
+
+
+    public void setMenueBar(){
+        var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
+        var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        allProducts.setOnAction( event -> {
+            showGridPane(CrudBien.getInstance().selectItems() );
+        } );
+        todayProducts.setOnAction( event -> {
+            showGridPane(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" ));
+        } );
+
+        menuBar.getMenus().get( 0 ).getItems().addAll(allProducts,todayProducts);
+
+
+        var allServices=new MenuItem("All Services",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var todayServices=new MenuItem("Today's Services",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        menuBar.getMenus().get( 1 ).getItems().addAll(allServices ,todayServices);
+
+
+        var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        menuBar.getMenus().get( 2 ).getItems().addAll(filterProd ,filterService);
+
+        filterProd.setOnAction( event -> {
+            EventBus.getInstance().publish( "filter",event );
+//            if(isChatActivated) {
+//                animateChanges( chatBox, hepfullBar );
+//                isChatActivated=false;
+//            }
+        } );
+
+
+    }
+
+    public void animateSearchBar(){
+        if(searchBarState.equals( "closed" )){
+            searchBarState="opened";
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if(searchTextField.getWidth()==16){
+                        searchBtn.setStyle( "-fx-border-radius: 0 20 20 0;" +
+                                "-fx-border-color: black  black black transparent ;");
+                        searchTextField.setVisible( true );
+                    }
+                    if (searchTextField.getWidth()<(searchHbox.getWidth()-searchBtn.getWidth()-20)) {
+                        searchTextField.setPrefWidth(searchTextField.getWidth()+10);
+                    } else
+                        this.cancel();
+                }
+
+            }, 0, 15);
+        }
+        else if(searchBarState.equals( "opened" )&&searchTextField.getText().isEmpty()){
+            searchBarState="closed";
+            animTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (searchTextField.getWidth() <=16) {
+                        searchBtn.setStyle( "-fx-border-radius: 20;" +
+                                "-fx-background-radius:20;");
+                        searchTextField.setVisible( false );
+                    }
+                    if (searchTextField.getWidth() > 16) {
+                        searchTextField.setPrefWidth( searchTextField.getWidth() - 10 );
+                    } else
+                        this.cancel();
+                }
+            }, 0, 15);
+        }
     }
 
 
@@ -124,9 +222,13 @@ public class MarketController implements Initializable {
     }
 
 
+    public void onFilterClicked(CustomMouseEvent<ObservableList<Bien>> customMouseEvent){
+        showGridPane(customMouseEvent.getEventData());
+    }
 
-    public void showGridPane(){
-        biens= CrudBien.getInstance().selectItems();
+
+    public void showGridPane(ObservableList<Bien> biens){
+        grid.getChildren().clear();
         if (biens.size() > 0) {
             try {
                 hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
@@ -172,27 +274,17 @@ public class MarketController implements Initializable {
                 int finalI = i;
                 anchorPane.setOnMouseClicked( event -> showRelativeImages(biens.get( finalI )) );
                 getProduct(anchorPane,itemController);
+
                 if (column == 3) {
                     column = 0;
                     row++;
                 }
                 grid.setHgap( 25 );
                 grid.setVgap( 25 );
-
                 grid.add(anchorPane, column++, row);
-                grid.setMinWidth(Region.USE_COMPUTED_SIZE);
-                grid.setPrefWidth(Region.USE_COMPUTED_SIZE);
-                grid.setMaxWidth(Region.USE_PREF_SIZE);
 
-                //set grid height
-                grid.setMinHeight(Region.USE_COMPUTED_SIZE);
-                grid.setPrefHeight(Region.USE_COMPUTED_SIZE);
-                grid.setMaxHeight(Region.USE_PREF_SIZE);
             }
-            grid.setPrefHeight(670);
-            grid.setPrefWidth(800);
-            grid.setPadding( new Insets( -10,0,40,20 ));
-
+            grid.setPadding( new Insets( 0,0,40,0 ));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -233,6 +325,7 @@ public class MarketController implements Initializable {
 //            throw new RuntimeException( e );
 //        }
 //        ChatController chatController = fxmlLoader.getController();
+        isChatActivated=true;
         animateChanges(vBox,chatBox);
     }
 

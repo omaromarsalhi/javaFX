@@ -159,17 +159,17 @@ public class ItemController implements Initializable {
 
         HBox hbox=new HBox();
 
-        trade.setPrefWidth( 50 );
-        info.setPrefWidth( 50 );
-        add2Card.setPrefWidth( 50 );
+        trade.setPrefWidth( 40 );
+        info.setPrefWidth( 40 );
+        add2Card.setPrefWidth( 40 );
 
-        trade.setPrefHeight( 32 );
-        info.setPrefHeight( 32 );
-        add2Card.setPrefHeight( 32 );
+        trade.setPrefHeight( 30 );
+        info.setPrefHeight( 30 );
+        add2Card.setPrefHeight( 30 );
 
-        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/buy.png") ));
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/exchange.png")));
-        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/interface.png")));
+        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/buy.png")),28,28,true,true );
+        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/exchange.png")),28,28,true,true );
+        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/interface.png")),28,28,true,true );
 
         add2Card.setGraphic( new ImageView( img1 ));
         trade.setGraphic( new ImageView( img2 ));

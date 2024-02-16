@@ -17,8 +17,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
-import pidev.javafx.crud.CrudBien;
-import pidev.javafx.crud.CrudLocalWrapper;
+import pidev.javafx.crud.marketplace.CrudBien;
+import pidev.javafx.crud.marketplace.CrudLocalWrapper;
 import pidev.javafx.controller.marketPlace.*;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
@@ -41,6 +41,14 @@ public class MainDashbordController implements Initializable {
     @FXML
     private AnchorPane accountInfo;
     @FXML
+    private VBox helperBar;
+    @FXML
+    private VBox topVbox;
+    @FXML
+    private ScrollPane scroll;
+    @FXML
+    private AnchorPane showAllProdsInfo;
+    @FXML
     private Button searchBtn;
     @FXML
     private HBox searchHbox;
@@ -48,23 +56,17 @@ public class MainDashbordController implements Initializable {
     private TextField searchTextField;
     @FXML
     private MenuBar menuBar;
-    @FXML
-    private VBox helperBar;
-    @FXML
-    private ScrollPane scroll;
-    @FXML
-    private AnchorPane showAllProdsInfo;
 
 
     private VBox infoTemplate;
     private ItemInfoController infoTemplateController;
-    private Timer animTimer;
-    private EventHandler<MouseEvent> eventHandler;
     private EventHandler<MouseEvent> eventHandler4ScrollPane;
     private Product prod2Update;
     private TableView<Bien> tableViewProd;
     private TableViewController tableViewController;
     private Timeline fiveSecondsWonder;
+    private Timer animTimer;
+    private String searchBarState;
 
 
 
@@ -94,20 +96,20 @@ public class MainDashbordController implements Initializable {
 
 
         animTimer = new Timer();
+        searchBarState="closed";
         searchTextField.setVisible( false );
         searchBtn.setStyle( "-fx-border-radius: 20;" );
+        searchHbox.setOnMouseEntered(event -> animateSearchBar());
 
-        eventHandler = event -> {
-            animateSearchBar(String.valueOf( event.getEventType() ) );
-        };
         eventHandler4ScrollPane = MouseEvent::consume;
 
-        searchHbox.setOnMouseEntered(eventHandler);
 
         EventBus.getInstance().subscribe( "refreshTableOnDelete",this::refreshTableOnDelete );
         EventBus.getInstance().subscribe( "refreshTableOnAddOrUpdate",this::refreshTableOnAddOrUpdate );
         EventBus.getInstance().subscribe( "updateProd",this::doUpdate );
     }
+
+
 
 
 
@@ -118,7 +120,7 @@ public class MainDashbordController implements Initializable {
         var showForSelledProduct=new MenuItem("Show Selled Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         addProduct.setOnAction( event -> {
             tableViewProd.getSelectionModel().clearSelection();
-            scroll.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
+            scroll.addEventFilter( MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
             fiveSecondsWonder.stop();
             showAllProdsInfo.getChildren().clear();
             showAllProdsInfo.getChildren().add(tableViewProd);
@@ -146,50 +148,44 @@ public class MainDashbordController implements Initializable {
         menuBar.getMenus().get( 1 ).getItems().addAll(addService ,showService);
     }
 
-    public void animateSearchBar(String eventType){
-
-        if(eventType.equals("MOUSE_ENTERED")){
+    public void animateSearchBar(){
+        if(searchBarState.equals( "closed" )){
+            searchBarState="opened";
             animTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
                     if(searchTextField.getWidth()==16){
-                        searchHbox.setOnMouseEntered(null);
-                        searchHbox.setOnMouseExited(null);
                         searchBtn.setStyle( "-fx-border-radius: 0 20 20 0;" +
                                 "-fx-border-color: black  black black transparent ;");
                         searchTextField.setVisible( true );
                     }
                     if (searchTextField.getWidth()<(searchHbox.getWidth()-searchBtn.getWidth()-20)) {
                         searchTextField.setPrefWidth(searchTextField.getWidth()+10);
-                    } else {
-                        searchHbox.setOnMouseExited(eventHandler);
+                    } else
                         this.cancel();
-                    }
                 }
 
-            }, 500, 20);
+            }, 0, 15);
         }
-        else if(eventType.equals("MOUSE_EXITED")){
+        else if(searchBarState.equals( "opened" )&&searchTextField.getText().isEmpty()){
+            searchBarState="closed";
             animTimer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                        if (searchTextField.getWidth() <=16) {
-                            searchHbox.setOnMouseEntered( null );
-                            searchHbox.setOnMouseExited( null );
-                            searchBtn.setStyle( "-fx-border-color: black;");
-                            searchBtn.setStyle( "-fx-border-radius: 20;");
-                            searchTextField.setVisible( false );
-                        }
-                        if (searchTextField.getWidth() > 16) {
-                            searchTextField.setPrefWidth( searchTextField.getWidth() - 10 );
-                        } else {
-                            searchHbox.setOnMouseEntered( eventHandler );
-                            this.cancel();
-                        }
+                    if (searchTextField.getWidth() <=16) {
+                        searchBtn.setStyle( "-fx-border-radius: 20;" +
+                                "-fx-background-radius:20;");
+                        searchTextField.setVisible( false );
+                    }
+                    if (searchTextField.getWidth() > 16) {
+                        searchTextField.setPrefWidth( searchTextField.getWidth() - 10 );
+                    } else
+                        this.cancel();
                 }
-            }, 1000, 15);
+            }, 0, 15);
         }
     }
+
 
     public void doUpdate(CustomMouseEvent<Product> customMouseEvent){
         prod2Update=customMouseEvent.getEventData();
@@ -280,7 +276,7 @@ public class MainDashbordController implements Initializable {
 
     public void setFormForAddOrUpdate(String termOfUse){
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/secondForm.fxml"));
+        fxmlLoader.setLocation(getClass().getResource( "/fxml/userMarketDashbord/secondForm.fxml" ));
         VBox form = null;
         try {
             form = fxmlLoader.load();
