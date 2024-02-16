@@ -1,4 +1,4 @@
-package pidev.javafx.crud.reclamation;
+package pidev.javafx.model.reclamation;
 
 import java.util.Date;
 
