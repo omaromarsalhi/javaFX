@@ -15,16 +15,13 @@ public class BlogService implements IService<Post> {
         String req = "INSERT INTO `post`(`date_post`, `caption`, `image`, `nbReactions`, `nbComments`) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
-
             ps.setObject(1, post.getDate());
             ps.setString(2,post.getCaption());
             ps.setString(3,post.getImage());
             ps.setInt(4,post.getTotalReactions());
             ps.setInt(5,post.getNbComments());
-
             ps.executeUpdate();
             System.out.println("Post added !");
-
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -35,14 +32,12 @@ public class BlogService implements IService<Post> {
         String req = "UPDATE `post` SET `date_post`=?, `caption`=?, `image`=?, `nbReactions`=?, `nbComments`=? WHERE id=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
-
             ps.setObject(1, post.getDate());
             ps.setString(2, post.getCaption());
             ps.setString(3, post.getImage());
             ps.setInt(4, post.getTotalReactions());
             ps.setInt(5, post.getNbComments());
             ps.setInt(6, post.getId());
-
             ps.executeUpdate();
             System.out.println("Post updated !");
         } catch (SQLException e) {
@@ -53,11 +48,9 @@ public class BlogService implements IService<Post> {
     @Override
     public void supprimer(int id) {
         String req = "DELETE FROM `post` WHERE id=?";
-
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1, id);
-
             ps.executeUpdate();
             System.out.println("Post deleted !");
         } catch (SQLException e) {
@@ -68,11 +61,9 @@ public class BlogService implements IService<Post> {
     @Override
     public Post getOneById(int id) {
         String req = "SELECT * FROM `post` WHERE id=?";
-
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1, id);
-
             ResultSet res = ps.executeQuery();
             if (res.next()) {
                 Timestamp timestamp = res.getTimestamp(2);
@@ -80,7 +71,6 @@ public class BlogService implements IService<Post> {
                 String img = res.getString(4);
                 int nbReactions = res.getInt(5);
                 int nbComments = res.getInt(6);
-
                 return new Post(id, timestamp, caption, img, nbReactions, nbComments);
             }
         } catch (SQLException e) {
@@ -97,14 +87,12 @@ public class BlogService implements IService<Post> {
             Statement st = cnx.createStatement();
             ResultSet res = st.executeQuery(req);
             while (res.next()){
-
                 int id = res.getInt(1);
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
                 String img = res.getString(4);
                 int nbReactions = res.getInt(5);
                 int nbComments = res.getInt(6);
-
                 Post p = new Post(id,timestamp,caption,img, nbReactions, nbComments);
                 posts.add(p);
             }
@@ -126,6 +114,61 @@ public class BlogService implements IService<Post> {
             System.out.println(e.getMessage());
         }
         return lastId;
+    }
+
+    public void ajouterReaction(String type,int idPost) {
+        String req = "INSERT INTO `reaction_post`(`idPost`, `type`) VALUES (?,?)";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setObject(1, idPost);
+            ps.setString(2,type);
+            ps.executeUpdate();
+            System.out.println("rection added added !");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void enleverReaction(int id) {
+        String req = "DELETE FROM `reaction_post` WHERE idPost=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            System.out.println("reaction deleted !");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public String getReaction (int id) {
+        String req = "SELECT type FROM `reaction_post` WHERE idPost=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, id);
+            ResultSet res = ps.executeQuery();
+            if (res.next()) {
+                String type = res.getString(1);
+                return type;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    public void modifierReaction (int id, String type) {
+        String req = "UPDATE `reaction_post` SET `type`=? WHERE idPost=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(2, id);
+            ps.setString(1, type);
+            ps.executeUpdate();
+            System.out.println("Post updated !");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 

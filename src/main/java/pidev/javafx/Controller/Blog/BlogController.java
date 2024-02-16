@@ -23,6 +23,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
+import pidev.javafx.Models.Reactions;
 import pidev.javafx.Services.BlogService;
 import java.io.File;
 import java.io.IOException;
@@ -100,7 +101,26 @@ public class BlogController implements Initializable {
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
+            addOrUpdateReaction("Angry", post.getId());
         });
+        postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
+            postController.onHahaClicked();
+            addOrUpdateReaction("Haha", post.getId());
+        });
+        postController.getImgLike().setOnMouseClicked(mouseEvent -> {
+            postController.onLikePressed();
+            addOrUpdateReaction("Like", post.getId());
+        });
+        postController.getImgSad().setOnMouseClicked(mouseEvent -> {
+            postController.onSadClicked();
+            addOrUpdateReaction("Sad", post.getId());
+        });
+        postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
+            boolean testTimer = postController.onLikeContainerMouseReleased();
+            if(testTimer)
+                addOrDeleteLike(post.getId(), postController);
+        });
+        setReaction(postController, post.getId());
     }
 
     public void loadPostAbove(Post post) throws IOException{
@@ -269,6 +289,37 @@ public class BlogController implements Initializable {
         }
     }
 
+    public void addOrUpdateReaction (String type, int idPost) {
+        BlogService bs = new BlogService();
+        if(bs.getReaction(idPost) == null){
+            bs.ajouterReaction(type, idPost);
+        }else {
+            bs.modifierReaction(idPost, type);
+        }
+    }
+    public void addOrDeleteLike(int idPost, PostController postController) {
+        BlogService bs = new BlogService();
+        if(bs.getReaction(idPost) == null){
+            bs.ajouterReaction("Like", idPost);
+        }else {
+            bs.enleverReaction(idPost);
+            postController.setReaction(Reactions.NON);
+        }
+    }
 
-
+    public void setReaction (PostController postController, int idPost) {
+        BlogService bs = new BlogService();
+        String reaction = bs.getReaction(idPost);
+        if(reaction == null){
+            postController.setReaction(Reactions.NON);
+        } else if (reaction.equals("Haha")) {
+            postController.setReaction(Reactions.HAHA);
+        } else if (reaction.equals("Sad")) {
+            postController.setReaction(Reactions.SAD);
+        } else if (reaction.equals("Angry")) {
+            postController.setReaction(Reactions.ANGRY);
+        } else if (reaction.equals("Like")) {
+            postController.setReaction(Reactions.LIKE);
+        }
+    }
 }

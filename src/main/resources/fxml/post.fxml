@@ -178,7 +178,7 @@
         </StackPane>
         <HBox maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="739.0" styleClass="top-border" stylesheets="@../Style/style.css">
             <children>
-                <HBox fx:id="likeContainer" alignment="CENTER" onMousePressed="#onLikeContainerPressed" onMouseReleased="#onLikeContainerMouseReleased" prefWidth="0.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                <HBox fx:id="likeContainer" alignment="CENTER" onMousePressed="#onLikeContainerPressed" prefWidth="0.0" spacing="10.0" HBox.hgrow="ALWAYS">
                     <children>
                         <ImageView fx:id="imgReaction" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                             <image>

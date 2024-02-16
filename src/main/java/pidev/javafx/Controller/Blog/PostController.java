@@ -110,6 +110,9 @@ public class PostController extends VBox implements Initializable {
     public ImageView getImgSad() {
         return imgSad;
     }
+    public HBox getLikeContainer() {
+        return likeContainer;
+    }
 
     public int getIdPost() {return idPost;}
 
@@ -137,8 +140,8 @@ public class PostController extends VBox implements Initializable {
     }
 
     @FXML
-    public void onLikeContainerMouseReleased(MouseEvent me){
-        if(System.currentTimeMillis() - startTime > 300){
+    public boolean onLikeContainerMouseReleased(){
+        if(System.currentTimeMillis() - startTime > 250){
             if(!reactionsContainer.isVisible()) {
                 reactionsContainer.setVisible(true);
                 iconLikeContainer.setVisible(false);
@@ -146,6 +149,7 @@ public class PostController extends VBox implements Initializable {
                 reactionsContainer.setVisible(false);
                 iconLikeContainer.setVisible(true);
             }
+            return false;
         }else {
             iconLikeContainer.setVisible(true);
             if(reactionsContainer.isVisible()){
@@ -156,6 +160,7 @@ public class PostController extends VBox implements Initializable {
             }else{
                 setReaction(Reactions.NON);
             }
+            return true;
         }
     }
 
@@ -206,18 +211,14 @@ public class PostController extends VBox implements Initializable {
         imgReaction.setImage(image);
         reactionName.setText(reaction.getName());
         reactionName.setTextFill(Color.web(reaction.getColor()));
-
-        if(currentReaction == Reactions.NON){
+        /*if(currentReaction == Reactions.NON){
             post.setTotalReactions(post.getTotalReactions() + 1);
         }
-
         currentReaction = reaction;
-
         if(currentReaction == Reactions.NON){
             post.setTotalReactions(post.getTotalReactions() - 1);
-        }
-
-        nbReactions.setText(String.valueOf(post.getTotalReactions()));
+        }*/
+       // nbReactions.setText(String.valueOf(post.getTotalReactions()));
     }
 
     public void setData(Post post){
