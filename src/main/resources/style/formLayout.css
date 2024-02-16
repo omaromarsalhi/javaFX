@@ -1,4 +1,4 @@
-#formBox .text-field ,#formBox .text-area ,#formBox  .text-area .content,#formBox  .choice-box , #itemDesc {
+#formBox .text-field ,#formBox .text-area ,#formBox  .text-area .content,#formBox  .choice-box , #itemDesc,#mainHbox .text-area {
     /*-fx-background-color:  #deddd9;*/
     /*-fx-background-color:  #D9D9D9;*/
     -fx-background-color: transparent;
@@ -13,7 +13,14 @@
     -fx-background-radius: 10;
 }
 
-#itemDeatails .text-area {
+
+#mainHbox .text-area,#mainHbox .text-area .content {
+    -fx-background-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}#itemDeatails .text-area,#mainHbox .text-area{
     -fx-background-color:  #f4f4f4;
     -fx-border-width: 0.01em;
     -fx-border-color: black;

@@ -47,8 +47,13 @@
     -fx-border-radius: 20;
 }
 
-#itemInfo .button:hover , #btnHolder .button:hover,#filterAnchorPane .button:hover {
+#itemInfo .button:hover ,#checkout .button:hover , #btnHolder .button:hover,#filterAnchorPane .button:hover {
     -fx-border-color: #fdc847;
+}
+
+#checkout .button:hover{
+    -fx-border-color: #fdc847;
+    -fx-border-radius: 10;
 }
 
 #filterAnchorPane .button {

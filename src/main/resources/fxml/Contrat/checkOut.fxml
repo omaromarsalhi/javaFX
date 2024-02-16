@@ -13,148 +13,173 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="mainHbox" alignment="CENTER" prefHeight="670.0" prefWidth="1020.0" spacing="50.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.contrat.CheckOutController">
+<HBox fx:id="mainHbox" alignment="CENTER" prefHeight="670.0" prefWidth="1020.0" spacing="50.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.contrat.CheckOutController">
    <children>
-      <VBox alignment="CENTER" minWidth="275.0" prefHeight="670.0" prefWidth="275.0">
+      <VBox alignment="CENTER" minWidth="275.0" prefHeight="670.0" prefWidth="399.0">
          <children>
-            <ImageView fx:id="Pimg" fitHeight="339.0" fitWidth="275.0" pickOnBounds="true">
+            <ImageView fx:id="Pimg" fitHeight="339.0" fitWidth="304.0" pickOnBounds="true">
                <image>
                   <Image url="@../../img/mySelf.jpg" />
                </image>
             </ImageView>
          </children>
       </VBox>
-      <VBox prefHeight="670.0" prefWidth="414.0">
+      <VBox prefHeight="670.0" prefWidth="366.0" spacing="6.0" stylesheets="@../../style/FilterStyle.css">
          <children>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="218.0">
+            <HBox fx:id="mainHbox" alignment="CENTER" prefHeight="40.0" prefWidth="218.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="163.0" text="Product Name">
+                  <Label prefHeight="70.0" prefWidth="338.0" text="Product Name :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Pname" alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="Prod 1">
+                  <Label fx:id="Pname" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="340.0" text="Prod 1" textFill="#848e4b">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="218.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="218.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="State :">
+                  <Label prefHeight="35.0" prefWidth="267.0" text="State :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Pstate" alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="in Stock">
+                  <Label fx:id="Pstate" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="330.0" text="in Stock" textFill="#848e4b">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Price :">
+                  <Label prefHeight="49.0" prefWidth="343.0" text="Price :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Pprice" alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="\$0.99">
+                  <Label fx:id="Pprice" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="330.0" text="\$0.99" textFill="#848e4b">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="234.0" text="Avialable Quantity :">
+                  <Label prefHeight="49.0" prefWidth="347.0" text="Avialable Quantity :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Pquantity" alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="\$0.99">
+                  <Label fx:id="Pquantity" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="110.0" text="\$0.99" textFill="#848e4b">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="208.0" text="Chosen Quantity :">
+                  <Label prefHeight="49.0" prefWidth="289.0" text="Chosen Quantity :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="requestedQuantity" prefHeight="46.0" prefWidth="150.0" />
+                  <TextField fx:id="requestedQuantity" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="146.0" promptText="Give requested Quantity" style="-fx-background-color: transparent;" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Category :">
+                  <Label prefHeight="49.0" prefWidth="293.0" text="Category :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="Pcategroy" alignment="CENTER" prefHeight="26.0" prefWidth="134.0" text="sport">
+                  <Label fx:id="Pcategroy" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="364.0" text="sport" textFill="#848e4b">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Date">
+                  <Label prefHeight="49.0" prefWidth="269.0" text="Date :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="PdateTime" />
+                  <DatePicker fx:id="PdateTime" prefHeight="35.0" prefWidth="230.0" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="43.0" prefWidth="180.0" text="Payement method">
+                  <Label prefHeight="49.0" prefWidth="279.0" text="Payement method :">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="PpayementChoice" prefHeight="37.0" prefWidth="150.0" />
+                  <ChoiceBox fx:id="PpayementChoice" prefHeight="36.0" prefWidth="194.0" style="-fx-background-color: tranparent;" />
                </children>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="50.0" prefWidth="159.0" text="Reciving Address">
+                  <Label prefHeight="35.0" prefWidth="207.0" text="Reciving Address">
                      <font>
-                        <Font name="Cambria Bold" size="18.0" />
+                        <Font name="System Italic" size="20.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="Plocarion" prefHeight="46.0" prefWidth="150.0" />
+                  <TextField fx:id="Plocarion" prefHeight="35.0" prefWidth="209.0" style="-fx-background-color: transparent;" text="Your Location ..." />
                </children>
             </HBox>
-            <Label alignment="CENTER" prefHeight="66.0" prefWidth="230.0" text="DESCREPTION" textAlignment="CENTER">
+            <Label alignment="CENTER" prefHeight="46.0" prefWidth="414.0" text="DESCREPTION" textAlignment="CENTER">
                <font>
-                  <Font name="Cambria Bold" size="18.0" />
+                  <Font name="System Italic" size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="Pdesc" prefHeight="86.0" prefWidth="406.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../style/formLayout.css" wrapText="true" />
-            <Label alignment="CENTER" prefHeight="66.0" prefWidth="230.0" text="Terms and conditions" textAlignment="CENTER">
+            <TextArea fx:id="Pdesc" editable="false" prefHeight="93.0" prefWidth="414.0" wrapText="true">
                <font>
-                  <Font name="Cambria Bold" size="18.0" />
+                  <Font name="System Italic" size="16.0" />
+               </font></TextArea>
+            <Label alignment="CENTER" prefHeight="36.0" prefWidth="414.0" text="Terms and conditions" textAlignment="CENTER">
+               <font>
+                  <Font name="System Italic" size="24.0" />
                </font>
             </Label>
-            <TextArea fx:id="ProlesAndTerms" prefHeight="92.0" prefWidth="414.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../style/formLayout.css" wrapText="true" />
+            <TextArea fx:id="ProlesAndTerms" editable="false" prefHeight="143.0" prefWidth="366.0" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font></TextArea>
          </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets top="8.0" />
+         </padding>
       </VBox>
-      <VBox fx:id="itemInfo" alignment="CENTER" prefHeight="670.0" prefWidth="118.0" spacing="30.0" stylesheets="@../../style/Buttons.css">
+      <VBox fx:id="checkout" alignment="CENTER" prefHeight="670.0" prefWidth="103.0" spacing="30.0" stylesheets="@../../style/Buttons.css">
          <children>
-            <Button fx:id="generatePDFbtn" mnemonicParsing="false" prefHeight="47.0" prefWidth="99.0" text="GNC" />
-            <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="99.0" />
-            <Button fx:id="exit" mnemonicParsing="false" prefHeight="40.0" prefWidth="99.0" text="exit" />
+            <Button fx:id="generatePDFbtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../namedIcons/download-pdf.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="exit" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../namedIcons/close.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
          </children>
          <HBox.margin>
             <Insets left="20.0" />

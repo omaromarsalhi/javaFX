@@ -86,16 +86,10 @@ public class MarketController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
         try {
-            VBox chatBox = fxmlLoader.load();
+             chatBox = fxmlLoader.load();
             animateChanges(hepfullBar,chatBox);
         } catch (IOException e) {
             throw new RuntimeException( e );
-        }
-        try {
-            hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
-            chatBox = FXMLLoader.load(getClass().getResource( "/fxml/chat/chat.fxml" ));
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
 
@@ -148,10 +142,10 @@ public class MarketController implements Initializable {
 
         filterProd.setOnAction( event -> {
             EventBus.getInstance().publish( "filter",event );
-//            if(isChatActivated) {
-//                animateChanges( chatBox, hepfullBar );
-//                isChatActivated=false;
-//            }
+            if(isChatActivated) {
+                animateChanges( chatBox, hepfullBar );
+                isChatActivated=false;
+            }
         } );
 
 

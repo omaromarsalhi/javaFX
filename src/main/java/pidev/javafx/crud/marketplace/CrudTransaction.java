@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.MarketPlace.Transaction;
 import pidev.javafx.model.MarketPlace.TransactionMode;
 

@@ -1,4 +1,4 @@
-package pidev.javafx.crud.marketplace;
+package pidev.javafx.crud;
 
 import javafx.collections.ObservableList;
 

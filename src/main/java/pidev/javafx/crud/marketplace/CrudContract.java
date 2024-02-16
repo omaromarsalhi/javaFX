@@ -2,6 +2,7 @@ package pidev.javafx.crud.marketplace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.Contrat.Contract;
 import pidev.javafx.model.Contrat.PaymentMethod;
 
