@@ -8,6 +8,9 @@ module pidev.javafx{
     requires itextpdf;
 
 
+    opens pidev.javafx.controller.reclamation;
+    exports pidev.javafx.controller.reclamation to javafx.fxml;
+
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
     exports pidev.javafx.model.MarketPlace;
     opens pidev.javafx.model.MarketPlace to javafx.fxml;

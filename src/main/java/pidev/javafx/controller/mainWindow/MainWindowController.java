@@ -54,14 +54,15 @@ public class MainWindowController implements Initializable {
 //    btns that changes the scenes
     @FXML
     public void onShowEmpClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/reclmation/intrface.fxml" ) ) );
         mainBorderPain.setCenter(showEmpAnchorPane);
     }
 
     @FXML
     public void onMPDClicked(ActionEvent event) throws IOException {
-        HBox hBox = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        mainBorderPain.setCenter(hBox);
+        AnchorPane showEmpAnchorPane;
+        showEmpAnchorPane = FXMLLoader.load(getClass().getResource( "/fxml/reclamation/menuDemande.fxml" ));
+        mainBorderPain.setCenter(showEmpAnchorPane);
     }
 
     @FXML

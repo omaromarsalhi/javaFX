@@ -3,15 +3,15 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
+
 import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
+
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -39,7 +39,7 @@ public class DemandeController {
         box3.setEffect(new BoxBlur(10, 10, 3));
         // timer1();
         // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Demande/intrface.fxml"));
-        AnchorPane showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/Demande/showuser_modife.fxml"));
+        AnchorPane showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/showuser_modife.fxml"));
         mainBorderPain.getChildren().setAll(showEmpAnchorPane);
     }
 
@@ -53,7 +53,7 @@ public class DemandeController {
         timer2();
         AnchorPane showEmpAnchorPane = null;
         try {
-            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/Demande/intrface.fxml"));
+            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/intrface.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
