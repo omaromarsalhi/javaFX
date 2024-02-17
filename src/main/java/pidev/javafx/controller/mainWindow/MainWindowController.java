@@ -95,9 +95,9 @@ public class MainWindowController implements Initializable {
     }
 @FXML
 public void onTransportClicked(ActionEvent event) throws IOException {
-    ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Display_Transport.fxml")));
-    scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
-    scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
+    AnchorPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/TransportClient.fxml")));
+//    scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
+//    scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
     mainBorderPain.setCenter(scrollPane);
 }
     @FXML

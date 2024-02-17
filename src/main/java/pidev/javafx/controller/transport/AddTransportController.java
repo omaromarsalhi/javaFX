@@ -161,12 +161,12 @@ public  void intialiase_timer(){
     fileChooser.setTitle("Choose a File");
     var selectedFile = fileChooser.showOpenDialog(primaryStage);
     if (selectedFile != null) {
-imagePath=selectedFile.getAbsolutePath() ;
-         Image image = new Image(imagePath);
+        imagePath=selectedFile.getAbsolutePath() ;
+
+        Image image = new Image(imagePath);
         Image.setFitHeight(114);
         Image.setFitWidth(114);
         Image.setImage(image);
-
     }
 }
 

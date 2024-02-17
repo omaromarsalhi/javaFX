@@ -213,7 +213,7 @@
                                     <Font name="Souliyo Unicode" size="13.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="154.0" fitWidth="126.0" layoutX="9.0" layoutY="22.0" pickOnBounds="true">
+                              <ImageView fx:id="imageAbonne" fitHeight="154.0" fitWidth="126.0" layoutX="9.0" layoutY="22.0" pickOnBounds="true">
                                  <image>
                                     <Image url="@../../img/omar.jpg" />
                                  </image>

@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -61,6 +63,8 @@ public class AbonnementController implements Initializable {
             private TextField PrenomText;
     @FXML
             private ComboBox <String> TypeAbonnementBox;
+    @FXML
+    private ImageView imageAbonne;
 
        int i;
        Set <Abonnement> abonnementSet;
@@ -155,6 +159,12 @@ String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
         NomLabel.setText(abonnementList.get(i).getNom());
         PrenomLabel.setText(abonnementList.get(i).getPrenom());
         IdLabel.setText("000"+id);
+        imagePath=abonnementList.get(i).getImage() ;
+
+        Image image = new Image(imagePath);
+        imageAbonne.setFitHeight(154);
+        imageAbonne.setFitWidth(126);
+        imageAbonne.setImage(image);
 
     }
     @FXML

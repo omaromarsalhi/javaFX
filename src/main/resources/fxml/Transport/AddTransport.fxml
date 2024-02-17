@@ -160,7 +160,7 @@
                   </Button>
                   <ImageView fx:id="Image" fitHeight="114.0" fitWidth="114.0" layoutX="71.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../img/Bus.png" />
+                        <Image url="@../../img/rrrtt.png" />
                      </image>
                   </ImageView>
                </children>

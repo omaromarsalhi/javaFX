@@ -112,6 +112,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
                 abs.setDateDebut(resultSet.getTimestamp("Date_Debut"));
                 abs.setDateFin(resultSet.getDate("Date_Fin"));
                 abs.setIdAboonnement(resultSet.getInt("idAbonnement"));
+                abs.setImage(resultSet.getString("Image"));
                 //System.out.println(abs);
 
                 abonnementList.add(abs);
