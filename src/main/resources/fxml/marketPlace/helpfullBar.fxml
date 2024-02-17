@@ -22,7 +22,7 @@
    <children>
       <AnchorPane fx:id="animationAnchor" prefHeight="220.0" prefWidth="200.0" style="-fx-background-radius: 10;">
          <children>
-            <ImageView fx:id="animationImageView" fitHeight="158.0" fitWidth="188.0" layoutX="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.4000000000000057" AnchorPane.topAnchor="0.0">
+            <ImageView fx:id="animationImageView" fitHeight="120.0" fitWidth="112.0" layoutX="63.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="17.400000000000006" AnchorPane.topAnchor="17.0">
                <image>
                   <Image url="@../../citizenHub/img1.png" />
                </image></ImageView>
@@ -198,7 +198,7 @@
                   </HBox>
                   <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="234.0" spacing="6.0" stylesheets="@../../style/Buttons.css">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" />
+                        <Button mnemonicParsing="false" onMouseClicked="#onCancelFilterClicked" text="Cancel" />
                         <Button mnemonicParsing="false" onMouseClicked="#onFilterClicked" text="Filter" />
                      </children>
                      <VBox.margin>

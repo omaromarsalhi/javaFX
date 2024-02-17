@@ -107,6 +107,7 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "refreshTableOnDelete",this::refreshTableOnDelete );
         EventBus.getInstance().subscribe( "refreshTableOnAddOrUpdate",this::refreshTableOnAddOrUpdate );
         EventBus.getInstance().subscribe( "updateProd",this::doUpdate );
+        EventBus.getInstance().subscribe( "onExitForm",this::onExitForm );
     }
 
 
@@ -273,6 +274,12 @@ public class MainDashbordController implements Initializable {
         fade.play();
     }
 
+    public void onExitForm(MouseEvent event){
+            informationBar.getChildren().remove( informationBar.getChildren().get( 0 ) );
+            loadInfoTemplate();
+            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
+            informationBar.getChildren().add(infoTemplate);
+    }
 
     public void setFormForAddOrUpdate(String termOfUse){
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -284,17 +291,6 @@ public class MainDashbordController implements Initializable {
             throw new RuntimeException( e );
         }
         FormController formController = fxmlLoader.getController();
-        VBox finalForm = form;
-        MyListener listeener=new MyListener() {
-            @Override
-            public void exit() {
-                informationBar.getChildren().remove( finalForm );
-                loadInfoTemplate();
-                loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
-                informationBar.getChildren().add(infoTemplate);
-            }
-        };
-        formController.setExitFunction(listeener);
         if(termOfUse.equals( "update_prod" ))
             formController.setInformaton( prod2Update );
         informationBar.getChildren().remove(infoTemplate);

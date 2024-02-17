@@ -39,8 +39,16 @@
 
 }
 
-#itemInfo .button , #btnHolder .button {
+ #btnHolder .button {
     -fx-background-color:  white;
+    /*-fx-border-color: black;*/
+    -fx-border-width: 1px;
+    -fx-background-radius:20;
+    -fx-border-radius: 20;
+}
+
+#itemInfo .button  {
+    -fx-background-color:  transparent;
     -fx-border-color: black;
     -fx-border-width: 1px;
     -fx-background-radius:20;
@@ -77,6 +85,10 @@
 }
 
 #purshaseDetailsBox .button:hover {
+    -fx-border-color: #fdc847;
+}
+
+.button:hover {
     -fx-border-color: #fdc847;
 }
 

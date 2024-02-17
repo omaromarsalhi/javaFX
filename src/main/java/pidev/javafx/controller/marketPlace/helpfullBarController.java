@@ -117,6 +117,10 @@ public class helpfullBarController implements Initializable {
         EventBus.getInstance().publish( "filterProducts",customMouseEvent);
         System.out.println(list.size());
     }
+    @FXML
+    public void onCancelFilterClicked(MouseEvent event){
+        filterAnchorPane.setVisible( false );
+    }
 
 
     public void animateImages(){

@@ -37,12 +37,6 @@ public class MarketController implements Initializable {
     @FXML
     private HBox mainHbox;
     @FXML
-    private VBox hepfullBar;
-    @FXML
-    private Button addBien;
-    @FXML
-    private Button exitBtn;
-    @FXML
     private ImageView relativeImageVieur;
     @FXML
     private AnchorPane ImageAnchorPane;
@@ -63,7 +57,8 @@ public class MarketController implements Initializable {
     @FXML
     private Menu filter;
 
-    private VBox vBox;
+    private VBox itemInfo;
+    private VBox hepfullBar;
     private VBox chatBox;
     private Timer animTimer;
     private Image image;
@@ -72,7 +67,7 @@ public class MarketController implements Initializable {
     private Timeline fiveSecondsWonder;
     private String searchBarState;
     private int idProd4nextSelection;
-    private boolean isChatActivated;
+    private String whoIsActiveNow;
 
 
 
@@ -81,16 +76,18 @@ public class MarketController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fiveSecondsWonder=new Timeline();
-        isChatActivated=false;
-        vBox=null;
+        itemInfo=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
         try {
-             chatBox = fxmlLoader.load();
-            animateChanges(hepfullBar,chatBox);
+            chatBox = fxmlLoader.load();
+            hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
+            itemInfo = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ));
+            mainHbox.getChildren().add(hepfullBar);
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
+        whoIsActiveNow="hepfullBar";
 
 
         showGridPane(CrudBien.getInstance().selectItems() );
@@ -112,6 +109,8 @@ public class MarketController implements Initializable {
 
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
+        EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
+        EventBus.getInstance().subscribe( "showHelfullBar",this::showHelfullBar);
     }
 
 
@@ -127,7 +126,6 @@ public class MarketController implements Initializable {
         todayProducts.setOnAction( event -> {
             showGridPane(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" ));
         } );
-
         menuBar.getMenus().get( 0 ).getItems().addAll(allProducts,todayProducts);
 
 
@@ -140,12 +138,15 @@ public class MarketController implements Initializable {
         var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         menuBar.getMenus().get( 2 ).getItems().addAll(filterProd ,filterService);
 
+
         filterProd.setOnAction( event -> {
-            EventBus.getInstance().publish( "filter",event );
-            if(isChatActivated) {
+            if(whoIsActiveNow.equals( "chatBox" ))
                 animateChanges( chatBox, hepfullBar );
-                isChatActivated=false;
-            }
+            else if (whoIsActiveNow.equals( "itemInfo" ))
+                animateChanges( itemInfo, hepfullBar );
+
+            EventBus.getInstance().publish( "filter",event );
+            whoIsActiveNow="hepfullBar";
         } );
 
 
@@ -220,39 +221,27 @@ public class MarketController implements Initializable {
         showGridPane(customMouseEvent.getEventData());
     }
 
+    public void loadAndSetItemInfo(CustomMouseEvent<Product> customMouseEvent){
+        EventBus.getInstance().publish( "setItemInfoData", customMouseEvent);
+        if(whoIsActiveNow.equals( "hepfullBar" ))
+            animateChanges(hepfullBar, itemInfo );
+        else if (whoIsActiveNow.equals( "chatBox" ))
+            animateChanges( chatBox, itemInfo );
+        whoIsActiveNow = "itemInfo";
+    }
+
+    public void showHelfullBar(MouseEvent event){
+        if(whoIsActiveNow.equals( "itemInfo" ))
+            animateChanges(itemInfo, hepfullBar );
+        else if (whoIsActiveNow.equals( "chatBox" ))
+            animateChanges( chatBox, hepfullBar );
+        whoIsActiveNow = "hepfullBar";
+    }
+
+
 
     public void showGridPane(ObservableList<Bien> biens){
         grid.getChildren().clear();
-        if (biens.size() > 0) {
-            try {
-                hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
-                mainHbox.getChildren().add(hepfullBar);
-            } catch (IOException e) {
-                throw new RuntimeException( e );
-            }
-            myListener = new MyListener<Product>() {
-                @Override
-                public void onClickListener(Product arg){
-                    mainHbox.getChildren().remove(vBox);
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader();
-                        fxmlLoader.setLocation( getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ) );
-                        vBox = fxmlLoader.load();
-                        ItemInfoController itemInfoController = fxmlLoader.getController();
-                        myListener = new MyListener<Product>() {
-                            @Override
-                            public void exit() {
-                                animateChanges(vBox,hepfullBar);
-                            }
-                        };
-                        itemInfoController.setData( arg, myListener );
-                        animateChanges(hepfullBar,vBox);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-        }
         int column = 0;
         int row = 1;
         try {
@@ -310,19 +299,11 @@ public class MarketController implements Initializable {
     }
 
     public void loadChat(MouseEvent event){
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
-//        try {
-//            VBox chatBox = fxmlLoader.load();
-//            animateChanges(hepfullBar,chatBox);
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-//        ChatController chatController = fxmlLoader.getController();
-        isChatActivated=true;
-        animateChanges(vBox,chatBox);
+        if(whoIsActiveNow.equals( "hepfullBar" ))
+            animateChanges(hepfullBar, chatBox );
+        else if (whoIsActiveNow.equals( "itemInfo" ))
+            animateChanges( itemInfo, chatBox );
+        whoIsActiveNow="chatBox";
     }
-
-
 
 }
