@@ -134,7 +134,6 @@ public class ChatController implements Initializable {
 
 
         ImageView image=new ImageView( new Image(path,80,100,true,true) );
-
 //        msgLabel.setStyle( "-fx-background-color: blue" );
         image.setStyle( "-fx-background-radius: 10;" +
                 "-fx-border-radius: 10;");

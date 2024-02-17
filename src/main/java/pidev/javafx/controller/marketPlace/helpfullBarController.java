@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
 public class helpfullBarController implements Initializable {
 
     @FXML
-    private AnchorPane animationAnchor;
+    private AnchorPane designAnchor;
     @FXML
     private ImageView animationImageView;
     @FXML
@@ -58,6 +58,12 @@ public class helpfullBarController implements Initializable {
     private Slider minPriceSlider;
     @FXML
     private Slider maxPriceSlider;
+    @FXML
+    private Button filterOrAddBtn;
+    @FXML
+    private Label filterTitle;
+    @FXML
+    private VBox helpfullBarContainer;
 
 
     private Timeline fiveSecondsWonder;
@@ -72,9 +78,17 @@ public class helpfullBarController implements Initializable {
 //        animateImages();
         filterAnchorPane.setVisible( false );
         EventBus.getInstance().subscribe( "filter",this::showFilter);
+        EventBus.getInstance().subscribe( "favorite",this::showFavoriteFilter);
 
     }
 
+    public void showFavoriteFilter(ActionEvent event) {
+        helpfullBarContainer.getChildren().remove(designAnchor );
+        filterOrAddBtn.setText("Add");
+        filterTitle.setText( "Product Criteria" );
+//        filterAnchorPane.setStyle( "-fx-background-color: white" );
+        showFilter(event);
+    }
 
     public void showFilter(ActionEvent event){
         filterAnchorPane.setVisible( true );
@@ -96,26 +110,38 @@ public class helpfullBarController implements Initializable {
         for(Categorie cat:Categorie.values())
             categoryChoice.getItems().add(cat.toString());
     }
+
+
     @FXML
     public void onFilterClicked(MouseEvent event){
-        String fromDateResult=(fromDate.getValue()==null)?"":fromDate.getValue().toString();
-        String toDateResult=(toDate.getValue()==null)?"":toDate.getValue().toString();
-        int minPriceSliderResult=(int)minPriceSlider.getValue();
-        int maxPriceSliderResult=(int)maxPriceSlider.getValue();
-        int quantitySliderResult=(int)quantitySlider.getValue();
-        String categoryChoiceResult=categoryChoice.getValue();
+        if(filterOrAddBtn.getText().equals("Add" )){
 
-        if(minPriceSliderResult==0)
-            minPriceSliderResult=-1;
-        if(maxPriceSliderResult==0)
-            maxPriceSliderResult=-1;
-        if(quantitySliderResult==0)
-            quantitySliderResult=-1;
+        }
+        else {
+            String fromDateResult = (fromDate.getValue() == null) ? "" : fromDate.getValue().toString();
+            String toDateResult = (toDate.getValue() == null) ? "" : toDate.getValue().toString();
+            int minPriceSliderResult = (int) minPriceSlider.getValue();
+            int maxPriceSliderResult = (int) maxPriceSlider.getValue();
+            int quantitySliderResult = (int) quantitySlider.getValue();
+            String categoryChoiceResult = categoryChoice.getValue();
 
-        var list= CrudBien.getInstance().filterItems(fromDateResult,toDateResult, minPriceSliderResult,maxPriceSliderResult,quantitySliderResult,categoryChoiceResult );
-        CustomMouseEvent<ObservableList<Bien>>  customMouseEvent=new CustomMouseEvent<>(list);
-        EventBus.getInstance().publish( "filterProducts",customMouseEvent);
-        System.out.println(list.size());
+            if (minPriceSliderResult == 0)
+                minPriceSliderResult = -1;
+            if (maxPriceSliderResult == 0)
+                maxPriceSliderResult = -1;
+            if (quantitySliderResult == 0)
+                quantitySliderResult = -1;
+
+            var list = CrudBien.getInstance().filterItems( fromDateResult, toDateResult, minPriceSliderResult, maxPriceSliderResult, quantitySliderResult, categoryChoiceResult );
+            CustomMouseEvent<ObservableList<Bien>> customMouseEvent = new CustomMouseEvent<>( list );
+            EventBus.getInstance().publish( "filterProducts", customMouseEvent );
+        }
+    }
+
+
+    @FXML
+    public void onCancelFilterClicked(MouseEvent event){
+        filterAnchorPane.setVisible( false );
     }
 
 

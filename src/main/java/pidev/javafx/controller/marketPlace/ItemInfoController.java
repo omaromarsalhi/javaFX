@@ -2,6 +2,7 @@ package pidev.javafx.controller.marketPlace;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -20,8 +21,10 @@ import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ItemInfoController {
+public class ItemInfoController implements Initializable {
 
     @FXML
     private Label categoryLable;
@@ -31,6 +34,8 @@ public class ItemInfoController {
 
     @FXML
     private VBox itemDeatails;
+    @FXML
+    private HBox btnBox;
 
     @FXML
     private TextArea itemDesc;
@@ -60,24 +65,30 @@ public class ItemInfoController {
 
 
 
-    private MyListener myListener;
     private Product product;
     private HBox infoTemplateBtn;
 
-    public void setData(Product product,MyListener myListener) {
-        this.product=product;
-        this.myListener=myListener;
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        EventBus.getInstance().subscribe( "setItemInfoData",this::setData );
+    }
+
+
+    public void setData(CustomMouseEvent<Product> customMouseEvent) {
+        this.product=customMouseEvent.getEventData();
         userName.setText("Omar Salhi");
-        prodName.setText( product.getName() );
+        prodName.setText( product.getName().toUpperCase() );
         itemImage.setImage(new Image("file:src/main/resources"+product.getImgSource()));
-        itemDesc.setText( "qsfdgoauiehrtgpbea ufhgae ouifehg dfvb ae rhtgqfvhbj aert qfvhuaerçtg" );
+        itemDesc.setText( product.getDescreption() );
         priceLable.setText( Float.toString(product.getPrice()) );
         quantityLable.setText(Float.toString(product.getQuantity())   );
         stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
     }
 
     public void setDataForLocalUser(Product product, double width) {
-        itemDeatails.getChildren().remove(exit);
+        itemDeatails.getChildren().remove(btnBox);
         itemDeatails.getChildren().remove(userInfo);
         itemDeatails.setPrefHeight( itemDeatails.getPrefHeight()-100 );
         this.product=product;
@@ -137,12 +148,14 @@ public class ItemInfoController {
     }
 
     @FXML
-    public void onExitBtnClicked(ActionEvent event){
-       myListener.exit();
+    public void onExitBtnClicked(MouseEvent event){
+        EventBus.getInstance().publish( "showHelfullBar",event );
     }
 
     @FXML
     public void onOpenChatBtnClicked(MouseEvent event){
         EventBus.getInstance().publish( "loadChat",event);
     }
+
+
 }

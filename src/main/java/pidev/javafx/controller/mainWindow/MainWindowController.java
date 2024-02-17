@@ -81,7 +81,7 @@ public class MainWindowController implements Initializable {
         mainBorderPain.getChildren().remove(mainhBox);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/fxml/Contrat/checkOut.fxml"));
+            fxmlLoader.setLocation(getClass().getResource( "/fxml/Contract/checkOut.fxml" ));
             mainhBox = fxmlLoader.load();
             CheckOutController checkOutController = fxmlLoader.getController();
             checkOutController.setData(event.getEventData());

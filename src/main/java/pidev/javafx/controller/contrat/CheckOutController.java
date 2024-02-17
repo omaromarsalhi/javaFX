@@ -77,6 +77,7 @@ public class CheckOutController implements Initializable {
             CrudTransaction.getInstance().addItem( prepareTransaction() );
         });
         PpayementChoice.getItems().addAll( PaymentMethod.values());
+        PpayementChoice.setValue( PaymentMethod.ESPECE);
     }
 
     public void setData(Bien bien) {

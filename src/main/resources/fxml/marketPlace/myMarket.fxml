@@ -20,9 +20,9 @@
    <children>
       <VBox>
          <children>
-            <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="200.0" stylesheets="@../../style/toolBarStyle.css">
+            <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../style/toolBarStyle.css">
                <children>
-                  <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="238.0">
+                  <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="237.0">
                      <menus>
                         <Menu mnemonicParsing="false" text="Products" />
                         <Menu mnemonicParsing="false" text="Services" />

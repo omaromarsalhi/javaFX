@@ -31,6 +31,24 @@
     </dependency>
 
     <dependency>
+
+<!--    <dependency>-->
+<!--      <groupId>com.itextpdf</groupId>-->
+<!--      <artifactId>itext7-core</artifactId>-->
+<!--      <version>7.2.0</version>-->
+<!--      <type>pom</type>-->
+<!--    </dependency>-->
+
+
+<!--    <dependency>-->
+<!--      <groupId>com.twilio.sdk</groupId>-->
+<!--      <artifactId>twilio</artifactId>-->
+<!--      <version>10.0.0</version>-->
+<!--      <scope>compile</scope>-->
+<!--    </dependency>-->
+
+<!--    <dependency>-->
+
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
       <version>${junit.version}</version>

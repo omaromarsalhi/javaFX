@@ -159,17 +159,18 @@ public class ItemController implements Initializable {
 
         HBox hbox=new HBox();
 
-        trade.setPrefWidth( 40 );
-        info.setPrefWidth( 40 );
-        add2Card.setPrefWidth( 40 );
+        trade.setPrefWidth( 42 );
+        info.setPrefWidth( 42 );
+        add2Card.setPrefWidth( 42 );
 
-        trade.setPrefHeight( 30 );
-        info.setPrefHeight( 30 );
-        add2Card.setPrefHeight( 30 );
+        trade.setMinHeight( 32 );
+        info.setMinHeight( 32 );
+        add2Card.setMinHeight( 32 );
 
-        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/buy.png")),28,28,true,true );
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/exchange.png")),28,28,true,true );
-        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/interface.png")),28,28,true,true );
+
+        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/newBuy.png")),24,24,true,true );
+        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/lending.png")),24,24,true,true );
+        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/information.png")),24,24,true,true );
 
         add2Card.setGraphic( new ImageView( img1 ));
         trade.setGraphic( new ImageView( img2 ));
@@ -180,7 +181,10 @@ public class ItemController implements Initializable {
             CustomMouseEvent<Product> customEvent = new CustomMouseEvent<>(bien);
             EventBus.getInstance().publish( "laodCheckOut",customEvent);
         });
-        info.setOnMouseClicked( event -> myListener.onClickListener( bien ) );
+        info.setOnMouseClicked( event -> {
+            CustomMouseEvent<Product> customMouseEvent=new CustomMouseEvent<>( bien );
+            EventBus.getInstance().publish( "showAndSetItemInfo",customMouseEvent );
+        } );
 
         hbox.getChildren().addAll( add2Card,trade,info );
         hbox.setSpacing( 10 );

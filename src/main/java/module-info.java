@@ -6,6 +6,7 @@ module pidev.javafx{
     requires transitive javafx.graphics;
     requires transitive java.desktop;
     requires itextpdf;
+    requires twilio;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
