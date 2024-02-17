@@ -96,6 +96,9 @@ public class PostController extends VBox implements Initializable {
     @FXML
     private MenuItem ModifierPost;
 
+    @FXML
+    private HBox CommentContainer;
+
     private Post post;
 
     private int idPost;
@@ -112,6 +115,9 @@ public class PostController extends VBox implements Initializable {
     }
     public HBox getLikeContainer() {
         return likeContainer;
+    }
+    public HBox getCommentContainer() {
+        return CommentContainer;
     }
 
     public int getIdPost() {return idPost;}

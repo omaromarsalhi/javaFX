@@ -195,7 +195,7 @@
                   <Insets left="105.0" />
                </HBox.margin>
                 </HBox>
-                <HBox alignment="CENTER" prefHeight="30.0" prefWidth="0.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                <HBox fx:id="CommentContainer" alignment="CENTER" prefHeight="30.0" prefWidth="0.0" spacing="10.0" HBox.hgrow="ALWAYS">
                     <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>

@@ -2,16 +2,11 @@ package pidev.javafx.Controller.Blog;
 
 
 import javafx.animation.TranslateTransition;
-import javafx.event.Event;
-import javafx.geometry.Bounds;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -99,7 +94,7 @@ public class BlogController implements Initializable {
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopup(post.getId(), postsContainer, vBox);
+            afficherPopupModifier(post.getId(), postsContainer, vBox);
         });
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
@@ -125,6 +120,11 @@ public class BlogController implements Initializable {
             }
         });
         setReaction(postController, post.getId());
+
+        postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
+            System.out.println("zzzzz");
+            afficherPopUpComments(post.getId());
+        });
     }
 
     public void loadPostAbove(Post post) throws IOException{
@@ -143,7 +143,7 @@ public class BlogController implements Initializable {
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopup(post.getId(), postsContainer, vBox);
+            afficherPopupModifier(post.getId(), postsContainer, vBox);
         });
     }
 
@@ -238,7 +238,7 @@ public class BlogController implements Initializable {
         }
     }
 
-    public void afficherPopup(int idPost, VBox postsContainer, VBox postVbox) {
+    public void afficherPopupModifier(int idPost, VBox postsContainer, VBox postVbox) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/popUpModifierPost.fxml"));
             Parent parent = fxmlLoader.load();
@@ -260,7 +260,7 @@ public class BlogController implements Initializable {
             parent.setVisible(true);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
             transition.setFromY(600);
-            transition.setToY(0); // Position finale du popup
+            transition.setToY(0);
             transition.play();
 
             popUpController.getData(idPost);
@@ -328,5 +328,37 @@ public class BlogController implements Initializable {
             postController.setReaction(Reactions.LIKE);
         }
         postController.setNbReactions(rs.nbrReaction(idPost));
+    }
+
+    public void afficherPopUpComments(int idPost) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PopUpComments.fxml"));
+            Parent parent = fxmlLoader.load();
+            PopUpCommentsController popUpCommentsController = fxmlLoader.getController();
+
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+
+            Scene sc = new Scene(parent);
+            stage.setScene(sc);
+            stage.setTitle("Modifier la Publication");
+            sc.setFill(Color.TRANSPARENT);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.show();
+
+            parent.setVisible(false);
+            stage.show();
+            stage.setY(200);
+            stage.setX(513);
+            parent.setVisible(true);
+            TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
+            transition.setFromY(600);
+            transition.setToY(0);
+            transition.play();
+
+            popUpCommentsController.getData(idPost);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

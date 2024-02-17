@@ -58,7 +58,7 @@ public class PopUpModifierPostController {
     @FXML
     void onClosedBtn(MouseEvent event) {
         Stage stage = (Stage) closeBtn.getScene().getWindow();
-        stage.close(); // Ferme le pop-up
+        stage.close();
     }
 
      public void onAddImgBtnClicked(MouseEvent event) {

@@ -34,6 +34,9 @@
                      </HBox.margin>
                   </ImageView>
                </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
             </HBox>
             <VBox>
                <VBox.margin>
@@ -61,7 +64,7 @@
                   </HBox>
                </children>
             </VBox>
-            <ImageView fx:id="imgPost" fitHeight="227.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgPost" fitHeight="209.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
             <HBox alignment="CENTER" prefHeight="58.0" prefWidth="438.0" spacing="90.0">
                <children>
                   <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="37.0" prefWidth="143.0" style="-fx-background-color: transperent;" text="Changer la photo" textFill="#c7c7c7">

@@ -87,6 +87,7 @@
 
 .scroll-bar:vertical {
     -fx-pref-width: 10;
+    -fx-background-color: transparent;
 }
 
 .text-area .scroll-pane {
