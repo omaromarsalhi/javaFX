@@ -149,7 +149,6 @@ public class MarketController implements Initializable {
             whoIsActiveNow="hepfullBar";
         } );
 
-
     }
 
     public void animateSearchBar(){

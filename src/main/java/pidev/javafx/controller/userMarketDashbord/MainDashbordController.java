@@ -16,13 +16,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 import pidev.javafx.crud.marketplace.CrudBien;
+import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.crud.marketplace.CrudLocalWrapper;
 import pidev.javafx.controller.marketPlace.*;
+import pidev.javafx.model.MarketPlace.Favorite;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
 import pidev.javafx.tools.MyTools;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
@@ -56,6 +60,8 @@ public class MainDashbordController implements Initializable {
     private TextField searchTextField;
     @FXML
     private MenuBar menuBar;
+    @FXML
+    private VBox bigContainer;
 
 
     private VBox infoTemplate;
@@ -67,6 +73,8 @@ public class MainDashbordController implements Initializable {
     private Timeline fiveSecondsWonder;
     private Timer animTimer;
     private String searchBarState;
+
+
 
 
 
@@ -108,10 +116,8 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "refreshTableOnAddOrUpdate",this::refreshTableOnAddOrUpdate );
         EventBus.getInstance().subscribe( "updateProd",this::doUpdate );
         EventBus.getInstance().subscribe( "onExitForm",this::onExitForm );
+
     }
-
-
-
 
 
     public void setMenueBar(){
@@ -147,6 +153,41 @@ public class MainDashbordController implements Initializable {
         var addService=new MenuItem("Add Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
         var showService=new MenuItem("Show Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         menuBar.getMenus().get( 1 ).getItems().addAll(addService ,showService);
+
+        var add2Favorite=new MenuItem("Add",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var deleteFromFavorite=new MenuItem("Delete",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        menuBar.getMenus().get( 2 ).getItems().addAll(add2Favorite ,deleteFromFavorite);
+
+        add2Favorite.setOnAction( event -> {
+            loadFavoriteView();
+            loadFavorite();
+            EventBus.getInstance().publish( "favorite",event);
+        });
+    }
+
+
+    public void loadFavorite(){
+//        showAllProdsInfo.getChildren().clear();
+        VBox favorite = null;
+        try {
+            favorite = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+
+        Label label=new Label("Here you can select your Wishlist criteria." +
+                "This criterion will allow you to get notified when a matching product gets added.");
+        label.setWrapText( true );
+        label.setFont( Font.font( "System", FontWeight.BOLD, FontPosture.ITALIC,16 ));
+        label.setAlignment( Pos.CENTER );
+        label.setPadding( new Insets( 0,0,0,15 ) );
+        label.setMinHeight( 80 );
+        bigContainer.getChildren().add(0, label );
+
+        favorite.setPadding( new Insets( 0 ) );
+        favorite.setSpacing( 0 );
+        informationBar.getChildren().clear();
+        informationBar.getChildren().add(favorite);
     }
 
     public void animateSearchBar(){
@@ -343,11 +384,43 @@ public class MainDashbordController implements Initializable {
         }
         tableViewController = fxmlLoader.getController();
         tableViewController.setData(CrudBien.getInstance().selectItems());
-
     }
 
 
-
+    public void loadFavoriteView() {
+        ObservableList<Favorite> list= CrudFavorite.getInstance().selectItems();
+        showAllProdsInfo.getChildren().clear();
+        GridPane gridPane=new GridPane();
+        gridPane.setPrefWidth(showAllProdsInfo.getPrefWidth());
+//        gridPane.setMinSize( 1200,100 );
+        gridPane.setAlignment( Pos.CENTER );
+//        gridPane.setPadding( new Insets( 0,0,50,50 ) );
+        gridPane.setHgap( 40 );
+        gridPane.setVgap( 30 );
+//        gridPane.setStyle( "-fx-background-color: red" );
+        int column = 0;
+        int row = 1;
+        System.out.println(list.size());
+        for(int i=0;i< list.size();i++){
+            HBox favoriteAnchorPanes = null;
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/userMarketDashbord/favorite.fxml"));
+            try {
+                favoriteAnchorPanes = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException( e );
+            }
+            FavoriteController favoriteController=fxmlLoader.getController();
+            favoriteController.setData(list.get( i ) ,i+1 );
+            if (column == 3) {
+                column = 0;
+                row++;
+            }
+            gridPane.add(favoriteAnchorPanes, column++, row);
+        }
+        showAllProdsInfo.getChildren().add(gridPane);
+        scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
+    }
 
 
 }

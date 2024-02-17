@@ -5,14 +5,12 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -74,7 +72,7 @@ public class FormController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         isImageUpdated=false;
-        isAllInpulValid=new boolean[]{true,true,true};
+        isAllInpulValid=new boolean[]{false,false,false,false};
 
         createFormBtns();
         formBox.getChildren().add( buttonsBox );
@@ -120,7 +118,6 @@ public class FormController implements Initializable {
             isAllInpulValid[0]=Pname.getText().matches("[a-zA-Z0-9]{0,10}");
             Node node=(isAllInpulValid[0])?regexValidatedIcon1:regexNotValidatedIcon1;
             String color=(isAllInpulValid[0])?"green":"red";
-
             if(Pname.getText().isEmpty()){
                 formBox1.getChildren().removeAll( regexValidatedIcon1,regexNotValidatedIcon1 );
                 Pname.setStyle( "");
@@ -140,7 +137,8 @@ public class FormController implements Initializable {
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
                         "-fx-border-radius: 10;");
             }
-            if(!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])
+            System.out.println(isAllInpulValid[3]);
+            if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
                         "-fx-border-radius: 10;" );
         });
@@ -168,7 +166,7 @@ public class FormController implements Initializable {
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
                         "-fx-border-radius: 10;");
             }
-            if(!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])
+            if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
                         "-fx-border-radius: 10;" );
         });
@@ -196,7 +194,7 @@ public class FormController implements Initializable {
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
                         "-fx-border-radius: 10;");
             }
-            if(!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])
+            if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
                         "-fx-border-radius: 10;" );
         });
@@ -221,12 +219,12 @@ public class FormController implements Initializable {
                     Boolean.TRUE,
                     Timestamp.valueOf( LocalDateTime.now() ),
                     Pcategory.getValue() );
-
-            List<String> imagesList = new ArrayList<>();
-            for (File file : chosenFiles)
-                imagesList.add( file.getAbsolutePath() );
-            bien.setAllImagesSources( imagesList );
-
+            if(chosenFiles!=null) {
+                List<String> imagesList = new ArrayList<>();
+                for (File file : chosenFiles)
+                    imagesList.add( file.getAbsolutePath() );
+                bien.setAllImagesSources( imagesList );
+            }
             if (usageOfThisForm.equals( "add_prod" )) {
                 CrudBien.getInstance().addItem( bien );
             } else if (usageOfThisForm.equals( "update_prod" ))
@@ -235,7 +233,22 @@ public class FormController implements Initializable {
             EventBus.getInstance().publish( "onExitForm",event );
         }
         else{
-            System.out.println("bayiiiiiiiiiiiii");
+            Alert confirmationAlert = new Alert( Alert.AlertType.ERROR );
+            confirmationAlert.setTitle("Error");
+            confirmationAlert.setHeaderText( null );
+            confirmationAlert.setGraphic( null );
+            confirmationAlert.getDialogPane().getStylesheets().add("file:src/main/resources/style/alertStyle.css");
+            confirmationAlert.setContentText("There is some wrong Data please fix it !!!");
+//            confirmationAlert.getButtonTypes().setAll(ButtonType.YES, ButtonType.NO);
+//            confirmationAlert.getDialogPane().setPrefHeight(20);
+//            confirmationAlert.showAndWait().ifPresent(buttonType -> {
+//                if (buttonType == ButtonType.YES) {
+//                    System.out.println("yes");
+//                } else {
+//                    System.out.println("no");
+//                }
+//            });
+            confirmationAlert.show();
         }
 
     }
