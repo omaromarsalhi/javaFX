@@ -4,9 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
-import pidev.javafx.Controller.Entity.Reclamation;
-import pidev.javafx.Controller.Service.Iservice;
-import pidev.javafx.Controller.Service.ServiceReclamation;
+import pidev.javafx.crud.reclamation.ServiceReclamation;
+import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.crud.reclamation.Iservice;
+import pidev.javafx.controller.reclamation.*;
 
 import java.io.File;
 import java.net.URL;
