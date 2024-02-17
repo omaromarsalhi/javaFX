@@ -57,7 +57,7 @@ public class AjouterReclamation {
         privateKey.setText(generatedString);
         System.out.println(generatedString);
 
-        Reclamation   rec = new Reclamation(privateKey.getText(), title.getText(),selectedSubject ,description.getText());
+        Reclamation   rec = new Reclamation(privateKey.getText(), selectedSubject,title.getText() ,description.getText());
         si.ajouter(rec);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Confirmation");

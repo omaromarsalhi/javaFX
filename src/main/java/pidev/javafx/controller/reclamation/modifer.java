@@ -16,11 +16,12 @@ public class modifer {
     private Button importButton;
 
     @FXML
+    private TextField subject;
+    @FXML
     private TextField privateKey;
     @FXML
     private TextField title;
-    @FXML
-    private TextField subject;
+
 
     @FXML
     private TextArea description ;
@@ -66,7 +67,7 @@ public void initialize() {
     @FXML
     void modifer_Reclamation()
     {
-        Reclamation   rec = new Reclamation(privateKey.getText(), title.getText(),subject.getText() ,description.getText());
+        Reclamation   rec = new Reclamation(privateKey.getText(), subject.getText(), title.getText(),description.getText());
         si.modifier(rec);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Confirmation");
