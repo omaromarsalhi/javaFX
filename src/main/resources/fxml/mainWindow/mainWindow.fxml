@@ -17,47 +17,27 @@
                <children>
                   <Button fx:id="showEmp" mnemonicParsing="false" onAction="#onShowEmpClicked" prefWidth="110.0" text="show " textAlignment="CENTER">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/4.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                   <Button fx:id="btn2" mnemonicParsing="false" prefWidth="110.0" text="Button 2">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/17.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                   <Button fx:id="btn3" mnemonicParsing="false" prefWidth="110.0" text="Button 3">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/33.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                   <Button fx:id="MPD" mnemonicParsing="false" onAction="#onMPDClicked" prefWidth="110.0" text="MPD">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/79.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                   <Button fx:id="marketPlaceBtn" mnemonicParsing="false" onAction="#onMarketPlaceBtnClicked" prefHeight="30.0" prefWidth="110.0" text="MarketPlace">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/4.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                </children>
@@ -67,20 +47,12 @@
                <children>
                   <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Account">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/15.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                   <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="100.0" text="Settings">
                      <graphic>
-                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../icons/398.png" />
-                           </image>
-                        </ImageView>
+
                      </graphic>
                   </Button>
                </children>
