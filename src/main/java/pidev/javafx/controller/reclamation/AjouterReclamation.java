@@ -61,7 +61,6 @@ public class AjouterReclamation {
         {
             imagePath = "6666.png";
         }
-
         Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
         si.ajouter(rec);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
