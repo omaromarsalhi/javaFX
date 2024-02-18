@@ -2,10 +2,12 @@ package pidev.javafx.controller.reclamation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
 
+import javax.swing.text.html.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +24,8 @@ public class modifer {
     @FXML
     private TextField title;
 
+    @FXML
+    private ImageView imageView;
 
     @FXML
     private TextArea description ;
@@ -59,6 +63,10 @@ public void initialize() {
                 setText(null);
             } else {
                 setText(reclamation.getPrivateKey() + " | " + reclamation.getDate() +" | "+reclamation.getSubject() + " | " + reclamation.getTitre());
+                imageView.setImage(new Image(reclamation.getImagePath()));
+                imageView.setPrefWidth(50);  // adjust the width and height as needed
+                imageView.setFitHeight(50);
+                setGraphic(imageView);
                 setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
             }
         }

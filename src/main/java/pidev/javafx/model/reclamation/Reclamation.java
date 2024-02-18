@@ -10,18 +10,38 @@ private String titre;
 private Date date;
 private String description;
 
-public Reclamation(int idReclamation, String subject, String titre, Date date, String description){
+
+
+    private String imagePath; // New field for the image
+
+
+public Reclamation(int idReclamation, String subject, String titre, Date date, String description, String imagePath){
     this.idReclamation = idReclamation;
     this.subject = subject;
     this.titre = titre;
     this.date = date;
     this.description = description;
+    this.imagePath = imagePath;
 }
+    public Reclamation(int idReclamation, String subject, String titre, Date date, String description){
+        this.idReclamation = idReclamation;
+        this.subject = subject;
+        this.titre = titre;
+        this.date = date;
+        this.description = description;
+    }
     public Reclamation( String  privateKey ,String subject, String titre, String description){
         this.privateKey = privateKey;
         this.subject = subject;
         this.titre = titre;
         this.description = description;
+    }
+    public Reclamation( String  privateKey ,String subject, String titre, String description,String imagePath){
+        this.privateKey = privateKey;
+        this.subject = subject;
+        this.titre = titre;
+        this.description = description;
+        this.imagePath = imagePath;
     }
 
 public Reclamation( String subject, String titre){
@@ -84,5 +104,12 @@ public Reclamation() { }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

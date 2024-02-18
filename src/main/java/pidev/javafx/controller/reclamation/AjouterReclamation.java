@@ -3,18 +3,17 @@ package pidev.javafx.controller.reclamation;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
+import pidev.javafx.crud.reclamation.DataSource;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
-import pidev.javafx.crud.reclamation.Iservice;
-import pidev.javafx.controller.reclamation.*;
-
 import java.io.File;
-import java.net.URL;
-import java.security.PrivateKey;
-import java.sql.SQLOutput;
+import java.sql.*;
+import java.util.HashSet;
 import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.Set;
+
 
 public class AjouterReclamation {
 
@@ -25,39 +24,41 @@ public class AjouterReclamation {
     private TextField privateKey;
     @FXML
     private TextField title;
-    @FXML
-    private TextField subject;
+//    @FXML
+//    private TextField subject;
 
     @FXML
-    private TextArea description ;
-   @FXML
+    private TextArea description;
+    @FXML
     public ChoiceBox ChoixMul;
     @FXML
     ServiceReclamation si = new ServiceReclamation();
+    //String imagePath;
 
+    private String imagePath; // Class variable to store the image path
 
     public void importFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            System.out.println("File imported");
+            imagePath = selectedFile.getAbsolutePath(); // Store the file path
+            System.out.println("File imported: " + imagePath);
         } else {
             System.out.println("File selection cancelled.");
         }
     }
+
+
     @FXML
-
-
-    void ajouter_Reclamation()
-    {
+    void ajouter_Reclamation() {
         String selectedSubject = initialize();
 
         String generatedString = generateRandomString(20);
         privateKey.setText(generatedString);
         System.out.println(generatedString);
 
-        Reclamation   rec = new Reclamation(privateKey.getText(), selectedSubject,title.getText() ,description.getText());
+        Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
         si.ajouter(rec);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Confirmation");
@@ -71,39 +72,61 @@ public class AjouterReclamation {
     private String generateRandomString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         Random rnd = new Random();
-        StringBuilder sb = new StringBuilder(length);
+        StringBuilder sb;
+        String randomString;
 
-        for (int i = 0; i < length; i++) {
-            int index = rnd.nextInt(characters.length());
-            sb.append(characters.charAt(index));
+        do {
+            sb = new StringBuilder(length);
+            for (int i = 0; i < length; i++) {
+                int index = rnd.nextInt(characters.length());
+                sb.append(characters.charAt(index));
+            }
+            randomString = sb.toString();
+
+            // Check if the generated string exists in the database
+            if (!doesExist(randomString)) {
+                break;
+            }
+        } while (true);
+
+        return randomString;
+    }
+
+    public boolean doesExist(String randomString) {
+        Set<Reclamation> reclamations = getAll();
+
+        for (Reclamation rec : reclamations) {
+            if (rec.getPrivateKey().equals(randomString)) {
+                return true;
+            }
         }
 
-        return sb.toString();
+        return false;
     }
+
+    Connection cnx = DataSource.getInstance().getCnx();
+
+    public Set<Reclamation> getAll() {
+        Set<Reclamation> reclamations = new HashSet<>();
+        String req = "SELECT * FROM `reclamation`";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                reclamations.add(new Reclamation(rs.getString("privateKey"), rs.getString("subject"), rs.getString("titre"), rs.getDate("date"), rs.getString("description")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return reclamations;
+    }
+
+
     public String initialize() {
 
-        ChoixMul.getItems().addAll("Problem technique", "application", "testt","omar salhi","khalil rmila ");
+        ChoixMul.getItems().addAll("Problem technique", "application", "testt", "omar salhi", "khalil rmila ");
         return (String) ChoixMul.getSelectionModel().getSelectedItem();
     }
-//    void ajouter_Reclamation()
-//    {
-//        String selectedSubject = initialize();
-//        if (selectedSubject == null) {
-//            // Handle the case where no item is selected.
-//            // For example, you could show an error message to the user.
-//        } else {
-//            Reclamation rec = new Reclamation(privateKey.getText(), title.getText(), selectedSubject, description.getText());
-//            si.ajouter(rec);
-//
-//        }
-//    }
-//
-//
-//
-//    public String initialize() {
-//        ChoixMul.getItems().removeAll(ChoixMul.getItems());
-//        ChoixMul.getItems().addAll("Problem technique", "application", "testt","omar salhi","khalil rmila ");
-//        return (String) ChoixMul.getSelectionModel().getSelectedItem();
-//    }
+
 
 }

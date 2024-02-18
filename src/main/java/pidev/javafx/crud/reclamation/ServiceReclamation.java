@@ -17,19 +17,21 @@ public class ServiceReclamation implements Iservice<Reclamation> {
 
     @Override
     public void ajouter(Reclamation reclamation) {
-        String req = "INSERT INTO `reclamation`(`privateKey`, `subject`, `titre`, `description`) VALUES (?,?,?,?)";
+        String req = "INSERT INTO `reclamation`(`privateKey`, `subject`, `titre`, `description`, `imagePath`) VALUES (?,?,?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, reclamation.getPrivateKey());
             ps.setString(2, reclamation.getSubject());
             ps.setString(3, reclamation.getTitre());
             ps.setString(4, reclamation.getDescription());
+            ps.setString(5, reclamation.getImagePath()); // Add the image path
             ps.executeUpdate();
             System.out.println("Reclamation added !");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
+
 
     @Override
     public void modifier(Reclamation reclamation) {
@@ -106,5 +108,8 @@ public class ServiceReclamation implements Iservice<Reclamation> {
         }
         return privateKeys;
     }
+
+
+
 
 }
