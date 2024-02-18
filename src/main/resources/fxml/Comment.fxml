@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <VBox style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.CommentController">
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="444.0" spacing="8.0" style="-fx-background-color: transparent;" stylesheets="@../Style/comment.css">
@@ -18,13 +17,26 @@
                   <Image url="@../img/profilImg.png" />
                </image>
             </ImageView>
-            <TextArea fx:id="caption" maxHeight="50.0" prefHeight="30.0" prefWidth="243.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 0 10 10 10;" />
+            <TextArea fx:id="caption" maxHeight="50.0" prefHeight="50.0" prefWidth="282.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 0 10 10 10;" />
+            <ImageView fx:id="sendBtn" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+               <HBox.margin>
+                  <Insets top="16.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../icon/send.png" />
+               </image>
+            </ImageView>
          </children>
       </HBox>
-      <Label fx:id="date" prefHeight="18.0" prefWidth="237.0" style="-fx-background-color: transparent;" text="Label" textFill="#868b91">
+      <HBox prefHeight="18.0" prefWidth="277.0">
          <VBox.margin>
             <Insets left="43.0" />
          </VBox.margin>
-      </Label>
+         <children>
+            <Label fx:id="date" prefHeight="18.0" prefWidth="159.0" style="-fx-background-color: transparent;" text="Label" textFill="#868b91" />
+            <Label onMouseClicked="#onModifierClicked" prefHeight="18.0" prefWidth="54.0" text="Modifier" textFill="#868b91" />
+            <Label fx:id="SupprimerBtn" prefHeight="18.0" prefWidth="58.0" text="Supprimer" textFill="#868b91" />
+         </children>
+      </HBox>
    </children>
 </VBox>

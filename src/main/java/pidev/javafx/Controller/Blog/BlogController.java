@@ -2,6 +2,7 @@ package pidev.javafx.Controller.Blog;
 
 
 import javafx.animation.TranslateTransition;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,6 +22,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.Models.Reactions;
 import pidev.javafx.Services.BlogService;
+import pidev.javafx.Services.CommentService;
 import pidev.javafx.Services.ReactionService;
 
 import java.io.File;
@@ -119,8 +121,10 @@ public class BlogController implements Initializable {
         setReaction(postController, post.getId());
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
-            afficherPopUpComments(post.getId());
+            afficherPopUpComments(postController, post.getId());
         });
+        setNbComments(postController, post.getId());
+
     }
 
     public void loadPostAbove(Post post) throws IOException{
@@ -139,6 +143,34 @@ public class BlogController implements Initializable {
 
         postController.getModifierPost().setOnAction(actionEvent -> {
             afficherPopupModifier(post.getId(), postsContainer, vBox);
+        });
+
+        postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
+            postController.onAngryClicked();
+            addOrUpdateReaction("Angry", post.getId(), postController);
+        });
+        postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
+            postController.onHahaClicked();
+            addOrUpdateReaction("Haha", post.getId(), postController);
+        });
+        postController.getImgLike().setOnMouseClicked(mouseEvent -> {
+            postController.onLikePressed();
+            addOrUpdateReaction("Like", post.getId(), postController);
+        });
+        postController.getImgSad().setOnMouseClicked(mouseEvent -> {
+            postController.onSadClicked();
+            addOrUpdateReaction("Sad", post.getId(), postController);
+        });
+        postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
+            boolean testTimer = postController.onLikeContainerMouseReleased();
+            if(testTimer) {
+                addOrDeleteLike(post.getId(), postController);
+            }
+        });
+        setReaction(postController, post.getId());
+
+        postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
+            afficherPopUpComments(postController, post.getId());
         });
     }
 
@@ -208,8 +240,7 @@ public class BlogController implements Initializable {
         SourceString = null;
         addImgBtn.setText("Ajouter une Photo");
 
-        int id = bs.getLastId();
-        p.setId(id);
+        p.setId(bs.getLastId());
         posts.add(0, p);
 
         try {
@@ -274,7 +305,7 @@ public class BlogController implements Initializable {
                     posts.add(0, psotUpdeted);
                     System.out.println(posts);
                 } else {
-                    System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
+                    System.out.println("Aucun post trouvé avec l'ID : " + idPost);
                 }
                 try {
                     loadPostAbove(psotUpdeted);
@@ -325,7 +356,12 @@ public class BlogController implements Initializable {
         postController.setNbReactions(rs.nbrReaction(idPost));
     }
 
-    public void afficherPopUpComments(int idPost) {
+    public void setNbComments(PostController postController, int idPost){
+        CommentService cs = new CommentService();
+        postController.setNbComments(cs.nbrReaction(idPost));
+    }
+
+    public void afficherPopUpComments(PostController postController, int idPost) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PopUpComments.fxml"));
             PopUpCommentsController popUpCommentsController = new PopUpCommentsController(idPost);
@@ -352,8 +388,18 @@ public class BlogController implements Initializable {
             transition.setToY(0);
             transition.play();
             popUpCommentsController.getData(idPost);
+
+            popUpCommentsController.getSendBtn().setOnMouseClicked(mouseEvent -> {
+                popUpCommentsController.onSendBtnClicked();
+                setNbComments(postController, idPost);
+            });
+            popUpCommentsController.getCloseBtn().setOnMouseClicked(mouseEvent -> {
+                popUpCommentsController.onClosedBtn();
+                setNbComments(postController, idPost);
+            });
         }catch (Exception e){
             e.printStackTrace();
         }
     }
+
 }

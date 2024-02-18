@@ -27,7 +27,7 @@
                         <Insets />
                      </HBox.margin>
                   </Label>
-                  <ImageView fx:id="closeBtn" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onClosedBtn" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="closeBtn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icon/closePopUp.png" />
                      </image>
@@ -39,7 +39,7 @@
             </HBox>
             <ScrollPane prefHeight="380.0" prefWidth="742.0" style="-fx-background: transperent;">
                <content>
-                  <VBox fx:id="commentContainer" alignment="CENTER_LEFT" prefHeight="445.0" prefWidth="739.0" spacing="8.0">
+                  <VBox fx:id="commentContainer" alignment="CENTER_LEFT" prefHeight="445.0" prefWidth="739.0" spacing="12.0">
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="750.0" spacing="10.0">
                            <children>
@@ -150,7 +150,7 @@
                      </HBox.margin>
                   </ImageView>
                   <TextArea fx:id="CommentText" maxHeight="50.0" maxWidth="692.0" prefHeight="50.0" prefWidth="614.0" promptText="Exprimer Vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" />
-                  <ImageView fx:id="sendBtn" fitHeight="25.0" fitWidth="29.0" onMouseClicked="#onSendBtnClicked" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="sendBtn" fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icon/send.png" />
                      </image>

@@ -230,6 +230,7 @@ public class PostController extends VBox implements Initializable {
     public void setNbReactions(int nbr) {
         nbReactions.setText(String.valueOf(nbr));
     }
+    public void setNbComments(int nbr){nbComments.setText(String.valueOf(nbr) + " commentaires");}
 
     public void setData(Post post){
         this.post = post;

@@ -9,7 +9,7 @@ public class Comment {
     private String caption;
     private int idPost;
 
-    public Comment(int id, Timestamp date, String caption, int idPost) {
+    public Comment(int id, String caption, Timestamp date, int idPost) {
         this.id = id;
         this.date = date;
         this.caption = caption;
@@ -37,6 +37,9 @@ public class Comment {
     }
     public int getIdPost() {
         return idPost;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
