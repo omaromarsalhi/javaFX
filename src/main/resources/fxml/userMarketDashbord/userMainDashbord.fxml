@@ -51,7 +51,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <VBox fx:id="informationBar" alignment="CENTER" prefHeight="487.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+            <VBox fx:id="informationBar" alignment="CENTER" prefHeight="487.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -63,16 +63,16 @@
       </VBox>
       <VBox prefHeight="650.0" prefWidth="766.0">
          <children>
-            <VBox prefHeight="166.0">
+            <VBox fx:id="topVbox">
                <children>
                   <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="200.0" stylesheets="@../../style/toolBarStyle.css">
                      <children>
-                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="242.0">
-                          <menus>
-                            <Menu mnemonicParsing="false" text="Products" />
-                            <Menu mnemonicParsing="false" text="Services" />
-                              <Menu mnemonicParsing="false" text="Favorite" />
-                          </menus>
+                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="238.0">
+                           <menus>
+                              <Menu mnemonicParsing="false" text="Products" />
+                              <Menu mnemonicParsing="false" text="Services" />
+                              <Menu mnemonicParsing="false" text="Contrat" />
+                           </menus>
                         </MenuBar>
                         <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;">
                            <children>
@@ -189,21 +189,17 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox fx:id="bigContainer" alignment="CENTER">
-               <children>
-                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="489.0" prefWidth="748.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #f4f4f4;" vbarPolicy="NEVER">
-                     <content>
-                        <AnchorPane fx:id="showAllProdsInfo" prefHeight="470.0" prefWidth="736.0" />
-                     </content>
-                     <padding>
-                        <Insets bottom="4.0" left="8.0" right="8.0" top="10.0" />
-                     </padding>
-                  </ScrollPane>
-               </children>
-               <padding>
+            <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="486.0" prefWidth="748.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #f4f4f4;" vbarPolicy="NEVER">
+               <VBox.margin>
                   <Insets right="10.0" />
+               </VBox.margin>
+               <content>
+                  <AnchorPane fx:id="showAllProdsInfo" prefHeight="476.0" prefWidth="739.0" />
+               </content>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </padding>
-            </VBox>
+            </ScrollPane>
          </children>
       </VBox>
    </children>

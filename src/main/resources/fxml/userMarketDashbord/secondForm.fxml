@@ -12,27 +12,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="formBox" alignment="CENTER" prefHeight="450.0" prefWidth="267.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
+<VBox fx:id="formBox" alignment="CENTER" prefHeight="450.0" prefWidth="267.0" spacing="4.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
    <children>
-      <VBox prefHeight="8.0" prefWidth="267.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+      <VBox prefHeight="43.0" prefWidth="267.0">
          <children>
-            <Label prefHeight="20.0" prefWidth="160.0" text="Name :">
+            <Label prefHeight="25.0" prefWidth="160.0" text="Name :">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Candara Bold" size="19.0" />
                </font>
             </Label>
-            <HBox fx:id="formBox1">
-               <children>
-                  <TextField fx:id="Pname" prefHeight="30.0" prefWidth="246.0" styleClass="text-field">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
+            <TextField fx:id="Pname" prefHeight="35.0" prefWidth="246.0" styleClass="text-field">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+            </TextField>
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -41,49 +34,18 @@
             <Insets top="4.0" />
          </VBox.margin>
       </VBox>
-      <VBox prefHeight="0.0" prefWidth="267.0">
+      <VBox>
          <children>
-            <Label prefHeight="20.0" prefWidth="160.0" text="Price :">
+            <Label prefHeight="25.0" prefWidth="160.0" text="Price :">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Candara Bold" size="19.0" />
                </font>
             </Label>
-            <HBox fx:id="formBox2">
-               <children>
-                  <TextField fx:id="Pprice" prefHeight="30.0" prefWidth="246.0" styleClass="text-field">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets left="10.0" right="10.0" />
-         </padding>
-      </VBox>
-      <VBox prefHeight="0.0" prefWidth="267.0">
-         <children>
-            <Label prefHeight="20.0" prefWidth="160.0" text="Quantity :">
+            <TextField fx:id="Pprice" prefHeight="35.0" prefWidth="246.0" styleClass="text-field">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Candara Bold" size="19.0" />
                </font>
-            </Label>
-            <HBox fx:id="formBox3">
-               <children>
-                  <TextField fx:id="Pquantity" prefHeight="10.0" prefWidth="246.0" styleClass="text-field">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children>
-            </HBox>
+            </TextField>
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -91,15 +53,29 @@
       </VBox>
       <VBox>
          <children>
-            <Label prefHeight="20.0" prefWidth="160.0" text="Category :">
+            <Label prefHeight="25.0" prefWidth="160.0" text="Quantity :">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Candara Bold" size="19.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="Pcategory" prefHeight="40.0" prefWidth="236.0">
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin></ChoiceBox>
+            <TextField fx:id="Pquantity" prefHeight="35.0" prefWidth="246.0" styleClass="text-field">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+            </TextField>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </VBox>
+      <VBox>
+         <children>
+            <Label prefHeight="25.0" prefWidth="160.0" text="Category :">
+               <font>
+                  <Font name="Candara Bold" size="19.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="Pcategory" prefHeight="35.0" prefWidth="246.0" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
@@ -107,28 +83,22 @@
       </VBox>
       <VBox prefHeight="92.0" prefWidth="267.0">
          <children>
-            <Label prefHeight="20.0" prefWidth="160.0" text="Descreption :">
+            <Label prefHeight="25.0" prefWidth="160.0" text="Descreption :">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Candara Bold" size="19.0" />
                </font>
             </Label>
-            <TextArea fx:id="Pdescretion" prefHeight="82.0" prefWidth="246.0">
-               <VBox.margin>
-                  <Insets left="10.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="18.0" />
-               </font></TextArea>
+            <TextArea fx:id="Pdescretion" prefHeight="82.0" prefWidth="246.0" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
          </padding>
       </VBox>
-      <HBox alignment="CENTER" prefHeight="54.0" prefWidth="267.0" style="-fx-background-radius: 20; -fx-border-style: 20;">
+      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="267.0">
          <children>
             <Label prefHeight="26.0" prefWidth="90.0" text="Image :">
                <font>
-                  <Font name="System Italic" size="20.0" />
+                  <Font name="Candara Bold" size="19.0" />
                </font>
             </Label>
             <Button fx:id="imageBtn" mnemonicParsing="false" stylesheets="@../../style/formLayout.css">
@@ -140,12 +110,6 @@
                   </ImageView>
                </graphic></Button>
          </children>
-         <VBox.margin>
-            <Insets top="6.0" />
-         </VBox.margin>
       </HBox>
    </children>
-   <padding>
-      <Insets bottom="10.0" top="10.0" />
-   </padding>
 </VBox>
