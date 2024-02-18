@@ -45,7 +45,7 @@ public class AjouterReclamation {
             imagePath = selectedFile.getAbsolutePath(); // Store the file path
             System.out.println("File imported: " + imagePath);
         } else {
-            System.out.println("File selection cancelled.");
+            System.out.println("File selection cancelled.");// Default image path
         }
     }
 
@@ -57,6 +57,10 @@ public class AjouterReclamation {
         String generatedString = generateRandomString(20);
         privateKey.setText(generatedString);
         System.out.println(generatedString);
+        if(imagePath==null)
+        {
+            imagePath = "6666.png";
+        }
 
         Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
         si.ajouter(rec);
