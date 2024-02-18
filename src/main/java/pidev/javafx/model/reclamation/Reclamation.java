@@ -9,10 +9,7 @@ private String subject;
 private String titre;
 private Date date;
 private String description;
-
-
-
-    private String imagePath; // New field for the image
+private String imagePath; // New field for the image
 
 
 public Reclamation(int idReclamation, String subject, String titre, Date date, String description, String imagePath){
@@ -56,6 +53,15 @@ public Reclamation() { }
     this.titre = titre;
     this.date = date;
     this.description = description;
+    }
+
+    public Reclamation(String privateKey, String subject, String titre, java.sql.Date date, String description, String imagePath) {
+    this.privateKey = privateKey;
+    this.subject = subject;
+    this.titre = titre;
+    this.date = date;
+    this.description = description;
+    this.imagePath = imagePath;
     }
 
     public int getId() {
@@ -111,5 +117,18 @@ public Reclamation() { }
 
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Reclamation{" +
+                "idReclamation=" + idReclamation +
+                ", privateKey='" + privateKey + '\'' +
+                ", subject='" + subject + '\'' +
+                ", titre='" + titre + '\'' +
+                ", date=" + date +
+                ", description='" + description + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                '}';
     }
 }

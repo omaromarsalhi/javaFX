@@ -64,7 +64,6 @@ public class AjouterReclamation {
         alert.setTitle("Confirmation");
         alert.setHeaderText(null);
         alert.setContentText("Reclmation has been added successfully!");
-
         // Show the alert
         alert.show();
     }

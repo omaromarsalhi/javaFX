@@ -3,11 +3,12 @@ package pidev.javafx.controller.reclamation;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
 
-import javax.swing.text.html.ImageView;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,10 +64,21 @@ public void initialize() {
                 setText(null);
             } else {
                 setText(reclamation.getPrivateKey() + " | " + reclamation.getDate() +" | "+reclamation.getSubject() + " | " + reclamation.getTitre());
-                imageView.setImage(new Image(reclamation.getImagePath()));
-                imageView.setPrefWidth(50);  // adjust the width and height as needed
-                imageView.setFitHeight(50);
-                setGraphic(imageView);
+                System.out.println(reclamation.toString());
+
+
+                ImageView imageView = new ImageView();
+
+                    imageView.setFitHeight(50);
+                    imageView.setFitWidth(50);
+              if (empty || reclamation.getImagePath()== null)
+              {
+
+              }
+               else
+               { Image image = new Image(reclamation.getImagePath());
+                    imageView.setImage(image);
+                setGraphic(imageView);}
                 setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
             }
         }

@@ -87,7 +87,7 @@ public class ServiceReclamation implements Iservice<Reclamation> {
             PreparedStatement ps = cnx.prepareStatement(req);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                reclamations.add(new Reclamation(rs.getString("privateKey"), rs.getString("subject"), rs.getString("titre"), rs.getDate("date"), rs.getString("description")));
+                reclamations.add(new Reclamation(rs.getString("privateKey"), rs.getString("subject"), rs.getString("titre"), rs.getDate("date"), rs.getString("description"), rs.getString("imagePath")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
