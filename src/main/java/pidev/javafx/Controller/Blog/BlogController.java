@@ -55,11 +55,10 @@ public class BlogController implements Initializable {
 
     List<Post> posts;
 
-    List<PostController> postControllers;
 
     String SourceString;
 
-    final String destinationString = "C:/Users/Omar Marrakchi/Desktop/javaFX/src/main/resources/blogImgPosts";
+    final String destinationString = "C:/javaFXOldVersion/src/main/resources/blogImgPosts";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {
@@ -67,7 +66,6 @@ public class BlogController implements Initializable {
         choiceBox.setValue("Tous");
 
         posts = new ArrayList<>(getPost());
-        postControllers = new ArrayList<>();
 
             for (Post post : posts) {
                 try {
@@ -84,7 +82,6 @@ public class BlogController implements Initializable {
         VBox vBox = fxmlLoader.load();
         PostController postController = fxmlLoader.getController();
         postController.setIdPost(post.getId());
-        postControllers.add(postController);
         postController.setData(post);
         postsContainer.getChildren().add(vBox);
 
@@ -122,7 +119,6 @@ public class BlogController implements Initializable {
         setReaction(postController, post.getId());
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
-            System.out.println("zzzzz");
             afficherPopUpComments(post.getId());
         });
     }
@@ -133,7 +129,6 @@ public class BlogController implements Initializable {
         VBox vBox = fxmlLoader.load();
         PostController postController = fxmlLoader.getController();
         postController.setIdPost(post.getId());
-        postControllers.add(postController);
         postController.setData(post);
         postsContainer.getChildren().add(2, vBox);
 
@@ -333,8 +328,9 @@ public class BlogController implements Initializable {
     public void afficherPopUpComments(int idPost) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PopUpComments.fxml"));
+            PopUpCommentsController popUpCommentsController = new PopUpCommentsController(idPost);
+            fxmlLoader.setControllerFactory(controllerClass -> popUpCommentsController);
             Parent parent = fxmlLoader.load();
-            PopUpCommentsController popUpCommentsController = fxmlLoader.getController();
 
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -355,7 +351,6 @@ public class BlogController implements Initializable {
             transition.setFromY(600);
             transition.setToY(0);
             transition.play();
-
             popUpCommentsController.getData(idPost);
         }catch (Exception e){
             e.printStackTrace();

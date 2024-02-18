@@ -39,9 +39,9 @@
             </HBox>
             <ScrollPane prefHeight="380.0" prefWidth="742.0" style="-fx-background: transperent;">
                <content>
-                  <VBox alignment="TOP_CENTER" prefHeight="445.0" prefWidth="739.0" spacing="8.0">
+                  <VBox fx:id="commentContainer" alignment="CENTER_LEFT" prefHeight="445.0" prefWidth="739.0" spacing="8.0">
                      <children>
-                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0">
+                        <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="750.0" spacing="10.0">
                            <children>
                               <ImageView fx:id="imgProfile" fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -93,15 +93,19 @@
                               </Pane>
                            </children>
                            <padding>
-                              <Insets left="20.0" right="20.0" />
+                              <Insets left="10.0" right="20.0" />
                            </padding>
                         </HBox>
                         <Label fx:id="caption" prefHeight="30.0" prefWidth="692.0" text="Label" textFill="#e1e1e1" />
-                        <ImageView fx:id="imgPost" fitHeight="259.0" fitWidth="528.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/reclamation.png" />
-                           </image>
-                        </ImageView>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="imgPost" fitHeight="259.0" fitWidth="528.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/reclamation.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </VBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="686.0" spacing="10.0">
                            <children>
                               <HBox alignment="CENTER" prefHeight="35.0" prefWidth="82.0" spacing="5.0">
@@ -124,17 +128,20 @@
                               </HBox>
                            </children>
                            <padding>
-                              <Insets left="10.0" right="10.0" />
+                              <Insets right="10.0" />
                            </padding>
                         </HBox>
-                        <Separator opacity="0.3" prefHeight="1.0" prefWidth="739.0" style="-fx-background-color: white;" />
+                        <Separator opacity="0.35" prefHeight="2.0" prefWidth="739.0" style="-fx-background-color: white;" />
                      </children>
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
                   </VBox>
                </content>
             </ScrollPane>
             <HBox alignment="CENTER" prefHeight="77.0" prefWidth="742.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="35.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../img/profilImg.png" />
                      </image>
@@ -142,7 +149,12 @@
                         <Insets bottom="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <TextArea maxHeight="50.0" maxWidth="692.0" prefHeight="50.0" prefWidth="614.0" promptText="Exprimer Vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" />
+                  <TextArea fx:id="CommentText" maxHeight="50.0" maxWidth="692.0" prefHeight="50.0" prefWidth="614.0" promptText="Exprimer Vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" />
+                  <ImageView fx:id="sendBtn" fitHeight="25.0" fitWidth="29.0" onMouseClicked="#onSendBtnClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icon/send.png" />
+                     </image>
+                  </ImageView>
                </children>
             </HBox>
          </children>

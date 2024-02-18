@@ -17,7 +17,7 @@
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="423.0">
                <children>
-                  <Label prefHeight="22.0" prefWidth="152.0" text="Modifier la publication" textFill="#f2f2f2">
+                  <Label prefHeight="22.0" prefWidth="152.0" text="Modifier la publication" textFill="#e1e1e1">
                      <HBox.margin>
                         <Insets right="115.0" />
                      </HBox.margin>

@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="72.0" prefWidth="315.0" spacing="8.0" style="-fx-background-color: transparent;" stylesheets="@../Style/comment.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<VBox style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.CommentController">
    <children>
-      <ImageView fitHeight="39.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../img/profilImg.png" />
-         </image>
-      </ImageView>
-      <TextArea prefHeight="72.0" prefWidth="312.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 11;" />
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="444.0" spacing="8.0" style="-fx-background-color: transparent;" stylesheets="@../Style/comment.css">
+         <children>
+            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/profilImg.png" />
+               </image>
+            </ImageView>
+            <TextArea fx:id="caption" maxHeight="50.0" prefHeight="30.0" prefWidth="243.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 0 10 10 10;" />
+         </children>
+      </HBox>
+      <Label fx:id="date" prefHeight="18.0" prefWidth="237.0" style="-fx-background-color: transparent;" text="Label" textFill="#868b91">
+         <VBox.margin>
+            <Insets left="43.0" />
+         </VBox.margin>
+      </Label>
    </children>
-</HBox>
+</VBox>
