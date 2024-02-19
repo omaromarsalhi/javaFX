@@ -73,6 +73,7 @@ public class MainDashbordController implements Initializable {
     private Timeline fiveSecondsWonder;
     private Timer animTimer;
     private String searchBarState;
+    private GridPane gridPane4Favorite;
 
 
 
@@ -87,7 +88,7 @@ public class MainDashbordController implements Initializable {
         AnchorPane.setTopAnchor(tableViewProd,4d);
         AnchorPane.setLeftAnchor(tableViewProd,4d);
         AnchorPane.setBottomAnchor(tableViewProd,4d);
-        AnchorPane.setRightAnchor(tableViewProd,10d);
+        AnchorPane.setRightAnchor(tableViewProd,0d);
 
         setMenueBar();
 
@@ -116,6 +117,7 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "refreshTableOnAddOrUpdate",this::refreshTableOnAddOrUpdate );
         EventBus.getInstance().subscribe( "updateProd",this::doUpdate );
         EventBus.getInstance().subscribe( "onExitForm",this::onExitForm );
+        EventBus.getInstance().subscribe( "add2Grid",this::add2Grid );
 
     }
 
@@ -126,6 +128,7 @@ public class MainDashbordController implements Initializable {
         var showForPushasedProduct=new MenuItem("Show Purshased Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         var showForSelledProduct=new MenuItem("Show Selled Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         addProduct.setOnAction( event -> {
+            deleteFavoriteLabel();
             tableViewProd.getSelectionModel().clearSelection();
             scroll.addEventFilter( MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
             fiveSecondsWonder.stop();
@@ -134,6 +137,7 @@ public class MainDashbordController implements Initializable {
             setFormForAddOrUpdate("add_prod");
         } );
         showForSaleProduct.setOnAction( event -> {
+            deleteFavoriteLabel();
             scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
             loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
             informationBar.getChildren().clear();
@@ -141,12 +145,8 @@ public class MainDashbordController implements Initializable {
             showAllProdsInfo.getChildren().clear();
             showAllProdsInfo.getChildren().add(tableViewProd);
         } );
-        showForPushasedProduct.setOnAction( event -> {
-            loadSelledOrPurchsedProducts("PURCHSED");
-        } );
-        showForSelledProduct.setOnAction( event -> {
-            loadSelledOrPurchsedProducts("SELLED");
-        } );
+        showForPushasedProduct.setOnAction( event -> loadSelledOrPurchsedProducts("PURCHSED"));
+        showForSelledProduct.setOnAction( event -> loadSelledOrPurchsedProducts("SELLED") );
 
         menuBar.getMenus().get( 0 ).getItems().addAll(addProduct ,showForSaleProduct,showForPushasedProduct,showForSelledProduct);
 
@@ -154,20 +154,18 @@ public class MainDashbordController implements Initializable {
         var showService=new MenuItem("Show Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         menuBar.getMenus().get( 1 ).getItems().addAll(addService ,showService);
 
-        var add2Favorite=new MenuItem("Add",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var deleteFromFavorite=new MenuItem("Delete",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        menuBar.getMenus().get( 2 ).getItems().addAll(add2Favorite ,deleteFromFavorite);
+        var add2Favorite=new MenuItem("Manage",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        menuBar.getMenus().get( 2 ).getItems().add(add2Favorite);
 
         add2Favorite.setOnAction( event -> {
             loadFavoriteView();
             loadFavorite();
-            EventBus.getInstance().publish( "favorite",event);
+            EventBus.getInstance().publish( "showFavorite",event);
         });
     }
 
 
     public void loadFavorite(){
-//        showAllProdsInfo.getChildren().clear();
         VBox favorite = null;
         try {
             favorite = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
@@ -188,7 +186,17 @@ public class MainDashbordController implements Initializable {
         favorite.setSpacing( 0 );
         informationBar.getChildren().clear();
         informationBar.getChildren().add(favorite);
+        scroll.setPrefHeight(informationBar.getPrefHeight()-80 );
     }
+
+
+    public void deleteFavoriteLabel(){
+        if(bigContainer.getChildren().size()>1){
+            bigContainer.getChildren().remove(bigContainer.getChildren().get( 0 ));
+            scroll.setPrefHeight(scroll.getPrefHeight()+80 );
+        }
+    }
+
 
     public void animateSearchBar(){
         if(searchBarState.equals( "closed" )){
@@ -233,6 +241,7 @@ public class MainDashbordController implements Initializable {
         prod2Update=customMouseEvent.getEventData();
         setFormForAddOrUpdate("update_prod");
     }
+
 
     public void loadSelledOrPurchsedProducts(String trasactionType){
 
@@ -288,9 +297,11 @@ public class MainDashbordController implements Initializable {
             int finalI = i;
             transactionDetailsController.getDownloadBtn().setOnMouseClicked( event -> MyTools.getInstance().generatePDF(localWrapperList.get( finalI ).getContract()));
             HBox finalHboxOfStackPane = hboxOfStackPane;
+            int finalRow = row;
+            int finalColumn = column;
             transactionDetailsController.getDeleteBtn().setOnMouseClicked( event -> {
-                CrudBien.getInstance().deleteItem( localWrapperList.get( finalI ).getProduct().getId() );
-                gridPane.getChildren().remove( finalHboxOfStackPane );
+                CrudBien.getInstance().deleteItem( localWrapperList.get( finalI ).getProduct().getId());
+                rfreshGridPane(gridPane,finalHboxOfStackPane, finalRow, finalColumn,1);
             });
 
             ((StackPane)hboxOfStackPane.getChildren().get( 0 )).getChildren().add(anchorPane );
@@ -308,6 +319,7 @@ public class MainDashbordController implements Initializable {
         scroll.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
     }
 
+
     public void animateProdBox(int initialState,Node node,float duration){
         FadeTransition fade = new FadeTransition( Duration.seconds(duration),node  );
         fade.setFromValue(initialState);
@@ -315,12 +327,15 @@ public class MainDashbordController implements Initializable {
         fade.play();
     }
 
+
     public void onExitForm(MouseEvent event){
-            informationBar.getChildren().remove( informationBar.getChildren().get( 0 ) );
-            loadInfoTemplate();
-            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
-            informationBar.getChildren().add(infoTemplate);
+        informationBar.getChildren().clear();
+        loadInfoTemplate();
+        loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
+        informationBar.getChildren().add(infoTemplate);
+        scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
     }
+
 
     public void setFormForAddOrUpdate(String termOfUse){
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -334,11 +349,12 @@ public class MainDashbordController implements Initializable {
         FormController formController = fxmlLoader.getController();
         if(termOfUse.equals( "update_prod" ))
             formController.setInformaton( prod2Update );
-        informationBar.getChildren().remove(infoTemplate);
+        informationBar.getChildren().clear();
         form.setPrefHeight(informationBar.getPrefHeight());
         form.setPrefWidth(informationBar.getPrefWidth());
         informationBar.getChildren().add(form);
     }
+
 
     public void loadInfoTemplate() {
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -352,11 +368,12 @@ public class MainDashbordController implements Initializable {
         infoTemplateController = fxmlLoader.getController();
     }
 
+
     public void loadInfoOfSpecificItem(Product product) {
         infoTemplateController.setDataForLocalUser(product,(accountInfo.getWidth()/2));
         infoTemplate.setPrefHeight( informationBar.getPrefHeight()-40);
-
     }
+
 
     public void refreshTableOnDelete(CustomMouseEvent<Bien> event){
         tableViewProd.getItems().remove( event.getEventData() );
@@ -364,6 +381,7 @@ public class MainDashbordController implements Initializable {
         loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
         tableViewProd.getSelectionModel().clearSelection();
     }
+
 
     public void refreshTableOnAddOrUpdate(MouseEvent event){
         tableViewProd.getItems().clear();
@@ -388,20 +406,25 @@ public class MainDashbordController implements Initializable {
 
 
     public void loadFavoriteView() {
-        ObservableList<Favorite> list= CrudFavorite.getInstance().selectItems();
         showAllProdsInfo.getChildren().clear();
-        GridPane gridPane=new GridPane();
-        gridPane.setPrefWidth(showAllProdsInfo.getPrefWidth());
-//        gridPane.setMinSize( 1200,100 );
-        gridPane.setAlignment( Pos.CENTER );
-//        gridPane.setPadding( new Insets( 0,0,50,50 ) );
-        gridPane.setHgap( 40 );
-        gridPane.setVgap( 30 );
-//        gridPane.setStyle( "-fx-background-color: red" );
-        int column = 0;
-        int row = 1;
-        System.out.println(list.size());
-        for(int i=0;i< list.size();i++){
+        gridPane4Favorite=new GridPane();
+        gridPane4Favorite.setPrefWidth(showAllProdsInfo.getPrefWidth());
+        gridPane4Favorite.setAlignment( Pos.CENTER );
+        gridPane4Favorite.setPadding( new Insets( 20,0,20,0 ) );
+        gridPane4Favorite.setHgap( 40 );
+        gridPane4Favorite.setVgap( 30 );
+        add2Grid(new CustomMouseEvent<>(CrudFavorite.getInstance().selectItems()));
+        showAllProdsInfo.getChildren().add(gridPane4Favorite);
+        scroll.addEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
+    }
+
+
+    public void add2Grid(CustomMouseEvent<ObservableList<Favorite>> customMouseEvent) {
+        int row= (int) Math.ceil((float)gridPane4Favorite.getChildren().size()/3);
+        int column=gridPane4Favorite.getChildren().size()%3;
+        row-=(row==0||column==0)?0:1;
+
+        for(int i=0;i< customMouseEvent.getEventData().size();i++){
             HBox favoriteAnchorPanes = null;
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/fxml/userMarketDashbord/favorite.fxml"));
@@ -411,15 +434,37 @@ public class MainDashbordController implements Initializable {
                 throw new RuntimeException( e );
             }
             FavoriteController favoriteController=fxmlLoader.getController();
-            favoriteController.setData(list.get( i ) ,i+1 );
+            favoriteController.setData(customMouseEvent.getEventData().get( i ) ,row*3+column+1);
+            HBox finalFavoriteAnchorPanes = favoriteAnchorPanes;
+            int finalRow = row;
+            int finalColumn = column;
+            int finalI = i;
+            favoriteController.getDeleteBtn().setOnMouseClicked( event -> {
+                rfreshGridPane(gridPane4Favorite,finalFavoriteAnchorPanes,finalRow,finalColumn,2);
+                CrudFavorite.getInstance().deleteItem( customMouseEvent.getEventData().get( finalI ).getIdFavorite() );
+            });
             if (column == 3) {
                 column = 0;
                 row++;
             }
-            gridPane.add(favoriteAnchorPanes, column++, row);
+            gridPane4Favorite.add(favoriteAnchorPanes, column++, row);
         }
-        showAllProdsInfo.getChildren().add(gridPane);
-        scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
+    }
+
+
+    public void rfreshGridPane(GridPane gridPane,Node node2Delete,int row,int column,int nbrColumns){
+        gridPane.getChildren().remove( node2Delete );
+        for (Node node : gridPane.getChildren()){
+            Integer rowIndex = GridPane.getRowIndex(node);
+            Integer columnIndex = GridPane.getColumnIndex(node);
+            if (rowIndex != null && ((rowIndex==row && columnIndex>column)||rowIndex>row )){
+                rowIndex+=(columnIndex==0&&rowIndex!=0)?-1:0;
+                columnIndex+=(columnIndex==0)?nbrColumns:-1;
+                GridPane.setColumnIndex( node,columnIndex );
+                GridPane.setRowIndex(node, rowIndex );
+            }
+        }
+        gridPane.layout();
     }
 
 

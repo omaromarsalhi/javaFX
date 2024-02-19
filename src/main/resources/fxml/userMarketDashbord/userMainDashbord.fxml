@@ -51,7 +51,7 @@
                   </Label>
                </children>
             </AnchorPane>
-            <VBox fx:id="informationBar" alignment="CENTER" prefHeight="487.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+            <VBox fx:id="informationBar" alignment="BOTTOM_CENTER" prefHeight="487.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -63,9 +63,9 @@
       </VBox>
       <VBox prefHeight="650.0" prefWidth="766.0">
          <children>
-            <VBox prefHeight="166.0">
+            <VBox prefHeight="171.0">
                <children>
-                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="200.0" stylesheets="@../../style/toolBarStyle.css">
+                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="200.0" stylesheets="@../../style/toolBarStyle.css">
                      <children>
                         <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="242.0">
                           <menus>
@@ -96,7 +96,7 @@
                         <Insets right="22.0" />
                      </padding>
                   </HBox>
-                  <HBox prefHeight="69.0" prefWidth="763.0" spacing="10.0">
+                  <HBox prefHeight="120.0" prefWidth="763.0" spacing="10.0">
                      <children>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
                            <children>
@@ -188,16 +188,16 @@
                      </padding>
                   </HBox>
                </children>
+               <padding>
+                  <Insets top="4.0" />
+               </padding>
             </VBox>
             <VBox fx:id="bigContainer" alignment="CENTER">
                <children>
-                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="489.0" prefWidth="748.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #f4f4f4;" vbarPolicy="NEVER">
+                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="489.0" prefWidth="748.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent;" vbarPolicy="NEVER">
                      <content>
-                        <AnchorPane fx:id="showAllProdsInfo" prefHeight="470.0" prefWidth="736.0" />
+                        <AnchorPane fx:id="showAllProdsInfo" prefHeight="482.0" prefWidth="736.0" />
                      </content>
-                     <padding>
-                        <Insets bottom="4.0" left="8.0" right="8.0" top="10.0" />
-                     </padding>
                   </ScrollPane>
                </children>
                <padding>
@@ -205,6 +205,9 @@
                </padding>
             </VBox>
          </children>
+         <padding>
+            <Insets bottom="4.0" />
+         </padding>
       </VBox>
    </children>
    <padding>

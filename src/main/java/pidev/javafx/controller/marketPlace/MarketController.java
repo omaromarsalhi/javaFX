@@ -68,6 +68,7 @@ public class MarketController implements Initializable {
     private String searchBarState;
     private int idProd4nextSelection;
     private String whoIsActiveNow;
+//    private List<FXMLLoader> fxmlLoaderList=new ArrayList<>();
 
 
 
@@ -107,13 +108,22 @@ public class MarketController implements Initializable {
 
         searchBtn.setOnMouseClicked(event -> animateSearchBar());
 
+//        scroll.vvalueProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue.doubleValue() >= 1.0) {
+//                System.out.println("Reached the end of the scroll pane!");
+//                showGridPane(CrudBien.getInstance().selectItems());
+////                changeGridPaneContent(CrudBien.getInstance().selectItems());
+//                scroll.setVvalue(0.0);
+//            }
+//        });
+
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
         EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
         EventBus.getInstance().subscribe( "showHelfullBar",this::showHelfullBar);
+
+
     }
-
-
 
 
 
@@ -238,39 +248,38 @@ public class MarketController implements Initializable {
     }
 
 
-
     public void showGridPane(ObservableList<Bien> biens){
         grid.getChildren().clear();
         int column = 0;
         int row = 1;
-        try {
-            for (int i = 0; i < biens.size(); i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                ItemController itemController = fxmlLoader.getController();
-                itemController.setData(biens.get(i),myListener);
-                itemController.setData(biens.get( i ));
-                itemController.animateImages(fiveSecondsWonder,biens.get( i ));
-                int finalI = i;
-                anchorPane.setOnMouseClicked( event -> showRelativeImages(biens.get( finalI )) );
-                getProduct(anchorPane,itemController);
-
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-                grid.setHgap( 25 );
-                grid.setVgap( 25 );
-                grid.add(anchorPane, column++, row);
-
+        for (int i = 0; i < biens.size() ; i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException( e );
             }
-            grid.setPadding( new Insets( 0,0,40,0 ));
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            ItemController itemController = fxmlLoader.getController();
+            itemController.setData(biens.get( i ));
+            itemController.animateImages(fiveSecondsWonder,biens.get(i));
+            int finalI = i;
+            anchorPane.setOnMouseClicked( event -> showRelativeImages(biens.get( finalI )) );
+            getProduct(anchorPane,itemController);
+
+            if (column == 3) {
+                column = 0;
+                row++;
+            }
+            grid.add(anchorPane, column++, row);
         }
+        grid.setHgap( 25 );
+        grid.setVgap( 25 );
+        grid.setPadding( new Insets( 0,0,40,0 ));
     }
+
 
     public void showRelativeImages(Bien bien){
         AtomicInteger imageIndex= new AtomicInteger(0);
@@ -292,10 +301,6 @@ public class MarketController implements Initializable {
         } );
     }
 
-
-    public void setMainWindowListener(MyListener listener){
-        MainWindowListener=listener;
-    }
 
     public void loadChat(MouseEvent event){
         if(whoIsActiveNow.equals( "hepfullBar" ))

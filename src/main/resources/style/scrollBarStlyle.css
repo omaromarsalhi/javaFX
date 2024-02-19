@@ -5,6 +5,7 @@
 
 
 .scroll-bar:vertical {
+    /*-fx-pref-width: 0.8em;*/
     -fx-pref-width: 0.8em;
     -fx-background-color:  #f4f4f4;
     /*-fx-border-width: 0;*/

@@ -27,7 +27,7 @@ public class CrudLocalWrapper{
         String id=(trasactionMode.equals("PURCHSED"))?"t.idBuyer":"t.idSeller";
         String sql = "SELECT * FROM transactions t JOIN products p ON t.idProd=p.idProd" +
                 " JOIN contracts c on t.idContract=c.idContract" +
-                " where "+id+" = ? ";
+                " where "+id+" = ? and isdeleted = 0";
 
         connect = ConnectionDB.connectDb();
         ObservableList<LocalWrapper> wrapperList = FXCollections.observableArrayList();

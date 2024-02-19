@@ -20,6 +20,7 @@ import pidev.javafx.tools.MyListener;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Product;
+import pidev.javafx.tools.MyTools;
 
 import java.io.File;
 import java.net.URL;
@@ -121,7 +122,8 @@ public class FormController implements Initializable {
             if(Pname.getText().isEmpty()){
                 formBox1.getChildren().removeAll( regexValidatedIcon1,regexNotValidatedIcon1 );
                 Pname.setStyle( "");
-                formBox.setStyle( "");
+                formBox.setStyle("-fx-border-color:black;"+"-fx-border-width: 1;" +
+                        "-fx-border-radius: 10");
                 isAllInpulValid[0]=true;
             }
             else {
@@ -135,9 +137,9 @@ public class FormController implements Initializable {
                         "-fx-border-width:0 0 2 0;" +
                         "-fx-border-radius: 0" );
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
-                        "-fx-border-radius: 10;");
+                        "-fx-border-radius: 10;" +
+                        "-fx-border-width: 1");
             }
-            System.out.println(isAllInpulValid[3]);
             if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
                         "-fx-border-radius: 10;" );
@@ -150,7 +152,8 @@ public class FormController implements Initializable {
             if(Pprice.getText().isEmpty()){
                 formBox2.getChildren().removeAll( regexValidatedIcon2,regexNotValidatedIcon2 );
                 Pprice.setStyle( "");
-                formBox.setStyle( "");
+                formBox.setStyle("-fx-border-color:black;"+"-fx-border-width: 1;" +
+                        "-fx-border-radius: 10");
                 isAllInpulValid[1]=true;
             }
             else {
@@ -178,7 +181,8 @@ public class FormController implements Initializable {
             if(Pquantity.getText().isEmpty()){
                 formBox3.getChildren().removeAll( regexValidatedIcon3,regexNotValidatedIcon3 );
                 Pquantity.setStyle( "");
-                formBox.setStyle( "");
+                formBox.setStyle("-fx-border-color:black;"+"-fx-border-width: 1;" +
+                        "-fx-border-radius: 10");
                 isAllInpulValid[2]=true;
             }
             else {
@@ -227,6 +231,7 @@ public class FormController implements Initializable {
             }
             if (usageOfThisForm.equals( "add_prod" )) {
                 CrudBien.getInstance().addItem( bien );
+                MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             } else if (usageOfThisForm.equals( "update_prod" ))
                 CrudBien.getInstance().updateItem( bien );
             EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
@@ -291,7 +296,7 @@ public class FormController implements Initializable {
         buttonsBox.setAlignment( Pos.CENTER);
         buttonsBox.setId( "itemInfo" );
         buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
-        buttonsBox.setPadding( new Insets( 10,0,10,0 ) );
+        buttonsBox.setPadding( new Insets( 4,0,0,0 ) );
     }
 
     public void setExitFunction(MyListener listener) {
@@ -310,6 +315,9 @@ public class FormController implements Initializable {
             Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/validation.png") ));
             ((Button)buttonsBox.getChildren().get( 0 )).setGraphic( new ImageView(img1) );
             Pcategory.setValue(  ((Bien) product).getCategorie());
+            isAllInpulValid[0]=true;
+            isAllInpulValid[1]=true;
+            isAllInpulValid[2]=true;
         }
     }
 

@@ -137,7 +137,7 @@
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="234.0">
                      <children>
                         <Slider fx:id="minPriceSlider" />
-                        <Label fx:id="minPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="100dt" textAlignment="CENTER">
+                        <Label fx:id="minPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="0dt" textAlignment="CENTER">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
@@ -158,7 +158,7 @@
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="234.0">
                      <children>
                         <Slider fx:id="maxPriceSlider" />
-                        <Label fx:id="maxPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="100dt" textAlignment="CENTER">
+                        <Label fx:id="maxPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="0dt" textAlignment="CENTER">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
@@ -188,7 +188,7 @@
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="234.0">
                      <children>
                         <Slider fx:id="quantitySlider" />
-                        <Label fx:id="quantityL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="10" textAlignment="CENTER">
+                        <Label fx:id="quantityL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="0" textAlignment="CENTER">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>

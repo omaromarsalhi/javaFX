@@ -2,6 +2,7 @@ package pidev.javafx.controller.marketPlace;
 
 
 import javafx.animation.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,13 +16,17 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import pidev.javafx.controller.userMarketDashbord.FavoriteController;
 import pidev.javafx.crud.marketplace.CrudBien;
+import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
+import pidev.javafx.model.MarketPlace.Favorite;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class helpfullBarController implements Initializable {
@@ -78,15 +83,14 @@ public class helpfullBarController implements Initializable {
 //        animateImages();
         filterAnchorPane.setVisible( false );
         EventBus.getInstance().subscribe( "filter",this::showFilter);
-        EventBus.getInstance().subscribe( "favorite",this::showFavoriteFilter);
-
+        EventBus.getInstance().subscribe( "showFavorite",this::showFavoriteFilter);
     }
+
 
     public void showFavoriteFilter(ActionEvent event) {
         helpfullBarContainer.getChildren().remove(designAnchor );
         filterOrAddBtn.setText("Add");
         filterTitle.setText( "Product Criteria" );
-//        filterAnchorPane.setStyle( "-fx-background-color: white" );
         showFilter(event);
     }
 
@@ -114,24 +118,40 @@ public class helpfullBarController implements Initializable {
 
     @FXML
     public void onFilterClicked(MouseEvent event){
-        if(filterOrAddBtn.getText().equals("Add" )){
+        String fromDateResult = (fromDate.getValue() == null) ? "" : fromDate.getValue().toString();
+        String toDateResult = (toDate.getValue() == null) ? "" : toDate.getValue().toString();
+        int minPriceSliderResult = (int) minPriceSlider.getValue();
+        int maxPriceSliderResult = (int) maxPriceSlider.getValue();
+        int quantitySliderResult = (int) quantitySlider.getValue();
+        String categoryChoiceResult = categoryChoice.getValue();
 
+        if (minPriceSliderResult == 0)
+            minPriceSliderResult = -1;
+        if (maxPriceSliderResult == 0)
+            maxPriceSliderResult = -1;
+        if (quantitySliderResult == 0)
+            quantitySliderResult = -1;
+
+        if(filterOrAddBtn.getText().equals("Add" )){
+            String specifications="";
+            specifications+=(fromDateResult.isEmpty())?LocalDate.now():fromDateResult;
+            specifications+="__";
+            specifications+=toDateResult;
+            specifications+="__";
+            specifications+=minPriceSliderResult;
+            specifications+="__";
+            specifications+=maxPriceSliderResult;
+            specifications+="__";
+            specifications+=quantitySliderResult;
+            specifications+="__";
+            specifications+=categoryChoiceResult;
+
+            Favorite favorite=new Favorite(0,1,specifications);
+            CrudFavorite.getInstance().addItem(favorite);
+            favorite.setIdFavorite( CrudFavorite.getInstance().selectIdLastItem());
+            EventBus.getInstance().publish( "add2Grid",new CustomMouseEvent<>( FXCollections.observableArrayList(favorite)));
         }
         else {
-            String fromDateResult = (fromDate.getValue() == null) ? "" : fromDate.getValue().toString();
-            String toDateResult = (toDate.getValue() == null) ? "" : toDate.getValue().toString();
-            int minPriceSliderResult = (int) minPriceSlider.getValue();
-            int maxPriceSliderResult = (int) maxPriceSlider.getValue();
-            int quantitySliderResult = (int) quantitySlider.getValue();
-            String categoryChoiceResult = categoryChoice.getValue();
-
-            if (minPriceSliderResult == 0)
-                minPriceSliderResult = -1;
-            if (maxPriceSliderResult == 0)
-                maxPriceSliderResult = -1;
-            if (quantitySliderResult == 0)
-                quantitySliderResult = -1;
-
             var list = CrudBien.getInstance().filterItems( fromDateResult, toDateResult, minPriceSliderResult, maxPriceSliderResult, quantitySliderResult, categoryChoiceResult );
             CustomMouseEvent<ObservableList<Bien>> customMouseEvent = new CustomMouseEvent<>( list );
             EventBus.getInstance().publish( "filterProducts", customMouseEvent );
@@ -141,13 +161,21 @@ public class helpfullBarController implements Initializable {
 
     @FXML
     public void onCancelFilterClicked(MouseEvent event){
-        filterAnchorPane.setVisible( false );
+        if(filterOrAddBtn.getText().equals("Add" )){
+            fromDate.setValue( null );
+            toDate.setValue( null );
+            minPriceSlider.setValue( 0 );
+            maxPriceSlider.setValue( 0 );
+            quantitySlider.setValue( 0 );
+            categoryChoice.setValue("ALL");
+        }
+        else
+            filterAnchorPane.setVisible( false );
     }
 
 
     public void animateImages(){
         animationImageView.setImage( new Image( "file:src/main/resources/newanim/"+imageIndex+".gif",animationImageView.getFitWidth(), animationImageView.getFitHeight(),true,true) );
-
 //        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(3), animationImageView);
 //        rotateTransition.setByAngle(360); // Rotate by 360 degrees
 //        rotateTransition.setCycleCount( Animation.INDEFINITE); // Continuous rotation

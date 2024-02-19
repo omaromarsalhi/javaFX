@@ -47,49 +47,19 @@ public class ItemController implements Initializable {
 
 
     private Bien bien;
-    private MyListener myListener;
     private HBox hbox;
     private int imageIndex;
 
 
-
-//    private static Timeline fiveSecondsWonder;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        fiveSecondsWonder=new Timeline();
+
     }
 
-//    public static void stopTimeLine() {
-//        fiveSecondsWonder.stop();
-//    }
-//
-//    public static void startTimeLine() {
-//        TranslateTransition translateTransition=new TranslateTransition( Duration.seconds( 0.6 ), img);
-//
-//        translateTransition.setByX( -200 );
-//        animateImagesKeyFrame= new KeyFrame(Duration.seconds(5), event -> {
-//            System.out.println("This is called every 5 seconds on the UI thread");
-//            translateTransition.setByX( -200 );
-//            translateTransition.play();
-//            translateTransition.setOnFinished( event1 -> {
-//                img.setImage(new Image("file:src/main/resources"+bien.getImageSourceByIndex(imageIndex++)));
-//                translateTransition.setByX(200);
-//                translateTransition.play();
-//                translateTransition.setOnFinished( null );
-//                if(bien.getAllImagesSources().size()==imageIndex)
-//                    imageIndex=0;
-//            } );
-//        } );
-//        fiveSecondsWonder.getKeyFrames().add(animateImagesKeyFrame);
-//        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-//        fiveSecondsWonder.play();
-//    }
 
-    public void setData(Bien bien, MyListener myListener) {
+    public void setData(Bien bien) {
         this.imageIndex=1;
         this.bien = bien;
-        this.myListener = myListener;
         nameLabel.setText(bien.getName());
         priceLable.setText( "$"+bien.getPrice());
         stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
@@ -98,14 +68,7 @@ public class ItemController implements Initializable {
         img.setImage(image);
         hbox=createItemsBtns();
     }
-    public void setData(Bien bien) {
-        nameLabel.setText(bien.getName());
-        priceLable.setText( "$"+bien.getPrice());
-        stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
-        categoryLable.setText(bien.getCategorie().name());
-        Image image = new Image("file:src/main/resources"+bien.getImgSource());
-        img.setImage(image);
-    }
+
 
     public void animateImages(Timeline fiveSecondsWonder,Bien bien) {
         if(bien.getAllImagesSources().size()>1) {

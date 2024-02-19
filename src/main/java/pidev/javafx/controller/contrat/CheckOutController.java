@@ -65,7 +65,6 @@ public class CheckOutController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         contract =CrudContract.getInstance().selectLastItem();
-        System.out.println(contract);
         exit.setOnAction( event -> EventBus.getInstance().publish( "laodMarketPlace", event ) );
         generatePDFbtn.setOnAction( event -> {
             bien.setQuantity( Float.parseFloat( Pquantity.getText() ) );

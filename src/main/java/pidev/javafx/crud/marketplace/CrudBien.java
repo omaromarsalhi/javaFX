@@ -86,8 +86,8 @@ public class CrudBien implements CrudInterface<Bien> {
 
 
     public void deleteItem(int id) {
-        String sql = "UPDATE products SET isDeleted = true WHERE idProd = ?";
 
+        String sql = "UPDATE products SET isDeleted = true WHERE idProd = ?";
         connect = ConnectionDB.connectDb();
 
         try {
@@ -100,6 +100,7 @@ public class CrudBien implements CrudInterface<Bien> {
     }
 
     public void deleteImages(int id) {
+
         String sql = "DELETE FROM product_images WHERE idProduct = ?";
 
         connect4Images = ConnectionDB.connectDb();
@@ -149,7 +150,7 @@ public class CrudBien implements CrudInterface<Bien> {
     @Override
     public ObservableList<Bien> selectItems() {
         Bien bien = null;
-        String sql = "SELECT * FROM products "; // Retrieve all items
+        String sql = "SELECT * FROM products  where isDeleted=false order by idProd desc"; // Retrieve all items
 
         connect = ConnectionDB.connectDb();
         ObservableList<Bien> BienList = FXCollections.observableArrayList();
@@ -183,9 +184,9 @@ public class CrudBien implements CrudInterface<Bien> {
     public ObservableList<Bien> filterItems(String fromDate,String todate,int minPrice,int maxPrice,int quantity,String categoryChoice) {
         Bien bien = null;
         String sql = "SELECT * FROM products where idProd >=0 " ;
-        sql+=(categoryChoice.equals( "" )||categoryChoice.equals( "ALL" ))?"":"and category = ?";
-        sql+=(fromDate.equals( "" ))?"":" and timestamp >= ?";
-        sql+=(todate.equals( "" ))?"":" and timestamp <= ?";
+        sql+=(categoryChoice.isEmpty()||categoryChoice.equals( "ALL" ))?"":"and category = ?";
+        sql+=(fromDate.isEmpty())?"":" and timestamp >= ?";
+        sql+=(todate.isEmpty())?"":" and timestamp <= ?";
         sql+=(minPrice==-1)?"":" and price >= ?";
         sql+=(maxPrice==-1)?"":" and price <= ?";
         sql+=(quantity==-1)?"":" and quantity = ?";
@@ -196,11 +197,11 @@ public class CrudBien implements CrudInterface<Bien> {
         try {
             int i=1;
             prepare = connect.prepareStatement(sql);
-            if(!categoryChoice.equals( "" )&&!categoryChoice.equals( "ALL" ))
+            if(!categoryChoice.isEmpty()&&!categoryChoice.equals( "ALL" ))
                 prepare.setString(  i++, categoryChoice);
-            if(!fromDate.equals( "" ))
+            if(!fromDate.isEmpty())
                 prepare.setString( i++, fromDate);
-            if(!todate.equals( "" ))
+            if(!todate.isEmpty())
                 prepare.setString( i++, todate);
             if(minPrice!=-1)
                 prepare.setInt(  i++, minPrice);

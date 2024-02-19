@@ -25,7 +25,7 @@ public class PhoneSMS{
     public void sendSMS(String reciver,String body) {
         Message message = Message
                 .creator(
-                        new PhoneNumber("+21629624921"),
+                        new PhoneNumber(reciver),
                         new PhoneNumber("+16097704463"),
                         body
                 ).create();
