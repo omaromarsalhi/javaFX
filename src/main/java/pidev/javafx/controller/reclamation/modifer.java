@@ -7,8 +7,9 @@ import javafx.scene.image.ImageView;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
-
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class modifer {
 
     ServiceReclamation si = new ServiceReclamation();
 
-//    public void initialize() {
+    //    public void initialize() {
 //        try {
 //            // Get the data from the database
 //
@@ -48,42 +49,45 @@ public class modifer {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-public void initialize() {
-    ServiceReclamation service = new ServiceReclamation();
-    List<Reclamation> reclamations = new ArrayList<>(service.getAll());
-
-    // Add the Reclamation objects to the ListView
-    lista.getItems().addAll(reclamations);
-
-    // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
-    lista.setCellFactory(reclamationListView -> new ListCell<Reclamation>() {
-        @Override
-        protected void updateItem(Reclamation reclamation, boolean empty) {
-            super.updateItem(reclamation, empty);
-            if (empty || reclamation == null) {
-                setText(null);
-            } else {
-                setText(reclamation.getPrivateKey() + " | " + reclamation.getDate() +" | "+reclamation.getSubject() + " | " + reclamation.getTitre());
-                System.out.println(reclamation.toString());
 
 
-                ImageView imageView = new ImageView();
+    public void initialize() {
+        ServiceReclamation service = new ServiceReclamation();
+        List<Reclamation> reclamations = new ArrayList<>(service.getAll());
+
+        // Add the Reclamation objects to the ListView
+        lista.getItems().addAll(reclamations);
+
+        // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
+        lista.setCellFactory(reclamationListView -> new ListCell<Reclamation>() {
+            @Override
+            protected void updateItem(Reclamation reclamation, boolean empty) {
+                super.updateItem(reclamation, empty);
+                if (empty || reclamation == null) {
+                    setText(null);
+                } else {
+                    setText(reclamation.getPrivateKey() + " | " + reclamation.getDate() +" | "+reclamation.getSubject() + " | " + reclamation.getTitre());
+                //    System.out.println(reclamation.toString());
+
+                    ImageView imageView = new ImageView();
 
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
-              if (empty || reclamation.getImagePath()== null)
-              {
-
-              }
-               else
-               { Image image = new Image(reclamation.getImagePath());
-                    imageView.setImage(image);
-                setGraphic(imageView);}
-                setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
+                    if (!empty && reclamation.getImagePath() != null) {
+                        try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
+                            Image image = new Image(is);
+                            imageView.setImage(image);
+                            setGraphic(imageView);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
+                }
             }
-        }
-    });
-}
+        });
+    }
+
     @FXML
     void modifer_Reclamation()
     {
@@ -132,8 +136,4 @@ public void initialize() {
         subject.setText("");
         description.setText("");
     }
-
-
-
 }
-
