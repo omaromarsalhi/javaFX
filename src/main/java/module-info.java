@@ -6,6 +6,9 @@ module pidev.javafx{
     requires transitive javafx.graphics;
     requires transitive java.desktop;
     requires itextpdf;
+    //change 1
+    requires org.apache.httpcomponents.httpclient;
+    requires org.apache.httpcomponents.httpcore;
 
 
     opens pidev.javafx.controller.reclamation;

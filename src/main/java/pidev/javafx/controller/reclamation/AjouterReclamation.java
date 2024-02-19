@@ -9,11 +9,25 @@ import pidev.javafx.crud.reclamation.DataSource;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 import java.io.File;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
-
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class AjouterReclamation {
 
@@ -67,7 +81,7 @@ public class AjouterReclamation {
 
 
     @FXML
-    void ajouter_Reclamation() {
+    void ajouter_Reclamation() throws IOException {
         String selectedSubject = initialize();
 
         String generatedString = generateRandomString(20);
@@ -77,14 +91,63 @@ public class AjouterReclamation {
         {
             imagePath = "6666.png";
         }
-        Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
-        si.ajouter(rec);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Reclmation has been added successfully!");
-        // Show the alert
-        alert.show();
+
+        // Call the onTextChanged function here
+        onTextChanged();
+
+        // Check if the text fields are valid
+        if (title.getStyle().equals("-fx-text-fill: #25c12c;") && description.getStyle().equals("-fx-text-fill: #25c12c")) {
+            Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
+            si.ajouter(rec);
+
+            // Generate a QR code for the reclamation
+            String data = URLEncoder.encode(rec.toString(), StandardCharsets.UTF_8); // URL-encode the data
+            String size = "200x200"; // Replace this with the desired size of the QR code
+            String url = "https://api.qrserver.com/v1/create-qr-code/?data=" + data + "&size=" + size;
+
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpGet httpGet = new HttpGet(url);
+            CloseableHttpResponse response = httpClient.execute(httpGet);
+
+// Save the response to a file
+            String qrCodeFilePath = "src/main/resources/reclamation/" + generatedString + ".png"; // Each QR code will have a unique name
+            try (OutputStream os = new FileOutputStream(qrCodeFilePath)) {
+                response.getEntity().writeTo(os);
+            }
+
+            // Create a new JavaFX stage for the pop-up window
+            Stage popupStage = new Stage();
+
+            // Create an ImageView to display the QR code
+            ImageView qrCodeImageView = new ImageView(new Image("file:" + qrCodeFilePath));
+
+            // Create a layout for the pop-up window
+            StackPane layout = new StackPane();
+            layout.getChildren().add(qrCodeImageView);
+
+            // Create a scene for the pop-up window
+            Scene scene = new Scene(layout);
+
+            // Set the scene for the pop-up window
+            popupStage.setScene(scene);
+
+            // Show the pop-up window
+            popupStage.showAndWait();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Reclamation has been added successfully!");
+            // Show the alert
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Verification failed. Please check your input.");
+            // Show the alert
+            alert.show();
+        }
     }
 
     private String generateRandomString(int length) {
