@@ -34,7 +34,23 @@ public class AjouterReclamation {
     @FXML
     ServiceReclamation si = new ServiceReclamation();
     //String imagePath;
+    @FXML
+    protected void onTextChanged() {
+        String[] text = new String[10];
 
+        text[1] = title.getText();
+        text[2]= description.getText();
+
+        if (text[1].matches("[a-zA-Z]*"))
+            title.setStyle("-fx-text-fill: #25c12c;");
+        else
+            title.setStyle("-fx-text-fill: #bb2020;");
+
+        if (text[2].matches("[a-zA-Z0-9]+"))
+            description.setStyle("-fx-text-fill: #25c12c");
+        else
+            description.setStyle("-fx-text-fill: #bb2020 ");
+    }
     private String imagePath; // Class variable to store the image path
 
     public void importFile(ActionEvent event) {
@@ -61,15 +77,30 @@ public class AjouterReclamation {
         {
             imagePath = "6666.png";
         }
-        Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
-        si.ajouter(rec);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Reclmation has been added successfully!");
-        // Show the alert
-        alert.show();
+
+        // Call the onTextChanged function here
+        onTextChanged();
+
+        // Check if the text fields are valid
+        if (title.getStyle().equals("-fx-text-fill: #25c12c;") && description.getStyle().equals("-fx-text-fill: #25c12c")) {
+            Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
+            si.ajouter(rec);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Reclmation has been added successfully!");
+            // Show the alert
+            alert.show();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(null);
+            alert.setContentText("Verification failed. Please check your input.");
+            // Show the alert
+            alert.show();
+        }
     }
+
 
     private String generateRandomString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
