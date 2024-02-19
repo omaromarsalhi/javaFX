@@ -77,30 +77,15 @@ public class AjouterReclamation {
         {
             imagePath = "6666.png";
         }
-
-        // Call the onTextChanged function here
-        onTextChanged();
-
-        // Check if the text fields are valid
-        if (title.getStyle().equals("-fx-text-fill: #25c12c;") && description.getStyle().equals("-fx-text-fill: #25c12c")) {
-            Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
-            si.ajouter(rec);
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("Reclmation has been added successfully!");
-            // Show the alert
-            alert.show();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Verification failed. Please check your input.");
-            // Show the alert
-            alert.show();
-        }
+        Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
+        si.ajouter(rec);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Reclmation has been added successfully!");
+        // Show the alert
+        alert.show();
     }
-
 
     private String generateRandomString(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
