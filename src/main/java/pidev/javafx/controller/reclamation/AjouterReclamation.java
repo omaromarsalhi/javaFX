@@ -109,36 +109,21 @@ public class AjouterReclamation {
             HttpGet httpGet = new HttpGet(url);
             CloseableHttpResponse response = httpClient.execute(httpGet);
 
-// Save the response to a file
-            String qrCodeFilePath = "src/main/resources/reclamation/" + generatedString + ".png"; // Each QR code will have a unique name
+            String qrCodeFilePath = "src/main/resources/reclamation/" + generatedString + ".png";
             try (OutputStream os = new FileOutputStream(qrCodeFilePath)) {
                 response.getEntity().writeTo(os);
             }
-
-            // Create a new JavaFX stage for the pop-up window
             Stage popupStage = new Stage();
-
-            // Create an ImageView to display the QR code
             ImageView qrCodeImageView = new ImageView(new Image("file:" + qrCodeFilePath));
-
-            // Create a layout for the pop-up window
             StackPane layout = new StackPane();
             layout.getChildren().add(qrCodeImageView);
-
-            // Create a scene for the pop-up window
             Scene scene = new Scene(layout);
-
-            // Set the scene for the pop-up window
             popupStage.setScene(scene);
-
-            // Show the pop-up window
             popupStage.showAndWait();
-
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Confirmation");
             alert.setHeaderText(null);
             alert.setContentText("Reclamation has been added successfully!");
-            // Show the alert
             alert.show();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
