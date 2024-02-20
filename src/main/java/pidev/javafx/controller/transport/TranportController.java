@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import pidev.javafx.crud.transport.ServicesTransport;
@@ -173,29 +174,29 @@ Set<Transport> dataList=new HashSet<>();
               ImageCol.setCellValueFactory(new PropertyValueFactory<>("vehicule_Image"));
 
              // Set the cell factory for rendering the image
-             ImageCol.setCellFactory(param -> new TableCell<>() {
-                 private final ImageView imageView = new ImageView();
-
-                 {
-                     imageView.setFitWidth(50);
-                     imageView.setFitHeight(50);
-                 }
-
-                 @Override
-                 protected void updateItem(String imagePath, boolean empty) {
-                     super.updateItem(imagePath, empty);
-
-                     if (empty || imagePath == null) {
-                         setGraphic(null);
-                     } else {
-                         // Set the image for the ImageView
-                         Image image = new Image(imagePath);
-                         imageView.setImage(image);
-                         imageView.setStyle("-fx-border-radius: 12px; -fx-background-color: blue;");
-                         setGraphic(imageView);
-                     }
-                 }
-             });
+//             ImageCol.setCellFactory(param -> new TableCell<>() {
+//                 private final ImageView imageView = new ImageView();
+//
+//                 {
+//                     imageView.setFitWidth(50);
+//                     imageView.setFitHeight(50);
+//                 }
+//
+//                 @Override
+//                 protected void updateItem(String imagePath, boolean empty) {
+//                     super.updateItem(imagePath, empty);
+//
+//                     if (empty || imagePath == null) {
+//                         setGraphic(null);
+//                     } else {
+//                         // Set the image for the ImageView
+//                         Image image = new Image(imagePath);
+//                         imageView.setImage(image);
+//                         imageView.setStyle("-fx-border-radius: 12px; -fx-background-color: blue;");
+//                         setGraphic(imageView);
+//                     }
+//                 }
+//             });
              dataList=st.getAll();
          ObservableList<Transport> observableList = FXCollections.observableArrayList(dataList);
 
@@ -204,100 +205,12 @@ Set<Transport> dataList=new HashSet<>();
 
 
       }
-//
-//      public void Recherche(){
-//
-//
-//          String sql = "SELECT * FROM transport WHERE Type_Vehicule=?  ";
-//
-//          connect = ConnectionDB.connectDb();
-//
-//          System.out.println(SearchText.getText());
-//          try (PreparedStatement preparedStatement = connect.prepareStatement(sql);
-//
-//               ResultSet resultSet = preparedStatement.executeQuery()) {
-//              prepare = connect.prepareStatement(sql);
-//              prepare.setString(1,SearchText.getText());
-//
-//              // Create an ObservableList to store your data
-//              ObservableList<Transport> dataList = FXCollections.observableArrayList();
-//
-//              while (resultSet.next()) {
-//                  Transport data = new Transport();
-//
-//                  data.setIdTransport(Integer.parseInt(resultSet.getString("idTransport")));
-//                  data.setType_vehicule(resultSet.getString("Type_Vehicule"));
-//                  data.setReference(resultSet.getString("Reference"));
-//                  data.setDepart(resultSet.getString("Depart"));
-//                  data.setArivee(resultSet.getString("Arivee"));
-//                  data.setPrix((resultSet.getFloat("Prix")));
-//                  data.setHeure((resultSet.getTime("Heure")));
-//                  data.setVehicule_Image((resultSet.getString("Vehicule_Image")));
-//
-//                  dataList.add(data);
-//
-//              }
-//
-//
-//  List<String> nameList = dataList.stream()
-//           .map(Transport::getArivee)
-//           .collect(Collectors.toList());
-//              nameList.stream().anyMatch( str -> str.equals(SearchText.getText()));
-//
-//              ReferenceCol.setCellValueFactory(new PropertyValueFactory<>("Reference"));
-//              HeureCol.setCellValueFactory(new PropertyValueFactory<>("Heure"));
-//              DepartCol.setCellValueFactory(new PropertyValueFactory<>("depart"));
-//              ArriveCol.setCellValueFactory(new PropertyValueFactory<>("arivee"));
-//              TypeCol.setCellValueFactory(new PropertyValueFactory<>("type_vehicule"));
-//              PrixCol.setCellValueFactory(new PropertyValueFactory<>("Prix"));
-//              ImageCol.setCellValueFactory(new PropertyValueFactory<>("vehicule_Image"));
-//
-//              // Set the cell factory for rendering the image
-//              ImageCol.setCellFactory(param -> new TableCell<>() {
-//                  private final ImageView imageView = new ImageView();
-//
-//                  {
-//                      imageView.setFitWidth(50);
-//                      imageView.setFitHeight(50);
-//                  }
-//
-//                  @Override
-//                  protected void updateItem(String imagePath, boolean empty) {
-//                      super.updateItem(imagePath, empty);
-//
-//                      if (empty || imagePath == null) {
-//                          setGraphic(null);
-//                      } else {
-//                          // Set the image for the ImageView
-//                          Image image = new Image(imagePath);
-//                          imageView.setImage(image);
-//                          imageView.setStyle("-fx-border-radius: 12px; -fx-background-color: blue;");
-//                          setGraphic(imageView);
-//                      }
-//                  }
-//              });
-//
-//              Transport_table.setItems(dataList);
-//
-//          } catch (Exception e) {
-//              System.out.println(e.getMessage());
-//          }
-//      }
-//
-
-
-
-
 
         @FXML
         public Boolean Supprimer(int id) {       // Delete from the database
         st.supprimer(id);
         return true;
         };
-
-
-
-
 
 
         public void onInsertClicked(ActionEvent event) throws IOException {

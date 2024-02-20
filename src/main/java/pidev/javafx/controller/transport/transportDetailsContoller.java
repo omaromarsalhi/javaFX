@@ -79,15 +79,20 @@ public class transportDetailsContoller implements Initializable {
     Transport t;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        detailsTransport.setVisible(false);
+        dropToggle.setSelected(true);
      //   fillDetails();
-        System.out.println(1);
+       // System.out.println(1);
        // System.out.println(data.toString());
-        System.out.println(1);
+        //System.out.println(1);
     }
 
     @FXML
     void onDropdownClick(ActionEvent event) {
         if (dropToggle.isSelected()) {
+            detailsTransport.setMinSize(0, 0); // Set minimum size to zero
+            detailsTransport.setMaxSize(0, 0);
+            detailsTransport.setPrefSize(0,0);
             detailsTransport.setVisible(false);
         }
         else if (!dropToggle.isSelected()) {

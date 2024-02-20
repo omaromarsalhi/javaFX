@@ -53,7 +53,7 @@
                                  </font>
                               </TextField>
             
-                              <Button mnemonicParsing="false" onAction="#showDialog" prefHeight="39.0" prefWidth="32.0" styleClass="SearchBar" stylesheets="@../../style/Transport.css">
+                                    <Button mnemonicParsing="false" onAction="#showDialog" prefHeight="39.0" prefWidth="32.0" styleClass="SearchBar" stylesheets="@../../style/Transport.css">
                                  <graphic>
                                     <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>

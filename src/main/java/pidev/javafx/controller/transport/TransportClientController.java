@@ -80,8 +80,6 @@ List<Transport> Transports;
 
     public void Onclick(){
         load("/fxml/Transport/ListeTransport.fxml");
-        showItems.getChildren().add(vBox);
-
 
     }
     private void load(String fxmlPath) {

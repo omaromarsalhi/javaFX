@@ -217,3 +217,81 @@
     -fx-background-color: transparent;
 }
 
+
+/* styles.css */
+
+/* styles.css */
+
+.scroll-pane1{
+    -fx-background-color: transparent;
+}
+.scroll-pane1 .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane1 .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane1 .scroll-bar .thumb {
+    -fx-background-color: #d8ab25;
+    -fx-background-radius: 10px;
+}
+
+.scroll-pane1 .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+#btn:hover #btnImageview1{
+    -fx-image: url('../img_transport/Untitled-2.png');
+
+}
+#btn #btnImageview1{
+    -fx-image: url('../img_transport/Untitled-1.png');
+
+}
+#btn #ArriveImageView{
+    -fx-image: url('../img_transport/arrive.png');
+}
+
+#btn:hover #ArriveImageView{
+    -fx-image: url('../img_transport/arrive1.png');
+}
+
+#btn:hover #DepartImageView{
+    -fx-image: url('../img_transport/depart1.png');
+
+}
+#btn #DepartImageView{
+    -fx-image: url('../img_transport/depart.png');
+}
+
+#btn #StationImageView{
+    -fx-image: url('../img_transport/station.png');
+}
+#btn:hover #StationImageView{
+    -fx-image: url('../img_transport/station1.png');
+}
+
+
+/* styles.css */
+
+.list-view {
+    -fx-background-color: #f4f4f4;
+    -fx-padding: 10px;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10px;
+    -fx-border-radius: 5px;
+    -fx-border-color: #dddddd;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-transition: background-color 0.3s;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: #e0e0e0;
+    -fx-transform: scale(2.2); /* Add scaling effect on hover */
+}
+

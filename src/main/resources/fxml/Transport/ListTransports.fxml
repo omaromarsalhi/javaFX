@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane fx:id="TransportPane" prefHeight="472.0" prefWidth="398.0" styleClass="ListeTrnsportInside" stylesheets="@../../style/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.transport.ListTransportController">
+   <children>
+      <VBox layoutX="27.0" layoutY="14.0" prefHeight="123.0" prefWidth="331.0">
+         <children>
+            <Pane prefHeight="43.0" prefWidth="331.0" styleClass="header_pane">
+               <children>
+                  <Label fx:id="InfoLabel1" layoutX="13.0" layoutY="5.0" prefHeight="26.0" prefWidth="153.0" text="Options and labels " textFill="#6a6a6a">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <Pane prefHeight="99.0" prefWidth="331.0" style="-fx-border-radius: 0 0 10 10;" styleClass="body_pane">
+               <children>
+                  <Label fx:id="InfoLabel" layoutX="131.0" layoutY="17.0" text="Metreo :" textFill="#6d6d6d">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="149.0" layoutY="58.0" text="23°" textFill="#78cf83">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+         </children>
+      </VBox>
+      <HBox layoutX="138.0" layoutY="144.0">
+         <children>
+            <ToggleButton id="yourButton" fx:id="toggleButton1" mnemonicParsing="false" onAction="#handleToggleButton1" prefHeight="25.0" prefWidth="27.0">
+               <graphic>
+                  <ImageView id="yourImageView" fitHeight="11.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/circul_button1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </ToggleButton>
+            <ToggleButton id="yourButton" fx:id="toggleButton2" mnemonicParsing="false" onAction="#handleToggleButton2" prefHeight="25.0" prefWidth="27.0">
+               <graphic>
+                  <ImageView id="yourImageView" fitHeight="11.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/circul_button1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </ToggleButton>
+            <ToggleButton id="yourButton" fx:id="toggleButton3" mnemonicParsing="false" onAction="#handleToggleButton3" prefHeight="19.0" prefWidth="24.0">
+               <graphic>
+                  <ImageView id="yourImageView" fitHeight="11.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/circul_button1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </ToggleButton>
+            <ToggleButton id="yourButton" fx:id="toggleButton4" mnemonicParsing="false" onAction="#handleToggleButton4" prefHeight="26.0" prefWidth="27.0">
+               <graphic>
+                  <ImageView id="yourImageView" fitHeight="11.0" fitWidth="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/circul_button1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </ToggleButton>
+         </children>
+      </HBox>
+      <VBox layoutX="8.0" layoutY="174.0">
+         <children>
+            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="386.0" style="-fx-background-color: d1d0d0;">
+               <children>
+                  <Label fx:id="InfoLabel11" layoutX="13.0" layoutY="5.0" prefHeight="26.0" prefWidth="264.0" text="ARRIVALS-STAURDAY,FEB 17" textFill="#6a6a6a">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+            <ScrollPane prefHeight="251.0" prefWidth="385.0" styleClass="scroll-pane1">
+               <content>
+                  <GridPane fx:id="showItems" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="370.0" vgap="6.0">
+                     <columnConstraints>
+                        <ColumnConstraints fillWidth="false" halignment="CENTER" hgrow="NEVER" maxWidth="177.0" minWidth="362.0" prefWidth="363.0" />
+                     </columnConstraints>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </GridPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+   </children>
+</Pane>

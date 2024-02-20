@@ -14,11 +14,11 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane id="scroll-pane" fx:id="mainBorderPain" stylesheets="@../../style/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.transport.TranportController">
+<ScrollPane id="scroll-pane" fx:id="mainBorderPain" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" stylesheets="@../../style/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.transport.TranportController">
    <content>
-      <AnchorPane prefHeight="670.0" prefWidth="1034.0" styleClass="anchor-pane" stylesheets="@../../style/Transport.css">
+      <AnchorPane prefHeight="670.0" prefWidth="1040.0" styleClass="anchor-pane" stylesheets="@../../style/Transport.css">
          <children>
-            <Pane fx:id="displayTransport" layoutX="7.0" layoutY="7.0" prefHeight="660.0" prefWidth="1026.0" styleClass="pane" stylesheets="@../../style/Transport.css">
+            <Pane fx:id="displayTransport" layoutX="7.0" layoutY="7.0" prefHeight="670.0" prefWidth="1040.0" styleClass="pane" stylesheets="@../../style/Transport.css">
                <children>
                   <Line endX="52.60003662109375" layoutX="939.0" layoutY="120.0" startX="-900.0" stroke="#4e4545" />
                   <ImageView fitHeight="106.0" fitWidth="90.0" layoutX="898.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
@@ -59,7 +59,8 @@
                               <Image url="@../../icons/442.png" />
                            </image>
                         </ImageView>
-                     </graphic></Button>
+                     </graphic>
+                  </Button>
                   <TableView fx:id="Transport_table" layoutX="17.0" layoutY="176.0" prefHeight="483.0" prefWidth="1000.0" styleClass="TableView">
                     <columns>
                       <TableColumn fx:id="ReferenceCol" maxWidth="135.0" minWidth="130.0" prefWidth="135.0" resizable="false" text="Reference" />

@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
 
@@ -36,7 +37,7 @@ public class StationController implements Initializable {
     private ListView<Station> StationListView;
 
     @FXML
-    private ScrollPane mainBorderPain;
+    private AnchorPane mainBorderPain;
     private ServicesStation ss=new ServicesStation();
 
 @FXML
@@ -64,7 +65,7 @@ public void afficher (){
         ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/AddStation.fxml")));
         scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
         scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
-        mainBorderPain.setContent(scrollPane);
+        mainBorderPain.getChildren().setAll(scrollPane);
     };
 
     @Override

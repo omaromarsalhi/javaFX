@@ -39,7 +39,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button MPD;
     @FXML
-    private BorderPane mainBorderPain;
+    private AnchorPane mainBorderPain;
     @FXML
     private AnchorPane MainAnchorPane;
     @FXML
@@ -56,13 +56,13 @@ public class MainWindowController implements Initializable {
     @FXML
     public void onShowEmpClicked(ActionEvent event) throws IOException {
         VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPain.setCenter(showEmpAnchorPane);
+      //  mainBorderPain.setCenter(showEmpAnchorPane);
     }
 
     @FXML
     public void onMPDClicked(ActionEvent event) throws IOException {
         HBox hBox = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        mainBorderPain.setCenter(hBox);
+        //mainBorderPain.setCenter(hBox);
     }
 
     @FXML
@@ -98,24 +98,44 @@ public void onTransportClicked(ActionEvent event) throws IOException {
     AnchorPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/TransportClient.fxml")));
 //    scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
 //    scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
-    mainBorderPain.setCenter(scrollPane);
-}
-    @FXML
-    public void onGareClicked(ActionEvent event) throws IOException{
-        // ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Display_Transport.fxml")));
-        ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Abonnement.fxml")));
 
-        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight() );
-        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
-        mainBorderPain.setCenter(scrollPane);
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Display_Transport.fxml"));
+    ScrollPane loadedPane = loader.load();
+    mainBorderPain.getChildren().setAll(loadedPane);
+}
+
+    @FXML
+    public void onTransportClientClicked(ActionEvent event) throws IOException {
+        AnchorPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/TransportClient.fxml")));
+//    scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
+//    scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/TransportClient.fxml"));
+        AnchorPane loadedPane = loader.load();
+        mainBorderPain.getChildren().setAll(loadedPane.getChildren());
+    }
+    @FXML
+    public void onAbonnementClicked(ActionEvent event) throws IOException{
+        // ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Display_Transport.fxml")));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Abonnement.fxml"));
+        AnchorPane loadedPane = loader.load();
+        mainBorderPain.getChildren().setAll(loadedPane);
+//        ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Abonnement.fxml")));
+//
+//        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight() );
+//        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
+//        mainBorderPain.setCenter(scrollPane);
 
     }
     @FXML
     public void onStationClicked(ActionEvent event) throws IOException{
-        ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Station.fxml")));
-
-        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight() );
-        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
-        mainBorderPain.setCenter(scrollPane);
+      //  ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Station.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Station.fxml"));
+        AnchorPane loadedPane = loader.load();
+        mainBorderPain.getChildren().setAll(loadedPane);
+//        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight() );
+//        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
+//        mainBorderPain.setCenter(scrollPane);
     }
 }

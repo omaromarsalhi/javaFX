@@ -19,6 +19,7 @@ public class Main extends Application {
         stage.setResizable( true );
 //        stage.setWidth( 950 );
 //        stage.setHeight(600);
+
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(event -> System.exit(0));

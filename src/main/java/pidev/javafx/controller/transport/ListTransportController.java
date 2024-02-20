@@ -5,11 +5,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -69,7 +70,7 @@ public class ListTransportController implements Initializable {
     private AnchorPane mainanchor;
 
     @FXML
-    private VBox showItems;
+    private GridPane showItems;
 
     @FXML
     private ToggleButton toggleButton1;
@@ -84,67 +85,47 @@ public class ListTransportController implements Initializable {
     private ToggleButton toggleButton4;
     @FXML
     private Label InfoLabel;
-    VBox vBox;
+    private Pane vBox;
 
     String clickedOption;
 
-    public void showArrive_status(){
 
-        Arrive_Status.setText("arrive");
-//        Timeline timeline = new Timeline(
-//                new KeyFrame(Duration.seconds(2), event -> {
-//                    // Update the label text
-//                    label.setText(texts[currentIndex]);
-//
-//                    // Switch to the next text
-//                    currentIndex = (currentIndex + 1) % texts.length;
-//                })
-//        );
-//        timeline.setCycleCount(Timeline.INDEFINITE); // Repeat indefinitely
-//        timeline.play();
-    }
+
     public void Station_Infos() {
-        showArrive_status();
 
-        if(toggleButton1.isSelected()){
+        if (toggleButton1.isSelected()) {
             System.out.println(1);
             InfoLabel.setText("option 1");
-        }
-        else if(toggleButton2.isSelected()){
+        } else if (toggleButton2.isSelected()) {
             System.out.println(2);
             InfoLabel.setText("option 2");
-        }
-        else if(toggleButton3.isSelected()){
+        } else if (toggleButton3.isSelected()) {
             InfoLabel.setText("option 3");
             System.out.println(3);
-        }
-        else  if(toggleButton4.isSelected()){
+        } else if (toggleButton4.isSelected()) {
             InfoLabel.setText("option 4");
             System.out.println(4);
         }
 
     }
+
     @FXML
     private void handleToggleButtonAction(ToggleButton clickedButton) {
-        // Unselect other buttons
 
-        if(clickedButton.isSelected()) {
-            if(clickedButton.equals(dropToggle))
-            {
+        if (clickedButton.isSelected()) {
+            if (clickedButton.equals(dropToggle)) {
                 onDropdownClick();
-            }
-            else{
+            } else {
                 toggleButton1.setSelected(false);
                 toggleButton2.setSelected(false);
                 toggleButton3.setSelected(false);
                 toggleButton4.setSelected(false);
                 clickedButton.setSelected(true);
                 clickedOption = clickedButton.toString();
-                Station_Infos();}
+                Station_Infos();
+            }
 
-        }
-
-        else {
+        } else {
             // If the clicked button was already selected, unselect it
             clickedButton.setSelected(false);
         }
@@ -155,6 +136,7 @@ public class ListTransportController implements Initializable {
     void onDropdownClick(ActionEvent event) {
 
     }
+
     @FXML
     private void handleToggleButton1() {
         handleToggleButtonAction(toggleButton1);
@@ -174,12 +156,12 @@ public class ListTransportController implements Initializable {
     private void handleToggleButton4() {
         handleToggleButtonAction(toggleButton4);
     }
+
     @FXML
     private void onDropdownClick() {
         if (dropToggle.isSelected()) {
             detailsTransport.setVisible(false);
-        }
-        else if (!dropToggle.isSelected()) {
+        } else if (!dropToggle.isSelected()) {
             detailsTransport.setVisible(true);
         }
     }
@@ -187,24 +169,105 @@ public class ListTransportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for(int i=0;i<2;i++){
+
+loadList(0);
+    }
+    @FXML
+    private Pane mainPain;
+    public void Close(){
+        mainPain.setVisible(false);
+    }
+
+    public void expand_column(int i){
+     //   showItems.setPrefHeight(showItems.getPrefHeight()*5);
+        //showItems.setPrefHeight(showItems.getPrefHeight()+113);
+        showItems.setPrefHeight(showItems.getPrefHeight()+113);
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setMinHeight(177);
+        showItems.getRowConstraints().set(i, rowConstraints);
+
+      //  showItems.getRowConstraints().add(rowConstraints);
+    }
+    public void unexpand_column(int i){
+        RowConstraints rowConstraints = new RowConstraints();
+        rowConstraints.setMinHeight(64);
+        showItems.getRowConstraints().set(i, rowConstraints);
+        showItems.setPrefHeight(showItems.getPrefHeight()-113);
+    }
+//@FXML
+//    private void handleCellClick(MouseEvent event) {
+//        Label clickedLabel = (Label) event.getSource();
+//        int rowIndex = showItems.getRowIndex(clickedLabel);
+//        int colIndex = showItems.getColumnIndex(clickedLabel);
+//
+//        System.out.println("Clicked on cell at row " + rowIndex + ", column " + colIndex);
+//    }
+boolean cellSelected =false;
+    private void handleCellClick(Pane label, int row, int col) {
+
+       // unexpand_column();
+        System.out.println("Clicked on cell at row " + row + ", column " + col + ": " );
+      //  showItems.setPrefHeight(showItems.getPrefHeight()+113);
+        if(cellSelected==false){
+        expand_column(row);
+        cellSelected=true;
+        }
+        else
+        {  unexpand_column(row);
+        cellSelected=false;}
+
+    }
+
+    @FXML
+    private Pane TransportPane;
+@FXML
+public void openDetails() throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/StationInfos.fxml"));
+    AnchorPane loadedPane = loader.load();
+    TransportPane.getChildren().setAll(loadedPane.getChildren());
+}
+
+@FXML
+   public void openArrive() throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/ListTransports.fxml"));
+    Pane loadedPane = loader.load();
+    TransportPane.getChildren().setAll(loadedPane.getChildren());
+
+}
+    @FXML
+private ScrollPane scroll;
+    public void loadList(int pos) {
+        // Set Vgrow constraints outside the loop
+        showItems.setPrefHeight(showItems.getPrefHeight()*5);
+
+        try {
+        for (int i = 0; i <5; i++) {
+            RowConstraints rowConstraints = new RowConstraints();
+            rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
+            showItems.getRowConstraints().add(rowConstraints);
+
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/transportDetails.fxml"));
 
+                vBox = fxmlLoader.load();
+                vBox.setMinHeight(60);
+                transportDetailsContoller transportItem = fxmlLoader.getController();
+            int finalI = i;
+            vBox.setOnMouseClicked(event->handleCellClick(vBox, finalI,0));
 
-            try {
+                showItems.add( vBox ,0,i);
 
-                    vBox = fxmlLoader.load();
-                    transportDetailsContoller transportItem = fxmlLoader.getController();
-                Insets vboxInsets = new Insets(100, 20, 20, 40); // top, right, bottom, left
-                VBox.setMargin(showItems, vboxInsets);
-                    showItems.getChildren().add(vBox);
 
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            System.out.println(vBox);
+
 
         }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
+
+
+
 }
