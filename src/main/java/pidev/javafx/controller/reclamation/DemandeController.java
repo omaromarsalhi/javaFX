@@ -39,7 +39,7 @@ public class DemandeController {
         box3.setEffect(new BoxBlur(10, 10, 3));
         // timer1();
         // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Demande/intrface.fxml"));
-        AnchorPane showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/showuser_modife.fxml"));
+        AnchorPane showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/intrface.fxml"));
         mainBorderPain.getChildren().setAll(showEmpAnchorPane);
     }
 
@@ -53,7 +53,7 @@ public class DemandeController {
         timer2();
         AnchorPane showEmpAnchorPane = null;
         try {
-            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/intrface.fxml"));
+            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/reponse.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

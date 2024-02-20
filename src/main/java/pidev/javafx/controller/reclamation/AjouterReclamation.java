@@ -154,7 +154,6 @@ public class AjouterReclamation {
                 break;
             }
         } while (true);
-
         return randomString;
     }
 
