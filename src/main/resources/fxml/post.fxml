@@ -16,15 +16,12 @@
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0">
             <children>
-                <ImageView fx:id="imgProfile" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/profilImg.png" />
-               </image></ImageView>
+                <ImageView fx:id="imgProfile" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                 <VBox alignment="CENTER" prefHeight="60.0">
                     <children>
                         <HBox alignment="CENTER_LEFT">
                             <children>
-                                <Label fx:id="username" text="Omar Marrakchi">
+                                <Label fx:id="username">
                                     <font>
                                         <Font name="Segoe UI Semibold" size="18.0" />
                                     </font>
@@ -116,11 +113,26 @@
                             <children>
                                 <HBox fx:id="iconLikeContainer" alignment="CENTER" prefHeight="34.0" prefWidth="85.0" spacing="5.0">
                                     <children>
-                                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                        <ImageView fx:id="IconReaction1" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
                                                 <Image url="@../img/ic_like.png" />
                                             </image>
                                         </ImageView>
+                              <ImageView fx:id="IconReaction2" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/ic_like.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="IconReaction3" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/ic_like.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fx:id="IconReaction4" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../img/ic_like.png" />
+                                 </image>
+                              </ImageView>
                                       <Label fx:id="nbReactions" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="29.0" textFill="#606266">
                                           <font>
                                               <Font name="Segoe UI Historic" size="18.0" />

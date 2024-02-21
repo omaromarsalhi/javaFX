@@ -41,18 +41,21 @@ public class PopUpModifierPostController {
 
 
     String SourceString;
-    private int id;
+    private int idPostUpadte;
+    private int idCompteUpdate;
     private int nbComments;
     private int nbReaction;
     private String imgPath;
-    final String destinationString = "C:/Users/Omar Marrakchi/Desktop/javaFX/src/main/resources/blogImgPosts";
+    final String destinationString = "src/main/resources/blogImgPosts";
 
     public int getId() {
-        return id;
+        return idPostUpadte;
     }
-
     public Button getPublierBtn() {
         return publierBtn;
+    }
+    public int getIdCompteUpdate() {
+        return idCompteUpdate;
     }
 
     @FXML
@@ -74,6 +77,9 @@ public class PopUpModifierPostController {
         if (selectedFile != null) {
             SourceString = selectedFile.getAbsolutePath();
             addImgBtn.setText(SourceString);
+            String correctedPath = SourceString.replace("\\", "/");
+            Image img = new Image(new File(correctedPath).toURI().toString());
+            imgPost.setImage(img);
         }
     }
 
@@ -82,7 +88,8 @@ public class PopUpModifierPostController {
         Post post = bs.getOneById(idPost);
         Image img;
 
-        id = idPost;
+        idPostUpadte = idPost;
+        idCompteUpdate = post.getIdCompte();
         caption.setText(post.getCaption());
         imgPath = post.getImage();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
@@ -108,7 +115,8 @@ public class PopUpModifierPostController {
         Post p = new Post();
         BlogService bs = new BlogService();
 
-        p.setId(id);
+        p.setId(idPostUpadte);
+        p.setIdCompte(idCompteUpdate);
         long currentTimeMillis = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(currentTimeMillis);
         p.setDate(timestamp);

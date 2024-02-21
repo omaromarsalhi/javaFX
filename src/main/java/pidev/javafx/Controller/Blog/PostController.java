@@ -19,11 +19,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import pidev.javafx.Services.BlogService;
 import pidev.javafx.Services.ReactionService;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PostController extends VBox implements Initializable {
@@ -99,9 +102,21 @@ public class PostController extends VBox implements Initializable {
     @FXML
     private HBox CommentContainer;
 
-    private Post post;
+    @FXML
+    private ImageView IconReaction1;
 
+    @FXML
+    private ImageView IconReaction2;
+
+    @FXML
+    private ImageView IconReaction3;
+
+    @FXML
+    private ImageView IconReaction4;
+
+    private Post post;
     private int idPost;
+    private int idCompte;
 
     public ImageView getImgLike() {return imgLike;}
     public ImageView getImgAngry() {
@@ -119,10 +134,17 @@ public class PostController extends VBox implements Initializable {
     public HBox getCommentContainer() {
         return CommentContainer;
     }
-
     public int getIdPost() {return idPost;}
-
     public void setIdPost(int idPost) {this.idPost = idPost;}
+    public int getIdCompte() {
+        return idCompte;
+    }
+    public void setIdCompte(int idCompte) {
+        this.idCompte = idCompte;
+    }
+    public MenuButton getMenuBtnPost() {
+        return menuBtnPost;
+    }
 
     public MenuItem getSupprimerPostBtn() {return supprimerPostBtn;}
 
@@ -130,6 +152,13 @@ public class PostController extends VBox implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        IconReaction2.setVisible(false);
+        IconReaction2.setManaged(false);
+        IconReaction3.setVisible(false);
+        IconReaction3.setManaged(false);
+        IconReaction4.setVisible(false);
+        IconReaction4.setManaged(false);
+
 
     }
 
@@ -227,23 +256,70 @@ public class PostController extends VBox implements Initializable {
        // nbReactions.setText(String.valueOf(post.getTotalReactions()));
     }
 
+    public void setIconReaction(ArrayList<String> types){
+        Image image;
+        int k=0;
+        if(types.size() == 0){
+            image = new Image(getClass().getResourceAsStream(Reactions.LIKE.getImgSrc()));
+            IconReaction1.setImage(image);
+        }
+        else {
+            for(int i = 1; i <= types.size(); i++){
+                try {
+                    k++;
+                    Field field = getClass().getDeclaredField("IconReaction" + i);
+                    ImageView value = (ImageView) field.get(this);
+                    value.setVisible(true);
+                    value.setManaged(true);
+                    if(types.get(i-1).equals("Like")) {
+                        image = new Image(getClass().getResourceAsStream(Reactions.LIKE.getImgSrc()));
+                        value.setImage(image);
+                    }
+                    else if(types.get(i-1).equals("Haha")) {
+                        image = new Image(getClass().getResourceAsStream(Reactions.HAHA.getImgSrc()));
+                        value.setImage(image);
+                    }
+                    else if(types.get(i-1).equals("Sad")) {
+                        image = new Image(getClass().getResourceAsStream(Reactions.SAD.getImgSrc()));
+                        value.setImage(image);
+                    }
+                    else if(types.get(i-1).equals("Angry")) {
+                        image = new Image(getClass().getResourceAsStream(Reactions.ANGRY.getImgSrc()));
+                        value.setImage(image);
+                    }
+                    for(int j = k+1; j <= 4; j++){
+                        Field field1 = null;
+                        field = getClass().getDeclaredField("IconReaction" + j);
+                        ImageView value1 = (ImageView) field.get(this);
+                        value1.setVisible(false);
+                        value1.setManaged(false);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+        }
+        }
+    }
+
     public void setNbReactions(int nbr) {
         nbReactions.setText(String.valueOf(nbr));
     }
     public void setNbComments(int nbr){nbComments.setText(String.valueOf(nbr) + " commentaires");}
 
-    public void setData(Post post){
+    public void setData(Post post, int idCompte){
         this.post = post;
         Image img;
+        BlogService bs = new BlogService();
+        Account account = bs.getComte(idCompte);
 
-        /*img = new Image(getClass().getResourceAsStream(post.getAccount().getProfileImg()));
+        img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         imgProfile.setImage(img);
-        username.setText(post.getAccount().getName());
-        if(post.getAccount().isVerified()){
+        username.setText(account.getName());
+        if(account.isVerified()){
             imgVerified.setVisible(true);
         }else{
             imgVerified.setVisible(false);
-        }*/
+        }
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());

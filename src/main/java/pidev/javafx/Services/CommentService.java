@@ -12,13 +12,13 @@ public class CommentService {
     Connection cnx = DataSource.getInstance().getCnx();
 
     public void ajouterComment(Comment comment) {
-        String req = "INSERT INTO `comment_post`(`caption`, `dateComment`, `idPost`) VALUES (?,?,?)" ;
+        String req = "INSERT INTO `comment_post`(`caption`, `dateComment`, `idPost`, `idCompte`) VALUES (?,?,?,?)" ;
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, comment.getCaption());
             ps.setObject(2, comment.getDate());
             ps.setInt(3, comment.getIdPost());
-
+            ps.setInt(4, comment.getIdCompte());
             ps.executeUpdate();
             System.out.println("comment added !");
 
@@ -39,7 +39,8 @@ public class CommentService {
                 String caption = res.getString(2);
                 Timestamp timestamp = res.getTimestamp(3);
                 int idPost = res.getInt(4);
-                Comment c = new Comment(id, caption,timestamp, idPost);
+                int idCompte = res.getInt(5);
+                Comment c = new Comment(id, caption,timestamp, idPost, idCompte);
                 comments.add(c);
             }
         } catch (SQLException e) {
@@ -63,7 +64,7 @@ public class CommentService {
 
     public int getLastId(){
         int lastId = -1;
-        String req = "SELECT MAX(id) FROM `comment_post`";
+        String req = "SELECT MAX(idComment) FROM `comment_post`";
         try {
             Statement st = cnx.createStatement();
             ResultSet res = st.executeQuery(req);
@@ -103,7 +104,8 @@ public class CommentService {
                 String caption = res.getString(2);
                 Timestamp timestamp = res.getTimestamp(3);
                 int idPost = res.getInt(4);
-                return new Comment(idc, caption, timestamp, idPost);
+                int idCompte = res.getInt(5);
+                return new Comment(idc, caption, timestamp, idPost, idCompte);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -111,7 +113,7 @@ public class CommentService {
         return null;
     }
 
-    public int nbrReaction(int id) {
+    public int nbrComment(int id) {
         String req = "SELECT COUNT(*) FROM `comment_post` WHERE idPost=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
@@ -126,4 +128,6 @@ public class CommentService {
         }
         return 0;
     }
+
+
 }

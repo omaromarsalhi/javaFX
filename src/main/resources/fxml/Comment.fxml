@@ -12,11 +12,7 @@
    <children>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="444.0" spacing="8.0" style="-fx-background-color: transparent;" stylesheets="@../Style/comment.css">
          <children>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/profilImg.png" />
-               </image>
-            </ImageView>
+            <ImageView fx:id="AccImg" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
             <TextArea fx:id="caption" maxHeight="50.0" prefHeight="50.0" prefWidth="282.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 0 10 10 10;" />
             <ImageView fx:id="sendBtn" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                <HBox.margin>
@@ -34,7 +30,7 @@
          </VBox.margin>
          <children>
             <Label fx:id="date" prefHeight="18.0" prefWidth="159.0" style="-fx-background-color: transparent;" text="Label" textFill="#868b91" />
-            <Label onMouseClicked="#onModifierClicked" prefHeight="18.0" prefWidth="54.0" text="Modifier" textFill="#868b91" />
+            <Label fx:id="ModifierBtn" onMouseClicked="#onModifierClicked" prefHeight="18.0" prefWidth="54.0" text="Modifier" textFill="#868b91" />
             <Label fx:id="SupprimerBtn" prefHeight="18.0" prefWidth="58.0" text="Supprimer" textFill="#868b91" />
          </children>
       </HBox>

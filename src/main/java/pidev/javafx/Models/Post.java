@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Post {
     private int id;
-    private Account account;
+    private int idCompte;
     private Timestamp date;
     private String caption;
     private String image;
@@ -17,11 +17,12 @@ public class Post {
 
     public Post () {}
 
-    public Post(int id , Timestamp date, String caption, String image, int totalReactions, int nbComments) {
+    public Post(int id , Timestamp date, String caption, String image, int idCompte, int totalReactions, int nbComments) {
         this.id = id;
         this.date = date;
         this.caption = caption;
         this.image = image;
+        this.idCompte = idCompte;
         this.totalReactions = totalReactions;
         this.nbComments = nbComments;
     }
@@ -43,7 +44,7 @@ public class Post {
     public String toString() {
         return "Post{" +
                 "id : " + id +
-                "account=" + account +
+                "account=" + idCompte +
                 ", date=" + date +
                 ", caption='" + caption + '\'' +
                 ", image='" + image + '\'' +
@@ -56,12 +57,12 @@ public class Post {
 
     public void setId(int id) {this.id = id;}
 
-    public Account getAccount() {
-        return account;
+    public int getIdCompte() {
+        return idCompte;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setIdCompte(int idCompte) {
+        this.idCompte = idCompte;
     }
 
     public Timestamp getDate() {

@@ -7,10 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Comment;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Services.BlogService;
@@ -43,6 +42,10 @@ public class PopUpCommentsController implements Initializable {
     private TextArea CommentText;
     @FXML
     private Label nbReactions;
+    @FXML
+    private ImageView ProfileImg;
+    @FXML
+    private ImageView CommentProp;
 
     private int id;
     List<Comment> comments;
@@ -69,7 +72,10 @@ public class PopUpCommentsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        System.out.println(id);
+        BlogService blogService = new BlogService();
+        Account account = blogService.getComte(5);
+        Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        ProfileImg.setImage(img1);
         comments = new ArrayList<>(getComments());
         for (Comment comment : comments) {
             try {
@@ -92,6 +98,14 @@ public class PopUpCommentsController implements Initializable {
         commentController.getDate().setText(formattedDate);
         commentContainer.getChildren().add(vBox);
 
+        if(comment.getIdCompte() == 5){
+            commentController.getSupprimerBtn().setVisible(true);
+            commentController.getModifierBtn().setVisible(true);
+        }else {
+            commentController.getSupprimerBtn().setVisible(false);
+            commentController.getModifierBtn().setVisible(false);
+        }
+
         commentController.getSupprimerBtn().setOnMouseClicked(mouseEvent -> {
             commentController.supprimerComment(comment.getId());
             commentContainer.getChildren().remove(vBox);
@@ -113,7 +127,15 @@ public class PopUpCommentsController implements Initializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(comment.getDate());
         commentController.getDate().setText(formattedDate);
-        commentContainer.getChildren().add(4,vBox);
+        commentContainer.getChildren().add(5,vBox);
+
+        if(comment.getIdCompte() == 5){
+            commentController.getSupprimerBtn().setVisible(true);
+            commentController.getModifierBtn().setVisible(true);
+        }else {
+            commentController.getSupprimerBtn().setVisible(false);
+            commentController.getModifierBtn().setVisible(false);
+        }
 
         commentController.getSupprimerBtn().setOnMouseClicked(mouseEvent -> {
             commentController.supprimerComment(comment.getId());
@@ -140,7 +162,11 @@ public class PopUpCommentsController implements Initializable {
     public void getData(int idPost) {
         BlogService bs = new BlogService();
         Post post = bs.getOneById(idPost);
+        Account account = bs.getComte(post.getIdCompte());
         Image img;
+
+        Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        CommentProp.setImage(img1);
 
         id = idPost;
         caption.setText(post.getCaption());
@@ -170,6 +196,7 @@ public class PopUpCommentsController implements Initializable {
         comment.setDate(timestamp);
         comment.setCaption(CommentText.getText());
         comment.setIdPost(id);
+        comment.setIdCompte(5);
 
         cs.ajouterComment(comment);
         comment.setId(cs.getLastId());

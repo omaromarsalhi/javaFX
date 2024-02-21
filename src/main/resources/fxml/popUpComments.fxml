@@ -43,11 +43,7 @@
                      <children>
                         <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="750.0" spacing="10.0">
                            <children>
-                              <ImageView fx:id="imgProfile" fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/profilImg.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="CommentProp" fitHeight="42.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" />
                               <VBox alignment="CENTER" prefHeight="60.0">
                                  <children>
                                     <HBox alignment="CENTER_LEFT">
@@ -96,7 +92,10 @@
                               <Insets left="10.0" right="20.0" />
                            </padding>
                         </HBox>
-                        <Label fx:id="caption" prefHeight="30.0" prefWidth="692.0" text="Label" textFill="#e1e1e1" />
+                        <Label fx:id="caption" prefHeight="30.0" prefWidth="692.0" text="Label" textFill="#e1e1e1">
+                           <font>
+                              <Font size="16.0" />
+                           </font></Label>
                         <VBox alignment="CENTER">
                            <children>
                               <ImageView fx:id="imgPost" fitHeight="259.0" fitWidth="528.0" pickOnBounds="true" preserveRatio="true">
@@ -141,10 +140,7 @@
             </ScrollPane>
             <HBox alignment="CENTER" prefHeight="77.0" prefWidth="742.0" spacing="10.0">
                <children>
-                  <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../img/profilImg.png" />
-                     </image>
+                  <ImageView fx:id="ProfileImg" fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <HBox.margin>
                         <Insets bottom="20.0" />
                      </HBox.margin>

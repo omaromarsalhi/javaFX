@@ -8,12 +8,14 @@ public class Comment {
     private Timestamp date;
     private String caption;
     private int idPost;
+    private int idCompte;
 
-    public Comment(int id, String caption, Timestamp date, int idPost) {
+    public Comment(int id, String caption, Timestamp date, int idPost, int idCompte) {
         this.id = id;
         this.date = date;
         this.caption = caption;
         this.idPost = idPost;
+        this.idCompte = idCompte;
     }
     public  Comment () {}
 
@@ -40,6 +42,12 @@ public class Comment {
     }
     public void setId(int id) {
         this.id = id;
+    }
+    public int getIdCompte() {
+        return idCompte;
+    }
+    public void setIdCompte(int idCompte) {
+        this.idCompte = idCompte;
     }
 
     @Override

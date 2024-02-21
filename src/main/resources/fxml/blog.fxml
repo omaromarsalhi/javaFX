@@ -87,11 +87,7 @@
                            <children>
                               <HBox alignment="TOP_CENTER" prefHeight="66.0" prefWidth="921.0" spacing="10.0">
                                  <children>
-                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../img/profilImg.png" />
-                                       </image>
-                                    </ImageView>
+                                    <ImageView fx:id="ProfileImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                                     <TextArea fx:id="captionText" prefHeight="44.0" prefWidth="626.0" promptText="Exprimer vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" styleClass="text-area" stylesheets="@../Style/style.css" wrapText="true">
                                        <font>
                                           <Font size="14.0" />

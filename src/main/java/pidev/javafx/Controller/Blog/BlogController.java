@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -14,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -54,18 +57,25 @@ public class BlogController implements Initializable {
 
     @FXML
     private TextArea captionText;
+    @FXML
+    private ImageView ProfileImg;
 
     List<Post> posts;
 
 
     String SourceString;
 
-    final String destinationString = "C:/javaFXOldVersion/src/main/resources/blogImgPosts";
+    final String destinationString = "src/main/resources/blogImgPosts";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle)  {
         choiceBox.getItems().addAll("Tous", "Municipalité", "Citoyens");
         choiceBox.setValue("Tous");
+
+        BlogService blogService = new BlogService();
+        Account account = blogService.getComte(5);
+        Image img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        ProfileImg.setImage(img);
 
         posts = new ArrayList<>(getPost());
 
@@ -84,8 +94,12 @@ public class BlogController implements Initializable {
         VBox vBox = fxmlLoader.load();
         PostController postController = fxmlLoader.getController();
         postController.setIdPost(post.getId());
-        postController.setData(post);
+        postController.setIdCompte(post.getIdCompte());
+        postController.setData(post, post.getIdCompte());
         postsContainer.getChildren().add(vBox);
+
+        if(post.getIdCompte() == 5){postController.getMenuBtnPost().setVisible(true);
+        }else {postController.getMenuBtnPost().setVisible(false);}
 
         postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
             supprimerPost(post.getId());
@@ -98,33 +112,32 @@ public class BlogController implements Initializable {
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post.getId(), postController);
+            addOrUpdateReaction("Angry", post.getId(), 5, postController);
         });
         postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
             postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post.getId(), postController);
+            addOrUpdateReaction("Haha", post.getId(), 5, postController);
         });
         postController.getImgLike().setOnMouseClicked(mouseEvent -> {
             postController.onLikePressed();
-            addOrUpdateReaction("Like", post.getId(), postController);
+            addOrUpdateReaction("Like", post.getId(), 5, postController);
         });
         postController.getImgSad().setOnMouseClicked(mouseEvent -> {
             postController.onSadClicked();
-            addOrUpdateReaction("Sad", post.getId(), postController);
+            addOrUpdateReaction("Sad", post.getId(), 5, postController);
         });
         postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
             boolean testTimer = postController.onLikeContainerMouseReleased();
             if(testTimer) {
-                addOrDeleteLike(post.getId(), postController);
+                addOrDeleteLike(post.getId(), postController, 5);
             }
         });
-        setReaction(postController, post.getId());
+        setReaction(postController, post.getId(), 5);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
             afficherPopUpComments(postController, post.getId());
         });
         setNbComments(postController, post.getId());
-
     }
 
     public void loadPostAbove(Post post) throws IOException{
@@ -133,8 +146,11 @@ public class BlogController implements Initializable {
         VBox vBox = fxmlLoader.load();
         PostController postController = fxmlLoader.getController();
         postController.setIdPost(post.getId());
-        postController.setData(post);
+        postController.setData(post, post.getIdCompte());
         postsContainer.getChildren().add(2, vBox);
+
+        if(post.getIdCompte() == 5){postController.getMenuBtnPost().setVisible(true);
+        }else {postController.getMenuBtnPost().setVisible(false);}
 
         postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
             supprimerPost(post.getId());
@@ -147,31 +163,32 @@ public class BlogController implements Initializable {
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post.getId(), postController);
+            addOrUpdateReaction("Angry", post.getId(), 5, postController);
         });
         postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
             postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post.getId(), postController);
+            addOrUpdateReaction("Haha", post.getId(), 5, postController);
         });
         postController.getImgLike().setOnMouseClicked(mouseEvent -> {
             postController.onLikePressed();
-            addOrUpdateReaction("Like", post.getId(), postController);
+            addOrUpdateReaction("Like", post.getId(), 5, postController);
         });
         postController.getImgSad().setOnMouseClicked(mouseEvent -> {
             postController.onSadClicked();
-            addOrUpdateReaction("Sad", post.getId(), postController);
+            addOrUpdateReaction("Sad", post.getId(), 5, postController);
         });
         postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
             boolean testTimer = postController.onLikeContainerMouseReleased();
             if(testTimer) {
-                addOrDeleteLike(post.getId(), postController);
+                addOrDeleteLike(post.getId(), postController, 5);
             }
         });
-        setReaction(postController, post.getId());
+        setReaction(postController, post.getId(), 5);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
             afficherPopUpComments(postController, post.getId());
         });
+        setNbComments(postController, post.getId());
     }
 
     public List<Post> getPost(){
@@ -231,18 +248,15 @@ public class BlogController implements Initializable {
         }else {
             p.setImage(imgPath);
         }
+        p.setIdCompte(5);
         p.setNbComments(0);
         p.setTotalReactions(0);
-
         bs.ajouter(p);
-
         captionText.clear();
         SourceString = null;
         addImgBtn.setText("Ajouter une Photo");
-
         p.setId(bs.getLastId());
         posts.add(0, p);
-
         try {
             loadPostAbove(p);
         } catch (IOException e) {
@@ -303,7 +317,6 @@ public class BlogController implements Initializable {
                     Post oldPost = optionalPost.get();
                     posts.remove(oldPost);
                     posts.add(0, psotUpdeted);
-                    System.out.println(posts);
                 } else {
                     System.out.println("Aucun post trouvé avec l'ID : " + idPost);
                 }
@@ -319,29 +332,33 @@ public class BlogController implements Initializable {
         }
     }
 
-    public void addOrUpdateReaction (String type, int idPost, PostController postController) {
+    public void addOrUpdateReaction (String type, int idPost, int idCompte, PostController postController) {
         ReactionService rs = new ReactionService();
-        if(rs.getReaction(idPost) == null){
-            rs.ajouterReaction(type, idPost);
+        if(rs.getReaction(idPost, idCompte) == null){
+            rs.ajouterReaction(type, idPost, idCompte);
         }else {
-            rs.modifierReaction(idPost, type);
+            rs.modifierReaction(idPost, type, idCompte);
         }
         postController.setNbReactions(rs.nbrReaction(idPost));
+        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
+        postController.setIconReaction(types);
     }
-    public void addOrDeleteLike(int idPost, PostController postController) {
+    public void addOrDeleteLike(int idPost, PostController postController, int idCompte) {
         ReactionService rs = new ReactionService();
-        if(rs.getReaction(idPost) == null){
-            rs.ajouterReaction("Like", idPost);
+        if(rs.getReaction(idPost, idCompte) == null){
+            rs.ajouterReaction("Like", idPost, idCompte);
         }else {
-            rs.enleverReaction(idPost);
+            rs.enleverReaction(idPost, idCompte);
             postController.setReaction(Reactions.NON);
         }
         postController.setNbReactions(rs.nbrReaction(idPost));
+        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
+        postController.setIconReaction(types);
     }
 
-    public void setReaction (PostController postController, int idPost) {
+    public void setReaction (PostController postController, int idPost, int idCompte) {
         ReactionService rs = new ReactionService();
-        String reaction = rs.getReaction(idPost);
+        String reaction = rs.getReaction(idPost, idCompte);
         if(reaction == null){
             postController.setReaction(Reactions.NON);
         } else if (reaction.equals("Haha")) {
@@ -354,11 +371,14 @@ public class BlogController implements Initializable {
             postController.setReaction(Reactions.LIKE);
         }
         postController.setNbReactions(rs.nbrReaction(idPost));
+        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
+        postController.setIconReaction(types);
+
     }
 
     public void setNbComments(PostController postController, int idPost){
         CommentService cs = new CommentService();
-        postController.setNbComments(cs.nbrReaction(idPost));
+        postController.setNbComments(cs.nbrComment(idPost));
     }
 
     public void afficherPopUpComments(PostController postController, int idPost) {
