@@ -89,7 +89,7 @@ public class AjouterReclamation {
         System.out.println(generatedString);
         if(imagePath==null)
         {
-            imagePath = "src/main/java/pidev/javafx/controller/reclamation/6666.png";
+            imagePath = "src/main/java/pidev/javafx/controller/reclamation/" + generatedString + ".png";
         }
 
         // Call the onTextChanged function here
