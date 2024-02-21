@@ -113,6 +113,7 @@ public class PopUpModifierPostController {
             imgPost.setImage(img);
             addImgBtn.setText("ajouter une photo");
         }
+
         nbReaction = post.getTotalReactions();
         nbComments = post.getNbComments();
     }
