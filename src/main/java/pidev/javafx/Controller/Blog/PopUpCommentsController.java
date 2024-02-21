@@ -18,6 +18,7 @@ import pidev.javafx.Services.ReactionService;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -48,6 +49,7 @@ public class PopUpCommentsController implements Initializable {
     private ImageView CommentProp;
 
     private int id;
+    private int ConectedAccount;
     List<Comment> comments;
 
     public void setId(int id) {
@@ -72,8 +74,9 @@ public class PopUpCommentsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ConectedAccount = 6;
         BlogService blogService = new BlogService();
-        Account account = blogService.getComte(5);
+        Account account = blogService.getComte(ConectedAccount);
         Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         ProfileImg.setImage(img1);
         comments = new ArrayList<>(getComments());
@@ -98,10 +101,10 @@ public class PopUpCommentsController implements Initializable {
         commentController.getDate().setText(formattedDate);
         commentContainer.getChildren().add(vBox);
 
-        if(comment.getIdCompte() == 5){
+        if (comment.getIdCompte() == ConectedAccount) {
             commentController.getSupprimerBtn().setVisible(true);
             commentController.getModifierBtn().setVisible(true);
-        }else {
+        } else {
             commentController.getSupprimerBtn().setVisible(false);
             commentController.getModifierBtn().setVisible(false);
         }
@@ -116,6 +119,7 @@ public class PopUpCommentsController implements Initializable {
             commentContainer.getChildren().remove(vBox);
         });
     }
+
     private void loadCommentAbove(Comment comment) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/Comment.fxml"));
@@ -127,12 +131,12 @@ public class PopUpCommentsController implements Initializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(comment.getDate());
         commentController.getDate().setText(formattedDate);
-        commentContainer.getChildren().add(5,vBox);
+        commentContainer.getChildren().add(5, vBox);
 
-        if(comment.getIdCompte() == 5){
+        if (comment.getIdCompte() == ConectedAccount) {
             commentController.getSupprimerBtn().setVisible(true);
             commentController.getModifierBtn().setVisible(true);
-        }else {
+        } else {
             commentController.getSupprimerBtn().setVisible(false);
             commentController.getModifierBtn().setVisible(false);
         }
@@ -148,15 +152,9 @@ public class PopUpCommentsController implements Initializable {
         });
     }
 
-    public List<Comment> getComments(){
+    public List<Comment> getComments() {
         CommentService cs = new CommentService();
         return cs.getAll(id);
-    }
-
-
-    void onClosedBtn() {
-        Stage stage = (Stage) closeBtn.getScene().getWindow();
-        stage.close();
     }
 
     public void getData(int idPost) {
@@ -174,10 +172,10 @@ public class PopUpCommentsController implements Initializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());
         date.setText(formattedDate);
-        if(post.getImage() != null && !post.getImage().isEmpty()){
+        if (post.getImage() != null && !post.getImage().isEmpty()) {
             img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
-        }else{
+        } else {
             //popUpVbox.setPrefHeight(popUpVbox.getPrefHeight() - imgPost.getFitHeight());
             imgPost.setVisible(false);
             imgPost.setManaged(false);
@@ -196,7 +194,7 @@ public class PopUpCommentsController implements Initializable {
         comment.setDate(timestamp);
         comment.setCaption(CommentText.getText());
         comment.setIdPost(id);
-        comment.setIdCompte(5);
+        comment.setIdCompte(ConectedAccount);
 
         cs.ajouterComment(comment);
         comment.setId(cs.getLastId());

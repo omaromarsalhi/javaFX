@@ -11,8 +11,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Services.BlogService;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,6 +40,8 @@ public class PopUpModifierPostController {
     private Button publierBtn;
     @FXML
     private Label dateLabel;
+    @FXML
+    private ImageView AccountImg;
 
 
     String SourceString;
@@ -51,20 +55,20 @@ public class PopUpModifierPostController {
     public int getId() {
         return idPostUpadte;
     }
+
     public Button getPublierBtn() {
         return publierBtn;
     }
+
     public int getIdCompteUpdate() {
         return idCompteUpdate;
     }
 
-    @FXML
-    void onClosedBtn(MouseEvent event) {
-        Stage stage = (Stage) closeBtn.getScene().getWindow();
-        stage.close();
+    public ImageView getCloseBtn() {
+        return closeBtn;
     }
 
-     public void onAddImgBtnClicked(MouseEvent event) {
+    public void onAddImgBtnClicked(MouseEvent event) {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle("Choisisez une image");
@@ -79,6 +83,7 @@ public class PopUpModifierPostController {
             addImgBtn.setText(SourceString);
             String correctedPath = SourceString.replace("\\", "/");
             Image img = new Image(new File(correctedPath).toURI().toString());
+            System.out.println(correctedPath);
             imgPost.setImage(img);
         }
     }
@@ -86,7 +91,11 @@ public class PopUpModifierPostController {
     public void getData(int idPost) {
         BlogService bs = new BlogService();
         Post post = bs.getOneById(idPost);
+        Account account = bs.getComte(post.getIdCompte());
         Image img;
+
+        Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        AccountImg.setImage(img1);
 
         idPostUpadte = idPost;
         idCompteUpdate = post.getIdCompte();
@@ -95,14 +104,13 @@ public class PopUpModifierPostController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());
         dateLabel.setText(formattedDate);
-        if(post.getImage() != null && !post.getImage().isEmpty()){
+        if (post.getImage() != null && !post.getImage().isEmpty()) {
             img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
             addImgBtn.setText("changer la photo");
-        }else{
-            popUpVbox.setPrefHeight(popUpVbox.getPrefHeight() - imgPost.getFitHeight());
-            imgPost.setVisible(false);
-            imgPost.setManaged(false);
+        } else {
+            img = new Image(getClass().getResourceAsStream("/blogImgPosts/aucuneImg.png"));
+            imgPost.setImage(img);
             addImgBtn.setText("ajouter une photo");
         }
         nbReaction = post.getTotalReactions();
@@ -111,6 +119,7 @@ public class PopUpModifierPostController {
 
     @FXML
     void modifierPost() {
+
         String randomFileName = null;
         Post p = new Post();
         BlogService bs = new BlogService();
@@ -121,17 +130,17 @@ public class PopUpModifierPostController {
         Timestamp timestamp = new Timestamp(currentTimeMillis);
         p.setDate(timestamp);
 
-        if(caption.getText().isEmpty()) {
+        if (caption.getText().isEmpty()) {
             p.setCaption(null);
-        }else {
+        } else {
             p.setCaption(caption.getText());
         }
-        if(SourceString != null) {
+        if (SourceString != null) {
             try {
                 Path sourcePath = Paths.get(SourceString);
                 if (SourceString.endsWith(".png")) {
                     randomFileName = UUID.randomUUID().toString() + ".png";
-                }else {
+                } else {
                     randomFileName = UUID.randomUUID().toString() + ".jpg";
                 }
                 Path destinationPath = Paths.get(destinationString, randomFileName);
@@ -141,14 +150,13 @@ public class PopUpModifierPostController {
                 System.err.println(e.getMessage());
             }
             p.setImage(imgPath);
-        }else {
+        } else {
             p.setImage(imgPath);
         }
         p.setNbComments(nbComments);
         p.setTotalReactions(nbReaction);
         bs.modifier(p);
         SourceString = null;
-        Stage stage = (Stage) closeBtn.getScene().getWindow();
-        stage.close();
     }
+
 }

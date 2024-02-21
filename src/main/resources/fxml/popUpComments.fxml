@@ -109,7 +109,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="35.0" prefWidth="82.0" spacing="5.0">
                                  <children>
-                                    <HBox fx:id="iconLikeContainer" alignment="CENTER" prefHeight="36.0" prefWidth="120.0" spacing="5.0">
+                                    <HBox fx:id="iconLikeContainer" alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="120.0" spacing="5.0">
                                        <children>
                                           <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

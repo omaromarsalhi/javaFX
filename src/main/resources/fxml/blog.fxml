@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="blogPane" prefHeight="200.0" prefWidth="200.0" styleClass="mainWindow" stylesheets="@../Style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.BlogController">
+<AnchorPane fx:id="blogPane" prefHeight="200.0" prefWidth="200.0" styleClass="mainWindow" stylesheets="@../Style/Blog.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.BlogController">
    <children>
       <VBox layoutX="1.0" layoutY="-1.0" spacing="5.0">
          <children>
@@ -83,12 +83,12 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <VBox fx:id="vboxStatutBlog" prefHeight="130.0" prefWidth="744.0" spacing="15.0" styleClass="post-background" stylesheets="@../Style/style.css">
+                        <VBox fx:id="vboxStatutBlog" prefHeight="130.0" prefWidth="744.0" spacing="15.0" styleClass="post-background" stylesheets="@../Style/Blog.css">
                            <children>
                               <HBox alignment="TOP_CENTER" prefHeight="66.0" prefWidth="921.0" spacing="10.0">
                                  <children>
                                     <ImageView fx:id="ProfileImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                                    <TextArea fx:id="captionText" prefHeight="44.0" prefWidth="626.0" promptText="Exprimer vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" styleClass="text-area" stylesheets="@../Style/style.css" wrapText="true">
+                                    <TextArea fx:id="captionText" prefHeight="44.0" prefWidth="626.0" promptText="Exprimer vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" styleClass="text-area" stylesheets="@../Style/Blog.css" wrapText="true">
                                        <font>
                                           <Font size="14.0" />
                                        </font>
@@ -105,9 +105,6 @@
                                              </image>
                                           </ImageView>
                                        </graphic>
-                                       <font>
-                                          <Font size="18.0" />
-                                       </font>
                                     </Button>
                                     <Button fx:id="publierBtn" mnemonicParsing="false" onMouseClicked="#onPublierClicked" prefHeight="34.0" prefWidth="109.0" styleClass="publierBtn" text="Publier" textFill="#fafafa" />
                                  </children>

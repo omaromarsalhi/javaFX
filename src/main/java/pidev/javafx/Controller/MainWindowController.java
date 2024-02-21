@@ -54,5 +54,4 @@ public class MainWindowController {
         AnchorPane blogPane = loader.load();
         mainBorderPain.getChildren().setAll(blogPane);
     }
-
 }

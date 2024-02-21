@@ -25,7 +25,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="closeBtn" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onClosedBtn" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="closeBtn" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../icon/closePopUp.png" />
                      </image>
@@ -50,11 +50,7 @@
                   </Label>
                   <HBox alignment="TOP_RIGHT" prefHeight="63.0" prefWidth="438.0" spacing="10.0">
                      <children>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../img/profilImg.png" />
-                           </image>
-                        </ImageView>
+                        <ImageView fx:id="AccountImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
                         <TextArea fx:id="caption" maxWidth="400.0" prefHeight="63.0" prefWidth="350.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;">
                            <HBox.margin>
                               <Insets right="18.0" />

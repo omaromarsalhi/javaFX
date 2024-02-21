@@ -5,8 +5,8 @@ import javafx.animation.TranslateTransition;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -21,7 +21,6 @@ import pidev.javafx.Models.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.Models.Reactions;
 import pidev.javafx.Services.BlogService;
@@ -59,6 +58,7 @@ public class BlogController implements Initializable {
     private TextArea captionText;
     @FXML
     private ImageView ProfileImg;
+    private int ConnectedAccount;
 
     List<Post> posts;
 
@@ -68,27 +68,28 @@ public class BlogController implements Initializable {
     final String destinationString = "src/main/resources/blogImgPosts";
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle)  {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        ConnectedAccount = 6;
         choiceBox.getItems().addAll("Tous", "Municipalité", "Citoyens");
         choiceBox.setValue("Tous");
 
         BlogService blogService = new BlogService();
-        Account account = blogService.getComte(5);
+        Account account = blogService.getComte(ConnectedAccount);
         Image img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         ProfileImg.setImage(img);
 
         posts = new ArrayList<>(getPost());
 
-            for (Post post : posts) {
-                try {
-                    loadPost(post);
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
-                }
+        for (Post post : posts) {
+            try {
+                loadPost(post);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
             }
+        }
     }
 
-    public void loadPost (Post post) throws IOException{
+    public void loadPost(Post post) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
         VBox vBox = fxmlLoader.load();
@@ -98,12 +99,14 @@ public class BlogController implements Initializable {
         postController.setData(post, post.getIdCompte());
         postsContainer.getChildren().add(vBox);
 
-        if(post.getIdCompte() == 5){postController.getMenuBtnPost().setVisible(true);
-        }else {postController.getMenuBtnPost().setVisible(false);}
+        if (post.getIdCompte() == ConnectedAccount) {
+            postController.getMenuBtnPost().setVisible(true);
+        } else {
+            postController.getMenuBtnPost().setVisible(false);
+        }
 
         postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
-            supprimerPost(post.getId());
-            postsContainer.getChildren().remove(vBox);
+            supprimerPost(post.getId(), postController, vBox);
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
@@ -112,27 +115,27 @@ public class BlogController implements Initializable {
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post.getId(), 5, postController);
+            addOrUpdateReaction("Angry", post.getId(), ConnectedAccount, postController);
         });
         postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
             postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post.getId(), 5, postController);
+            addOrUpdateReaction("Haha", post.getId(), ConnectedAccount, postController);
         });
         postController.getImgLike().setOnMouseClicked(mouseEvent -> {
             postController.onLikePressed();
-            addOrUpdateReaction("Like", post.getId(), 5, postController);
+            addOrUpdateReaction("Like", post.getId(), ConnectedAccount, postController);
         });
         postController.getImgSad().setOnMouseClicked(mouseEvent -> {
             postController.onSadClicked();
-            addOrUpdateReaction("Sad", post.getId(), 5, postController);
+            addOrUpdateReaction("Sad", post.getId(), ConnectedAccount, postController);
         });
         postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
             boolean testTimer = postController.onLikeContainerMouseReleased();
-            if(testTimer) {
-                addOrDeleteLike(post.getId(), postController, 5);
+            if (testTimer) {
+                addOrDeleteLike(post.getId(), postController, ConnectedAccount);
             }
         });
-        setReaction(postController, post.getId(), 5);
+        setReaction(postController, post.getId(), ConnectedAccount);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
             afficherPopUpComments(postController, post.getId());
@@ -140,7 +143,7 @@ public class BlogController implements Initializable {
         setNbComments(postController, post.getId());
     }
 
-    public void loadPostAbove(Post post) throws IOException{
+    public void loadPostAbove(Post post) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
         VBox vBox = fxmlLoader.load();
@@ -149,11 +152,14 @@ public class BlogController implements Initializable {
         postController.setData(post, post.getIdCompte());
         postsContainer.getChildren().add(2, vBox);
 
-        if(post.getIdCompte() == 5){postController.getMenuBtnPost().setVisible(true);
-        }else {postController.getMenuBtnPost().setVisible(false);}
+        if (post.getIdCompte() == ConnectedAccount) {
+            postController.getMenuBtnPost().setVisible(true);
+        } else {
+            postController.getMenuBtnPost().setVisible(false);
+        }
 
         postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
-            supprimerPost(post.getId());
+            supprimerPost(post.getId(), postController, vBox);
             postsContainer.getChildren().remove(vBox);
         });
 
@@ -163,27 +169,27 @@ public class BlogController implements Initializable {
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post.getId(), 5, postController);
+            addOrUpdateReaction("Angry", post.getId(), ConnectedAccount, postController);
         });
         postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
             postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post.getId(), 5, postController);
+            addOrUpdateReaction("Haha", post.getId(), ConnectedAccount, postController);
         });
         postController.getImgLike().setOnMouseClicked(mouseEvent -> {
             postController.onLikePressed();
-            addOrUpdateReaction("Like", post.getId(), 5, postController);
+            addOrUpdateReaction("Like", post.getId(), ConnectedAccount, postController);
         });
         postController.getImgSad().setOnMouseClicked(mouseEvent -> {
             postController.onSadClicked();
-            addOrUpdateReaction("Sad", post.getId(), 5, postController);
+            addOrUpdateReaction("Sad", post.getId(), ConnectedAccount, postController);
         });
         postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
             boolean testTimer = postController.onLikeContainerMouseReleased();
-            if(testTimer) {
-                addOrDeleteLike(post.getId(), postController, 5);
+            if (testTimer) {
+                addOrDeleteLike(post.getId(), postController, ConnectedAccount);
             }
         });
-        setReaction(postController, post.getId(), 5);
+        setReaction(postController, post.getId(), ConnectedAccount);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
             afficherPopUpComments(postController, post.getId());
@@ -191,7 +197,7 @@ public class BlogController implements Initializable {
         setNbComments(postController, post.getId());
     }
 
-    public List<Post> getPost(){
+    public List<Post> getPost() {
         BlogService bs = new BlogService();
         return bs.getAll();
     }
@@ -215,67 +221,98 @@ public class BlogController implements Initializable {
 
     @FXML
     void onPublierClicked(MouseEvent event) {
-        String imgPath = null;
-        String randomFileName = null;
-        Post p = new Post();
-        BlogService bs = new BlogService();
+        if (!captionText.getText().isEmpty() || SourceString != null) {
+            String imgPath = null;
+            String randomFileName = null;
+            Post p = new Post();
+            BlogService bs = new BlogService();
 
-        long currentTimeMillis = System.currentTimeMillis();
-        Timestamp timestamp = new Timestamp(currentTimeMillis);
-        p.setDate(timestamp);
+            long currentTimeMillis = System.currentTimeMillis();
+            Timestamp timestamp = new Timestamp(currentTimeMillis);
+            p.setDate(timestamp);
 
-        if(captionText.getText().isEmpty()) {
-            p.setCaption(null);
-        }else {
-            p.setCaption(captionText.getText());
-        }
-
-        if(SourceString != null) {
-            try {
-                Path sourcePath = Paths.get(SourceString);
-                if (SourceString.endsWith(".png")) {
-                    randomFileName = UUID.randomUUID().toString() + ".png";
-                }else {
-                    randomFileName = UUID.randomUUID().toString() + ".jpg";
-                }
-                Path destinationPath = Paths.get(destinationString, randomFileName);
-                Files.copy(sourcePath, destinationPath);
-                imgPath = "/blogImgPosts" + "/" + randomFileName;
-            } catch (IOException e) {
-                System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
+            if (captionText.getText().isEmpty()) {
+                p.setCaption(null);
+            } else {
+                p.setCaption(captionText.getText());
             }
-            p.setImage(imgPath);
-        }else {
-            p.setImage(imgPath);
-        }
-        p.setIdCompte(5);
-        p.setNbComments(0);
-        p.setTotalReactions(0);
-        bs.ajouter(p);
-        captionText.clear();
-        SourceString = null;
-        addImgBtn.setText("Ajouter une Photo");
-        p.setId(bs.getLastId());
-        posts.add(0, p);
-        try {
-            loadPostAbove(p);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+
+            if (SourceString != null) {
+                try {
+                    Path sourcePath = Paths.get(SourceString);
+                    if (SourceString.endsWith(".png")) {
+                        randomFileName = UUID.randomUUID().toString() + ".png";
+                    } else {
+                        randomFileName = UUID.randomUUID().toString() + ".jpg";
+                    }
+                    Path destinationPath = Paths.get(destinationString, randomFileName);
+                    Files.copy(sourcePath, destinationPath);
+                    imgPath = "/blogImgPosts" + "/" + randomFileName;
+                } catch (IOException e) {
+                    System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
+                }
+                p.setImage(imgPath);
+            } else {
+                p.setImage(imgPath);
+            }
+            p.setIdCompte(ConnectedAccount);
+            p.setNbComments(0);
+            p.setTotalReactions(0);
+            bs.ajouter(p);
+            captionText.clear();
+            SourceString = null;
+            addImgBtn.setText("Ajouter une Photo");
+            p.setId(bs.getLastId());
+            posts.add(0, p);
+            try {
+                loadPostAbove(p);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
-    public void supprimerPost(int idPost) {
-        BlogService bs = new BlogService();
-        bs.supprimer(idPost);
-        Optional<Post> optionalPost = posts.stream()
-                .filter(obj -> obj.getId() == idPost)
-                .findFirst();
-        if (optionalPost.isPresent()) {
-            Post p = optionalPost.get();
-            posts.remove(p);
-        } else {
-            System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
-        }
+
+
+    public void supprimerPost(int idPost, PostController postController, VBox vBox) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation de suppression");
+        alert.setHeaderText(null);
+        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce post ?");
+        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/icon/supp.png")));
+        alert.setGraphic(icon);
+        Stage primaryStage = (Stage) vBox.getScene().getWindow(); // Remplacez "yourParentNode" par le noeud parent de votre scène principale
+        alert.initOwner(primaryStage);
+        alert.initStyle(StageStyle.TRANSPARENT);
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/Style/alerte.css").toExternalForm());
+        dialogPane.getStyleClass().add("dialog-pane");
+
+        // Optionnel : Personnaliser le bouton pour une confirmation plus claire
+        ButtonType buttonTypeOui = new ButtonType("Oui");
+        ButtonType buttonTypeNon = new ButtonType("Non");
+        alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
+
+        // Afficher l'alerte et attendre la réponse de l'utilisateur
+        alert.showAndWait().ifPresent(response -> {
+            if (response == buttonTypeOui) {
+                // L'utilisateur confirme la suppression
+                BlogService bs = new BlogService();
+                bs.supprimer(idPost);
+                Optional<Post> optionalPost = posts.stream()
+                        .filter(obj -> obj.getId() == idPost)
+                        .findFirst();
+                if (optionalPost.isPresent()) {
+                    Post p = optionalPost.get();
+                    posts.remove(p);
+                    postsContainer.getChildren().remove(vBox);
+                } else {
+                    System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
+                }
+            } else {
+                System.out.println("Suppression annulée");
+            }
+        });
     }
 
     public void afficherPopupModifier(int idPost, VBox postsContainer, VBox postVbox) {
@@ -292,9 +329,13 @@ public class BlogController implements Initializable {
             stage.setTitle("Modifier la Publication");
             sc.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
-
-            parent.setVisible(false);
+            Scene scene = postsContainer.getScene();
+            Stage mainWindow = (Stage) scene.getWindow();
+            BoxBlur blur = new BoxBlur(5, 5, 3);
+            stage.initOwner(mainWindow);
             stage.show();
+            scene.getRoot().setEffect(blur);
+            parent.setVisible(false);
             stage.setY(200);
             stage.setX(650);
             parent.setVisible(true);
@@ -309,7 +350,7 @@ public class BlogController implements Initializable {
                 popUpController.modifierPost();
                 postsContainer.getChildren().remove(postVbox);
                 int idPostUpdeted = popUpController.getId();
-                Post psotUpdeted =  bs.getOneById(idPostUpdeted);
+                Post psotUpdeted = bs.getOneById(idPostUpdeted);
                 Optional<Post> optionalPost = posts.stream()
                         .filter(obj -> obj.getId() == idPostUpdeted)
                         .findFirst();
@@ -325,6 +366,25 @@ public class BlogController implements Initializable {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+                TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
+                closeTransition.setFromY(0);
+                closeTransition.setToY(600);
+                closeTransition.setOnFinished(event -> {
+                    stage.close();
+                    scene.getRoot().setEffect(null); //
+                });
+                closeTransition.play();
+            });
+
+            popUpController.getCloseBtn().setOnMouseClicked(mouseEvent -> {
+                TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
+                closeTransition.setFromY(0);
+                closeTransition.setToY(600);
+                closeTransition.setOnFinished(event -> {
+                    stage.close();
+                    scene.getRoot().setEffect(null); //
+                });
+                closeTransition.play();
             });
 
         } catch (Exception e) {
@@ -332,22 +392,23 @@ public class BlogController implements Initializable {
         }
     }
 
-    public void addOrUpdateReaction (String type, int idPost, int idCompte, PostController postController) {
+    public void addOrUpdateReaction(String type, int idPost, int idCompte, PostController postController) {
         ReactionService rs = new ReactionService();
-        if(rs.getReaction(idPost, idCompte) == null){
+        if (rs.getReaction(idPost, idCompte) == null) {
             rs.ajouterReaction(type, idPost, idCompte);
-        }else {
+        } else {
             rs.modifierReaction(idPost, type, idCompte);
         }
         postController.setNbReactions(rs.nbrReaction(idPost));
         ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
         postController.setIconReaction(types);
     }
+
     public void addOrDeleteLike(int idPost, PostController postController, int idCompte) {
         ReactionService rs = new ReactionService();
-        if(rs.getReaction(idPost, idCompte) == null){
+        if (rs.getReaction(idPost, idCompte) == null) {
             rs.ajouterReaction("Like", idPost, idCompte);
-        }else {
+        } else {
             rs.enleverReaction(idPost, idCompte);
             postController.setReaction(Reactions.NON);
         }
@@ -356,10 +417,10 @@ public class BlogController implements Initializable {
         postController.setIconReaction(types);
     }
 
-    public void setReaction (PostController postController, int idPost, int idCompte) {
+    public void setReaction(PostController postController, int idPost, int idCompte) {
         ReactionService rs = new ReactionService();
         String reaction = rs.getReaction(idPost, idCompte);
-        if(reaction == null){
+        if (reaction == null) {
             postController.setReaction(Reactions.NON);
         } else if (reaction.equals("Haha")) {
             postController.setReaction(Reactions.HAHA);
@@ -376,7 +437,7 @@ public class BlogController implements Initializable {
 
     }
 
-    public void setNbComments(PostController postController, int idPost){
+    public void setNbComments(PostController postController, int idPost) {
         CommentService cs = new CommentService();
         postController.setNbComments(cs.nbrComment(idPost));
     }
@@ -396,8 +457,13 @@ public class BlogController implements Initializable {
             stage.setTitle("Modifier la Publication");
             sc.setFill(Color.TRANSPARENT);
             stage.initStyle(StageStyle.TRANSPARENT);
-            stage.show();
+            Scene scene = postsContainer.getScene();
+            Stage mainWindow = (Stage) scene.getWindow();
+            BoxBlur blur = new BoxBlur(5, 5, 3);
+            stage.initOwner(mainWindow);
 
+            stage.show();
+            scene.getRoot().setEffect(blur);
             parent.setVisible(false);
             stage.show();
             stage.setY(200);
@@ -414,10 +480,17 @@ public class BlogController implements Initializable {
                 setNbComments(postController, idPost);
             });
             popUpCommentsController.getCloseBtn().setOnMouseClicked(mouseEvent -> {
-                popUpCommentsController.onClosedBtn();
-                setNbComments(postController, idPost);
+                TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
+                closeTransition.setFromY(0);
+                closeTransition.setToY(600);
+                closeTransition.setOnFinished(event -> {
+                    setNbComments(postController, idPost);
+                    stage.close();
+                    scene.getRoot().setEffect(null);
+                });
+                closeTransition.play();
             });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

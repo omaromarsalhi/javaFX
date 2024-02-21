@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="postContainer" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="739.0" spacing="10.0" styleClass="post-background" stylesheets="@../Style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.PostController">
+<VBox fx:id="postContainer" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="501.0" prefWidth="739.0" spacing="10.0" styleClass="post-background" stylesheets="@../Style/Blog.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.PostController">
     <children>
         <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0">
             <children>
@@ -96,7 +96,7 @@
                 <Insets left="20.0" right="20.0" />
             </padding>
         </HBox>
-        <Label fx:id="caption" maxWidth="1.7976931348623157E308" prefWidth="699.0">
+        <Label fx:id="caption" maxWidth="1.7976931348623157E308" prefWidth="699.0" wrapText="true">
             <VBox.margin>
                 <Insets left="20.0" right="20.0" />
             </VBox.margin>
@@ -118,21 +118,9 @@
                                                 <Image url="@../img/ic_like.png" />
                                             </image>
                                         </ImageView>
-                              <ImageView fx:id="IconReaction2" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/ic_like.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="IconReaction3" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/ic_like.png" />
-                                 </image>
-                              </ImageView>
-                              <ImageView fx:id="IconReaction4" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/ic_like.png" />
-                                 </image>
-                              </ImageView>
+                              <ImageView fx:id="IconReaction2" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="IconReaction3" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="IconReaction4" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" />
                                       <Label fx:id="nbReactions" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="29.0" textFill="#606266">
                                           <font>
                                               <Font name="Segoe UI Historic" size="18.0" />
@@ -188,9 +176,9 @@
             <Insets />
          </VBox.margin>
         </StackPane>
-        <HBox maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="739.0" styleClass="top-border" stylesheets="@../Style/style.css">
+        <HBox alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="35.0" prefWidth="668.0" spacing="150.0">
             <children>
-                <HBox fx:id="likeContainer" alignment="CENTER" onMousePressed="#onLikeContainerPressed" prefWidth="0.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                <HBox fx:id="likeContainer" alignment="CENTER" maxWidth="120.0" onMousePressed="#onLikeContainerPressed" prefHeight="26.0" prefWidth="120.0" spacing="10.0" styleClass="containers" HBox.hgrow="ALWAYS">
                     <children>
                         <ImageView fx:id="imgReaction" fitHeight="23.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -204,10 +192,10 @@
                         </Label>
                     </children>
                <HBox.margin>
-                  <Insets left="105.0" />
+                  <Insets />
                </HBox.margin>
                 </HBox>
-                <HBox fx:id="CommentContainer" alignment="CENTER" prefHeight="30.0" prefWidth="0.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                <HBox fx:id="CommentContainer" alignment="CENTER" maxWidth="120.0" prefHeight="26.0" prefWidth="0.0" spacing="10.0" styleClass="containers" HBox.hgrow="ALWAYS">
                     <children>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -220,11 +208,8 @@
                             </font>
                         </Label>
                     </children>
-               <padding>
-                  <Insets right="10.0" />
-               </padding>
                <HBox.margin>
-                  <Insets right="100.0" />
+                  <Insets />
                </HBox.margin>
                 </HBox>
             </children>

@@ -1,9 +1,11 @@
 package pidev.javafx.Controller.Blog;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.Priority;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Models.Reactions;
@@ -158,8 +160,6 @@ public class PostController extends VBox implements Initializable {
         IconReaction3.setManaged(false);
         IconReaction4.setVisible(false);
         IconReaction4.setManaged(false);
-
-
     }
 
     @Override
@@ -246,14 +246,6 @@ public class PostController extends VBox implements Initializable {
         imgReaction.setImage(image);
         reactionName.setText(reaction.getName());
         reactionName.setTextFill(Color.web(reaction.getColor()));
-        /*if(currentReaction == Reactions.NON){
-            post.setTotalReactions(post.getTotalReactions() + 1);
-        }
-        currentReaction = reaction;
-        if(currentReaction == Reactions.NON){
-            post.setTotalReactions(post.getTotalReactions() - 1);
-        }*/
-       // nbReactions.setText(String.valueOf(post.getTotalReactions()));
     }
 
     public void setIconReaction(ArrayList<String> types){
@@ -327,19 +319,23 @@ public class PostController extends VBox implements Initializable {
 
         if(post.getCaption() != null && !post.getCaption().isEmpty()){
             caption.setText(post.getCaption());
-        }else{
-            postContainer.setPrefHeight(postContainer.getPrefHeight() - (caption.getPrefHeight() - 10));
-            caption.setVisible(false);
-            caption.setManaged(false);
-        }
+            caption.applyCss();
+            Platform.runLater(() -> {
+                double captionHeight = caption.getBoundsInLocal().getHeight();
+                postContainer.setPrefHeight(postContainer.getPrefHeight() + captionHeight);
+                VBox.setVgrow(caption, Priority.ALWAYS);
+            });
+
+        }else{caption.setVisible(false);}
 
         if(post.getImage() != null && !post.getImage().isEmpty()){
             img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
         }else{
-            postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight());
             imgPost.setVisible(false);
             imgPost.setManaged(false);
+            // Réduisez la hauteur du VBox de la hauteur de l'ImageView
+            postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight() - 14);
         }
 
         nbReactions.setText(String.valueOf(post.getTotalReactions()));
