@@ -18,8 +18,8 @@
                   <Label fx:id="subject" layoutX="194.0" layoutY="63.0" prefHeight="17.0" prefWidth="99.0" text="Subject" />
                   <Label fx:id="titre" layoutX="95.0" layoutY="92.0" prefHeight="17.0" prefWidth="99.0" text="titre" />
                   <Label fx:id="descirption" layoutX="27.0" layoutY="121.0" prefHeight="17.0" prefWidth="99.0" text="Description" />
-                  <Button layoutX="235.0" layoutY="161.0" mnemonicParsing="false" text="Button" />
-                  <Button layoutX="159.0" layoutY="161.0" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="update" layoutX="235.0" layoutY="161.0" mnemonicParsing="false" text="Update" />
+                  <Button fx:id="Delete" layoutX="159.0" layoutY="161.0" mnemonicParsing="false" text="Delete" />
                </children>
             </Pane>
          </children>

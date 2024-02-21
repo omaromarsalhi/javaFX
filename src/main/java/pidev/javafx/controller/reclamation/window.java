@@ -1,10 +1,11 @@
 package pidev.javafx.controller.reclamation;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
 import java.io.FileInputStream;
@@ -15,20 +16,40 @@ import java.text.SimpleDateFormat;
 public class window {
     @FXML
     private Label date;
-
     @FXML
     private Label descirption;
-
     @FXML
     private Label privatekey;
-
     @FXML
     private Label subject;
-
     @FXML
     private Label titre;
     @FXML
     private ImageView imagePath;
+    @FXML
+    private Button update;
+    @FXML
+    private Button Delete;
+
+    private reponse reponseController;
+    private  Reclamation reclamation;
+
+    public void setReponseController(reponse reponseController, Reclamation reclamation) {
+    this.reclamation=reclamation;
+        this.reponseController = reponseController;
+        System.out.println("setReponseController called");
+
+    }
+
+
+
+    public void initialize() {
+        update.setOnAction((ActionEvent event) -> {
+            displayDetails();
+        });
+    }
+
+
 
     public void setReclamation(Reclamation reclamation) {
         privatekey.setText(reclamation.getPrivateKey());
@@ -36,7 +57,6 @@ public class window {
         titre.setText(reclamation.getTitre());
         descirption.setText(reclamation.getDescription());
         ImageView imageView = new ImageView();
-
         imageView.setFitHeight(50);
         imageView.setFitWidth(50);
         if ( reclamation.getImagePath() != null) {
@@ -50,15 +70,8 @@ public class window {
         }
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
-
-        // Add an action listener to the delete button
     }
-
-    public class ReclamationItemController {
-        private Reclamation reclamation; // The Reclamation object for this item
-        private ServiceReclamation rs = new ServiceReclamation();
-
+    public void displayDetails() {
+        reponseController.displayReclamationDetails(reclamation);
     }
-
-
 }

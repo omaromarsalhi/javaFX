@@ -1,8 +1,12 @@
 package pidev.javafx.controller.reclamation;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
@@ -16,7 +20,55 @@ import java.util.ResourceBundle;
 
 public class reponse implements Initializable {
     @FXML
+    private TextArea description;
+
+    @FXML
+    private TextField privateKey;
+
+    @FXML
     private VBox reclamationcontrainer;
+
+    @FXML
+    private TextField subject;
+
+    @FXML
+    private TextField title;
+    private String reponse;
+
+
+
+    ServiceReclamation si = new ServiceReclamation();
+
+
+    @FXML
+    void modifer_Reclamation(ActionEvent event) {
+
+        Reclamation   rec = new Reclamation(privateKey.getText(), subject.getText(), title.getText(),description.getText());
+        si.modifier(rec);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Reclmation has been modified !");
+
+        // Show the alert
+        alert.show();
+        clearFields();
+    }
+
+
+
+
+
+
+
+
+    private void clearFields() {
+        privateKey.setText("");
+        title.setText("");
+        subject.setText("");
+        description.setText("");
+    }
+
     private List<Reclamation> reclamations;
 
     @Override
@@ -30,6 +82,16 @@ public class reponse implements Initializable {
             }
         }
     }
+    public void displayReclamationDetails(Reclamation reclamation) {
+        System.out.println("reponseController: " + reponse);
+
+        // Display the details in the text fields
+        privateKey.setText(reclamation.getPrivateKey());
+        subject.setText(reclamation.getSubject());
+        title.setText(reclamation.getTitre());
+        description.setText(reclamation.getDescription());
+    }
+
 
     public List<Reclamation> getReclamations(){
         ServiceReclamation bs = new ServiceReclamation();
@@ -38,6 +100,8 @@ public class reponse implements Initializable {
 
 
     private void loadReclamation(Reclamation reclamation) throws IOException {
+        System.out.println("loadReclamation called");
+
         FXMLLoader fxmlLoader = new FXMLLoader();
 
         fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/window.fxml"));
@@ -49,6 +113,8 @@ public class reponse implements Initializable {
             throw new RuntimeException(e);
         }
         window si = fxmlLoader.getController();
+        si.setReponseController(this, reclamation);  // Add this line
+
         si.setReclamation(reclamation);
         reclamationcontrainer.getChildren().add(pane);
     }
