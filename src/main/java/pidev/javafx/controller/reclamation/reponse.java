@@ -39,7 +39,9 @@ public class reponse implements Initializable {
 
     private void loadReclamation(Reclamation reclamation) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
+
         fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/window.fxml"));
+
         Pane pane = null;
         try {
             pane = fxmlLoader.load();
@@ -47,6 +49,7 @@ public class reponse implements Initializable {
             throw new RuntimeException(e);
         }
         window si = fxmlLoader.getController();
+        si.setReclamation(reclamation);
         reclamationcontrainer.getChildren().add(pane);
     }
 }

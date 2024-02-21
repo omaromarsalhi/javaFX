@@ -29,41 +29,35 @@ public class window {
     private Label titre;
     @FXML
     private ImageView imagePath;
+
+    public void setReclamation(Reclamation reclamation) {
+        privatekey.setText(reclamation.getPrivateKey());
+        subject.setText(reclamation.getSubject());
+        titre.setText(reclamation.getTitre());
+        descirption.setText(reclamation.getDescription());
+        ImageView imageView = new ImageView();
+
+        imageView.setFitHeight(50);
+        imageView.setFitWidth(50);
+        if ( reclamation.getImagePath() != null) {
+            try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
+                Image image = new Image(is);
+                imageView.setImage(image);
+                imagePath.setImage(imageView.getImage());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
+
+        // Add an action listener to the delete button
+    }
+
     public class ReclamationItemController {
         private Reclamation reclamation; // The Reclamation object for this item
         private ServiceReclamation rs = new ServiceReclamation();
 
-
-
-
-        // Method to set the Reclamation data for this item
-        public void setReclamation(Reclamation reclamation) {
-            this.reclamation = reclamation;
-
-            // Set the labels to the reclamation's data
-            privatekey.setText(reclamation.getPrivateKey());
-            subject.setText(reclamation.getSubject());
-            titre.setText(reclamation.getTitre());
-            descirption.setText(reclamation.getDescription());
-            ImageView imageView = new ImageView();
-
-            imageView.setFitHeight(50);
-            imageView.setFitWidth(50);
-            if ( reclamation.getImagePath() != null) {
-                try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
-                    Image image = new Image(is);
-                    imageView.setImage(image);
-                    imagePath.setImage(imageView.getImage());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
-
-            // Add an action listener to the delete button
-
-        }
     }
 
 
