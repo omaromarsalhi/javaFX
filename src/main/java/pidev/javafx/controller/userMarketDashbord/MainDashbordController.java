@@ -11,20 +11,26 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import pidev.javafx.controller.chat.ChatController;
 import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.crud.marketplace.CrudLocalWrapper;
 import pidev.javafx.controller.marketPlace.*;
 import pidev.javafx.model.MarketPlace.Favorite;
+import pidev.javafx.test.Main;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.tools.MyTools;
@@ -74,6 +80,8 @@ public class MainDashbordController implements Initializable {
     private Timer animTimer;
     private String searchBarState;
     private GridPane gridPane4Favorite;
+    private double xOffset = 0;
+    private double yOffset = 0;
 
 
 
@@ -107,8 +115,9 @@ public class MainDashbordController implements Initializable {
         animTimer = new Timer();
         searchBarState="closed";
         searchTextField.setVisible( false );
-        searchBtn.setStyle( "-fx-border-radius: 20;" );
-        searchHbox.setOnMouseEntered(event -> animateSearchBar());
+        searchBtn.setStyle( "-fx-border-radius: 20;" +
+                "-fx-background-radius:20;" );
+        searchHbox.setOnMouseClicked(event -> animateSearchBar());
 
         eventHandler4ScrollPane = MouseEvent::consume;
 
@@ -162,7 +171,45 @@ public class MainDashbordController implements Initializable {
             loadFavorite();
             EventBus.getInstance().publish( "showFavorite",event);
         });
+
+        var openChat=new MenuItem("open chat ",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        menuBar.getMenus().get( 3 ).getItems().add(openChat);
+        openChat.setOnAction( event -> openChatWindow() );
     }
+
+
+    private void openChatWindow() {
+
+        Stage newStage = new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "/fxml/chat/seperatedChat.fxml" ));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        ChatController controller=fxmlLoader.getController();
+        controller.initliazeData();
+        controller.getExitBtn().setOnMouseClicked( event -> newStage.close() );
+//        controller.getExitBtn().setOnMouseClicked(event ->  System.exit(0) );
+        controller.getContainer().setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+        });
+        controller.getContainer().setOnMouseDragged(event -> {
+            newStage.setX(event.getScreenX() - xOffset);
+            newStage.setY(event.getScreenY() - yOffset);
+        });
+        controller.loadUsers();
+        newStage.setResizable( false );
+        newStage.setOnCloseRequest(event -> System.exit(0));
+        newStage.initStyle( StageStyle.TRANSPARENT);
+        newStage.setScene(scene);
+        newStage.show();
+    }
+
+
+
 
 
     public void loadFavorite(){

@@ -2,6 +2,7 @@ package pidev.javafx.crud.marketplace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.model.Contrat.Contract;
 import pidev.javafx.model.Contrat.PaymentMethod;
 import pidev.javafx.model.MarketPlace.*;
@@ -29,7 +30,7 @@ public class CrudLocalWrapper{
                 " JOIN contracts c on t.idContract=c.idContract" +
                 " where "+id+" = ? and isdeleted = 0";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         ObservableList<LocalWrapper> wrapperList = FXCollections.observableArrayList();
         Product product=null;
         Transaction transaction=null;

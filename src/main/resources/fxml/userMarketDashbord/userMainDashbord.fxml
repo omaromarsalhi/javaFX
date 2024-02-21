@@ -65,13 +65,22 @@
          <children>
             <VBox prefHeight="171.0">
                <children>
-                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="200.0" stylesheets="@../../style/toolBarStyle.css">
+                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../style/toolBarStyle.css">
                      <children>
-                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="242.0">
+                        <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="331.0">
                           <menus>
                             <Menu mnemonicParsing="false" text="Products" />
                             <Menu mnemonicParsing="false" text="Services" />
                               <Menu mnemonicParsing="false" text="Favorite" />
+                              <Menu mnemonicParsing="false" text="Chat">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/notification.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Menu>
                           </menus>
                         </MenuBar>
                         <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;">

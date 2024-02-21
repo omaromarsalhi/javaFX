@@ -2,6 +2,7 @@ package pidev.javafx.crud.marketplace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.model.MarketPlace.Favorite;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,7 +30,7 @@ public class CrudFavorite {
         Favorite favorite = null;
         String sql = "SELECT * FROM favorite ";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         ObservableList<Favorite> favoriteList = FXCollections.observableArrayList();
         try {
             prepare = connect.prepareStatement(sql);
@@ -48,7 +49,7 @@ public class CrudFavorite {
 
     public int selectIdLastItem() {
         String sql = "SELECT idFavorite FROM favorite order by idFavorite limit 1";
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         try {
             prepare = connect.prepareStatement(sql);
             result = prepare.executeQuery();
@@ -65,7 +66,7 @@ public class CrudFavorite {
                 + "( idUser, specifications)"
                 + " VALUES (?, ?)";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(sql);
@@ -81,7 +82,7 @@ public class CrudFavorite {
     public void deleteItem(int id) {
         String sql = "DELETE FROM favorite  WHERE idFavorite = ?";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         try {
             prepare = connect.prepareStatement(sql);
             prepare.setInt( 1,id );

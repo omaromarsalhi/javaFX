@@ -2,6 +2,7 @@ package pidev.javafx.crud.marketplace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.Contrat.Contract;
 import pidev.javafx.model.Contrat.PaymentMethod;
@@ -32,7 +33,7 @@ public class CrudContract implements CrudInterface<Contract> {
         String sql = "INSERT INTO contracts (title, terminationDate, purpose, termsAndConditions, paymentMethod,recivingLocation) " +
                 "VALUES (?, ?, ?, ?, ? ,?)";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement( sql );
@@ -57,7 +58,7 @@ public class CrudContract implements CrudInterface<Contract> {
                     " terminationDate = ?, purpose = ?, termsAndConditions = ?, paymentMethod = ? ,recingLocation= ?" +
                     "WHERE idContrat = ?";
 
-            connect = ConnectionDB.connectDb();
+            connect = ConnectionDB.getInstance().getCnx();
 
             prepare = connect.prepareStatement( updateQuery );
             prepare.setString( 1, contract.getTitle() );
@@ -81,7 +82,7 @@ public class CrudContract implements CrudInterface<Contract> {
             // Assuming you have a database table named "contrats"
             String selectQuery = "SELECT * FROM contracts";
 
-            connect = ConnectionDB.connectDb();
+            connect = ConnectionDB.getInstance().getCnx();
 
 
             prepare = connect.prepareStatement( selectQuery );
@@ -108,7 +109,7 @@ public class CrudContract implements CrudInterface<Contract> {
             // Assuming you have a database table named "contrats"
             String selectQuery = "SELECT * FROM contracts where idContract= ?";
 
-            connect = ConnectionDB.connectDb();
+            connect = ConnectionDB.getInstance().getCnx();
 
 
             prepare = connect.prepareStatement( selectQuery );
@@ -139,7 +140,7 @@ public class CrudContract implements CrudInterface<Contract> {
 
     public Contract selectLastItem() {
         String sql = "SELECT * FROM contracts ORDER BY idContract DESC LIMIT 1";
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(sql);
@@ -168,7 +169,7 @@ public class CrudContract implements CrudInterface<Contract> {
         try {
             String deleteQuery = "DELETE FROM contracts WHERE idContrat = ?";
 
-            connect = ConnectionDB.connectDb();
+            connect = ConnectionDB.getInstance().getCnx();
 
             prepare = connect.prepareStatement( deleteQuery );
             prepare.setInt( 1, id );
