@@ -6,11 +6,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import pidev.javafx.controller.userMarketDashbord.TransactionDetailsController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -234,40 +236,75 @@ public void openDetails() throws IOException {
     TransportPane.getChildren().setAll(loadedPane.getChildren());
 
 }
-    @FXML
-private ScrollPane scroll;
+
+//private ScrollPane scroll;
+//    public void loadList(int pos) {
+//        // Set Vgrow constraints outside the loop
+//        showItems.setPrefHeight(showItems.getPrefHeight()*5);
+//
+//        try {
+//        for (int i = 0; i <5; i++) {
+//            RowConstraints rowConstraints = new RowConstraints();
+//            rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
+//            showItems.getRowConstraints().add(rowConstraints);
+//
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/transportDetails.fxml"));
+//
+//                vBox = fxmlLoader.load();
+//            transportDetailsContoller Dc= new transportDetailsContoller();
+//          //  Dc.onDropdownClick(new ActionEvent());
+//                vBox.setMinHeight(60);
+//                transportDetailsContoller transportItem = fxmlLoader.getController();
+//            int finalI = i;
+//            vBox.setOnMouseClicked(event->handleCellClick(vBox, finalI,0));
+//
+//                showItems.add( vBox ,0,i);
+//
+//
+//
+//
+//        }
+//
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//    }
+@FXML
     public void loadList(int pos) {
         // Set Vgrow constraints outside the loop
-        showItems.setPrefHeight(showItems.getPrefHeight()*5);
+        showItems.setPrefHeight(showItems.getPrefHeight() * 5);
 
         try {
-        for (int i = 0; i <5; i++) {
-            RowConstraints rowConstraints = new RowConstraints();
-            rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
-            showItems.getRowConstraints().add(rowConstraints);
+            for (int i = 0; i < 5; i++) {
+                RowConstraints rowConstraints = new RowConstraints();
+                rowConstraints.setVgrow(javafx.scene.layout.Priority.ALWAYS);
+                showItems.getRowConstraints().add(rowConstraints);
 
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/transportDetails.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/transportDetails.fxml"));
 
                 vBox = fxmlLoader.load();
-                vBox.setMinHeight(60);
                 transportDetailsContoller transportItem = fxmlLoader.getController();
-            int finalI = i;
-            vBox.setOnMouseClicked(event->handleCellClick(vBox, finalI,0));
 
-                showItems.add( vBox ,0,i);
+                // Call the desired function in the controller
+//                transportItem.onDropdownClick(new ActionEvent()); // Replace with the actual function name
+                int finalI = i;
+                // Set up a button click event
+                ToggleButton yourButton = transportItem.getDropToggle(); // Replace with the actual method to get your button
+                yourButton.setOnAction(event -> transportItem.onDropdownClick(event));
+                yourButton.setOnMouseClicked(event -> handleCellClick(vBox, finalI, 0)); // Replace with the actual button function
+
+                vBox.setMinHeight(60);
 
 
-
-
-        }
-
+                showItems.add(vBox, 0, i);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-
 
 
 }

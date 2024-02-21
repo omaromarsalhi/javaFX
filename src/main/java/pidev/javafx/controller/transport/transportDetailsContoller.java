@@ -63,8 +63,18 @@ public class transportDetailsContoller implements Initializable {
     @FXML
     private Pane detailsTransport;
 
+    public ToggleButton getDropToggle() {
+        return dropToggle;
+    }
+
+    public void setDropToggle(ToggleButton dropToggle) {
+        this.dropToggle = dropToggle;
+    }
+
     @FXML
     private ToggleButton dropToggle;
+
+
 
     public Transport getData() {
         return data;

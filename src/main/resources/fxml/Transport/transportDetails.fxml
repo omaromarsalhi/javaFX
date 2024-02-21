@@ -8,7 +8,6 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
 <Pane prefWidth="359.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.transport.transportDetailsContoller">
    <children>
       <Pane layoutY="4.0" prefHeight="60.0" prefWidth="352.0" style="-fx-background-color: f1f1f1;">
@@ -65,9 +64,9 @@
                   </Label>
                </children>
             </Pane>
-            <ToggleButton id="Dropdownbtn" fx:id="dropToggle" layoutX="319.0" layoutY="12.0" mnemonicParsing="false" onAction="#onDropdownClick" prefHeight="26.0" prefWidth="36.0">
+            <ToggleButton id="Dropdownbtn" fx:id="dropToggle" layoutX="307.0" layoutY="4.0" mnemonicParsing="false" onAction="#onDropdownClick" prefHeight="42.0" prefWidth="49.0" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView id="btnImageview" fitHeight="13.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="btnImageview" fitHeight="23.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../img_transport/DOWN.png" />
                      </image>

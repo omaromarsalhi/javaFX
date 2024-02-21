@@ -96,19 +96,22 @@ public class MainWindowController implements Initializable {
 @FXML
 public void onTransportClicked(ActionEvent event) throws IOException {
     AnchorPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/TransportClient.fxml")));
-//    scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
-//    scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
 
     FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Display_Transport.fxml"));
     ScrollPane loadedPane = loader.load();
     mainBorderPain.getChildren().setAll(loadedPane);
 }
+    @FXML
+    public void onListTransportClicked(ActionEvent event) throws IOException {
 
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Display_Transport.fxml"));
+        ScrollPane loadedPane = loader.load();
+        mainBorderPain.getChildren().setAll(loadedPane);
+    }
     @FXML
     public void onTransportClientClicked(ActionEvent event) throws IOException {
         AnchorPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/TransportClient.fxml")));
-//    scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
-//    scrollPane.setPrefWidth( mainBorderPain.getPrefWidth()-sideBar.getPrefWidth() );
+
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/TransportClient.fxml"));
         AnchorPane loadedPane = loader.load();

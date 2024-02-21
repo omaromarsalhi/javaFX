@@ -79,6 +79,18 @@
                         <Font size="20.0" />
                      </font>
                   </Button>
+                  <Button alignment="BASELINE_LEFT" minWidth="153.0" mnemonicParsing="false" onAction="#onListTransportClicked" prefHeight="40.0" prefWidth="153.0" text="  Transports" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/transport.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets />
