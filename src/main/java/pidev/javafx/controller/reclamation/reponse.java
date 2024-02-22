@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
@@ -106,16 +107,16 @@ public class reponse implements Initializable {
 
         fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/window.fxml"));
 
-        Pane pane = null;
+        HBox hBox = null;
         try {
-            pane = fxmlLoader.load();
+            hBox = fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         window si = fxmlLoader.getController();
-        si.setReponseController(this, reclamation);  // Add this line
+        si.setReponseController(this, reclamation);
 
         si.setReclamation(reclamation);
-        reclamationcontrainer.getChildren().add(pane);
+        reclamationcontrainer.getChildren().add(hBox);
     }
 }

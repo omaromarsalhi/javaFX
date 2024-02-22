@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
@@ -22,7 +24,11 @@
       <Pane fx:id="box1" layoutX="52.0" layoutY="157.0" prefHeight="356.0" prefWidth="317.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
          <children>
              <Button fx:id="importButton" layoutX="125.0" layoutY="290.0" onAction="#importFile" text="Import File" />
-            <Pane layoutX="59.0" layoutY="45.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #A6B0B2; -fx-effect: backdrop-filter;" />
+            <ImageView fitHeight="231.0" fitWidth="246.0" layoutX="36.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../../../../sql/photo/citizenHub%20img/2903523.png" />
+               </image>
+            </ImageView>
          </children>
       </Pane>
       <ChoiceBox fx:id="ChoixMul" layoutX="458.0" layoutY="349.0" prefHeight="26.0" prefWidth="318.0" />
