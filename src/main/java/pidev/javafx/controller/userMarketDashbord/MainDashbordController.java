@@ -3,6 +3,7 @@ package pidev.javafx.controller.userMarketDashbord;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -25,12 +26,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import pidev.javafx.controller.chat.ChatController;
+import pidev.javafx.controller.user.UserController;
 import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.crud.marketplace.CrudLocalWrapper;
 import pidev.javafx.controller.marketPlace.*;
 import pidev.javafx.model.MarketPlace.Favorite;
-import pidev.javafx.test.Main;
+import pidev.javafx.model.User.Role;
+import pidev.javafx.model.User.User;
+import pidev.javafx.tools.ChatClient;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.tools.MyTools;
@@ -68,6 +72,14 @@ public class MainDashbordController implements Initializable {
     private MenuBar menuBar;
     @FXML
     private VBox bigContainer;
+    @FXML
+    private Label userEmail;
+    @FXML
+    private ImageView userImage;
+    @FXML
+    private Label userlasteName;
+    @FXML
+    private Label username;
 
 
     private VBox infoTemplate;
@@ -90,6 +102,12 @@ public class MainDashbordController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getImagePath() ) );
+        username.setText(  UserController.getInstance().getCurrentUser().getFirstname() );
+        userlasteName.setText(UserController.getInstance().getCurrentUser().getLastname()  );
+        userEmail.setText(UserController.getInstance().getCurrentUser().getEmail() );
+
+
         fiveSecondsWonder=new Timeline();
         loadTableView();
         showAllProdsInfo.getChildren().add(tableViewProd);
@@ -179,7 +197,6 @@ public class MainDashbordController implements Initializable {
 
 
     private void openChatWindow() {
-
         Stage newStage = new Stage();
         FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "/fxml/chat/seperatedChat.fxml" ));
         Scene scene = null;
@@ -190,8 +207,10 @@ public class MainDashbordController implements Initializable {
         }
         ChatController controller=fxmlLoader.getController();
         controller.initliazeData();
-        controller.getExitBtn().setOnMouseClicked( event -> newStage.close() );
-//        controller.getExitBtn().setOnMouseClicked(event ->  System.exit(0) );
+        controller.getExitBtn().setOnMouseClicked( event ->{
+            ChatClient.getInstance().closeConnection();
+            newStage.close();
+        }  );
         controller.getContainer().setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
@@ -200,7 +219,28 @@ public class MainDashbordController implements Initializable {
             newStage.setX(event.getScreenX() - xOffset);
             newStage.setY(event.getScreenY() - yOffset);
         });
-        controller.loadUsers();
+        controller.loadUsers( FXCollections.observableArrayList( new User( 1,
+                "omar",
+                "salhi",
+                "salhiomar362@gmail.com",
+                "12710434",
+                22,
+                29624921,
+                "beb saadoun",
+                Role.simpleutlisateur,
+                "salhi",
+                "img/me.png" ) ,
+                new User( 2,
+                "latifa",
+                "benzaied",
+                "latifa@gmail.com",
+                "25251400",
+                22,
+                50421001,
+                "menzah 1",
+                Role.simpleutlisateur,
+                "benzaied",
+                "img/latifa.png") ) );
         newStage.setResizable( false );
         newStage.setOnCloseRequest(event -> System.exit(0));
         newStage.initStyle( StageStyle.TRANSPARENT);

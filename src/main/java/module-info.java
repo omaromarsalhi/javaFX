@@ -31,5 +31,6 @@ module pidev.javafx{
     opens pidev.javafx.crud.marketplace to javafx.fxml;
     exports pidev.javafx.controller.user;
     exports pidev.javafx.model.User;
+    exports pidev.javafx.model.chat;
 }
 

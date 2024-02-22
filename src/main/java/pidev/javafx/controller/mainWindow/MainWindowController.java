@@ -15,7 +15,10 @@ import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 
+
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -51,6 +54,9 @@ public class MainWindowController implements Initializable {
         EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
         EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
     }
+
+
+
 //    btns that changes the scenes
     @FXML
     public void onShowEmpClicked(ActionEvent event) throws IOException {

@@ -1,6 +1,7 @@
 package pidev.javafx.controller.chat;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -19,9 +20,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.controller.user.UserController;
 import pidev.javafx.model.User.User;
-import pidev.javafx.tools.EventBus;
+import pidev.javafx.tools.ChatClient;
+import pidev.javafx.tools.ChatServer;
 
-import java.io.File;
+import java.io.*;
+import java.net.Socket;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -90,36 +93,56 @@ public class ChatController implements Initializable {
     private Label userName;
     @FXML
     private ImageView connState;
-
-
-
     @FXML
     private VBox container;
 
 
-    private boolean val;
+
+    private  boolean amIAReciver;
     private List<File>  chosenFiles;
     private String searchBarState;
     private Timer animTimer;
+    private User reciver;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         chosenFiles=null;
         ancherPaneOfgridPaneMain.setVisible( false );
-        val=false;
+        amIAReciver=false;
     }
 
     public void initliazeData(){
+        ChatClient.getInstance().establishConnection();
         animTimer = new Timer();
         searchBarState="closed";
         searchTextField.setVisible( false );
         searchBtn.setStyle( "-fx-border-radius: 20;" +
                 "-fx-background-radius:20;" );
         searchBtn.setOnMouseClicked(event -> animateSearchBar());
+        ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer );
     }
 
-    public HBox createUserForAdd(){
+
+    @FXML
+    public void onSendMsgBtnClicked(){
+        System.out.println(ChatServer.getClientsSize());
+        if(chosenFiles==null) {
+            amIAReciver=false;
+            ChatClient.getInstance().sendMessages( "@"+reciver.getFirstname()+"_"+messageTextField.getText() );
+            chatContainer.getChildren().add( createTextChatBox( messageTextField.getText(), false ) );
+        }
+        else {
+            for (int i = 0; i < chosenFiles.size(); i++)
+                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(),amIAReciver ) );
+            chosenFiles=null;
+        }
+        scroll.setVvalue( 1 );
+        messageTextField.clear();
+    }
+
+
+    public HBox createUserForAdd(User user){
         HBox hBox=new HBox();
         hBox.setMinHeight( 40 );
 
@@ -132,8 +155,8 @@ public class ChatController implements Initializable {
                 "-fx-border-radius: 50;" +
                 "-fx-background-radius: 50");
 
-        ImageView userImage=new ImageView(new Image( "file:src/main/resources/img/me.png" ,32,32,true,true));
-        Label userName=new Label("Omar Salhi");
+        ImageView userImage=new ImageView(new Image( "file:src/main/resources/"+user.getImagePath() ,32,32,true,true));
+        Label userName=new Label(user.getFirstname()+" "+user.getLastname());
         userName.setFont(Font.font( "System", FontWeight.LIGHT, FontPosture.ITALIC,14 ));
         userName.setMinWidth( 80 );
 
@@ -154,18 +177,20 @@ public class ChatController implements Initializable {
                 hBox.setStyle( "-fx-background-color: transparent" );
         });
 
-        hBox.setOnMouseClicked( event -> setSelectedUserData(UserController.getInstance().getCurrentUser()));
+        hBox.setOnMouseClicked( event -> setSelectedUserData(user));
         return hBox;
     }
 
-    public void loadUsers(){
-        for(int i=0;i<10;i++)
-            usersBox.getChildren().add( createUserForAdd());
+
+    public void loadUsers(ObservableList<User> users){
+        for(int i=0;i<users.size();i++)
+            usersBox.getChildren().add( createUserForAdd(users.get( i )));
     }
 
+
     public void setSelectedUserData(User user){
-        System.out.println("ali");
-        userImage.setImage(new Image( "file:src/main/resources/img/me.png" ,46,46,true,true)) ;
+        this.reciver=user;
+        userImage.setImage(new Image( "file:src/main/resources/"+user.getImagePath() ,46,46,true,true)) ;
         userName.setText( user.getFirstname()+" "+user.getLastname() );
         userName.setMinHeight( Region.USE_PREF_SIZE);
         connState.setImage(new Image( "file:src/main/resources/namedIcons/button.png" ,12,12,true,true));
@@ -211,12 +236,12 @@ public class ChatController implements Initializable {
     }
 
 
-    public HBox createTextChatBox(String text,boolean changeOrder){
+    public static HBox createTextChatBox(String text,boolean changeOrder){
         HBox msgBox=new HBox();
-        msgBox.setPrefWidth( chatContainer.getPrefWidth());
+//        msgBox.setPrefWidth( chatContainer.getPrefWidth());
 
-        msgBox.setPadding( new Insets( 0,0,0,10 ) );
-        msgBox.setSpacing( 4 );
+//        msgBox.setPadding( new Insets( 0,0,0,10 ) );
+        msgBox.setSpacing( 6 );
 
 
         Label msgLabel=new Label();
@@ -236,20 +261,20 @@ public class ChatController implements Initializable {
         timeLabel.setText( LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")) );
 
         ImageView usernIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,false,false) );
-        ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/namedIcons/miniTrash.png",16,16,true,true) );
-        setMargin(usernIcon,new Insets( 0,0,4,0 ));
-        setMargin(deleteIcon,new Insets( 0,0,msgLabel.getPrefHeight()/2,0 ));
-        System.out.println(msgLabel.getPrefHeight()/2-8);
+//        ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/namedIcons/miniTrash.png",16,16,true,true) );
+        setMargin(usernIcon,new Insets( 0,0,2,0 ));
+//        setMargin(deleteIcon,new Insets( 0,0,msgLabel.getPrefHeight()/2,0 ));
         if(!changeOrder) {
             msgBox.setAlignment( Pos.BOTTOM_RIGHT );
-            msgBox.getChildren().addAll(deleteIcon, msgLabel, timeLabel, usernIcon );
+            msgBox.getChildren().addAll( msgLabel, timeLabel, usernIcon );
         }
         else {
             msgBox.setAlignment( Pos.BOTTOM_LEFT );
-            msgBox.getChildren().addAll( usernIcon, timeLabel, msgLabel,deleteIcon );
+            msgBox.getChildren().addAll( usernIcon, timeLabel, msgLabel );
         }
         return msgBox;
     }
+
 
     public HBox createImageChatBox(String path,boolean changeOrder){
         HBox msgBox=new HBox();
@@ -276,7 +301,7 @@ public class ChatController implements Initializable {
         setMargin(usernIcon,new Insets( 0,0,4,10 ));
         setMargin(deleteIcon,new Insets( 0,0,4,10 ));
 
-        
+
         if(!changeOrder) {
             msgBox.setAlignment( Pos.BOTTOM_RIGHT );
             msgBox.getChildren().addAll(deleteIcon, image, timeLabel, usernIcon );
@@ -288,20 +313,7 @@ public class ChatController implements Initializable {
         return msgBox;
     }
 
-    @FXML
-    public void onSendMsgBtnClicked(){
 
-        if(chosenFiles==null)
-            chatContainer.getChildren().add(createTextChatBox(messageTextField.getText(),val));
-        else {
-            for (int i = 0; i < chosenFiles.size(); i++)
-                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(),val ) );
-            chosenFiles=null;
-        }
-        scroll.setVvalue( 1 );
-        val=(!val);
-        messageTextField.clear();
-    }
 
     @FXML
     public void chooseImage(){
@@ -317,6 +329,7 @@ public class ChatController implements Initializable {
             }
     }
 
+
     private void setExtFilters(FileChooser chooser){
         chooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("All Images", "*.*"),
@@ -328,7 +341,6 @@ public class ChatController implements Initializable {
     @FXML
     public void onMoreOptionsClick(){
         FadeTransition fadeTransition=new FadeTransition( Duration.seconds( 0.4 ),ancherPaneOfgridPaneMain);
-        System.out.println(ancherPaneOfgridPaneMain.isVisible());
         if(ancherPaneOfgridPaneMain.isVisible()){
             fadeTransition.setFromValue(1 );
             fadeTransition.setToValue(0 );
@@ -349,39 +361,39 @@ public class ChatController implements Initializable {
             fadeTransition.setFromValue(0);
             fadeTransition.setToValue(1);
             emojie00.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png" ,val));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png" ,amIAReciver));
                 scroll.setVvalue( 1 );
             });
             emojie01.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/in-love.png",val ));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/in-love.png",amIAReciver ));
                 scroll.setVvalue( 1 );
             } );
             emojie10.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png"  ,val));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png"  ,amIAReciver));
                 scroll.setVvalue( 1 );
             });
             emojie02.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/party.png"  ,val));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/party.png"  ,amIAReciver));
                 scroll.setVvalue( 1 );
             });
             emojie20.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/smiling.png" ,val ));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/smiling.png" ,amIAReciver ));
                 scroll.setVvalue( 1 );
             });
             emojie21.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/nerd.png"  ,val));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/nerd.png"  ,amIAReciver));
                 scroll.setVvalue( 1 );
             });
             emojie22.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/surprised.png" ,val ));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/surprised.png" ,amIAReciver ));
                 scroll.setVvalue( 1 );
             });
             emojie12.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/sad.png" ,val ));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/sad.png" ,amIAReciver ));
                 scroll.setVvalue( 1 );
             });
             emojie11.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/laugh.png" ,val ));
+                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/laugh.png" ,amIAReciver ));
                 scroll.setVvalue( 1 );
             });
             fadeTransition.play();
@@ -389,11 +401,16 @@ public class ChatController implements Initializable {
 
     }
 
+
     public ImageView getExitBtn() {
         return exitBtn;
     }
+
+
     public VBox getContainer() {
         return container;
     }
+
+
 
 }
