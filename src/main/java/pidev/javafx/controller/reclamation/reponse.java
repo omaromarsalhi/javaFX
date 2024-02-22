@@ -119,4 +119,9 @@ public class reponse implements Initializable {
         si.setReclamation(reclamation);
         reclamationcontrainer.getChildren().add(hBox);
     }
+    @FXML
+    void supprimer_Reclamation() {
+        String idReclamation = privateKey.getText();
+        si.supprimer(idReclamation);
+    }
 }

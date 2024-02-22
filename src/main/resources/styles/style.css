@@ -49,4 +49,8 @@
     -fx-background-color: #FFFFFF;
         -fx-background-radius: 30;
 }
-
+.recc {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: #474749;
+}

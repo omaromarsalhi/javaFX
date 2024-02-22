@@ -10,19 +10,20 @@
 
 <AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.reponse">
    <children>
-      <TextField fx:id="privateKey" disable="true" editable="false" layoutX="32.0" layoutY="198.0" prefHeight="25.0" prefWidth="337.0" promptText="Private_key" />
-      <TextField fx:id="subject" disable="true" layoutX="32.0" layoutY="261.0" prefHeight="25.0" prefWidth="337.0" promptText="Subject" />
-      <TextField fx:id="title" layoutX="33.0" layoutY="324.0" prefHeight="25.0" prefWidth="337.0" promptText="Titre" />
-      <TextArea fx:id="description" layoutX="29.0" layoutY="385.0" prefHeight="100" prefWidth="337.0" promptText="Description" />
-      <Button layoutX="114.0" layoutY="512.0" onAction="#modifer_Reclamation" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: orange; -fx-text-fill: white;" text="update" />
+      <TextField fx:id="privateKey" disable="true" editable="false" layoutX="32.0" layoutY="198.0" prefHeight="25.0" prefWidth="337.0" promptText="Private_key" styleClass="recc" stylesheets="@../../styles/style.css" />
+      <TextField fx:id="subject" disable="true" layoutX="32.0" layoutY="261.0" prefHeight="25.0" prefWidth="337.0" promptText="Subject" styleClass="recc" stylesheets="@../../styles/style.css" />
+      <TextField fx:id="title" layoutX="33.0" layoutY="324.0" prefHeight="25.0" prefWidth="337.0" promptText="Titre" styleClass="recc" stylesheets="@../../styles/style.css" />
+      <TextArea fx:id="description" layoutX="29.0" layoutY="385.0" prefHeight="100" prefWidth="337.0" promptText="Description" styleClass="recc" stylesheets="@../../styles/style.css" />
+      <Button layoutX="114.0" layoutY="503.0" onAction="#modifer_Reclamation" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: orange; -fx-text-fill: white;" styleClass="add-btn" stylesheets="@../../styles/style.css" text="update" />
       <Label layoutX="32.0" layoutY="172.0" text="Ticket Key" />
       <Label layoutX="32.0" layoutY="298.0" text="Titre" />
       <Label layoutX="35.0" layoutY="237.0" text="Subject " />
       <Label layoutX="29.0" layoutY="360.0" text="Description" />
-      <ScrollPane layoutX="418.0" layoutY="74.0" prefWidth="602.0">
+      <ScrollPane layoutX="373.0" layoutY="74.0" prefHeight="502.0" prefWidth="647.0">
          <content>
-            <VBox fx:id="reclamationcontrainer" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="600.0" spacing="10.0" />
+            <VBox fx:id="reclamationcontrainer" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="629.0" spacing="10.0" />
          </content>
       </ScrollPane>
+      <Button layoutX="114.0" layoutY="536.0" onAction="#supprimer_Reclamation" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: orange; -fx-text-fill: white;" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Delelte" />
    </children>
 </AnchorPane>

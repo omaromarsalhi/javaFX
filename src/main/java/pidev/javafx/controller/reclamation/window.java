@@ -72,6 +72,7 @@ public class window {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
     }
+
     public void displayDetails() {
         reponseController.displayReclamationDetails(reclamation);
     }
