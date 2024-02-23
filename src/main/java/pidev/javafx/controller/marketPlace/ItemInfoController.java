@@ -130,6 +130,7 @@ public class ItemInfoController implements Initializable {
             CustomMouseEvent<Bien> customMouseEvent=new CustomMouseEvent<>((Bien) product);
             EventBus.getInstance().publish( "updateProd",customMouseEvent);
         } );
+
         delete.setOnAction( event -> {
             CustomMouseEvent<Bien> customMouseEvent=new CustomMouseEvent<>((Bien) product);
             CrudBien.getInstance().deleteItem( product.getId());

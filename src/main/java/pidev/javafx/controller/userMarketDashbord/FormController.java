@@ -1,5 +1,6 @@
 package pidev.javafx.controller.userMarketDashbord;
 
+import com.itextpdf.text.pdf.StringUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -66,12 +67,25 @@ public class FormController implements Initializable {
     private boolean isImageUpdated;
     private Product product;
     private boolean[] isAllInpulValid;
+    String formLayoutBeforRegexCheck;
+    String formLayoutAfterRegexCheck;
 
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        formLayoutBeforRegexCheck="-fx-border-color:black;"+"-fx-border-width: 2;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-color: white;" +
+                "-fx-background-radius: 10";
+
+        formLayoutAfterRegexCheck="-fx-border-width: 2;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-color: white;" +
+                "-fx-background-radius: 10";
+
         isImageUpdated=false;
         isAllInpulValid=new boolean[]{false,false,false,false};
 
@@ -115,15 +129,17 @@ public class FormController implements Initializable {
         var regexValidatedIcon3=createRegexImage(true);
         var regexNotValidatedIcon3=createRegexImage(false);
 
+
+
         Pname.setOnKeyTyped( event -> {
-            isAllInpulValid[0]=Pname.getText().matches("[a-zA-Z0-9]{0,10}");
+            isAllInpulValid[3]=true;
+            isAllInpulValid[0]=Pname.getText().matches("[a-zA-Z0-9]{3,10}");
             Node node=(isAllInpulValid[0])?regexValidatedIcon1:regexNotValidatedIcon1;
             String color=(isAllInpulValid[0])?"green":"red";
             if(Pname.getText().isEmpty()){
                 formBox1.getChildren().removeAll( regexValidatedIcon1,regexNotValidatedIcon1 );
                 Pname.setStyle( "");
-                formBox.setStyle("-fx-border-color:black;"+"-fx-border-width: 1;" +
-                        "-fx-border-radius: 10");
+                formBox.setStyle(formLayoutBeforRegexCheck);
                 isAllInpulValid[0]=true;
             }
             else {
@@ -137,14 +153,14 @@ public class FormController implements Initializable {
                         "-fx-border-width:0 0 2 0;" +
                         "-fx-border-radius: 0" );
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
-                        "-fx-border-radius: 10;" +
-                        "-fx-border-width: 1");
+                        formLayoutAfterRegexCheck);
             }
             if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
-                        "-fx-border-radius: 10;" );
+                        formLayoutAfterRegexCheck );
         });
         Pprice.setOnKeyTyped( event -> {
+            isAllInpulValid[3]=true;
             isAllInpulValid[1]=Pprice.getText().matches("([1-9]\\d{0,10}(,\\d{3})*)(\\.\\d{1,2})?");
             Node node=(isAllInpulValid[1])?regexValidatedIcon2:regexNotValidatedIcon2;
             String color=(isAllInpulValid[1])?"green":"red";
@@ -152,8 +168,7 @@ public class FormController implements Initializable {
             if(Pprice.getText().isEmpty()){
                 formBox2.getChildren().removeAll( regexValidatedIcon2,regexNotValidatedIcon2 );
                 Pprice.setStyle( "");
-                formBox.setStyle("-fx-border-color:black;"+"-fx-border-width: 1;" +
-                        "-fx-border-radius: 10");
+                formBox.setStyle(formLayoutBeforRegexCheck);
                 isAllInpulValid[1]=true;
             }
             else {
@@ -167,13 +182,14 @@ public class FormController implements Initializable {
                         "-fx-border-width: 0 0 2 0;" +
                         "-fx-border-radius: 0" );
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
-                        "-fx-border-radius: 10;");
+                        formLayoutAfterRegexCheck);
             }
             if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
-                        "-fx-border-radius: 10;" );
+                        formLayoutAfterRegexCheck );
         });
         Pquantity.setOnKeyTyped( event -> {
+            isAllInpulValid[3]=true;
             isAllInpulValid[2]=Pquantity.getText().matches("[0-9]{1,4}");
             Node node=(isAllInpulValid[2])?regexValidatedIcon3:regexNotValidatedIcon3;
             String color=(isAllInpulValid[2])?"green":"red";
@@ -181,8 +197,7 @@ public class FormController implements Initializable {
             if(Pquantity.getText().isEmpty()){
                 formBox3.getChildren().removeAll( regexValidatedIcon3,regexNotValidatedIcon3 );
                 Pquantity.setStyle( "");
-                formBox.setStyle("-fx-border-color:black;"+"-fx-border-width: 1;" +
-                        "-fx-border-radius: 10");
+                formBox.setStyle(formLayoutBeforRegexCheck);
                 isAllInpulValid[2]=true;
             }
             else {
@@ -196,11 +211,11 @@ public class FormController implements Initializable {
                         "-fx-border-width: 0 0 2 0;" +
                         "-fx-border-radius: 0" );
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
-                        "-fx-border-radius: 10;");
+                        formLayoutAfterRegexCheck);
             }
             if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
                 formBox.setStyle( "-fx-border-color:red;"+
-                        "-fx-border-radius: 10;" );
+                        formLayoutAfterRegexCheck );
         });
     }
 
@@ -284,6 +299,16 @@ public class FormController implements Initializable {
 
         addProd.setOnMouseClicked( this::onAddOrUpdateBienClicked);
         clearProd.setOnMouseClicked( event -> {
+            if(formBox1.getChildren().size()>1)
+                formBox1.getChildren().removeAll( formBox1.getChildren().get( 1 ) );
+            Pname.setStyle( "");
+            if(formBox2.getChildren().size()>1)
+                formBox2.getChildren().remove(formBox2.getChildren().get( 1 ) );
+            Pprice.setStyle( "");
+            if(formBox3.getChildren().size()>1)
+                formBox3.getChildren().removeAll( formBox3.getChildren().get( 1 ) );
+            Pquantity.setStyle( "");
+            formBox.setStyle(formLayoutBeforRegexCheck);
             Pdescretion.setText( "" );
             Pname.setText( "" );
             Pprice.setText( "" );
@@ -299,9 +324,9 @@ public class FormController implements Initializable {
         buttonsBox.setPadding( new Insets( 4,0,0,0 ) );
     }
 
-    public void setExitFunction(MyListener listener) {
-        this.listener=listener;
-    }
+//    public void setExitFunction(MyListener listener) {
+//        this.listener=listener;
+//    }
 
     public void setInformaton(Product product) {
         if(product!=null) {

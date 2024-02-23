@@ -2,7 +2,10 @@ package pidev.javafx.controller.chat;
 
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -139,6 +142,8 @@ public class ChatController implements Initializable {
         }
         scroll.setVvalue( 1 );
         messageTextField.clear();
+
+
     }
 
 

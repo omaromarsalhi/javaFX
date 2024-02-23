@@ -80,6 +80,12 @@ public class MainDashbordController implements Initializable {
     private Label userlasteName;
     @FXML
     private Label username;
+    @FXML
+    private AnchorPane secondInterface;
+    @FXML
+    private HBox secondIHbox;
+    @FXML
+    private HBox firstInterface;
 
 
     private VBox infoTemplate;
@@ -102,6 +108,9 @@ public class MainDashbordController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        secondInterface.setVisible( false );
+
+
         userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getImagePath() ) );
         username.setText(  UserController.getInstance().getCurrentUser().getFirstname() );
         userlasteName.setText(UserController.getInstance().getCurrentUser().getLastname()  );
@@ -155,12 +164,8 @@ public class MainDashbordController implements Initializable {
         var showForPushasedProduct=new MenuItem("Show Purshased Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         var showForSelledProduct=new MenuItem("Show Selled Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         addProduct.setOnAction( event -> {
-            deleteFavoriteLabel();
-            tableViewProd.getSelectionModel().clearSelection();
-            scroll.addEventFilter( MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
-            fiveSecondsWonder.stop();
-            showAllProdsInfo.getChildren().clear();
-            showAllProdsInfo.getChildren().add(tableViewProd);
+            secondInterface.setVisible( true );
+            firstInterface.setOpacity( 0.4 );
             setFormForAddOrUpdate("add_prod");
         } );
         showForSaleProduct.setOnAction( event -> {
@@ -326,6 +331,8 @@ public class MainDashbordController implements Initializable {
 
     public void doUpdate(CustomMouseEvent<Product> customMouseEvent){
         prod2Update=customMouseEvent.getEventData();
+        secondInterface.setVisible( true );
+        firstInterface.setOpacity( 0.4 );
         setFormForAddOrUpdate("update_prod");
     }
 
@@ -416,11 +423,9 @@ public class MainDashbordController implements Initializable {
 
 
     public void onExitForm(MouseEvent event){
-        informationBar.getChildren().clear();
-        loadInfoTemplate();
-        loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
-        informationBar.getChildren().add(infoTemplate);
-        scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
+        secondInterface.setVisible( false );
+        firstInterface.setOpacity( 1 );
+        secondIHbox.getChildren().clear();
     }
 
 
@@ -436,10 +441,9 @@ public class MainDashbordController implements Initializable {
         FormController formController = fxmlLoader.getController();
         if(termOfUse.equals( "update_prod" ))
             formController.setInformaton( prod2Update );
-        informationBar.getChildren().clear();
         form.setPrefHeight(informationBar.getPrefHeight());
         form.setPrefWidth(informationBar.getPrefWidth());
-        informationBar.getChildren().add(form);
+        secondIHbox.getChildren().add(form);
     }
 
 

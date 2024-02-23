@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
@@ -66,8 +63,8 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void onMPDClicked(ActionEvent event) throws IOException {
-        HBox hBox = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        mainBorderPain.setCenter(hBox);
+        StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+        mainBorderPain.setCenter(stackPane);
     }
 
     @FXML

@@ -12,18 +12,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="formBox" alignment="CENTER" prefHeight="450.0" prefWidth="267.0" spacing="4.0" style="-fx-border-width: 1; -fx-border-color: black; -fx-border-radius: 10;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
+
+<VBox fx:id="formBox" alignment="CENTER" prefHeight="503.0" prefWidth="384.0" spacing="4.0" style="-fx-border-width: 2; -fx-border-color: black; -fx-border-image-width: 4; -fx-border-radius: 10; -fx-background-radius: 10; -fx-background-color: white;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
    <children>
-      <VBox prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+      <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
          <children>
             <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Name :">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <HBox fx:id="formBox1" prefHeight="24.0" prefWidth="246.0">
+            <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
                <children>
-                  <TextField fx:id="Pname" prefHeight="42.0" prefWidth="216.0" promptText="Your Name here !!!" styleClass="text-field">
+                  <TextField fx:id="Pname" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -41,7 +42,7 @@
             <Insets top="4.0" />
          </VBox.margin>
       </VBox>
-      <VBox prefHeight="0.0" prefWidth="267.0">
+      <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
          <children>
             <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Price :">
                <font>
@@ -50,7 +51,7 @@
             </Label>
             <HBox fx:id="formBox2" prefHeight="30.0">
                <children>
-                  <TextField fx:id="Pprice" prefHeight="42.0" prefWidth="216.0" promptText="Your Price here !!!" styleClass="text-field">
+                  <TextField fx:id="Pprice" prefHeight="42.0" prefWidth="270.0" promptText="Your Price here !!!" styleClass="text-field">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -65,7 +66,7 @@
             <Insets left="10.0" right="10.0" />
          </padding>
       </VBox>
-      <VBox prefHeight="0.0" prefWidth="267.0">
+      <VBox minHeight="68.0" minWidth="300.0" prefHeight="68.0" prefWidth="270.0">
          <children>
             <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Quantity :">
                <font>
@@ -74,7 +75,7 @@
             </Label>
             <HBox fx:id="formBox3" prefHeight="30.0">
                <children>
-                  <TextField fx:id="Pquantity" prefHeight="30.0" prefWidth="216.0" promptText="The Price here !!!" styleClass="text-field">
+                  <TextField fx:id="Pquantity" prefHeight="38.0" prefWidth="270.0" promptText="The Price here !!!" styleClass="text-field">
                      <font>
                         <Font size="16.0" />
                      </font>
@@ -89,36 +90,38 @@
             <Insets left="10.0" right="10.0" />
          </padding>
       </VBox>
-      <VBox>
+      <VBox minHeight="68.0" minWidth="300.0">
          <children>
             <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Category :">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <ChoiceBox fx:id="Pcategory" minHeight="34.0" prefHeight="34.0" prefWidth="216.0">
+            <ChoiceBox fx:id="Pcategory" minHeight="34.0" prefHeight="34.0" prefWidth="270.0">
                <VBox.margin>
                   <Insets left="10.0" />
-               </VBox.margin></ChoiceBox>
+               </VBox.margin>
+            </ChoiceBox>
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />
          </padding>
       </VBox>
-      <VBox prefHeight="92.0" prefWidth="267.0" stylesheets="@../../style/scrollBarStlyle.css">
+      <VBox prefHeight="142.0" prefWidth="380.0" stylesheets="@../../style/scrollBarStlyle.css">
          <children>
             <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Descreption :">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <TextArea fx:id="Pdescretion" prefHeight="57.0" prefWidth="215.0" promptText="Describe Your Item here" wrapText="true">
+            <TextArea fx:id="Pdescretion" minWidth="300.0" prefHeight="112.0" prefWidth="357.0" promptText="Describe Your Item here" wrapText="true">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <font>
                   <Font size="16.0" />
-               </font></TextArea>
+               </font>
+            </TextArea>
          </children>
          <padding>
             <Insets left="13.0" right="10.0" />
@@ -131,14 +134,15 @@
                   <Font name="System Italic" size="20.0" />
                </font>
             </Label>
-            <Button fx:id="imageBtn" mnemonicParsing="false" stylesheets="@../../style/formLayout.css">
+            <Button fx:id="imageBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../../style/formLayout.css">
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../namedIcons/image.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            </Button>
          </children>
          <VBox.margin>
             <Insets top="6.0" />
@@ -146,6 +150,6 @@
       </HBox>
    </children>
    <padding>
-      <Insets bottom="10.0" top="4.0" />
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
    </padding>
 </VBox>
