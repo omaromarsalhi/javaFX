@@ -4,17 +4,30 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
 
 <HBox alignment="CENTER" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.window">
    <children>
       <ImageView fx:id="imagePath" fitHeight="200.0" fitWidth="182.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="privatekey" prefHeight="17.0" prefWidth="99.0" styleClass="recc" stylesheets="@../../styles/style.css" text="privatekey" textAlignment="CENTER" />
-      <Label fx:id="date" prefHeight="18.0" prefWidth="55.0" styleClass="recc" stylesheets="@../../styles/style.css" text="date" />
-      <Label fx:id="subject" prefHeight="18.0" prefWidth="89.0" styleClass="recc" stylesheets="@../../styles/style.css" text="Subject" />
-      <Label fx:id="titre" prefHeight="17.0" prefWidth="99.0" styleClass="recc" stylesheets="@../../styles/style.css" text="titre" />
+      <VBox alignment="CENTER" spacing="20.0">
+         <children>
+            <Label fx:id="privatekey" prefHeight="17.0" prefWidth="99.0" styleClass="recc" stylesheets="@../../styles/style.css" text="privatekey" textAlignment="CENTER" />
+            <Label fx:id="date" prefHeight="18.0" prefWidth="55.0" styleClass="recc" stylesheets="@../../styles/style.css" text="date" />
+         </children>
+      </VBox>
+      <VBox alignment="CENTER" spacing="20.0">
+         <children>
+            <Label fx:id="subject" prefHeight="18.0" prefWidth="89.0" styleClass="recc" stylesheets="@../../styles/style.css" text="Subject" />
+            <Label fx:id="titre" prefHeight="17.0" prefWidth="99.0" styleClass="recc" stylesheets="@../../styles/style.css" text="titre" />
+         </children>
+      </VBox>
       <Label fx:id="descirption" prefHeight="17.0" prefWidth="99.0" styleClass="recc" stylesheets="@../../styles/style.css" text="Description" />
-      <Button fx:id="update" mnemonicParsing="false" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Update" />
-      <Button fx:id="Delete" mnemonicParsing="false" onAction="#supprimer_Reclamation" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Delete" />
+      <VBox alignment="CENTER" spacing="20.0">
+         <children>
+            <Button fx:id="update" mnemonicParsing="false" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Update" />
+            <Button fx:id="Delete" mnemonicParsing="false" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Delete" />
+         </children>
+      </VBox>
    </children>
 </HBox>

@@ -30,8 +30,6 @@ public class window {
     private Button update;
     @FXML
     private Button Delete;
-
-
     private reponse reponseController;
     private  Reclamation reclamation;
 
@@ -41,16 +39,11 @@ public class window {
         System.out.println("setReponseController called");
 
     }
-
-
-
     public void initialize() {
         update.setOnAction((ActionEvent event) -> {
             displayDetails();
         });
     }
-
-
 
     public void setReclamation(Reclamation reclamation) {
         privatekey.setText(reclamation.getPrivateKey());

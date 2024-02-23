@@ -5,11 +5,18 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.reponse">
    <children>
+      <ImageView fitHeight="748.0" fitWidth="1052.0" layoutY="-60.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../../sql/photo/citizenHub%20img/Asset%202@4x.png" />
+         </image>
+      </ImageView>
       <TextField fx:id="privateKey" disable="true" editable="false" layoutX="32.0" layoutY="198.0" prefHeight="25.0" prefWidth="337.0" promptText="Private_key" styleClass="recc" stylesheets="@../../styles/style.css" />
       <TextField fx:id="subject" disable="true" layoutX="32.0" layoutY="261.0" prefHeight="25.0" prefWidth="337.0" promptText="Subject" styleClass="recc" stylesheets="@../../styles/style.css" />
       <TextField fx:id="title" layoutX="33.0" layoutY="324.0" prefHeight="25.0" prefWidth="337.0" promptText="Titre" styleClass="recc" stylesheets="@../../styles/style.css" />
@@ -21,9 +28,8 @@
       <Label layoutX="29.0" layoutY="360.0" text="Description" />
       <ScrollPane layoutX="373.0" layoutY="74.0" prefHeight="502.0" prefWidth="647.0">
          <content>
-            <VBox fx:id="reclamationcontrainer" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="629.0" spacing="10.0" />
+            <VBox fx:id="reclamationcontrainer" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="629.0" spacing="10.0" styleClass="scroll-bar" stylesheets="@../../style/scrollBarStlyle.css" />
          </content>
       </ScrollPane>
-      <Button layoutX="114.0" layoutY="536.0" onAction="#supprimer_Reclamation" prefHeight="26.0" prefWidth="168.0" style="-fx-background-color: orange; -fx-text-fill: white;" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Delelte" />
    </children>
 </AnchorPane>

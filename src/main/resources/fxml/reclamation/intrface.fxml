@@ -12,6 +12,11 @@
 
 <AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.AjouterReclamation">
    <children>
+      <ImageView fitHeight="729.0" fitWidth="1057.0" layoutY="-55.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../../../../sql/photo/citizenHub%20img/Asset%202@4x.png" />
+         </image>
+      </ImageView>
       <Label layoutX="420.0" layoutY="35.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="RECLAMATION" />
       <TextField fx:id="privateKey" disable="true" editable="false" layoutX="458.0" layoutY="214.0" prefHeight="25.0" prefWidth="478.0" promptText="Private_key" styleClass="recc" stylesheets="@../../styles/style.css" />
       <TextField fx:id="title" layoutX="459.0" layoutY="279.0" prefHeight="25.0" prefWidth="478.0" promptText="Titre" styleClass="recc" stylesheets="@../../styles/style.css" />
@@ -21,14 +26,14 @@
       <Label layoutX="458.0" layoutY="253.0" text="Titre" />
       <Label layoutX="461.0" layoutY="318.0" text="Subject " />
       <Label layoutX="455.0" layoutY="376.0" text="Description" />
-      <Pane fx:id="box1" layoutX="52.0" layoutY="157.0" prefHeight="356.0" prefWidth="317.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
+      <Pane fx:id="box1" layoutX="73.0" layoutY="106.0" opacity="0.64" prefHeight="269.0" prefWidth="224.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
          <children>
-             <Button fx:id="importButton" layoutX="125.0" layoutY="290.0" onAction="#importFile" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Import File" />
-            <ImageView fitHeight="231.0" fitWidth="246.0" layoutX="36.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="231.0" fitWidth="246.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../../../sql/photo/citizenHub%20img/2903523.png" />
                </image>
             </ImageView>
+             <Button fx:id="importButton" layoutX="82.0" layoutY="199.0" onAction="#importFile" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Import File" />
          </children>
       </Pane>
       <ChoiceBox fx:id="ChoixMul" layoutX="458.0" layoutY="349.0" prefHeight="26.0" prefWidth="318.0" />

@@ -60,7 +60,7 @@ public class AjouterReclamation {
         else
             title.setStyle("-fx-text-fill: #bb2020;");
 
-        if (text[2].matches("[a-zA-Z0-9]+"))
+        if (text[2].matches("[a-zA-Z0-9 ]+"))
             description.setStyle("-fx-text-fill: #25c12c");
         else
             description.setStyle("-fx-text-fill: #bb2020 ");
