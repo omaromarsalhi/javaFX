@@ -9,7 +9,10 @@ module pidev.javafx{
     //change 1
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
+    requires aspose.imaging;
 
+    opens pidev.javafx.controller.ticket ;
+    exports pidev.javafx.controller.ticket to javafx.fxml;
 
     opens pidev.javafx.controller.reclamation;
     exports pidev.javafx.controller.reclamation to javafx.fxml;

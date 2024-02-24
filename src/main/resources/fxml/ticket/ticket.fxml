@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="mainBorderPain" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.ticket.first_page">
+   <content>
+      <AnchorPane prefHeight="670.0" prefWidth="1040.0" styleClass="anchor-pane">
+         <children>
+            <Pane fx:id="Pane" layoutX="7.0" layoutY="5.0" prefHeight="660.0" prefWidth="1026.0" styleClass="pane">
+               <children>
+                  <Label layoutX="47.0" layoutY="22.0" text="Ticket">
+                     <font>
+                        <Font name="Souliyo Unicode" size="30.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="47.0" layoutY="67.0" text="Reserve your ticket now  just one clic ">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+                  <Line endX="46.0" layoutX="939.0" layoutY="120.0" startX="-900.0" />
+                  <HBox alignment="CENTER" layoutX="134.0" layoutY="176.0" prefHeight="184.0" prefWidth="756.0">
+                     <children>
+                        <ImageView fx:id="imageView" fitHeight="168.0" fitWidth="217.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                  </HBox>
+                  <Button layoutX="440.0" layoutY="379.0" mnemonicParsing="false" text="Button" />
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </content>
+
+</ScrollPane>
