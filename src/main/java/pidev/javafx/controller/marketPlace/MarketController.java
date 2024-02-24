@@ -37,16 +37,6 @@ public class MarketController implements Initializable {
     @FXML
     private HBox mainHbox;
     @FXML
-    private ImageView relativeImageVieur;
-    @FXML
-    private AnchorPane ImageAnchorPane;
-    @FXML
-    private Button leftArrow;
-    @FXML
-    private Button rightArrow;
-    @FXML
-    private Button exitImageBtn;
-    @FXML
     private Button searchBtn;
     @FXML
     private HBox searchHbox;
@@ -56,6 +46,8 @@ public class MarketController implements Initializable {
     private MenuBar menuBar;
     @FXML
     private Menu filter;
+    @FXML
+    private AnchorPane secondInterface;
 
     private VBox itemInfo;
     private VBox hepfullBar;
@@ -68,7 +60,7 @@ public class MarketController implements Initializable {
     private String searchBarState;
     private int idProd4nextSelection;
     private String whoIsActiveNow;
-//    private List<FXMLLoader> fxmlLoaderList=new ArrayList<>();
+
 
 
 
@@ -76,6 +68,7 @@ public class MarketController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        secondInterface.setVisible( false );
         fiveSecondsWonder=new Timeline();
         itemInfo=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -94,11 +87,6 @@ public class MarketController implements Initializable {
         showGridPane(CrudBien.getInstance().selectItems() );
         setMenueBar();
 
-        ImageAnchorPane.setVisible( false );
-        exitImageBtn.setOnAction( event -> {
-            ImageAnchorPane.setVisible( false );
-            grid.setOpacity( 1 );
-        } );
 
         searchBarState="closed";
         animTimer = new Timer();
@@ -121,6 +109,7 @@ public class MarketController implements Initializable {
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
         EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
         EventBus.getInstance().subscribe( "showHelfullBar",this::showHelfullBar);
+        EventBus.getInstance().subscribe( "exitItemInfo",this::exitItemInfo);
 
 
     }
@@ -232,12 +221,22 @@ public class MarketController implements Initializable {
 
     public void loadAndSetItemInfo(CustomMouseEvent<Product> customMouseEvent){
         EventBus.getInstance().publish( "setItemInfoData", customMouseEvent);
-        if(whoIsActiveNow.equals( "hepfullBar" ))
-            animateChanges(hepfullBar, itemInfo );
-        else if (whoIsActiveNow.equals( "chatBox" ))
-            animateChanges( chatBox, itemInfo );
-        whoIsActiveNow = "itemInfo";
+//        if(whoIsActiveNow.equals( "hepfullBar" ))
+//            animateChanges(hepfullBar, itemInfo );
+//        else if (whoIsActiveNow.equals( "chatBox" ))
+//            animateChanges( chatBox, itemInfo );
+//        whoIsActiveNow = "itemInfo";
+        mainHbox.setOpacity( 0.4 );
+        secondInterface.setVisible( true );
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().add(itemInfo );
     }
+
+    public void exitItemInfo(MouseEvent event){
+        mainHbox.setOpacity( 1 );
+        secondInterface.setVisible( false );
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
+    }
+
 
     public void showHelfullBar(MouseEvent event){
         if(whoIsActiveNow.equals( "itemInfo" ))
@@ -265,8 +264,6 @@ public class MarketController implements Initializable {
             ItemController itemController = fxmlLoader.getController();
             itemController.setData(biens.get( i ));
             itemController.animateImages(fiveSecondsWonder,biens.get(i));
-            int finalI = i;
-            anchorPane.setOnMouseClicked( event -> showRelativeImages(biens.get( finalI )) );
             getProduct(anchorPane,itemController);
 
             if (column == 3) {
@@ -281,25 +278,7 @@ public class MarketController implements Initializable {
     }
 
 
-    public void showRelativeImages(Bien bien){
-        AtomicInteger imageIndex= new AtomicInteger(0);
-        ImageAnchorPane.setVisible( true );
-        grid.setOpacity( 0.2 );
-        relativeImageVieur.setImage(new Image("file:src/main/resources"+ bien.getImageSourceByIndex( imageIndex.get() ) ) );
-        rightArrow.setOnAction( event -> {
-            imageIndex.getAndIncrement();
-            if(imageIndex.get() >=bien.getAllImagesSources().size())
-                imageIndex.set( 0 );
-            relativeImageVieur.setImage( new Image( "file:src/main/resources"+bien.getImageSourceByIndex( imageIndex.get() ) ) );
 
-        } );
-        leftArrow.setOnAction( event -> {
-            imageIndex.getAndDecrement();
-            if(imageIndex.get() <=0)
-                imageIndex.set( bien.getAllImagesSources().size() - 1 );
-            relativeImageVieur.setImage( new Image("file:src/main/resources"+ bien.getImageSourceByIndex( imageIndex.get() ) ) );
-        } );
-    }
 
 
     public void loadChat(MouseEvent event){

@@ -36,7 +36,7 @@ public class TransactionDetailsController   {
 
 
     public void  setData(Transaction transaction, Contract contract){
-        Lprice.setText( String.valueOf( transaction.getQuantity()*transaction.getPricePerUnit() )+"$" );
+        Lprice.setText(  transaction.getQuantity()*transaction.getPricePerUnit()+"$" );
         LpaymentMode.setText(contract.getPaymentMethod().toString() );
         Ldate.setText( DateTimeFormatter.ofPattern("dd/MM/yy hh:mm").format(transaction.getEffectiveDate().toLocalDateTime())  );
         Llocation.setText( contract.getRecingLocation() );

@@ -20,224 +20,223 @@
    <children>
       <HBox fx:id="firstInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: black;">
          <children>
-            <VBox fx:id="helperBar" minWidth="250.0" prefHeight="648.0" prefWidth="250.0" spacing="12.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20;">
-               <children>
-                  <AnchorPane fx:id="accountInfo" prefHeight="124.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;">
-                     <VBox.margin>
-                        <Insets top="2.0" />
-                     </VBox.margin>
-                     <children>
-                        <ImageView fx:id="userImage" fitHeight="79.0" fitWidth="71.0" layoutX="45.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../img/mySelf.jpg" />
-                           </image>
-                        </ImageView>
-                        <Line endX="-1.0000228881835938" endY="59.399986267089844" layoutX="127.0" layoutY="46.0" startX="-1.0000228881835938" startY="-14.799995422363281" />
-                        <VBox layoutX="140.0" layoutY="44.0" prefHeight="53.0" prefWidth="83.0">
-                           <children>
-                              <Label fx:id="username" prefHeight="36.0" prefWidth="83.0" text="omar">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label fx:id="userlasteName" prefHeight="36.0" prefWidth="83.0" text="salhi">
-                                 <font>
-                                    <Font size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <Label fx:id="userEmail" layoutX="45.0" layoutY="115.0" prefHeight="27.0" prefWidth="162.0" text="omar.salhi@esprit.tn">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-                  <VBox fx:id="informationBar" alignment="BOTTOM_CENTER" prefHeight="487.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </VBox>
-               </children>
-               <padding>
-                  <Insets left="6.0" right="6.0" top="6.0" />
-               </padding>
-            </VBox>
-            <VBox prefHeight="650.0" prefWidth="766.0">
+            <VBox prefHeight="664.0" prefWidth="1018.0">
                <children>
                   <VBox prefHeight="171.0">
                      <children>
-                        <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="100.0" stylesheets="@../../style/toolBarStyle.css">
+                        <HBox>
                            <children>
-                              <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="370.0">
-                                <menus>
-                                  <Menu mnemonicParsing="false" text="Products">
-                                       <graphic>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../namedIcons/packaging.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Menu>
-                                  <Menu mnemonicParsing="false" text="Services">
-                                       <graphic>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../namedIcons/service.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Menu>
-                                    <Menu mnemonicParsing="false" text="Favorite">
-                                       <graphic>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../namedIcons/star.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Menu>
-                                    <Menu mnemonicParsing="false" text="Chat">
-                                       <graphic>
-                                          <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../namedIcons/notification.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                    </Menu>
-                                </menus>
-                              </MenuBar>
-                              <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;">
+                              <AnchorPane fx:id="accountInfo" prefHeight="143.0" prefWidth="236.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;">
                                  <children>
-                                    <TextField fx:id="searchTextField" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
-                                    <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
-                                       <graphic>
-                                          <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                             <image>
-                                                <Image url="@../../namedIcons/loupe.png" />
-                                             </image>
-                                          </ImageView>
-                                       </graphic>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                    </Button>
+                                    <ImageView fx:id="userImage" fitHeight="79.0" fitWidth="71.0" layoutX="45.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../img/mySelf.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Line endX="-1.0000228881835938" endY="59.399986267089844" layoutX="127.0" layoutY="46.0" startX="-1.0000228881835938" startY="-14.799995422363281" />
+                                    <VBox layoutX="140.0" layoutY="44.0" prefHeight="53.0" prefWidth="83.0">
+                                       <children>
+                                          <Label fx:id="username" prefHeight="36.0" prefWidth="83.0" text="omar">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="userlasteName" prefHeight="36.0" prefWidth="83.0" text="salhi">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label fx:id="userEmail" layoutX="45.0" layoutY="115.0" prefHeight="27.0" prefWidth="162.0" text="omar.salhi@esprit.tn">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
                                  </children>
-                              </HBox>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="4.0" />
+                                 </HBox.margin>
+                              </AnchorPane>
+                              <VBox>
+                                 <children>
+                                    <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="80.0" stylesheets="@../../style/toolBarStyle.css">
+                                       <children>
+                                          <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="370.0">
+                                            <menus>
+                                              <Menu mnemonicParsing="false" text="Products">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../namedIcons/packaging.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                              <Menu mnemonicParsing="false" text="Services">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../namedIcons/service.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                                <Menu mnemonicParsing="false" text="Favorite">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../namedIcons/star.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                                <Menu mnemonicParsing="false" text="Chat">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../namedIcons/notification.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                            </menus>
+                                          </MenuBar>
+                                          <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="39.0" prefWidth="286.0" style="-fx-background-color: #f4f4f4;">
+                                             <children>
+                                                <TextField fx:id="searchTextField" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
+                                                <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../namedIcons/loupe.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </Button>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="22.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="120.0" prefWidth="763.0" spacing="10.0">
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="17.0" layoutY="7.0" prefHeight="86.0" prefWidth="143.0" AnchorPane.bottomAnchor="7.400000000000006" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="18.200000000000017" AnchorPane.topAnchor="7.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="150.0" text="144">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Number of all posted Items" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="142.0" text="44" textAlignment="CENTER">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Numbers Of Selled ItemsThis Year" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="145.0" text="1547$">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Price of selled Items This Week" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="166.0" text="15">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Not Sold Items This Year" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
-                           <padding>
-                              <Insets right="22.0" />
-                           </padding>
-                        </HBox>
-                        <HBox prefHeight="120.0" prefWidth="763.0" spacing="10.0">
-                           <children>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
-                                 <children>
-                                    <VBox alignment="CENTER" layoutX="17.0" layoutY="7.0" prefHeight="86.0" prefWidth="143.0" AnchorPane.bottomAnchor="7.400000000000006" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="18.200000000000017" AnchorPane.topAnchor="7.0">
-                                       <padding>
-                                          <Insets top="10.0" />
-                                       </padding>
-                                       <children>
-                                          <Label prefHeight="36.0" prefWidth="150.0" text="144">
-                                             <font>
-                                                <Font name="Britannic Bold" size="36.0" />
-                                             </font>
-                                          </Label>
-                                          <Label prefHeight="39.0" prefWidth="121.0" text="Number of all posted Items" textAlignment="CENTER" wrapText="true">
-                                             <font>
-                                                <Font name="Britannic Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
-                                 <children>
-                                    <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
-                                       <padding>
-                                          <Insets top="10.0" />
-                                       </padding>
-                                       <children>
-                                          <Label prefHeight="36.0" prefWidth="142.0" text="44" textAlignment="CENTER">
-                                             <font>
-                                                <Font name="Britannic Bold" size="36.0" />
-                                             </font>
-                                          </Label>
-                                          <Label prefHeight="39.0" prefWidth="121.0" text="Numbers Of Selled ItemsThis Year" textAlignment="CENTER" wrapText="true">
-                                             <font>
-                                                <Font name="Britannic Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
-                                 <children>
-                                    <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
-                                       <padding>
-                                          <Insets top="10.0" />
-                                       </padding>
-                                       <children>
-                                          <Label prefHeight="36.0" prefWidth="145.0" text="1547$">
-                                             <font>
-                                                <Font name="Britannic Bold" size="36.0" />
-                                             </font>
-                                          </Label>
-                                          <Label prefHeight="39.0" prefWidth="121.0" text="Price of selled Items This Week" textAlignment="CENTER" wrapText="true">
-                                             <font>
-                                                <Font name="Britannic Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
-                                 <children>
-                                    <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
-                                       <padding>
-                                          <Insets top="10.0" />
-                                       </padding>
-                                       <children>
-                                          <Label prefHeight="36.0" prefWidth="166.0" text="15">
-                                             <font>
-                                                <Font name="Britannic Bold" size="36.0" />
-                                             </font>
-                                          </Label>
-                                          <Label prefHeight="39.0" prefWidth="121.0" text="Not Sold Items This Year" textAlignment="CENTER" wrapText="true">
-                                             <font>
-                                                <Font name="Britannic Bold" size="14.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                    </VBox>
-                                 </children>
-                              </AnchorPane>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                           </padding>
                         </HBox>
                      </children>
                      <padding>
                         <Insets top="4.0" />
                      </padding>
                   </VBox>
-                  <VBox fx:id="bigContainer" alignment="CENTER">
+                  <VBox fx:id="bigContainer" alignment="CENTER" prefHeight="528.0" prefWidth="1018.0">
                      <children>
-                        <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="489.0" prefWidth="748.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent;" vbarPolicy="NEVER">
+                        <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="504.0" prefWidth="1004.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent;" vbarPolicy="NEVER">
                            <content>
-                              <AnchorPane fx:id="showAllProdsInfo" prefHeight="482.0" prefWidth="736.0" />
+                              <AnchorPane fx:id="showAllProdsInfo" prefHeight="490.0" prefWidth="995.0" />
                            </content>
                         </ScrollPane>
                      </children>
                      <padding>
-                        <Insets right="10.0" />
+                        <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
                      </padding>
                   </VBox>
                </children>
@@ -252,7 +251,7 @@
       </HBox>
       <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
          <children>
-            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="55.2" layoutY="32.8" prefHeight="618.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="80.0" />
+            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
          </children>
       </AnchorPane>
    </children>

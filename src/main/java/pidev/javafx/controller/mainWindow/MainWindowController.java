@@ -46,6 +46,7 @@ public class MainWindowController implements Initializable {
 
 
     private HBox mainhBox;
+    private StackPane mainhBox2;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
@@ -71,13 +72,13 @@ public class MainWindowController implements Initializable {
     public void onMarketPlaceBtnClicked(ActionEvent event){
         mainBorderPain.getChildren().remove(mainhBox);
         try {
-            mainhBox = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+            mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-        mainBorderPain.setCenter(mainhBox);
+        mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight()  );
+        mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
+        mainBorderPain.setCenter(mainhBox2);
     }
 
     public void laodCheckOut(CustomMouseEvent<Bien> event) {

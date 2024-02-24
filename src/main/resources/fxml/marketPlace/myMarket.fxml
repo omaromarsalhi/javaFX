@@ -16,44 +16,44 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="mainHbox" alignment="CENTER_LEFT" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.MarketController">
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.MarketController">
    <children>
-      <VBox>
+      <HBox fx:id="mainHbox" alignment="CENTER_LEFT" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;">
          <children>
-            <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../style/toolBarStyle.css">
+            <VBox>
                <children>
-                  <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="237.0">
-                     <menus>
-                        <Menu mnemonicParsing="false" text="Products" />
-                        <Menu mnemonicParsing="false" text="Services" />
-                        <Menu fx:id="filter" mnemonicParsing="false" text="Filter" />
-                     </menus>
-                  </MenuBar>
-                  <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../../style/toolBarStyle.css">
+                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../style/toolBarStyle.css">
                      <children>
-                        <TextField fx:id="searchTextField" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
-                        <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
-                           <graphic>
-                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../namedIcons/loupe.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Button>
+                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="237.0">
+                           <menus>
+                              <Menu mnemonicParsing="false" text="Products" />
+                              <Menu mnemonicParsing="false" text="Services" />
+                              <Menu fx:id="filter" mnemonicParsing="false" text="Filter" />
+                           </menus>
+                        </MenuBar>
+                        <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../../style/toolBarStyle.css">
+                           <children>
+                              <TextField fx:id="searchTextField" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
+                              <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
+                                 <graphic>
+                                    <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/loupe.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
+                     <padding>
+                        <Insets right="22.0" top="4.0" />
+                     </padding>
                   </HBox>
-               </children>
-               <padding>
-                  <Insets right="22.0" top="4.0" />
-               </padding>
-            </HBox>
-            <StackPane prefWidth="775.0">
-               <children>
-                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="775.0" style="-fx-border-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/scrollBarStlyle.css" StackPane.alignment="CENTER">
+                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="775.0" style="-fx-border-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/scrollBarStlyle.css">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -69,45 +69,14 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <AnchorPane fx:id="ImageAnchorPane" prefHeight="620.0" prefWidth="200.0" stylesheets="@../../style/Buttons.css">
-                     <children>
-                        <ImageView fx:id="relativeImageVieur" fitHeight="323.0" fitWidth="445.0" layoutX="148.0" layoutY="176.0" pickOnBounds="true">
-                           <image>
-                              <Image url="@../../img/grapes.png" />
-                           </image>
-                        </ImageView>
-                        <Button fx:id="leftArrow" layoutX="61.0" layoutY="324.0" mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../namedIcons/left-arrow.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="rightArrow" layoutX="626.0" layoutY="324.0" mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../namedIcons/right-arrow.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button fx:id="exitImageBtn" layoutX="348.0" layoutY="14.0" mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../namedIcons/cross.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </AnchorPane>
                </children>
-            </StackPane>
+            </VBox>
          </children>
-      </VBox>
+      </HBox>
+      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox alignment="CENTER" layoutX="51.2" layoutY="108.8" prefHeight="407.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="155.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="109.0" />
+         </children>
+      </AnchorPane>
    </children>
-</HBox>
+</StackPane>

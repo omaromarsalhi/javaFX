@@ -1,6 +1,8 @@
 package pidev.javafx.controller.userMarketDashbord;
 
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -74,7 +77,8 @@ public class FormController implements Initializable {
     private VBox seconfInterface;
     @FXML
     private VBox Box1;
-
+    @FXML
+    private AnchorPane loadinPage;
 
 
 
@@ -82,7 +86,7 @@ public class FormController implements Initializable {
     private File chosenFile;
     private List<File>  chosenFiles;
     private MyListener listener;
-    private static String usageOfThisForm="add_prod";
+    private static String usageOfThisForm;
     private HBox buttonsBox;
     private boolean isImageUpdated;
     private Product product;
@@ -95,6 +99,8 @@ public class FormController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        usageOfThisForm="add_prod";
+        loadinPage.setVisible( false );
         chatBtn.setStyle( "-fx-border-color: transparent;" );
         chatBtn.hoverProperty().addListener( (observable, oldValue, newValue) -> {
             if(newValue)
@@ -120,7 +126,7 @@ public class FormController implements Initializable {
                 "-fx-background-radius: 10";
 
         isImageUpdated=false;
-        isAllInpulValid=new boolean[]{false,false,false,false};
+        isAllInpulValid=new boolean[]{false,false,false};
 
         createFormBtns();
         Box1.getChildren().add( buttonsBox );
@@ -143,6 +149,7 @@ public class FormController implements Initializable {
                 chosenFiles = fileChooser.showOpenMultipleDialog( Stage.getWindows().get( 0 ) );
             }
         } );
+
         setRegEx();
     }
 
@@ -205,8 +212,20 @@ public class FormController implements Initializable {
     @FXML
     public void generateDescription(ActionEvent event){
         if(!Pname.getText().isEmpty()&&isAllInpulValid[0]){
-            String result= ChatGPTAPIDescriber.chatGPT( Pname.getText() );
-            Pdescretion.setText(result);
+            Task<String> myTask = new Task<>() {
+                @Override
+                protected String call() throws Exception {
+                    return ChatGPTAPIDescriber.chatGPT( Pname.getText() );
+                }
+            };
+
+            myTask.setOnSucceeded(e -> {
+                Platform.runLater( () -> Pdescretion.setText( myTask.getValue() ) );
+                loadinPage.setVisible( false );
+            });
+            Thread thread = new Thread(myTask);
+            thread.start();
+            loadinPage.setVisible( true );
         }
     }
 
@@ -223,12 +242,11 @@ public class FormController implements Initializable {
         Popup popup4Regex =MyTools.getInstance().createPopUp();
 
         Pname.setOnKeyTyped( event -> {
-            isAllInpulValid[3]=true;
-            isAllInpulValid[0]=Pname.getText().matches("^[A-Za-z0-9 ]*${3,30}");
+            isAllInpulValid[0]=Pname.getText().matches("^[A-Za-z0-9 ]*$");
             Node node=(isAllInpulValid[0])?regexValidatedIcon1:regexNotValidatedIcon1;
             String color=(isAllInpulValid[0])?"green":"red";
             if(Pname.getText().isEmpty()){
-                formBox1.getChildren().removeAll( regexValidatedIcon1,regexNotValidatedIcon1 );
+                formBox1.getChildren().removeAll(regexValidatedIcon1,regexNotValidatedIcon1 );
                 Pname.setStyle( "");
                 formBox.setStyle(formLayoutBeforRegexCheck);
                 isAllInpulValid[0]=true;
@@ -246,12 +264,11 @@ public class FormController implements Initializable {
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
                         formLayoutAfterRegexCheck);
             }
-            if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
+            if((!isAllInpulValid[0]&&!Pname.getText().isEmpty())||(!isAllInpulValid[1]&&!Pprice.getText().isEmpty())||(!isAllInpulValid[2]&&!Pquantity.getText().isEmpty()))
                 formBox.setStyle( "-fx-border-color:red;"+
                         formLayoutAfterRegexCheck );
         });
         Pprice.setOnKeyTyped( event -> {
-            isAllInpulValid[3]=true;
             isAllInpulValid[1]=Pprice.getText().matches("([1-9]\\d{0,10}(,\\d{3})*)(\\.\\d{1,2})?");
             Node node=(isAllInpulValid[1])?regexValidatedIcon2:regexNotValidatedIcon2;
             String color=(isAllInpulValid[1])?"green":"red";
@@ -275,12 +292,11 @@ public class FormController implements Initializable {
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
                         formLayoutAfterRegexCheck);
             }
-            if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
+            if((!isAllInpulValid[0]&&!Pname.getText().isEmpty())||(!isAllInpulValid[1]&&!Pprice.getText().isEmpty())||(!isAllInpulValid[2]&&!Pquantity.getText().isEmpty()))
                 formBox.setStyle( "-fx-border-color:red;"+
                         formLayoutAfterRegexCheck );
         });
         Pquantity.setOnKeyTyped( event -> {
-            isAllInpulValid[3]=true;
             isAllInpulValid[2]=Pquantity.getText().matches("[0-9]{1,4}");
             Node node=(isAllInpulValid[2])?regexValidatedIcon3:regexNotValidatedIcon3;
             String color=(isAllInpulValid[2])?"green":"red";
@@ -304,7 +320,7 @@ public class FormController implements Initializable {
                 formBox.setStyle( "-fx-border-color:" + color + ";" +
                         formLayoutAfterRegexCheck);
             }
-            if((!isAllInpulValid[0]||!isAllInpulValid[1]||!isAllInpulValid[2])&&isAllInpulValid[3])
+            if((!isAllInpulValid[0]&&!Pname.getText().isEmpty())||(!isAllInpulValid[1]&&!Pprice.getText().isEmpty())||(!isAllInpulValid[2]&&!Pquantity.getText().isEmpty()))
                 formBox.setStyle( "-fx-border-color:red;"+
                         formLayoutAfterRegexCheck );
         });
@@ -333,7 +349,7 @@ public class FormController implements Initializable {
             }
         } );
         Pprice.setOnMouseExited( event -> {
-            if(isAllInpulValid[3])
+            if(!Pprice.getText().isEmpty())
                 popup4Regex.hide();
         } );
         Pquantity.setOnMouseEntered( event -> {
@@ -344,7 +360,7 @@ public class FormController implements Initializable {
             }
         } );
         Pquantity.setOnMouseExited( event -> {
-            if(isAllInpulValid[3])
+            if(!Pquantity.getText().isEmpty())
                 popup4Regex.hide();
         } );
     }
@@ -375,8 +391,25 @@ public class FormController implements Initializable {
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             } else if (usageOfThisForm.equals( "update_prod" ))
                 CrudBien.getInstance().updateItem( bien );
-            EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
-            EventBus.getInstance().publish( "onExitForm",event );
+
+            Task<Void> myTask = new Task<>() {
+                @Override
+                protected Void call() throws Exception {
+                    Thread.sleep(2500);
+                    return null;
+                }
+            };
+
+            myTask.setOnSucceeded(e -> {
+                EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
+                EventBus.getInstance().publish( "onExitForm",event );
+                loadinPage.setVisible( false );
+            });
+            Thread thread = new Thread(myTask);
+            loadinPage.setVisible( true );
+            thread.start();
+
+
         }
         else{
             Alert confirmationAlert = new Alert( Alert.AlertType.ERROR );

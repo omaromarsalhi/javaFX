@@ -51,3 +51,21 @@ public class UserController {
         return this.user;
     }
 }
+
+
+//// Simulate a time-consuming process (replace with your actual logic)
+//Task<Void> loadingTask = new Task<>() {
+//    @Override
+//    protected Void call() throws Exception {
+//        Thread.sleep(2000); // Simulate work
+//        return null;
+//    }
+//};
+//
+//        loadingTask.setOnSucceeded(e -> {
+//        // Close the loading screen when the task is done
+//        loadingStage.close();
+//        });
+//
+//                // Start the task
+//                new Thread(loadingTask).start();

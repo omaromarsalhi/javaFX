@@ -11,145 +11,172 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="itemDeatails" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefHeight="645.0" prefWidth="250.0" spacing="6.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.ItemInfoController">
+<VBox alignment="CENTER" prefHeight="422.0" prefWidth="772.0" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: #f4f4f4; -fx-effect: dropShadow(three-pass-box, rgba(26, 28, 28, 0.5), 10.0 , 0.0 , 1.0 ,10.0);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.ItemInfoController">
    <children>
-      <Label fx:id="prodName" alignment="CENTER" prefHeight="22.0" prefWidth="271.0">
+      <Label fx:id="prodName" alignment="CENTER" prefHeight="45.0" prefWidth="638.0">
          <font>
             <Font name="System Bold Italic" size="24.0" />
          </font>
       </Label>
-      <ImageView fx:id="itemImage" fitHeight="239.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" style="-fx-rotate: -15;">
-         <image>
-            <Image url="@../../img/mySelf.jpg" />
-         </image>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </ImageView>
-      <HBox fx:id="userInfo" alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="220.0">
+      <HBox alignment="CENTER" prefHeight="362.0" prefWidth="782.0" spacing="20.0" style="-fx-background-radius: 10; -fx-border-radius: 10;">
          <children>
-            <ImageView fx:id="userImage" fitHeight="68.0" fitWidth="49.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../img/mySelf.jpg" />
-               </image>
-            </ImageView>
-            <VBox alignment="CENTER" prefHeight="70.0" prefWidth="166.0">
+            <VBox alignment="CENTER" maxHeight="508.0" maxWidth="770.0" minHeight="365.0" prefHeight="365.0" prefWidth="236.0" spacing="10.0">
                <children>
-                  <Label alignment="CENTER" prefHeight="31.0" prefWidth="166.0" text="Owner Name ">
+                  <ImageView fx:id="itemImage" fitHeight="286.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/mySelf.jpg" />
+                     </image>
+                  </ImageView>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefHeight="364.0" prefWidth="208.0" spacing="6.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="62.0" prefWidth="166.0">
+                     <children>
+                        <ImageView fx:id="userImage" fitHeight="51.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../img/mySelf.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="userName" alignment="CENTER" prefHeight="30.0" prefWidth="205.0" textFill="#607337">
+                           <font>
+                              <Font name="System Bold Italic" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="40.0" prefWidth="238.0" text="State :">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="stateLabel" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="236.0" text="in Stock">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="40.0" prefWidth="241.0" text="Price :">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="priceLable" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="246.0" text="\$0.99">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="40.0" prefWidth="275.0" text="Quantity :">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="quantityLable" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="263.0" text="\$0.99">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <Label prefHeight="40.0" prefWidth="247.0" text="Category :">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="categoryLable" alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="234.0" text="sport">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+               <stylesheets>
+                  <URL value="@../../style/Buttons.css" />
+                  <URL value="@../../style/formLayout.css" />
+               </stylesheets>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="366.0" prefWidth="234.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="254.0" text="DESCREPTION" textAlignment="CENTER">
                      <font>
                         <Font name="System Italic" size="19.0" />
                      </font>
                   </Label>
-                  <Label fx:id="userName" alignment="CENTER" prefHeight="32.0" prefWidth="166.0" textFill="#607337">
-                     <font>
-                        <Font name="System Italic" size="20.0" />
-                     </font>
-                  </Label>
+                  <TextArea fx:id="itemDesc" editable="false" prefHeight="310.0" prefWidth="252.0" wrapText="true" />
+               </children>
+            </VBox>
+            <VBox fx:id="btnBox" alignment="CENTER" prefHeight="422.0" prefWidth="51.0" spacing="20.0">
+               <children>
+                  <Button fx:id="openChatBtn" mnemonicParsing="false" onMouseClicked="#onOpenChatBtnClicked" prefHeight="33.0" prefWidth="38.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1;">
+                     <graphic>
+                        <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../namedIcons/bubble-chat24c.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="4.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="rightArrow" mnemonicParsing="false">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../namedIcons/arrow24c.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="leftArrow" mnemonicParsing="false" prefHeight="32.0" prefWidth="14.0" rotate="180.0">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../namedIcons/arrow24c.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="exitImageBtn" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-width: 1;">
+                     <graphic>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../namedIcons/logout24c.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <padding>
+                        <Insets left="9.0" />
+                     </padding>
+                  </Button>
                </children>
                <HBox.margin>
-                  <Insets top="6.0" />
+                  <Insets right="6.0" />
                </HBox.margin>
             </VBox>
          </children>
-         <VBox.margin>
-            <Insets top="20.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="218.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="State :">
-               <font>
-                  <Font name="System Italic" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="stateLabel" alignment="CENTER" prefHeight="42.0" prefWidth="102.0" text="in Stock">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-         </children>
-         <VBox.margin>
-            <Insets top="10.0" />
-         </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Price :">
-               <font>
-                  <Font name="System Italic" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="priceLable" alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="\$0.99">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Quantity :">
-               <font>
-                  <Font name="System Italic" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="quantityLable" alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="\$0.99">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="70.0" prefWidth="222.0">
-         <children>
-            <Label alignment="CENTER" prefHeight="49.0" prefWidth="101.0" text="Category :">
-               <font>
-                  <Font name="System Italic" size="19.0" />
-               </font>
-            </Label>
-            <Label fx:id="categoryLable" alignment="CENTER" prefHeight="26.0" prefWidth="134.0" text="sport">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
-      <Label alignment="CENTER" prefHeight="66.0" prefWidth="230.0" text="DESCREPTION" textAlignment="CENTER">
-         <font>
-            <Font name="System Italic" size="19.0" />
-         </font></Label>
-      <TextArea fx:id="itemDesc" editable="false" prefHeight="65.0" prefWidth="500.0" wrapText="true" />
-      <HBox fx:id="btnBox" alignment="CENTER" prefHeight="72.0" prefWidth="220.0" spacing="10.0" stylesheets="@../../style/Buttons.css">
-         <children>
-            <Button fx:id="openChatBtn" mnemonicParsing="false" onMouseClicked="#onOpenChatBtnClicked" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-width: 1;">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../namedIcons/live-chat.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="exit" mnemonicParsing="false" onMouseClicked="#onExitBtnClicked" prefHeight="35.0" prefWidth="56.0" style="-fx-background-color: transparent; -fx-background-radius: 10; -fx-border-width: 1;">
-               <graphic>
-                  <ImageView fitHeight="32.0" fitWidth="32.0" onDragDetected="#onExitBtnClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../namedIcons/exit.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-         </children>
-         <padding>
-            <Insets right="5.0" />
-         </padding>
+         <stylesheets>
+            <URL value="@../../style/formLayout.css" />
+            <URL value="@../../style/Buttons.css" />
+         </stylesheets>
       </HBox>
    </children>
    <padding>
-      <Insets bottom="10.0" left="20.0" right="10.0" top="10.0" />
+      <Insets top="10.0" />
    </padding>
-   <stylesheets>
-      <URL value="@../../style/Buttons.css" />
-      <URL value="@../../style/formLayout.css" />
-   </stylesheets>
 </VBox>

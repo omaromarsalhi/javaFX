@@ -26,7 +26,7 @@ public final class CustomTextFieldTableCell<S, T> extends TextFieldTableCell<S, 
                 final EventHandler<MouseEvent> hoverListener = new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        final Label popupContent = new Label(result.getText().toUpperCase() );
+                        final Label popupContent = new Label((result.getText().isEmpty())?"NONE":result.getText().toUpperCase());
                         popupContent.setStyle("-fx-background-color: #64b5f6; -fx-border-color: #000000; -fx-border-width: 1px; -fx-padding: 5px; -fx-text-fill: white;"+
                                 "-fx-border-radius: 10;" +
                                         "-fx-background-radius: 10;");

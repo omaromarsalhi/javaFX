@@ -5,6 +5,7 @@ import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,14 +51,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class MainDashbordController implements Initializable {
 
 
-    @FXML
-    private VBox informationBar;
+
     @FXML
     private AnchorPane accountInfo;
-    @FXML
-    private VBox helperBar;
-    @FXML
-    private VBox topVbox;
     @FXML
     private ScrollPane scroll;
     @FXML
@@ -127,15 +123,15 @@ public class MainDashbordController implements Initializable {
 
         setMenueBar();
 
-        PauseTransition pause = new PauseTransition( Duration.seconds(0.1));
-        pause.setOnFinished(e -> {
-            loadInfoTemplate();
-            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
-            informationBar.getChildren().addAll(infoTemplate);
-        });
-        pause.play();
+//        PauseTransition pause = new PauseTransition( Duration.seconds(0.1));
+//        pause.setOnFinished(e -> {
+//            loadInfoTemplate();
+//            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
+//            informationBar.getChildren().addAll(infoTemplate);
+//        });
+//        pause.play();
         tableViewProd.setOnMouseClicked( event -> {
-            loadInfoOfSpecificItem(tableViewProd.getSelectionModel().getSelectedItem());
+            loadInfoItem(tableViewProd.getSelectionModel().getSelectedItem());
         } );
 
 
@@ -155,6 +151,7 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "onExitForm",this::onExitForm );
         EventBus.getInstance().subscribe( "add2Grid",this::add2Grid );
 
+
     }
 
 
@@ -171,9 +168,9 @@ public class MainDashbordController implements Initializable {
         showForSaleProduct.setOnAction( event -> {
             deleteFavoriteLabel();
             scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
-            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
-            informationBar.getChildren().clear();
-            informationBar.getChildren().add(infoTemplate);
+//            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
+//            informationBar.getChildren().clear();
+//            informationBar.getChildren().add(infoTemplate);
             showAllProdsInfo.getChildren().clear();
             showAllProdsInfo.getChildren().add(tableViewProd);
         } );
@@ -276,9 +273,9 @@ public class MainDashbordController implements Initializable {
 
         favorite.setPadding( new Insets( 0 ) );
         favorite.setSpacing( 0 );
-        informationBar.getChildren().clear();
-        informationBar.getChildren().add(favorite);
-        scroll.setPrefHeight(informationBar.getPrefHeight()-80 );
+//        informationBar.getChildren().clear();
+//        informationBar.getChildren().add(favorite);
+//        scroll.setPrefHeight(informationBar.getPrefHeight()-80 );
     }
 
 
@@ -331,11 +328,26 @@ public class MainDashbordController implements Initializable {
 
     public void doUpdate(CustomMouseEvent<Product> customMouseEvent){
         prod2Update=customMouseEvent.getEventData();
+        secondIHbox.getChildren().clear();
         secondInterface.setVisible( true );
         firstInterface.setOpacity( 0.4 );
         setFormForAddOrUpdate("update_prod");
     }
 
+
+    public void loadInfoItem(Product prod){
+        VBox info = null;
+        try {
+            info = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        EventBus.getInstance().publish( "setItemInfoData4LocalUser",new CustomMouseEvent<>(prod));
+        secondInterface.setVisible( true );
+        firstInterface.setOpacity( 0.4 );
+        secondIHbox.getChildren().clear();
+        secondIHbox.getChildren().add(info);
+    }
 
     public void loadSelledOrPurchsedProducts(String trasactionType){
 
@@ -395,12 +407,12 @@ public class MainDashbordController implements Initializable {
             int finalColumn = column;
             transactionDetailsController.getDeleteBtn().setOnMouseClicked( event -> {
                 CrudBien.getInstance().deleteItem( localWrapperList.get( finalI ).getProduct().getId());
-                rfreshGridPane(gridPane,finalHboxOfStackPane, finalRow, finalColumn,1);
+                rfreshGridPane(gridPane,finalHboxOfStackPane, finalRow, finalColumn,2);
             });
 
             ((StackPane)hboxOfStackPane.getChildren().get( 0 )).getChildren().add(anchorPane );
 
-            if (column == 2) {
+            if (column == 3) {
                 column = 0;
                 row++;
             }
@@ -441,8 +453,8 @@ public class MainDashbordController implements Initializable {
         FormController formController = fxmlLoader.getController();
         if(termOfUse.equals( "update_prod" ))
             formController.setInformaton( prod2Update );
-        form.setPrefHeight(informationBar.getPrefHeight());
-        form.setPrefWidth(informationBar.getPrefWidth());
+//        form.setPrefHeight(informationBar.getPrefHeight());
+//        form.setPrefWidth(informationBar.getPrefWidth());
         secondIHbox.getChildren().add(form);
     }
 
@@ -460,16 +472,10 @@ public class MainDashbordController implements Initializable {
     }
 
 
-    public void loadInfoOfSpecificItem(Product product) {
-        infoTemplateController.setDataForLocalUser(product,(accountInfo.getWidth()/2));
-        infoTemplate.setPrefHeight( informationBar.getPrefHeight()-40);
-    }
-
 
     public void refreshTableOnDelete(CustomMouseEvent<Bien> event){
         tableViewProd.getItems().remove( event.getEventData() );
         tableViewProd.refresh();
-        loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
         tableViewProd.getSelectionModel().clearSelection();
     }
 
@@ -477,7 +483,6 @@ public class MainDashbordController implements Initializable {
     public void refreshTableOnAddOrUpdate(MouseEvent event){
         tableViewProd.getItems().clear();
         tableViewController.setData(CrudBien.getInstance().selectItems());
-        loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
         tableViewProd.getSelectionModel().clearSelection();
     }
 

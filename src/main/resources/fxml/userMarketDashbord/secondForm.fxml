@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -236,5 +237,14 @@
             </HBox>
          </children>
       </VBox>
+      <AnchorPane fx:id="loadinPage">
+         <children>
+            <ImageView fitHeight="85.0" fitWidth="90.0" layoutX="343.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="212.60000000000002" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="212.0">
+               <image>
+                  <Image url="@../../img/grey-9026_256.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
    </children>
 </StackPane>
