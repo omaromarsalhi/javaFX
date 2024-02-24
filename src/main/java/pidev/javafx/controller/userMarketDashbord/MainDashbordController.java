@@ -432,7 +432,7 @@ public class MainDashbordController implements Initializable {
     public void setFormForAddOrUpdate(String termOfUse){
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource( "/fxml/userMarketDashbord/secondForm.fxml" ));
-        VBox form = null;
+        StackPane form = null;
         try {
             form = fxmlLoader.load();
         } catch (IOException e) {

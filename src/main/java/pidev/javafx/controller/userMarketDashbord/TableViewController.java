@@ -62,14 +62,13 @@ public class TableViewController implements Initializable {
         var table=new CustomHoverTableCell<Bien,Image>();
         imgCol.setCellFactory(table.forTableColumn());
         nameCol.setCellFactory( CustomTextFieldTableCell.forTableColumn(new DefaultStringConverter()));
-        descCol.setCellFactory( CustomTextFieldTableCell.forTableColumn(new DefaultStringConverter()));
         priceCol.setCellFactory( CustomTextFieldTableCell.forTableColumn(new FloatStringConverter()));
         quantityCol.setCellFactory( CustomTextFieldTableCell.forTableColumn(new FloatStringConverter()));
         stateCol.setCellFactory( CustomTextFieldTableCell.forTableColumn(new BooleanStringConverter()));
         timestampCol.setCellFactory( CustomTextFieldTableCell.forTableColumn( new StringConverter<Timestamp>() {
             @Override
             public String toString(Timestamp object) {
-                return object.toLocalDateTime().format( DateTimeFormatter.ofPattern( "yyy/MM:dd hh:mm" ) );
+                return object.toLocalDateTime().format( DateTimeFormatter.ofPattern( "yyy/MM/dd hh:mm" ) );
             }
 
             @Override
@@ -88,6 +87,9 @@ public class TableViewController implements Initializable {
                 return null;
             }
         } ));
+
+        ProductTable.setFixedCellSize( 50d ); // Set the desired row height (in pixels)
+
     }
 
     public void setData(ObservableList<Bien> bienList){

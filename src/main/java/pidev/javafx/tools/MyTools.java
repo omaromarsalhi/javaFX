@@ -5,7 +5,13 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.model.Contrat.Contract;
@@ -15,9 +21,14 @@ import pidev.javafx.model.MarketPlace.Product;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class MyTools {
@@ -66,6 +77,23 @@ public class MyTools {
         return fileChooser.showSaveDialog( Stage.getWindows().get(0) );
     }
 
+    public  String getPathAndSaveIMG(String chosenFilePath){
+
+        String path ="/usersImg/"+ UUID.randomUUID()+".png";
+
+        Path src = Paths.get(chosenFilePath);
+        Path dest = Paths.get( "src/main/resources"+path);
+
+        try {
+            Files.copy(src,dest);
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+
+        return path;
+    }
+
+
     public void notifyUser4NewAddedProduct(Product product){
         ObservableList<Favorite> favoriteObservableList= CrudFavorite.getInstance().selectItems();
         boolean checkIfProductIsValid=true;
@@ -93,5 +121,18 @@ public class MyTools {
                 checkIfProductIsValid=true;
             }
         }
+    }
+
+    public Popup createPopUp(){
+        Popup popup = new Popup();
+        Label popupContent = new Label();
+        popupContent.setStyle("-fx-border-color: #000000; -fx-border-width: 1px; -fx-padding: 5px; -fx-text-fill: white;"+
+                "-fx-border-radius: 10;" +
+                "-fx-background-radius: 10;");
+        popupContent.setWrapText( true );
+        popupContent.setAlignment( Pos.CENTER );
+        popupContent.setFont( Font.font( "System", FontWeight.MEDIUM, FontPosture.REGULAR,16 ) );
+        popup.getContent().add(popupContent);
+        return popup;
     }
 }

@@ -252,7 +252,7 @@
       </HBox>
       <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
          <children>
-            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="217.0" layoutY="72.0" prefHeight="526.0" prefWidth="585.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="72.0" AnchorPane.leftAnchor="217.0" AnchorPane.rightAnchor="217.0" AnchorPane.topAnchor="72.0" />
+            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="55.2" layoutY="32.8" prefHeight="618.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="80.0" />
          </children>
       </AnchorPane>
    </children>

@@ -8,6 +8,7 @@ import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.MyTools;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -76,7 +77,7 @@ public class CrudBien implements CrudInterface<Bien> {
             for(String file :imageList) {
                 prepare4Images = connect4Images.prepareStatement( sql );
                 prepare4Images.setInt( 1,id );
-                prepare4Images.setString( 2, getPathAndSaveIMG(file) );
+                prepare4Images.setString( 2, file );
                 prepare4Images.executeUpdate();
             }
         } catch (SQLException e) {
@@ -170,8 +171,10 @@ public class CrudBien implements CrudInterface<Bien> {
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );
-                bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
-                bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                if(bien.getAllImagesSources().size()>0) {
+                    bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                }
                 BienList.add(bien);
             }
         } catch (SQLException e) {
@@ -296,21 +299,7 @@ public class CrudBien implements CrudInterface<Bien> {
     }
 
 
-    private  String getPathAndSaveIMG(String chosenFilePath){
 
-        String path ="/usersImg/"+UUID.randomUUID()+".png";
-
-        Path src = Paths.get(chosenFilePath);
-        Path dest = Paths.get( "src/main/resources"+path);
-
-        try {
-            Files.copy(src,dest);
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-
-        return path;
-    }
 }
 
 
