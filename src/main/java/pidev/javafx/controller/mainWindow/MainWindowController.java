@@ -69,7 +69,7 @@ public class MainWindowController implements Initializable {
     public void onMarketPlaceBtnClicked(ActionEvent event){
         mainBorderPain.getChildren().remove(mainhBox);
         try {
-            mainhBox = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+            mainhBox = FXMLLoader.load(getClass().getResource( "/fxml/reclamation/testt.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

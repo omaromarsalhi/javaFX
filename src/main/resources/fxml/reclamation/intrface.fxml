@@ -36,7 +36,7 @@
              <Button fx:id="importButton" layoutX="82.0" layoutY="199.0" onAction="#importFile" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Import File" />
          </children>
       </Pane>
-      <ChoiceBox fx:id="ChoixMul" layoutX="458.0" layoutY="349.0" prefHeight="26.0" prefWidth="318.0" />
+      <ChoiceBox fx:id="ChoixMul" layoutX="458.0" layoutY="349.0" prefHeight="26.0" prefWidth="318.0" styleClass="comboBox" stylesheets="@../../styles/style.css" />
    </children>
 
 

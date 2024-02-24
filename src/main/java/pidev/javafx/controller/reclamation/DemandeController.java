@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 
 import javafx.scene.control.Button;
 
+import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
@@ -18,6 +19,7 @@ import javafx.util.Duration;
 import javafx.animation.Timeline;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class DemandeController {
 
@@ -38,9 +40,11 @@ public class DemandeController {
         box2.setEffect(new BoxBlur(10, 10, 3));
         box3.setEffect(new BoxBlur(10, 10, 3));
         // timer1();
-        // FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Demande/intrface.fxml"));
-//        AnchorPane showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/intrface.fxml"));
-//        mainBorderPain.getChildren().setAll(showEmpAnchorPane);
+       //  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Demande/intrface.fxml"));
+        ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/reclamation/testt.fxml")));
+        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
+        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
+        mainBorderPain.getChildren().setAll(scrollPane);
     }
 
     public void  getBoton_on_click_add1() {

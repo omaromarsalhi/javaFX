@@ -2,8 +2,10 @@ package pidev.javafx.controller.reclamation;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import pidev.javafx.crud.reclamation.DataSource;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
@@ -14,6 +16,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import javafx.scene.Scene;
@@ -33,18 +36,22 @@ public class AjouterReclamation {
 
     @FXML
     private Button importButton;
+    @FXML
+    private AnchorPane mainBorderPain;
 
     @FXML
     private TextField privateKey;
     @FXML
     private TextField title;
+    @FXML
+    private ImageView Image;
 //    @FXML
 //    private TextField subject;
 
     @FXML
     private TextArea description;
     @FXML
-    public ChoiceBox ChoixMul;
+    public ComboBox ChoixMul;
     @FXML
     ServiceReclamation si = new ServiceReclamation();
     //String imagePath;
@@ -72,12 +79,20 @@ public class AjouterReclamation {
         File selectedFile = fileChooser.showOpenDialog(null);
 
         if (selectedFile != null) {
-            imagePath = selectedFile.getAbsolutePath(); // Store the file path
+            imagePath = selectedFile.toURI().toString(); // Store the file path
             System.out.println("File imported: " + imagePath);
+
+            // Create an Image object from the file path
+            Image image = new Image(imagePath);
+
+            // Assuming you have an ImageView field named imageView
+            Image.setImage(image);
+
         } else {
-            System.out.println("File selection cancelled.");// Default image path
+            System.out.println("File selection cancelled."); // Default image path
         }
     }
+
 
 
     @FXML
@@ -191,6 +206,12 @@ public class AjouterReclamation {
 
         ChoixMul.getItems().addAll("Problem technique", "application", "testt", "omar salhi", "khalil rmila ");
         return (String) ChoixMul.getSelectionModel().getSelectedItem();
+    }
+    public void clear(ActionEvent event) throws IOException {
+        ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/reclamation/testt.fxml")));
+        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
+        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
+        mainBorderPain.getChildren().setAll(scrollPane);
     }
 
 
