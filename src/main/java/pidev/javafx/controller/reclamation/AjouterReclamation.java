@@ -201,7 +201,6 @@ public class AjouterReclamation {
         return reclamations;
     }
 
-
     public String initialize() {
 
         ChoixMul.getItems().addAll("Problem technique", "application", "testt", "omar salhi", "khalil rmila ");

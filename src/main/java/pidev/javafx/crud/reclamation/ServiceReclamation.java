@@ -63,6 +63,11 @@ public class ServiceReclamation implements Iservice<Reclamation> {
     }
 
     @Override
+    public void supprimer(int id) {
+
+    }
+
+    @Override
     public Reclamation getOneById(int idReclamation) {
         Reclamation reclamation = null;
         String req = "SELECT * FROM `reclamation` WHERE `idReclamation`=?";

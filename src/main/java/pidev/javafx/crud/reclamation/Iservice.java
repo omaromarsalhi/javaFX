@@ -9,6 +9,9 @@ public interface Iservice <T> {
     public void ajouter(T t);
     public void modifier(T t);
     public void supprimer(String idReclamation);
+
+    void supprimer(int id);
+
     public T getOneById(int idReclamation);
     public Set<T> getAll();
 
