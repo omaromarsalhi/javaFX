@@ -11,6 +11,7 @@ import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.MyTools;
 
 
 import java.io.DataOutputStream;
@@ -51,6 +52,7 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
         EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
+        btn2.setOnMouseClicked( event ->  MyTools.getInstance().generatePDFWithApi());
     }
 
 

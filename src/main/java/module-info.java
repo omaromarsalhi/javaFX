@@ -8,6 +8,7 @@ module pidev.javafx{
     requires itextpdf;
     requires twilio;
     requires org.json;
+    requires org.apache.pdfbox;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

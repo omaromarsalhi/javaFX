@@ -13,6 +13,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.model.Contrat.Contract;
 import pidev.javafx.model.MarketPlace.Bien;
@@ -30,6 +32,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
 public class MyTools {
 
@@ -67,6 +72,37 @@ public class MyTools {
         }
     }
 
+    public void generatePDFWithApi() {
+        try {
+            PDDocument document = new PDDocument();
+            PDPage page = new PDPage();
+            document.addPage(page);
+
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
+            PDImageXObject image = PDImageXObject.createFromFile("src/main/resources/appLogo/logo.png", document);
+            float imageWidth = image.getWidth();
+            float imageHeight = image.getHeight();
+
+            // Position the image at the end of the page
+            float imageX = 100; // Adjust X-coordinate as needed
+            float imageY = 100; // Adjust Y-coordinate as needed
+            contentStream.drawImage(image, imageX, imageY, 100, 100);
+//            contentStream.beginText();
+//            contentStream.setFont( PDType1Font.HELVETICA_BOLD, 18);
+//            contentStream.newLineAtOffset(100, 700);
+//            contentStream.showText("Hello, PDFBox!");
+//            contentStream.endText();
+
+            contentStream.close();
+            document.save(new FileOutputStream(getFileOfSave()));
+            System.out.println("PDF created successfully at: ");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     private File getFileOfSave(){
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Pdf Image");
@@ -76,6 +112,7 @@ public class MyTools {
         );
         return fileChooser.showSaveDialog( Stage.getWindows().get(0) );
     }
+
 
     public  String getPathAndSaveIMG(String chosenFilePath){
 

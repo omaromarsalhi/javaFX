@@ -5,8 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import pidev.javafx.controller.user.UserController;
-
 import java.io.IOException;
+
+
 
 public class Main extends Application {
     @Override
@@ -18,7 +19,6 @@ public class Main extends Application {
         UserController.setUser(1);
         stage.setTitle("Hello!");
         stage.setResizable( true );
-
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(event -> System.exit(0));
