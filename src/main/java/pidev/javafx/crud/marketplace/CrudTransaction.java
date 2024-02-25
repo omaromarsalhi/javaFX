@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.MarketPlace.Transaction;
 import pidev.javafx.model.MarketPlace.TransactionMode;
@@ -29,7 +30,7 @@ public class CrudTransaction implements CrudInterface<Transaction> {
         String sql = "INSERT INTO transactions (idProd,idContract, idSeller, idBuyer,pricePerUnit,quantity, transactionMode) " +
                 "VALUES (?, ?, ?, ? ,? ,?,?)";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(sql);
@@ -55,6 +56,8 @@ public class CrudTransaction implements CrudInterface<Transaction> {
     public ObservableList<Transaction> selectItems() {
         ObservableList<Transaction> transactions = FXCollections.observableArrayList();
         String selectSql = "SELECT * FROM transactions";
+        connect = ConnectionDB.getInstance().getCnx();
+
 
         try {
             prepare = connect.prepareStatement(selectSql);
@@ -88,6 +91,7 @@ public class CrudTransaction implements CrudInterface<Transaction> {
     @Override
     public Transaction selectFirstItem() {
         String selectFirstSql = "SELECT * FROM transactions LIMIT 1";
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(selectFirstSql);
@@ -114,6 +118,7 @@ public class CrudTransaction implements CrudInterface<Transaction> {
     @Override
     public void deleteItem(int id) {
         String deleteSql = "DELETE FROM transactions WHERE idTransaction = ?";
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(deleteSql);

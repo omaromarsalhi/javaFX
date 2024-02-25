@@ -153,7 +153,10 @@
             <TextArea fx:id="ProlesAndTerms" editable="false" prefHeight="143.0" prefWidth="366.0" wrapText="true">
                <font>
                   <Font size="16.0" />
-               </font></TextArea>
+               </font>
+               <VBox.margin>
+                  <Insets bottom="2.0" />
+               </VBox.margin></TextArea>
          </children>
          <HBox.margin>
             <Insets />

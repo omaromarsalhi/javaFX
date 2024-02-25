@@ -48,6 +48,12 @@ public class Product {
     public void setAllImagesSources(List<String> allImagesSources) {
         this.allImagesSources = allImagesSources;
     }
+    public void deleteFromImagesSources(int index) {
+        this.allImagesSources.remove( index );
+    }
+    public void addFromImagesSources(String path) {
+        this.allImagesSources.add( path );
+    }
 
     public int getId() {
         return id;

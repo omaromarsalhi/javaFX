@@ -14,7 +14,11 @@ public class User {
       String password;
       String date;
       String dob;
-      String status;
+    String status;
+
+
+
+    String imagePath;
 
     public User() {
     }
@@ -41,7 +45,7 @@ public class User {
         this.date = date;
     }
 
-    public User(int id, String firstname, String lastname, String email, String cin, int age, int num, String adresse, Role role) {
+    public User(int id, String firstname, String lastname, String email, String cin, int age, int num, String adresse, Role role,String password,String imagePath) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -51,9 +55,8 @@ public class User {
         this.num = num;
         this.adresse = adresse;
         this.role = role;
-        this.droit_acces = droit_acces;
         this.password = password;
-        this.date = date;
+        this.imagePath=imagePath;
     }
 
     public User(String firstname, String email, String cin, int age, int num, String adresse, String dob, String lastname,String status,String date,Role role) {
@@ -189,9 +192,13 @@ public class User {
     }
 
 
+    public String getImagePath() {
+        return imagePath;
+    }
 
-
-
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
 
 

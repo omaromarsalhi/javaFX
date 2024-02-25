@@ -6,16 +6,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.MyTools;
 
+
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -46,11 +47,16 @@ public class MainWindowController implements Initializable {
 
 
     private HBox mainhBox;
+    private StackPane mainhBox2;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
         EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
+        btn2.setOnMouseClicked( event ->  MyTools.getInstance().generatePDFWithApi());
     }
+
+
+
 //    btns that changes the scenes
     @FXML
     public void onShowEmpClicked(ActionEvent event) throws IOException {
@@ -60,21 +66,21 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void onMPDClicked(ActionEvent event) throws IOException {
-        HBox hBox = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        mainBorderPain.setCenter(hBox);
+        StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+        mainBorderPain.setCenter(stackPane);
     }
 
     @FXML
     public void onMarketPlaceBtnClicked(ActionEvent event){
         mainBorderPain.getChildren().remove(mainhBox);
         try {
-            mainhBox = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+            mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-        mainBorderPain.setCenter(mainhBox);
+        mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight()  );
+        mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
+        mainBorderPain.setCenter(mainhBox2);
     }
 
     public void laodCheckOut(CustomMouseEvent<Bien> event) {

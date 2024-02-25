@@ -7,6 +7,8 @@ module pidev.javafx{
     requires transitive java.desktop;
     requires itextpdf;
     requires twilio;
+    requires org.json;
+    requires org.apache.pdfbox;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
@@ -29,5 +31,8 @@ module pidev.javafx{
     opens pidev.javafx.controller.mainWindow to javafx.fxml;
     exports pidev.javafx.crud.marketplace;
     opens pidev.javafx.crud.marketplace to javafx.fxml;
+    exports pidev.javafx.controller.user;
+    exports pidev.javafx.model.User;
+    exports pidev.javafx.model.chat;
 }
 

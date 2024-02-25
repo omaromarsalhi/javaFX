@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefHeight="366.0" prefWidth="200.0" scaleShape="false" style="-fx-background-color: #fdc847;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.TransactionDetailsController">
+<StackPane prefHeight="244.0" prefWidth="182.0" scaleShape="false" style="-fx-background-color: red;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.TransactionDetailsController">
    <children>
-      <VBox fx:id="contratDetails" prefHeight="366.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20;">
+      <VBox fx:id="contratDetails" prefHeight="244.0" prefWidth="197.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20;">
          <children>
             <HBox alignment="CENTER" prefHeight="91.0" prefWidth="142.0">
                <children>
-                  <AnchorPane prefHeight="91.0" prefWidth="99.0">
+                  <AnchorPane prefHeight="90.0" prefWidth="87.0">
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="50.0" layoutX="14.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -36,7 +36,7 @@
                         <Label alignment="CENTER" layoutX="19.0" layoutY="68.0" prefHeight="22.0" prefWidth="101.0" text="Connected" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="91.0" prefWidth="122.0">
+                  <AnchorPane prefHeight="90.0" prefWidth="20.0">
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="50.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -61,7 +61,7 @@
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="165.0">
                <children>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="110.0" text="Total Price" />
-                  <TextField fx:id="PtotalPrice" prefHeight="46.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                  <TextField fx:id="PtotalPrice" editable="false" prefHeight="46.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                </children>
                <VBox.margin>
                   <Insets top="20.0" />
@@ -70,13 +70,13 @@
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="206.0">
                <children>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="110.0" text="Payment Method" />
-                  <TextField fx:id="PpaymentMode" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                  <TextField fx:id="PpaymentMode" editable="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="46.0" prefWidth="254.0">
                <children>
                   <Label alignment="CENTER" prefHeight="46.0" prefWidth="110.0" text="Evective Date" />
-                  <TextField fx:id="PeffectivrDate" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+                  <TextField fx:id="PeffectivrDate" editable="false" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
                </children>
             </HBox>
          </children>

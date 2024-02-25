@@ -8,33 +8,42 @@ public class UserController {
     private User user;
     private static UserController instance;
 
-    private UserController() {
-
-        user=new User(1,
-                "omar",
-                "salhi",
-                "salhiomar362@gmail.com",
-                "12710434",
-                22,
-                29624921,
-                "beb saadoun",
-                Role.simpleutlisateur);
-
-//        user=new User(2,
-//                "latifa",
-//                "benzaied",
-//                "latifa@gmail.com",
-//                "25251400",
-//                22,
-//                50421001,
-//                "menzah 1",
-//                Role.simpleutlisateur
-//        );
+    private UserController(int number) {
+        System.out.println(number);
+        if(number==1) {
+            user = new User( 1,
+                    "omar",
+                    "salhi",
+                    "salhiomar362@gmail.com",
+                    "12710434",
+                    22,
+                    29624921,
+                    "beb saadoun",
+                    Role.simpleutlisateur,
+                    "salhi",
+                    "img/me.png" );
+        }
+        else {
+            user = new User( 2,
+                    "latifa",
+                    "benzaied",
+                    "latifa@gmail.com",
+                    "25251400",
+                    22,
+                    50421001,
+                    "menzah 1",
+                    Role.simpleutlisateur,
+                    "benzaied",
+                    "img/latifa.png");
+        }
     }
 
+    public static void setUser(int number) {
+            instance = new UserController(number);
+    }
+
+
     public static UserController getInstance() {
-        if (instance == null)
-            instance = new UserController();
         return instance;
     }
 
@@ -42,3 +51,21 @@ public class UserController {
         return this.user;
     }
 }
+
+
+//// Simulate a time-consuming process (replace with your actual logic)
+//Task<Void> loadingTask = new Task<>() {
+//    @Override
+//    protected Void call() throws Exception {
+//        Thread.sleep(2000); // Simulate work
+//        return null;
+//    }
+//};
+//
+//        loadingTask.setOnSucceeded(e -> {
+//        // Close the loading screen when the task is done
+//        loadingStage.close();
+//        });
+//
+//                // Start the task
+//                new Thread(loadingTask).start();

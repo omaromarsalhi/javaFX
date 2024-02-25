@@ -56,7 +56,7 @@
                         <Insets left="8.0" />
                      </padding>
                   </HBox>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="361.0" prefWidth="232.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="361.0" prefWidth="232.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
                      <content>
                         <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" prefHeight="354.0" prefWidth="238.0" spacing="6.0" style="-fx-background-color: transparent;">
                            <padding>

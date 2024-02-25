@@ -37,16 +37,6 @@ public class MarketController implements Initializable {
     @FXML
     private HBox mainHbox;
     @FXML
-    private ImageView relativeImageVieur;
-    @FXML
-    private AnchorPane ImageAnchorPane;
-    @FXML
-    private Button leftArrow;
-    @FXML
-    private Button rightArrow;
-    @FXML
-    private Button exitImageBtn;
-    @FXML
     private Button searchBtn;
     @FXML
     private HBox searchHbox;
@@ -56,6 +46,8 @@ public class MarketController implements Initializable {
     private MenuBar menuBar;
     @FXML
     private Menu filter;
+    @FXML
+    private AnchorPane secondInterface;
 
     private VBox itemInfo;
     private VBox hepfullBar;
@@ -73,8 +65,10 @@ public class MarketController implements Initializable {
 
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        secondInterface.setVisible( false );
         fiveSecondsWonder=new Timeline();
         itemInfo=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
@@ -93,11 +87,6 @@ public class MarketController implements Initializable {
         showGridPane(CrudBien.getInstance().selectItems() );
         setMenueBar();
 
-        ImageAnchorPane.setVisible( false );
-        exitImageBtn.setOnAction( event -> {
-            ImageAnchorPane.setVisible( false );
-            grid.setOpacity( 1 );
-        } );
 
         searchBarState="closed";
         animTimer = new Timer();
@@ -107,13 +96,23 @@ public class MarketController implements Initializable {
 
         searchBtn.setOnMouseClicked(event -> animateSearchBar());
 
+//        scroll.vvalueProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue.doubleValue() >= 1.0) {
+//                System.out.println("Reached the end of the scroll pane!");
+//                showGridPane(CrudBien.getInstance().selectItems());
+////                changeGridPaneContent(CrudBien.getInstance().selectItems());
+//                scroll.setVvalue(0.0);
+//            }
+//        });
+
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
         EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
         EventBus.getInstance().subscribe( "showHelfullBar",this::showHelfullBar);
+        EventBus.getInstance().subscribe( "exitItemInfo",this::exitItemInfo);
+
+
     }
-
-
 
 
 
@@ -222,12 +221,22 @@ public class MarketController implements Initializable {
 
     public void loadAndSetItemInfo(CustomMouseEvent<Product> customMouseEvent){
         EventBus.getInstance().publish( "setItemInfoData", customMouseEvent);
-        if(whoIsActiveNow.equals( "hepfullBar" ))
-            animateChanges(hepfullBar, itemInfo );
-        else if (whoIsActiveNow.equals( "chatBox" ))
-            animateChanges( chatBox, itemInfo );
-        whoIsActiveNow = "itemInfo";
+//        if(whoIsActiveNow.equals( "hepfullBar" ))
+//            animateChanges(hepfullBar, itemInfo );
+//        else if (whoIsActiveNow.equals( "chatBox" ))
+//            animateChanges( chatBox, itemInfo );
+//        whoIsActiveNow = "itemInfo";
+        mainHbox.setOpacity( 0.4 );
+        secondInterface.setVisible( true );
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().add(itemInfo );
     }
+
+    public void exitItemInfo(MouseEvent event){
+        mainHbox.setOpacity( 1 );
+        secondInterface.setVisible( false );
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
+    }
+
 
     public void showHelfullBar(MouseEvent event){
         if(whoIsActiveNow.equals( "itemInfo" ))
@@ -238,64 +247,39 @@ public class MarketController implements Initializable {
     }
 
 
-
     public void showGridPane(ObservableList<Bien> biens){
         grid.getChildren().clear();
         int column = 0;
         int row = 1;
-        try {
-            for (int i = 0; i < biens.size(); i++) {
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                ItemController itemController = fxmlLoader.getController();
-                itemController.setData(biens.get(i),myListener);
-                itemController.setData(biens.get( i ));
-                itemController.animateImages(fiveSecondsWonder,biens.get( i ));
-                int finalI = i;
-                anchorPane.setOnMouseClicked( event -> showRelativeImages(biens.get( finalI )) );
-                getProduct(anchorPane,itemController);
-
-                if (column == 3) {
-                    column = 0;
-                    row++;
-                }
-                grid.setHgap( 25 );
-                grid.setVgap( 25 );
-                grid.add(anchorPane, column++, row);
-
+        for (int i = 0; i < biens.size() ; i++) {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
+            AnchorPane anchorPane = null;
+            try {
+                anchorPane = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException( e );
             }
-            grid.setPadding( new Insets( 0,0,40,0 ));
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            ItemController itemController = fxmlLoader.getController();
+            itemController.setData(biens.get( i ));
+            itemController.animateImages(fiveSecondsWonder,biens.get(i));
+            getProduct(anchorPane,itemController);
+
+            if (column == 3) {
+                column = 0;
+                row++;
+            }
+            grid.add(anchorPane, column++, row);
         }
-    }
-
-    public void showRelativeImages(Bien bien){
-        AtomicInteger imageIndex= new AtomicInteger(0);
-        ImageAnchorPane.setVisible( true );
-        grid.setOpacity( 0.2 );
-        relativeImageVieur.setImage(new Image("file:src/main/resources"+ bien.getImageSourceByIndex( imageIndex.get() ) ) );
-        rightArrow.setOnAction( event -> {
-            imageIndex.getAndIncrement();
-            if(imageIndex.get() >=bien.getAllImagesSources().size())
-                imageIndex.set( 0 );
-            relativeImageVieur.setImage( new Image( "file:src/main/resources"+bien.getImageSourceByIndex( imageIndex.get() ) ) );
-
-        } );
-        leftArrow.setOnAction( event -> {
-            imageIndex.getAndDecrement();
-            if(imageIndex.get() <=0)
-                imageIndex.set( bien.getAllImagesSources().size() - 1 );
-            relativeImageVieur.setImage( new Image("file:src/main/resources"+ bien.getImageSourceByIndex( imageIndex.get() ) ) );
-        } );
+        grid.setHgap( 25 );
+        grid.setVgap( 25 );
+        grid.setPadding( new Insets( 0,0,40,0 ));
     }
 
 
-    public void setMainWindowListener(MyListener listener){
-        MainWindowListener=listener;
-    }
+
+
 
     public void loadChat(MouseEvent event){
         if(whoIsActiveNow.equals( "hepfullBar" ))

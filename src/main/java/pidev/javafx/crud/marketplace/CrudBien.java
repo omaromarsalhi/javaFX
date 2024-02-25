@@ -4,9 +4,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.MyTools;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,7 +45,7 @@ public class CrudBien implements CrudInterface<Bien> {
                 + "(idUser, name, descreption,isDeleted, price, quantity, state, type, category)"
                 + " VALUES (?, ?, ?, ?, ?, ? ,? , ?, ?)";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(sql);
@@ -69,13 +71,13 @@ public class CrudBien implements CrudInterface<Bien> {
                 + "(idProduct,path)"
                 + " VALUES (?, ?)";
 
-        connect4Images = ConnectionDB.connectDb();
+        connect4Images = ConnectionDB.getInstance().getCnx();
 
         try {
             for(String file :imageList) {
                 prepare4Images = connect4Images.prepareStatement( sql );
                 prepare4Images.setInt( 1,id );
-                prepare4Images.setString( 2, getPathAndSaveIMG(file) );
+                prepare4Images.setString( 2, file );
                 prepare4Images.executeUpdate();
             }
         } catch (SQLException e) {
@@ -86,9 +88,9 @@ public class CrudBien implements CrudInterface<Bien> {
 
 
     public void deleteItem(int id) {
-        String sql = "UPDATE products SET isDeleted = true WHERE idProd = ?";
 
-        connect = ConnectionDB.connectDb();
+        String sql = "UPDATE products SET isDeleted = true WHERE idProd = ?";
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare = connect.prepareStatement(sql);
@@ -100,9 +102,10 @@ public class CrudBien implements CrudInterface<Bien> {
     }
 
     public void deleteImages(int id) {
+
         String sql = "DELETE FROM product_images WHERE idProduct = ?";
 
-        connect4Images = ConnectionDB.connectDb();
+        connect4Images = ConnectionDB.getInstance().getCnx();
 
         try {
             prepare4Images = connect4Images.prepareStatement(sql);
@@ -124,7 +127,7 @@ public class CrudBien implements CrudInterface<Bien> {
                 " category = ?"+
                 " WHERE idProd = ?";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
 
         try {
             int i=2;
@@ -149,9 +152,9 @@ public class CrudBien implements CrudInterface<Bien> {
     @Override
     public ObservableList<Bien> selectItems() {
         Bien bien = null;
-        String sql = "SELECT * FROM products "; // Retrieve all items
+        String sql = "SELECT * FROM products  where isDeleted=false order by idProd desc"; // Retrieve all items
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         ObservableList<Bien> BienList = FXCollections.observableArrayList();
         try {
             prepare = connect.prepareStatement(sql);
@@ -168,8 +171,10 @@ public class CrudBien implements CrudInterface<Bien> {
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );
-                bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
-                bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                if(bien.getAllImagesSources().size()>0) {
+                    bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                }
                 BienList.add(bien);
             }
         } catch (SQLException e) {
@@ -183,24 +188,24 @@ public class CrudBien implements CrudInterface<Bien> {
     public ObservableList<Bien> filterItems(String fromDate,String todate,int minPrice,int maxPrice,int quantity,String categoryChoice) {
         Bien bien = null;
         String sql = "SELECT * FROM products where idProd >=0 " ;
-        sql+=(categoryChoice.equals( "" )||categoryChoice.equals( "ALL" ))?"":"and category = ?";
-        sql+=(fromDate.equals( "" ))?"":" and timestamp >= ?";
-        sql+=(todate.equals( "" ))?"":" and timestamp <= ?";
+        sql+=(categoryChoice.isEmpty()||categoryChoice.equals( "ALL" ))?"":"and category = ?";
+        sql+=(fromDate.isEmpty())?"":" and timestamp >= ?";
+        sql+=(todate.isEmpty())?"":" and timestamp <= ?";
         sql+=(minPrice==-1)?"":" and price >= ?";
         sql+=(maxPrice==-1)?"":" and price <= ?";
         sql+=(quantity==-1)?"":" and quantity = ?";
 
         System.out.println(sql);
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         ObservableList<Bien> BienList = FXCollections.observableArrayList();
         try {
             int i=1;
             prepare = connect.prepareStatement(sql);
-            if(!categoryChoice.equals( "" )&&!categoryChoice.equals( "ALL" ))
+            if(!categoryChoice.isEmpty()&&!categoryChoice.equals( "ALL" ))
                 prepare.setString(  i++, categoryChoice);
-            if(!fromDate.equals( "" ))
+            if(!fromDate.isEmpty())
                 prepare.setString( i++, fromDate);
-            if(!todate.equals( "" ))
+            if(!todate.isEmpty())
                 prepare.setString( i++, todate);
             if(minPrice!=-1)
                 prepare.setInt(  i++, minPrice);
@@ -241,7 +246,7 @@ public class CrudBien implements CrudInterface<Bien> {
     public List<String> selectImagesById(int id) {
         String sql = "SELECT * FROM product_images where idProduct= ?";
         List<String> list=new ArrayList<>();
-        connect4Images = ConnectionDB.connectDb();
+        connect4Images = ConnectionDB.getInstance().getCnx();
         try {
 
                 prepare4Images = connect4Images.prepareStatement( sql );
@@ -269,7 +274,7 @@ public class CrudBien implements CrudInterface<Bien> {
 
     public Bien selectLastItem() {
         String Sql = "SELECT * FROM products ORDER BY idProd DESC LIMIT 1";
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         try {
             prepare = connect.prepareStatement(Sql);
             result = prepare.executeQuery();
@@ -294,21 +299,7 @@ public class CrudBien implements CrudInterface<Bien> {
     }
 
 
-    private  String getPathAndSaveIMG(String chosenFilePath){
 
-        String path ="/usersImg/"+UUID.randomUUID()+".png";
-
-        Path src = Paths.get(chosenFilePath);
-        Path dest = Paths.get( "src/main/resources"+path);
-
-        try {
-            Files.copy(src,dest);
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-
-        return path;
-    }
 }
 
 

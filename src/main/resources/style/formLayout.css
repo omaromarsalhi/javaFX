@@ -1,32 +1,70 @@
-#formBox .text-field ,#formBox .text-area ,#formBox  .text-area .content,#formBox  .choice-box , #itemDesc,#mainHbox .text-area {
-    /*-fx-background-color:  #deddd9;*/
-    /*-fx-background-color:  #D9D9D9;*/
-    -fx-background-color: transparent;
-    /*-fx-border-color: grey;*/
-    /*-fx-border-width: 1px;*/
-    /*-fx-background-radius: 10px;*/
-    /*-fx-border-radius: 10px;*/
-    -fx-border-width: 0.01em;
-    /*-fx-border-color: transparent transparent black transparent;*/
-    -fx-border-color: black;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-}
-
-
-#mainHbox .text-area,#mainHbox .text-area .content {
+#formBox .text-field ,#formBox .text-area ,#formBox  .choice-box , #itemDesc,#mainHbox .text-area {
     -fx-background-color: transparent;
     -fx-border-width: 1;
-    -fx-border-color: transparent;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
-}#itemDeatails .text-area,#mainHbox .text-area{
-    -fx-background-color:  #f4f4f4;
-    -fx-border-width: 0.01em;
-    -fx-border-color: black;
-    -fx-border-radius: 10;
-    -fx-background-radius: 10;
+    -fx-border-color: transparent transparent black transparent ;
+    /*-fx-border-radius: 10;*/
+    /*-fx-background-radius: 10;*/
 }
+/*#formBox  .text-area .content{*/
+/*    -fx-background-color: transparent;*/
+/*    !*-fx-background-radius: 10;*!*/
+/*    !*-fx-border-radius: 10;*!*/
+/*}*/
+
+/*#formBox  .text-area .viewport{*/
+/*    -fx-background-color: transparent;*/
+/*    !*-fx-background-radius: 10;*!*/
+/*    !*-fx-border-radius: 10;*!*/
+/*}*/
+
+/*#formBox  .text-area .scroll-bar:vertical {*/
+/*    -fx-pref-width: 0.1em;*/
+/*    -fx-background-color:  #f4f4f4;*/
+/*}*/
+
+.text-area{
+    -fx-background-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-color: transparent transparent black transparent ;
+    /*-fx-border-radius: 10;*/
+    /*-fx-background-radius: 10;*/
+}
+
+
+.text-area .content{
+    -fx-background-color: transparent;
+    /*-fx-background-radius: 10;*/
+    /*-fx-border-radius: 10;*/
+}
+
+.text-area .viewport{
+    -fx-background-color: transparent;
+    /*-fx-background-radius: 10;*/
+    /*-fx-border-radius: 10;*/
+}
+
+.text-area .scroll-bar:vertical {
+    -fx-pref-width: 0.1em;
+    -fx-background-color:  #f4f4f4;
+}
+
+
+
+/*#mainHbox .text-area,#mainHbox .text-area .content {*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-border-width: 1;*/
+/*    -fx-border-color: transparent;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-background-radius: 10;*/
+/*}*/
+
+/*#mainHbox .text-area{*/
+/*    -fx-background-color:  #f4f4f4;*/
+/*    -fx-border-width: 0.01em;*/
+/*    -fx-border-color: black;*/
+/*    -fx-border-radius: 10;*/
+/*    -fx-background-radius: 10;*/
+/*}*/
 
 
 #formBox .label{
