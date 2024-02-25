@@ -81,7 +81,7 @@
                   </MenuItem>
               </items>
                <graphic>
-                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="menu-button-Post">
                      <image>
                         <Image url="@../img/ic_more.png" />
                      </image>
@@ -104,7 +104,7 @@
                 <Font name="Segoe UI Historic" size="20.0" />
             </font>
         </Label>
-        <ImageView fx:id="imgPost" fitHeight="291.0" fitWidth="551.0" pickOnBounds="true" preserveRatio="true" />
+        <ImageView fx:id="imgPost" fitHeight="291.0" fitWidth="551.0" pickOnBounds="true" preserveRatio="true" styleClass="imagePost" />
         <StackPane alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="739.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">

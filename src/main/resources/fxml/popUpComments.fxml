@@ -37,7 +37,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <ScrollPane prefHeight="380.0" prefWidth="742.0" style="-fx-background: transperent;">
+            <ScrollPane fx:id="sroll" hbarPolicy="NEVER" prefHeight="380.0" prefWidth="742.0" style="-fx-background: transperent;" vbarPolicy="NEVER">
                <content>
                   <VBox fx:id="commentContainer" alignment="CENTER_LEFT" prefHeight="445.0" prefWidth="739.0" spacing="12.0">
                      <children>
@@ -48,7 +48,7 @@
                                  <children>
                                     <HBox alignment="CENTER_LEFT">
                                        <children>
-                                          <Label fx:id="username" text="Omar Marrakchi" textFill="#e1e1e1">
+                                          <Label fx:id="username" text="oooo" textFill="#e1e1e1">
                                              <font>
                                                 <Font name="Segoe UI Semibold" size="16.0" />
                                              </font>
@@ -92,7 +92,7 @@
                               <Insets left="10.0" right="20.0" />
                            </padding>
                         </HBox>
-                        <Label fx:id="caption" prefHeight="30.0" prefWidth="692.0" text="Label" textFill="#e1e1e1">
+                        <Label fx:id="caption" prefHeight="30.0" prefWidth="692.0" text="Label" textFill="#e1e1e1" wrapText="true">
                            <font>
                               <Font size="16.0" />
                            </font></Label>

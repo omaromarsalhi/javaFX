@@ -42,6 +42,8 @@ public class PopUpModifierPostController {
     private Label dateLabel;
     @FXML
     private ImageView AccountImg;
+    @FXML
+    private Label enlverImgBtn;
 
 
     String SourceString;
@@ -85,6 +87,7 @@ public class PopUpModifierPostController {
             Image img = new Image(new File(correctedPath).toURI().toString());
             System.out.println(correctedPath);
             imgPost.setImage(img);
+            enlverImgBtn.setVisible(true);
         }
     }
 
@@ -108,10 +111,12 @@ public class PopUpModifierPostController {
             img = new Image("file:src/main/resources" + post.getImage());
             imgPost.setImage(img);
             addImgBtn.setText("changer la photo");
+            enlverImgBtn.setVisible(true);
         } else {
             img = new Image(getClass().getResourceAsStream("/blogImgPosts/aucuneImg.png"));
             imgPost.setImage(img);
             addImgBtn.setText("ajouter une photo");
+            enlverImgBtn.setVisible(false);
         }
 
         nbReaction = post.getTotalReactions();
@@ -158,6 +163,16 @@ public class PopUpModifierPostController {
         p.setTotalReactions(nbReaction);
         bs.modifier(p);
         SourceString = null;
+    }
+
+    @FXML
+    void enleverImgBtnClicked(MouseEvent event) {
+        Image img = new Image(getClass().getResourceAsStream("/blogImgPosts/aucuneImg.png"));
+        imgPost.setImage(img);
+        addImgBtn.setText("ajouter une photo");
+        enlverImgBtn.setVisible(false);
+        SourceString = null;
+        imgPath = null;
     }
 
 }

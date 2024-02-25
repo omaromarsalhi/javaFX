@@ -1,14 +1,14 @@
 package pidev.javafx.Controller.Blog;
 
-
 import javafx.animation.TranslateTransition;
-import javafx.geometry.Pos;
+import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -16,6 +16,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import org.json.JSONException;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import javafx.fxml.FXML;
@@ -27,52 +28,61 @@ import pidev.javafx.Services.BlogService;
 import pidev.javafx.Services.CommentService;
 import pidev.javafx.Services.ReactionService;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.*;
+import org.json.JSONObject;
+
 
 
 public class BlogController implements Initializable {
 
     @FXML
     private VBox postsContainer;
-
     @FXML
     private VBox postContainer;
-
-    @FXML
-    private ChoiceBox choiceBox;
-
     @FXML
     private Button publierBtn;
-
     @FXML
     private Button addImgBtn;
-
     @FXML
     private TextArea captionText;
     @FXML
     private ImageView ProfileImg;
+    @FXML
+    private TextField searchBar;
+    @FXML
+    private MenuButton menuButtonFiltrer;
+    @FXML
+    private MenuItem choix1;
+    @FXML
+    private MenuItem choix2;
+    @FXML
+    private MenuItem choix3;
+    @FXML
+    private MenuItem choix4;
+
     private int ConnectedAccount;
-
     List<Post> posts;
-
-
     String SourceString;
-
     final String destinationString = "src/main/resources/blogImgPosts";
+
+    public TextField getSearchBar() {
+        return searchBar;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ConnectedAccount = 6;
-        choiceBox.getItems().addAll("Tous", "Municipalité", "Citoyens");
-        choiceBox.setValue("Tous");
-
+        ConnectedAccount = 5;
         BlogService blogService = new BlogService();
         Account account = blogService.getComte(ConnectedAccount);
         Image img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
@@ -112,30 +122,37 @@ public class BlogController implements Initializable {
         postController.getModifierPost().setOnAction(actionEvent -> {
             afficherPopupModifier(post.getId(), postsContainer, vBox);
         });
+       /* postController.getTranslate().setOnAction(actionEvent -> {
+            try {
+                translateText(postController.getCaption().getText(), "FR", "EN");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });*/
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Angry", post, ConnectedAccount, postController);
         });
         postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
             postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Haha", post, ConnectedAccount, postController);
         });
         postController.getImgLike().setOnMouseClicked(mouseEvent -> {
             postController.onLikePressed();
-            addOrUpdateReaction("Like", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Like", post, ConnectedAccount, postController);
         });
         postController.getImgSad().setOnMouseClicked(mouseEvent -> {
             postController.onSadClicked();
-            addOrUpdateReaction("Sad", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Sad", post, ConnectedAccount, postController);
         });
         postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
             boolean testTimer = postController.onLikeContainerMouseReleased();
             if (testTimer) {
-                addOrDeleteLike(post.getId(), postController, ConnectedAccount);
+                addOrDeleteLike(post, postController, ConnectedAccount);
             }
         });
-        setReaction(postController, post.getId(), ConnectedAccount);
+        setReaction(postController, post, ConnectedAccount);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
             afficherPopUpComments(postController, post.getId());
@@ -169,27 +186,27 @@ public class BlogController implements Initializable {
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Angry", post, ConnectedAccount, postController);
         });
         postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
             postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Haha", post, ConnectedAccount, postController);
         });
         postController.getImgLike().setOnMouseClicked(mouseEvent -> {
             postController.onLikePressed();
-            addOrUpdateReaction("Like", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Like", post, ConnectedAccount, postController);
         });
         postController.getImgSad().setOnMouseClicked(mouseEvent -> {
             postController.onSadClicked();
-            addOrUpdateReaction("Sad", post.getId(), ConnectedAccount, postController);
+            addOrUpdateReaction("Sad", post, ConnectedAccount, postController);
         });
         postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
             boolean testTimer = postController.onLikeContainerMouseReleased();
             if (testTimer) {
-                addOrDeleteLike(post.getId(), postController, ConnectedAccount);
+                addOrDeleteLike(post, postController, ConnectedAccount);
             }
         });
-        setReaction(postController, post.getId(), ConnectedAccount);
+        setReaction(postController, post, ConnectedAccount);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
             afficherPopUpComments(postController, post.getId());
@@ -272,8 +289,6 @@ public class BlogController implements Initializable {
         }
     }
 
-
-
     public void supprimerPost(int idPost, PostController postController, VBox vBox) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation de suppression");
@@ -287,13 +302,9 @@ public class BlogController implements Initializable {
         DialogPane dialogPane = alert.getDialogPane();
         dialogPane.getStylesheets().add(getClass().getResource("/Style/alerte.css").toExternalForm());
         dialogPane.getStyleClass().add("dialog-pane");
-
-        // Optionnel : Personnaliser le bouton pour une confirmation plus claire
         ButtonType buttonTypeOui = new ButtonType("Oui");
         ButtonType buttonTypeNon = new ButtonType("Non");
         alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
-
-        // Afficher l'alerte et attendre la réponse de l'utilisateur
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeOui) {
                 // L'utilisateur confirme la suppression
@@ -392,34 +403,43 @@ public class BlogController implements Initializable {
         }
     }
 
-    public void addOrUpdateReaction(String type, int idPost, int idCompte, PostController postController) {
+    public void addOrUpdateReaction(String type, Post post, int idCompte, PostController postController) {
         ReactionService rs = new ReactionService();
-        if (rs.getReaction(idPost, idCompte) == null) {
-            rs.ajouterReaction(type, idPost, idCompte);
+        BlogService blogService = new BlogService();
+        if (rs.getReaction(post.getId(), idCompte) == null) {
+            rs.ajouterReaction(type, post.getId(), idCompte);
         } else {
-            rs.modifierReaction(idPost, type, idCompte);
+            rs.modifierReaction(post.getId(), type, idCompte);
         }
-        postController.setNbReactions(rs.nbrReaction(idPost));
-        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
+        int nbrReaction = rs.nbrReaction(post.getId());
+        postController.setNbReactions(nbrReaction);
+        post.setTotalReactions(nbrReaction);
+        blogService.modifierNombreReactions(post.getId(), nbrReaction);
+        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(post.getId()));
         postController.setIconReaction(types);
     }
 
-    public void addOrDeleteLike(int idPost, PostController postController, int idCompte) {
+    public void addOrDeleteLike(Post post, PostController postController, int idCompte) {
         ReactionService rs = new ReactionService();
-        if (rs.getReaction(idPost, idCompte) == null) {
-            rs.ajouterReaction("Like", idPost, idCompte);
+        BlogService blogService = new BlogService();
+        if (rs.getReaction(post.getId(), idCompte) == null) {
+            rs.ajouterReaction("Like", post.getId(), idCompte);
         } else {
-            rs.enleverReaction(idPost, idCompte);
+            rs.enleverReaction(post.getId(), idCompte);
             postController.setReaction(Reactions.NON);
         }
-        postController.setNbReactions(rs.nbrReaction(idPost));
-        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
+        int nbrReaction = rs.nbrReaction(post.getId());
+        postController.setNbReactions(nbrReaction);
+        post.setTotalReactions(nbrReaction);
+        blogService.modifierNombreReactions(post.getId(), nbrReaction);
+        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(post.getId()));
         postController.setIconReaction(types);
     }
 
-    public void setReaction(PostController postController, int idPost, int idCompte) {
+    public void setReaction(PostController postController, Post post, int idCompte) {
         ReactionService rs = new ReactionService();
-        String reaction = rs.getReaction(idPost, idCompte);
+        BlogService blogService = new BlogService();
+        String reaction = rs.getReaction(post.getId(), idCompte);
         if (reaction == null) {
             postController.setReaction(Reactions.NON);
         } else if (reaction.equals("Haha")) {
@@ -431,10 +451,10 @@ public class BlogController implements Initializable {
         } else if (reaction.equals("Like")) {
             postController.setReaction(Reactions.LIKE);
         }
-        postController.setNbReactions(rs.nbrReaction(idPost));
-        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(idPost));
+        int nbrReaction = rs.nbrReaction(post.getId());
+        postController.setNbReactions(nbrReaction);
+        ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(post.getId()));
         postController.setIconReaction(types);
-
     }
 
     public void setNbComments(PostController postController, int idPost) {
@@ -495,4 +515,160 @@ public class BlogController implements Initializable {
         }
     }
 
+    @FXML
+    void onSearchKeyRelesed(KeyEvent event) {
+        BlogService blogService = new BlogService();
+        List<Post> postCherche = new ArrayList<>();
+        postCherche = blogService.rechercherPosts(searchBar.getText());
+        if (searchBar.getText().length() > 3) {
+            int size = postsContainer.getChildren().size();
+            if (size > 2) {
+                postsContainer.getChildren().remove(2, size);
+            }
+            for (Post post : postCherche) {
+                try {
+                    loadPost(post);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        if(searchBar.getText().isEmpty()) {
+            postCherche = blogService.getAll();
+            int size = postsContainer.getChildren().size();
+            if (size > 2) {
+                postsContainer.getChildren().remove(2, size);
+            }
+            for (Post post : postCherche) {
+                try {
+                    loadPost(post);
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
+    @FXML
+    void choix1Clicked(ActionEvent event) {
+        BlogService blogService = new BlogService();
+        menuButtonFiltrer.setText("Tous");
+        posts = blogService.getAll();
+        int size = postsContainer.getChildren().size();
+        if (size > 2) {
+            postsContainer.getChildren().remove(2, size);
+        }
+        for (Post post : posts) {
+            try {
+                loadPost(post);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    void choix2Clicked(ActionEvent event) {
+        BlogService blogService = new BlogService();
+        List<Post> postList = new ArrayList<>();
+        menuButtonFiltrer.setText("Municipalite");
+        postList = blogService.getVerifiedPosts();
+        int size = postsContainer.getChildren().size();
+        if (size > 2) {
+            postsContainer.getChildren().remove(2, size);
+        }
+        for (Post post : postList) {
+            try {
+                loadPost(post);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    void choix3Clicked(ActionEvent event) {
+        BlogService blogService = new BlogService();
+        List<Post> postList = new ArrayList<>();
+        menuButtonFiltrer.setText("Citoyens");
+        postList = blogService.getUnverifiedPosts();
+        int size = postsContainer.getChildren().size();
+        if (size > 2) {
+            postsContainer.getChildren().remove(2, size);
+        }
+        for (Post post : postList) {
+            try {
+                loadPost(post);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    void choix4Clicked(ActionEvent event) {
+        BlogService blogService = new BlogService();
+        List<Post> postList = new ArrayList<>();
+        menuButtonFiltrer.setText("Plus de Reactions");
+        postList = blogService.getPostsTriesParNbReactions();
+        int size = postsContainer.getChildren().size();
+        if (size > 2) {
+            postsContainer.getChildren().remove(2, size);
+        }
+        for (Post post : postList) {
+            try {
+                loadPost(post);
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public String translateText(String textToTranslate, String sourceLanguage, String targetLanguage) throws IOException {
+        String apiKey = "db017c40fad98dc5b9fc";
+        String url = "https://api.mymemory.translated.net/get?q=" + URLEncoder.encode(textToTranslate, "UTF-8") +
+                "&langpair=" + "fr" + "|" + "ar" +
+                "&key=" + apiKey; // Ajoutez la clé API comme paramètre
+
+        HttpURLConnection con = (HttpURLConnection) new URL(url).openConnection();
+        con.setRequestMethod("GET");
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+        }
+        in.close();
+
+        // Parse JSON response to extract translated text
+        String translatedText = parseTranslatedText(response.toString());
+        System.out.println(translatedText);
+        return translatedText;
+    }
+
+    private String parseTranslatedText(String jsonResponse) {
+        try {
+            // Convertir la réponse JSON en objet JSON
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+
+            // Vérifier si la réponse contient le champ "responseData"
+            if (jsonObject.has("responseData")) {
+                JSONObject responseData = jsonObject.getJSONObject("responseData");
+
+                // Vérifier si le champ "translatedText" est présent dans "responseData"
+                if (responseData.has("translatedText")) {
+                    // Extraire et renvoyer le texte traduit
+                    return responseData.getString("translatedText");
+                } else {
+                    return "Erreur : champ 'translatedText' manquant dans responseData";
+                }
+            } else {
+                return "Erreur : champ 'responseData' manquant dans la réponse JSON";
+            }
+        } catch (JSONException e) {
+            // Gérer les erreurs de parsing JSON
+            return "Erreur lors de l'analyse de la réponse JSON : " + e.getMessage();
+        }
+    }
 }

@@ -61,6 +61,8 @@ public class CommentController {
     void onModifierClicked(MouseEvent event) {
         sendBtn.setVisible(true);
         caption.setEditable(true);
+        caption.requestFocus();
+        caption.getStyleClass().add("yel-border");
     }
 
     public void modifierComment(int id) {

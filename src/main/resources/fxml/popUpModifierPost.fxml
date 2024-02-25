@@ -60,7 +60,16 @@
                   </HBox>
                </children>
             </VBox>
-            <ImageView fx:id="imgPost" fitHeight="209.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <ImageView fx:id="imgPost" fitHeight="209.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
+                  <Label fx:id="enlverImgBtn" alignment="CENTER" onMouseClicked="#enleverImgBtnClicked" prefHeight="18.0" prefWidth="102.0" text="Enlever l'image" textFill="#7b7b7b">
+                     <VBox.margin>
+                        <Insets right="10.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
             <HBox alignment="CENTER" prefHeight="58.0" prefWidth="438.0" spacing="90.0">
                <children>
                   <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="37.0" prefWidth="143.0" style="-fx-background-color: transperent;" text="Changer la photo" textFill="#c7c7c7">

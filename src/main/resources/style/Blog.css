@@ -64,13 +64,6 @@
     -fx-border-radius: 50;
 }
 
-.choice-box {
-    -fx-background-color: #fff;
-    -fx-background-radius: 5;
-    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0, 5.0);
-    -fx-pref-height: 30px;
-}
-
 .searchBar {
     -fx-background-color: #fff;
     -fx-background-radius: 8;
@@ -95,8 +88,9 @@
 }
 
 .menu-button {
-    -fx-background-color: transparent;
-    -fx-padding: 0px;
+    -fx-background-color: #fff;
+    -fx-background-radius: 5;
+    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0, 5.0);
 }
 
 .menu-button .arrow {
@@ -119,4 +113,8 @@
 
 .menu-item:selected:hover {
     -fx-background-color: transparent; /* Réinitialise le hover lorsque la souris est éloignée */
+}
+
+.imagePost {
+    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.13), 5.0, 0.0, 0.0, 6.0);
 }

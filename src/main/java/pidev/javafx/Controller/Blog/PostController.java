@@ -4,8 +4,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Models.Reactions;
@@ -34,85 +37,58 @@ import java.util.ResourceBundle;
 public class PostController extends VBox implements Initializable {
     @FXML
     private ImageView imgProfile;
-
     @FXML
     private Label username;
-
     @FXML
     private ImageView imgVerified;
-
     @FXML
     private Label date;
-
     @FXML
     private ImageView audience;
-
     @FXML
     private Label caption;
-
     @FXML
     private ImageView imgPost;
-
     @FXML
     private Label nbReactions;
-
     @FXML
     private Label nbComments;
-
     @FXML
     private HBox reactionsContainer;
-
     @FXML
     private HBox iconLikeContainer;
-
     @FXML
     private VBox postContainer;
-
     @FXML
     private ImageView imgLike;
-
     @FXML
     private ImageView imgHaha;
-
     @FXML
     private ImageView imgSad;
-
     @FXML
     private ImageView imgAngry;
-
     @FXML
     private HBox likeContainer;
-
     @FXML
     private ImageView imgReaction;
-
     @FXML
     private Label reactionName;
-
     private long startTime = 0;
     private Reactions currentReaction;
-
     @FXML
     private MenuButton menuBtnPost;
-
     @FXML
     private MenuItem supprimerPostBtn;
-
     @FXML
     private MenuItem ModifierPost;
-
     @FXML
     private HBox CommentContainer;
-
     @FXML
     private ImageView IconReaction1;
-
     @FXML
     private ImageView IconReaction2;
-
     @FXML
     private ImageView IconReaction3;
-
     @FXML
     private ImageView IconReaction4;
 
@@ -147,10 +123,11 @@ public class PostController extends VBox implements Initializable {
     public MenuButton getMenuBtnPost() {
         return menuBtnPost;
     }
-
     public MenuItem getSupprimerPostBtn() {return supprimerPostBtn;}
-
     public MenuItem getModifierPost() {return ModifierPost;}
+    public Label getCaption() {
+        return caption;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -319,6 +296,8 @@ public class PostController extends VBox implements Initializable {
 
         if(post.getCaption() != null && !post.getCaption().isEmpty()){
             caption.setText(post.getCaption());
+            caption.setMinHeight( Region.USE_PREF_SIZE);
+            caption.setWrapText( true );
             caption.applyCss();
             Platform.runLater(() -> {
                 double captionHeight = caption.getBoundsInLocal().getHeight();
@@ -334,7 +313,6 @@ public class PostController extends VBox implements Initializable {
         }else{
             imgPost.setVisible(false);
             imgPost.setManaged(false);
-            // Réduisez la hauteur du VBox de la hauteur de l'ImageView
             postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight() - 14);
         }
 

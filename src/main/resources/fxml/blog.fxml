@@ -2,8 +2,9 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
@@ -65,12 +66,25 @@
                                           <Image url="@../icon/ic_filtre.png" />
                                        </image>
                                     </ImageView>
-                                    <ChoiceBox fx:id="choiceBox" minHeight="20.0" prefHeight="20.0" prefWidth="95.0" />
+                                    <MenuButton fx:id="menuButtonFiltrer" maxHeight="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" prefHeight="8.0" prefWidth="95.0" text="Tous">
+                                      <items>
+                                        <MenuItem fx:id="choix1" mnemonicParsing="false" onAction="#choix1Clicked" text="Tous" />
+                                        <MenuItem fx:id="choix2" mnemonicParsing="false" onAction="#choix2Clicked" text="Municipalite" />
+                                          <MenuItem fx:id="choix3" mnemonicParsing="false" onAction="#choix3Clicked" text="Citoyens" />
+                                          <MenuItem fx:id="choix4" mnemonicParsing="false" onAction="#choix4Clicked" text="Plus de Reactions" />
+                                      </items>
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </MenuButton>
                                  </children>
                               </HBox>
                               <HBox alignment="CENTER" minHeight="20.0" prefHeight="20.0" prefWidth="121.0" spacing="8.0">
                                  <children>
-                                    <TextField minHeight="20.0" prefHeight="20.0" prefWidth="95.0" styleClass="searchBar" />
+                                    <TextField fx:id="searchBar" minHeight="20.0" onKeyReleased="#onSearchKeyRelesed" prefHeight="20.0" prefWidth="95.0" promptText="Search..." styleClass="searchBar">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font></TextField>
                                     <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../icon/ic_chercher.png" />

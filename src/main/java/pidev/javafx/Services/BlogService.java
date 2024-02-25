@@ -118,6 +118,31 @@ public class BlogService implements IService<Post> {
         return lastId;
     }
 
+    public List<Post> rechercherPosts(String recherche) {
+        List<Post> resultat = new ArrayList<>();
+        String req = "SELECT * FROM `post` WHERE `caption` LIKE ? OR `compte` IN (SELECT `id` FROM `compte` WHERE `nom` LIKE ?)";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, "%" + recherche + "%");
+            ps.setString(2, "%" + recherche + "%");
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                int id = res.getInt(1);
+                Timestamp timestamp = res.getTimestamp(2);
+                String caption = res.getString(3);
+                String img = res.getString(4);
+                int idCompte = res.getInt(5);
+                int nbReactions = res.getInt(6);
+                int nbComments = res.getInt(7);
+                Post post = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                resultat.add(post);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return resultat;
+    }
+
     public Account getComte (int id){
         String req = "SELECT * FROM `compte` WHERE id=?";
 
@@ -136,6 +161,88 @@ public class BlogService implements IService<Post> {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public void modifierNombreReactions(int idPost, int nouveauNbReactions) {
+        String req = "UPDATE `post` SET `nbReactions`=? WHERE id=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, nouveauNbReactions);
+            ps.setInt(2, idPost);
+            ps.executeUpdate();
+            System.out.println("Nombre de réactions du post avec l'ID " + idPost + " mis à jour !");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<Post> getPostsTriesParNbReactions() {
+        List<Post> posts = new ArrayList<>();
+        String req = "SELECT * FROM `post` ORDER BY `nbReactions` DESC";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ResultSet res = ps.executeQuery();
+            while (res.next()) {
+                int id = res.getInt(1);
+                Timestamp timestamp = res.getTimestamp(2);
+                String caption = res.getString(3);
+                String img = res.getString(4);
+                int idCompte = res.getInt(5);
+                int nbReactions = res.getInt(6);
+                int nbComments = res.getInt(7);
+                Post post = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                posts.add(post);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return posts;
+    }
+
+    public List<Post> getUnverifiedPosts() {
+        List<Post> unverifiedPosts = new ArrayList<>();
+        String req = "SELECT * FROM `post` p JOIN `compte` c ON p.compte = c.id WHERE c.verified = 0 ORDER BY p.date_post DESC";
+        try {
+            Statement st = cnx.createStatement();
+            ResultSet res = st.executeQuery(req);
+            while (res.next()){
+                int id = res.getInt(1);
+                Timestamp timestamp = res.getTimestamp(2);
+                String caption = res.getString(3);
+                String img = res.getString(4);
+                int idCompte = res.getInt(5);
+                int nbReactions = res.getInt(6);
+                int nbComments = res.getInt(7);
+                Post p = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                unverifiedPosts.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return unverifiedPosts;
+    }
+
+    public List<Post> getVerifiedPosts() {
+        List<Post> unverifiedPosts = new ArrayList<>();
+        String req = "SELECT * FROM `post` p JOIN `compte` c ON p.compte = c.id WHERE c.verified = 1 ORDER BY p.date_post DESC";
+        try {
+            Statement st = cnx.createStatement();
+            ResultSet res = st.executeQuery(req);
+            while (res.next()){
+                int id = res.getInt(1);
+                Timestamp timestamp = res.getTimestamp(2);
+                String caption = res.getString(3);
+                String img = res.getString(4);
+                int idCompte = res.getInt(5);
+                int nbReactions = res.getInt(6);
+                int nbComments = res.getInt(7);
+                Post p = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                unverifiedPosts.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return unverifiedPosts;
     }
 }
 
