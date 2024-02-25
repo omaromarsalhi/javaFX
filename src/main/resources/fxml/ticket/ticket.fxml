@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
@@ -29,10 +30,29 @@
                   <Line endX="46.0" layoutX="939.0" layoutY="120.0" startX="-900.0" />
                   <HBox alignment="CENTER" layoutX="134.0" layoutY="176.0" prefHeight="184.0" prefWidth="756.0">
                      <children>
-                        <ImageView fx:id="imageView" fitHeight="168.0" fitWidth="217.0" pickOnBounds="true" preserveRatio="true" />
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="add-btn" stylesheets="@../../styles/style.css" text="9batha" />
+                              <ImageView fx:id="imageView2" fitHeight="203.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="push2" mnemonicParsing="false" onAction="#updateImage2" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Button" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label styleClass="add-btn" stylesheets="@../../styles/style.css" text="bousta" />
+                              <ImageView fx:id="imageView1" fitHeight="208.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="push1" mnemonicParsing="false" onAction="#updateImage1" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Button" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" prefHeight="237.0" prefWidth="256.0">
+                           <children>
+                              <Label styleClass="fruit-item" stylesheets="@../../styles/style.css" text="baladiya" />
+                              <ImageView fx:id="imageView" fitHeight="207.0" fitWidth="265.0" pickOnBounds="true" preserveRatio="true" />
+                              <Button fx:id="push" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateImage" styleClass="add-btn" stylesheets="@../../styles/style.css" text="Button" textAlignment="CENTER" />
+                           </children>
+                        </VBox>
                      </children>
                   </HBox>
-                  <Button layoutX="440.0" layoutY="379.0" mnemonicParsing="false" text="Button" />
                </children>
             </Pane>
          </children>
