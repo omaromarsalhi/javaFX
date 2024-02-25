@@ -111,7 +111,7 @@
                               </HBox>
                               <HBox alignment="CENTER" prefHeight="0.0" prefWidth="744.0" spacing="80.0">
                                  <children>
-                                    <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="52.0" prefWidth="167.0" style="-fx-background-color: transperent;" text="Ajouter une Photo">
+                                    <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="52.0" prefWidth="167.0" styleClass="addImgBtn" text="Ajouter une Photo">
                                        <graphic>
                                           <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                              <image>

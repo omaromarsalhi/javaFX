@@ -91,10 +91,15 @@ public class PostController extends VBox implements Initializable {
     private ImageView IconReaction3;
     @FXML
     private ImageView IconReaction4;
+    @FXML
+    private Button translateBtn;
+    @FXML
+    private VBox captionContainer;
 
     private Post post;
     private int idPost;
     private int idCompte;
+    private boolean translated;
 
     public ImageView getImgLike() {return imgLike;}
     public ImageView getImgAngry() {
@@ -128,6 +133,15 @@ public class PostController extends VBox implements Initializable {
     public Label getCaption() {
         return caption;
     }
+    public Button getTranslateBtn() {
+        return translateBtn;
+    }
+    public boolean isTranslated() {
+        return translated;
+    }
+    public void setTranslated(boolean translated) {
+        this.translated = translated;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -137,6 +151,7 @@ public class PostController extends VBox implements Initializable {
         IconReaction3.setManaged(false);
         IconReaction4.setVisible(false);
         IconReaction4.setManaged(false);
+        translated = false;
     }
 
     @Override
@@ -305,7 +320,12 @@ public class PostController extends VBox implements Initializable {
                 VBox.setVgrow(caption, Priority.ALWAYS);
             });
 
-        }else{caption.setVisible(false);}
+        }else{
+            caption.setVisible(false);
+            translateBtn.setVisible(false);
+            captionContainer.setManaged(false);
+            postContainer.setPrefHeight(postContainer.getPrefHeight() - 62.4);
+        }
 
         if(post.getImage() != null && !post.getImage().isEmpty()){
             img = new Image("file:src/main/resources" + post.getImage());

@@ -122,14 +122,6 @@ public class BlogController implements Initializable {
         postController.getModifierPost().setOnAction(actionEvent -> {
             afficherPopupModifier(post.getId(), postsContainer, vBox);
         });
-       /* postController.getTranslate().setOnAction(actionEvent -> {
-            try {
-                translateText(postController.getCaption().getText(), "FR", "EN");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });*/
-
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
             addOrUpdateReaction("Angry", post, ConnectedAccount, postController);
@@ -158,6 +150,28 @@ public class BlogController implements Initializable {
             afficherPopUpComments(postController, post.getId());
         });
         setNbComments(postController, post.getId());
+
+        postController.getTranslateBtn().setOnAction(actionEvent -> {
+            String originalText = postController.getCaption().getText();
+            if(!postController.isTranslated()) {
+                try {
+                    String translatedText = translateText(originalText, "fr", "ar");
+                    postController.getCaption().setText(translatedText);
+                    if (translatedText.equals(originalText)) {
+                        postController.getTranslateBtn().setText("Non disponible");
+                    }else {
+                        postController.getTranslateBtn().setText("Version Original");
+                    }
+                    postController.setTranslated(true);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else {
+                postController.getCaption().setText(post.getCaption());
+                postController.getTranslateBtn().setText("Traduire");
+                postController.setTranslated(false);
+            }
+        });
     }
 
     public void loadPostAbove(Post post) throws IOException {
@@ -212,6 +226,28 @@ public class BlogController implements Initializable {
             afficherPopUpComments(postController, post.getId());
         });
         setNbComments(postController, post.getId());
+
+        postController.getTranslateBtn().setOnAction(actionEvent -> {
+            String originalText = postController.getCaption().getText();
+            if(!postController.isTranslated()) {
+                try {
+                    String translatedText = translateText(originalText, "fr", "ar");
+                    postController.getCaption().setText(translatedText);
+                    if (translatedText.equals(originalText)) {
+                        postController.getTranslateBtn().setText("Non disponible");
+                    }else {
+                        postController.getTranslateBtn().setText("Version Original");
+                    }
+                    postController.setTranslated(true);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }else {
+                postController.getCaption().setText(post.getCaption());
+                postController.getTranslateBtn().setText("Traduire");
+                postController.setTranslated(false);
+            }
+        });
     }
 
     public List<Post> getPost() {
@@ -643,7 +679,6 @@ public class BlogController implements Initializable {
 
         // Parse JSON response to extract translated text
         String translatedText = parseTranslatedText(response.toString());
-        System.out.println(translatedText);
         return translatedText;
     }
 

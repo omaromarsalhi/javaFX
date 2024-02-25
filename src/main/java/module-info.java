@@ -4,7 +4,6 @@ module pidev.javafx{
     requires java.sql;
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
-    requires com.google.gson;
     requires org.json;
 
     opens pidev.javafx to javafx.fxml;
