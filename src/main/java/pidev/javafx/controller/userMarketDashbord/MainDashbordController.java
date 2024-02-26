@@ -175,7 +175,7 @@ public class MainDashbordController implements Initializable {
             setFormForAddOrUpdate("add_prod");
         } );
         showForSaleProduct.setOnAction( event -> {
-            deleteFavoriteLabel();
+            deleteFavorite();
             scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
 //            loadInfoOfSpecificItem(tableViewProd.getItems().get(0));
 //            informationBar.getChildren().clear();
@@ -196,7 +196,6 @@ public class MainDashbordController implements Initializable {
         menuBar.getMenus().get( 2 ).getItems().add(add2Favorite);
 
         add2Favorite.setOnAction( event -> {
-
             loadFavoriteForm();
             loadFavoriteView();
             EventBus.getInstance().publish( "showFavorite",event);
@@ -285,15 +284,14 @@ public class MainDashbordController implements Initializable {
         favorite.setSpacing( 0 );
 
         ultraBigContainer.getChildren().add(0,favorite);
-
-
     }
 
 
-    public void deleteFavoriteLabel(){
+    public void deleteFavorite(){
         if(bigContainer.getChildren().size()>1){
             bigContainer.getChildren().remove(bigContainer.getChildren().get( 0 ));
-            scroll.setPrefHeight(scroll.getPrefHeight()+80 );
+//            scroll.setPrefHeight(scroll.getPrefHeight()+80 );
+            ultraBigContainer.getChildren().remove(0);
         }
     }
 
@@ -361,7 +359,7 @@ public class MainDashbordController implements Initializable {
     }
 
     public void loadSelledOrPurchsedProducts(String trasactionType){
-
+        deleteFavorite();
         showAllProdsInfo.getChildren().clear();
         ObservableList<LocalWrapper> localWrapperList= CrudLocalWrapper.getInstance().selectItemsByIdSeller(1,trasactionType);
         GridPane gridPane=new GridPane();
@@ -464,10 +462,7 @@ public class MainDashbordController implements Initializable {
         FormController formController = fxmlLoader.getController();
         if(termOfUse.equals( "update_prod" ))
             formController.setInformaton( prod2Update );
-//        form.setPrefHeight(informationBar.getPrefHeight());
-//        form.setPrefWidth(informationBar.getPrefWidth());
         secondIHbox.getChildren().add(form);
-
     }
 
 
@@ -514,7 +509,6 @@ public class MainDashbordController implements Initializable {
 
 
     public void loadFavoriteView() {
-
         showAllProdsInfo.getChildren().clear();
         gridPane4Favorite=new GridPane();
         scroll.widthProperty().addListener( (observable, oldValue, newValue) -> {

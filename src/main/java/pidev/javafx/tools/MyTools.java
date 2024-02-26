@@ -137,24 +137,22 @@ public class MyTools {
         if(product instanceof Bien prod){
             for(Favorite favorite:favoriteObservableList){
                 String[] parts = favorite.getSpecifications().split("__");
-                if(LocalDate.now().isAfter(LocalDate.parse(parts[0]))) {
-                    if (parts[1].isEmpty() || LocalDate.now().isAfter( LocalDate.parse( parts[1] ) ))
+                if(LocalDate.now().isAfter(LocalDate.parse(parts[0]))||LocalDate.now().isEqual(LocalDate.parse(parts[0]))) {
+                    if ( !parts[1].isEmpty() && (LocalDate.now().isAfter( LocalDate.parse( parts[1] ) )))
                         checkIfProductIsValid = false;
-                    else if (parts[2].equals( "-1" )||Integer.parseInt(parts[2])>prod.getPrice())
+                     else if (!parts[2].equals( "-1" )&&Integer.parseInt(parts[2])>prod.getPrice())
                         checkIfProductIsValid = false;
-                    else if (parts[3].equals( "-1" )||Integer.parseInt(parts[3])<prod.getPrice())
+                    else if (!parts[3].equals( "-1" )&&Integer.parseInt(parts[3])<prod.getPrice())
                         checkIfProductIsValid = false;
-                    else if (parts[4].equals( "-1" )||Integer.parseInt(parts[4])!=prod.getQuantity())
+                    else if (!parts[4].equals( "-1" )&&Integer.parseInt(parts[4])!=prod.getQuantity())
                         checkIfProductIsValid = false;
                     else if (!parts[5].equals(prod.getCategorie().toString())&&!parts[5].equals( "ALL"))
                         checkIfProductIsValid = false;
                 }
                 else
                         checkIfProductIsValid=false;
-                if(checkIfProductIsValid) {
-                    System.out.println("wa");
+                if(checkIfProductIsValid)
                     PhoneSMS.getInstance().sendSMS( "+21629624921","A New Product Was Added" );
-                }
                 checkIfProductIsValid=true;
             }
         }

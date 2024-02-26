@@ -212,21 +212,28 @@ public class FormController implements Initializable {
     @FXML
     public void generateDescription(ActionEvent event){
         if(!Pname.getText().isEmpty()&&isAllInpulValid[0]){
-            Task<String> myTask = new Task<>() {
-                @Override
-                protected String call() throws Exception {
-                    return ChatGPTAPIDescriber.chatGPT( Pname.getText() );
-                }
-            };
 
-            myTask.setOnSucceeded(e -> {
-                Platform.runLater( () -> Pdescretion.setText( myTask.getValue() ) );
-                loadinPage.setVisible( false );
-            });
-            Thread thread = new Thread(myTask);
+            Thread thread =loadingPageThread();
             thread.start();
             loadinPage.setVisible( true );
         }
+    }
+
+    private Thread loadingPageThread() {
+
+        Task<String> myTask = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                return ChatGPTAPIDescriber.chatGPT( Pname.getText() );
+            }
+        };
+
+        myTask.setOnSucceeded(e -> {
+            Platform.runLater( () -> Pdescretion.setText( myTask.getValue() ) );
+            loadinPage.setVisible( false );
+        });
+
+        return new Thread(myTask);
     }
 
     private void setRegEx(){
@@ -389,27 +396,13 @@ public class FormController implements Initializable {
             if (usageOfThisForm.equals( "add_prod" )) {
                 CrudBien.getInstance().addItem( bien );
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
-            } else if (usageOfThisForm.equals( "update_prod" ))
+            } else if (usageOfThisForm.equals( "update_prod" )) {
                 CrudBien.getInstance().updateItem( bien );
-
-            Task<Void> myTask = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    Thread.sleep(2500);
-                    return null;
-                }
-            };
-
-            myTask.setOnSucceeded(e -> {
-                EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
-                EventBus.getInstance().publish( "onExitForm",event );
-                loadinPage.setVisible( false );
-            });
-            Thread thread = new Thread(myTask);
+                MyTools.getInstance().notifyUser4NewAddedProduct( bien );
+            }
+            Thread thread = sleepThread( event );
             loadinPage.setVisible( true );
             thread.start();
-
-
         }
         else{
             Alert confirmationAlert = new Alert( Alert.AlertType.ERROR );
@@ -421,6 +414,24 @@ public class FormController implements Initializable {
             confirmationAlert.show();
         }
 
+    }
+
+
+    private Thread sleepThread(MouseEvent event) {
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Thread.sleep(2500);
+                return null;
+            }
+        };
+
+        myTask.setOnSucceeded(e -> {
+            EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
+            EventBus.getInstance().publish( "onExitForm", event );
+            loadinPage.setVisible( false );
+        });
+        return new Thread(myTask);
     }
 
 

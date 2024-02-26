@@ -173,7 +173,7 @@ public class CrudBien implements CrudInterface<Bien> {
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );
                 if(bien.getAllImagesSources().size()>0) {
                     bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
-                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 40, 40, false, false ) ) );
                 }
                 BienList.add(bien);
             }

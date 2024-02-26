@@ -18,11 +18,6 @@
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.MainDashbordController">
    <children>
-      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
-         <children>
-            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
-         </children>
-      </AnchorPane>
       <HBox fx:id="firstInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: black;">
          <children>
             <VBox prefHeight="664.0" prefWidth="1018.0">
@@ -258,5 +253,10 @@
             <Insets bottom="2.0" top="2.0" />
          </padding>
       </HBox>
+      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
+         </children>
+      </AnchorPane>
    </children>
 </StackPane>
