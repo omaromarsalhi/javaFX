@@ -3,6 +3,8 @@ package pidev.javafx.controller.userMarketDashbord;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -69,6 +71,8 @@ public class MainDashbordController implements Initializable {
     @FXML
     private VBox bigContainer;
     @FXML
+    private HBox ultraBigContainer;
+    @FXML
     private Label userEmail;
     @FXML
     private ImageView userImage;
@@ -104,8 +108,13 @@ public class MainDashbordController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        secondInterface.setVisible( false );
 
+        bigContainer.widthProperty().addListener( (observable, oldValue, newValue) -> {
+            scroll.setMaxWidth((Double)newValue-20);
+        } );
+
+        scroll.setFitToWidth(true);
+        secondInterface.setVisible( false );
 
         userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getImagePath() ) );
         username.setText(  UserController.getInstance().getCurrentUser().getFirstname() );
@@ -187,8 +196,9 @@ public class MainDashbordController implements Initializable {
         menuBar.getMenus().get( 2 ).getItems().add(add2Favorite);
 
         add2Favorite.setOnAction( event -> {
+
+            loadFavoriteForm();
             loadFavoriteView();
-            loadFavorite();
             EventBus.getInstance().publish( "showFavorite",event);
         });
 
@@ -254,7 +264,7 @@ public class MainDashbordController implements Initializable {
 
 
 
-    public void loadFavorite(){
+    public void loadFavoriteForm(){
         VBox favorite = null;
         try {
             favorite = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
@@ -271,11 +281,12 @@ public class MainDashbordController implements Initializable {
         label.setMinHeight( 80 );
         bigContainer.getChildren().add(0, label );
 
-        favorite.setPadding( new Insets( 0 ) );
+        favorite.setPadding( new Insets( 10,14,2,10 ) );
         favorite.setSpacing( 0 );
-//        informationBar.getChildren().clear();
-//        informationBar.getChildren().add(favorite);
-//        scroll.setPrefHeight(informationBar.getPrefHeight()-80 );
+
+        ultraBigContainer.getChildren().add(0,favorite);
+
+
     }
 
 
@@ -456,6 +467,7 @@ public class MainDashbordController implements Initializable {
 //        form.setPrefHeight(informationBar.getPrefHeight());
 //        form.setPrefWidth(informationBar.getPrefWidth());
         secondIHbox.getChildren().add(form);
+
     }
 
 
@@ -502,9 +514,12 @@ public class MainDashbordController implements Initializable {
 
 
     public void loadFavoriteView() {
+
         showAllProdsInfo.getChildren().clear();
         gridPane4Favorite=new GridPane();
-        gridPane4Favorite.setPrefWidth(showAllProdsInfo.getPrefWidth());
+        scroll.widthProperty().addListener( (observable, oldValue, newValue) -> {
+            gridPane4Favorite.setMinWidth((Double)newValue);
+        } );
         gridPane4Favorite.setAlignment( Pos.CENTER );
         gridPane4Favorite.setPadding( new Insets( 20,0,20,0 ) );
         gridPane4Favorite.setHgap( 40 );

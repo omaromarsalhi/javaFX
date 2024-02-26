@@ -18,6 +18,11 @@
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.MainDashbordController">
    <children>
+      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
+         </children>
+      </AnchorPane>
       <HBox fx:id="firstInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-border-color: black;">
          <children>
             <VBox prefHeight="664.0" prefWidth="1018.0">
@@ -227,18 +232,22 @@
                         <Insets top="4.0" />
                      </padding>
                   </VBox>
-                  <VBox fx:id="bigContainer" alignment="CENTER" prefHeight="528.0" prefWidth="1018.0">
+                  <HBox fx:id="ultraBigContainer">
                      <children>
-                        <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="504.0" prefWidth="1004.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent;" vbarPolicy="NEVER">
-                           <content>
-                              <AnchorPane fx:id="showAllProdsInfo" prefHeight="490.0" prefWidth="995.0" />
-                           </content>
-                        </ScrollPane>
+                        <VBox fx:id="bigContainer" alignment="CENTER" prefHeight="528.0" prefWidth="1018.0">
+                           <children>
+                              <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxWidth="1.7976931348623157E308" prefHeight="504.0" prefWidth="1004.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent;" vbarPolicy="NEVER">
+                                 <content>
+                                    <AnchorPane fx:id="showAllProdsInfo" prefHeight="490.0" prefWidth="995.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
+                           </padding>
+                        </VBox>
                      </children>
-                     <padding>
-                        <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
-                     </padding>
-                  </VBox>
+                  </HBox>
                </children>
                <padding>
                   <Insets bottom="4.0" />
@@ -249,10 +258,5 @@
             <Insets bottom="2.0" top="2.0" />
          </padding>
       </HBox>
-      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
-         <children>
-            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
-         </children>
-      </AnchorPane>
    </children>
 </StackPane>

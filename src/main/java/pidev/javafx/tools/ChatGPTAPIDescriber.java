@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class ChatGPTAPIDescriber {
     public static String chatGPT(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
-        String apiKey = "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";
+        String apiKey = "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";
         String model = "gpt-3.5-turbo";
 
         try {
@@ -19,7 +19,7 @@ public class ChatGPTAPIDescriber {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // Create the request body
-            String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + "describe"+prompt+" for sale specified its benefits" + "\"}]}";
+            String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" + "describe"+prompt+" for sale specifying its benefits" + "\"}]}";
             connection.setDoOutput(true);
 
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
