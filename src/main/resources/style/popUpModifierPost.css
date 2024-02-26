@@ -18,3 +18,7 @@
     -fx-background-color: rgb(32, 116, 156);
     -fx-background-radius: 5px;
 }
+
+.removeImg {
+    -fx-cursor: hand;
+}

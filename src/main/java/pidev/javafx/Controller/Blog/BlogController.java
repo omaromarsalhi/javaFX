@@ -70,7 +70,12 @@ public class BlogController implements Initializable {
     private MenuItem choix3;
     @FXML
     private MenuItem choix4;
-
+    @FXML
+    private VBox vboxStatutBlog;
+    @FXML
+    private ImageView postPreviewImg;
+    @FXML
+    private Label enlverImgBtn;
     private int ConnectedAccount;
     List<Post> posts;
     String SourceString;
@@ -83,6 +88,10 @@ public class BlogController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         ConnectedAccount = 5;
+        postPreviewImg.setVisible(false);
+        postPreviewImg.setManaged(false);
+        enlverImgBtn.setVisible(false);
+        enlverImgBtn.setManaged(false);
         BlogService blogService = new BlogService();
         Account account = blogService.getComte(ConnectedAccount);
         Image img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
@@ -269,7 +278,24 @@ public class BlogController implements Initializable {
         if (selectedFile != null) {
             SourceString = selectedFile.getAbsolutePath();
             addImgBtn.setText(SourceString);
+            String correctedPath = SourceString.replace("\\", "/");
+            Image img = new Image(new File(correctedPath).toURI().toString());
+            postPreviewImg.setImage(img);
+            postPreviewImg.setManaged(true);
+            postPreviewImg.setVisible(true);
+            enlverImgBtn.setVisible(true);
+            enlverImgBtn.setManaged(true);
         }
+    }
+
+    @FXML
+    void enleverImgBtnClicked(MouseEvent event) {
+        SourceString = null;
+        addImgBtn.setText("Ajouter une Photo");
+        postPreviewImg.setVisible(false);
+        postPreviewImg.setManaged(false);
+        enlverImgBtn.setVisible(false);
+        enlverImgBtn.setManaged(false);
     }
 
     @FXML
@@ -315,6 +341,10 @@ public class BlogController implements Initializable {
             captionText.clear();
             SourceString = null;
             addImgBtn.setText("Ajouter une Photo");
+            postPreviewImg.setVisible(false);
+            postPreviewImg.setManaged(false);
+            enlverImgBtn.setVisible(false);
+            enlverImgBtn.setManaged(false);
             p.setId(bs.getLastId());
             posts.add(0, p);
             try {
@@ -393,34 +423,36 @@ public class BlogController implements Initializable {
 
             popUpController.getData(idPost);
             popUpController.getPublierBtn().setOnAction(actionEvent -> {
-                BlogService bs = new BlogService();
-                popUpController.modifierPost();
-                postsContainer.getChildren().remove(postVbox);
-                int idPostUpdeted = popUpController.getId();
-                Post psotUpdeted = bs.getOneById(idPostUpdeted);
-                Optional<Post> optionalPost = posts.stream()
-                        .filter(obj -> obj.getId() == idPostUpdeted)
-                        .findFirst();
-                if (optionalPost.isPresent()) {
-                    Post oldPost = optionalPost.get();
-                    posts.remove(oldPost);
-                    posts.add(0, psotUpdeted);
-                } else {
-                    System.out.println("Aucun post trouvé avec l'ID : " + idPost);
+                if (popUpController.getImgPath() != null || !popUpController.getCaption().getText().isEmpty()) {
+                    BlogService bs = new BlogService();
+                    popUpController.modifierPost();
+                    postsContainer.getChildren().remove(postVbox);
+                    int idPostUpdeted = popUpController.getId();
+                    Post psotUpdeted = bs.getOneById(idPostUpdeted);
+                    Optional<Post> optionalPost = posts.stream()
+                            .filter(obj -> obj.getId() == idPostUpdeted)
+                            .findFirst();
+                    if (optionalPost.isPresent()) {
+                        Post oldPost = optionalPost.get();
+                        posts.remove(oldPost);
+                        posts.add(0, psotUpdeted);
+                    } else {
+                        System.out.println("Aucun post trouvé avec l'ID : " + idPost);
+                    }
+                    try {
+                        loadPostAbove(psotUpdeted);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
+                    closeTransition.setFromY(0);
+                    closeTransition.setToY(600);
+                    closeTransition.setOnFinished(event -> {
+                        stage.close();
+                        scene.getRoot().setEffect(null); //
+                    });
+                    closeTransition.play();
                 }
-                try {
-                    loadPostAbove(psotUpdeted);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
-                closeTransition.setFromY(0);
-                closeTransition.setToY(600);
-                closeTransition.setOnFinished(event -> {
-                    stage.close();
-                    scene.getRoot().setEffect(null); //
-                });
-                closeTransition.play();
             });
 
             popUpController.getCloseBtn().setOnMouseClicked(mouseEvent -> {

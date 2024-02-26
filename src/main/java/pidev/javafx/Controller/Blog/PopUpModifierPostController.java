@@ -57,17 +57,20 @@ public class PopUpModifierPostController {
     public int getId() {
         return idPostUpadte;
     }
-
     public Button getPublierBtn() {
         return publierBtn;
     }
-
     public int getIdCompteUpdate() {
         return idCompteUpdate;
     }
-
     public ImageView getCloseBtn() {
         return closeBtn;
+    }
+    public TextArea getCaption() {
+        return caption;
+    }
+    public String getImgPath() {
+        return imgPath;
     }
 
     public void onAddImgBtnClicked(MouseEvent event) {
@@ -85,7 +88,6 @@ public class PopUpModifierPostController {
             addImgBtn.setText(SourceString);
             String correctedPath = SourceString.replace("\\", "/");
             Image img = new Image(new File(correctedPath).toURI().toString());
-            System.out.println(correctedPath);
             imgPost.setImage(img);
             enlverImgBtn.setVisible(true);
         }
@@ -125,7 +127,6 @@ public class PopUpModifierPostController {
 
     @FXML
     void modifierPost() {
-
         String randomFileName = null;
         Post p = new Post();
         BlogService bs = new BlogService();

@@ -12,6 +12,7 @@
 .publierBtn {
     -fx-background-color: rgb(32, 116, 156);
     -fx-background-radius: 5px;
+    -fx-cursor: hand;
 }
 
 .containers {
@@ -91,6 +92,7 @@
     -fx-background-color: #fff;
     -fx-background-radius: 5;
     -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0, 5.0);
+    -fx-cursor: hand;
 }
 
 .menu-button .arrow {
@@ -104,17 +106,40 @@
 .menu-item:hover {
     -fx-background-color: rgba(0, 0, 0, 0.3);
     -fx-padding: 5px;
-    -fx-background-radius: 10;
+    -fx-background-radius: 5;
 }
 
 .menu-item:selected {
-    -fx-background-color: transparent; /* Empêche l'affichage de la sélection lorsque la souris est éloignée */
+    -fx-background-color: transparent;
 }
 
 .menu-item:selected:hover {
-    -fx-background-color: transparent; /* Réinitialise le hover lorsque la souris est éloignée */
+    -fx-background-color: transparent;
 }
 
 .imagePost {
     -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.13), 5.0, 0.0, 0.0, 6.0);
+}
+
+.buttonTranslate {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.addImgBtn {
+    -fx-background-color: transperent;
+    -fx-cursor: hand;
+    -fx-min-width: 160px;
+    -fx-min-height: 40px;
+    -fx-max-width: 160px;
+    -fx-max-height: 40px;
+}
+.addImgBtn:hover {
+    -fx-background-color: rgba(168, 168, 168, 0.18);
+    -fx-padding: 5px;
+    -fx-background-radius: 10;
+}
+
+.removeImg {
+    -fx-cursor: hand;
 }

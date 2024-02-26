@@ -97,11 +97,11 @@
                               </HBox>
                            </children>
                         </HBox>
-                        <VBox fx:id="vboxStatutBlog" prefHeight="130.0" prefWidth="744.0" spacing="15.0" styleClass="post-background" stylesheets="@../Style/Blog.css">
+                        <VBox fx:id="vboxStatutBlog" alignment="CENTER" prefHeight="130.0" prefWidth="744.0" spacing="15.0" styleClass="post-background" stylesheets="@../Style/Blog.css">
                            <children>
                               <HBox alignment="TOP_CENTER" prefHeight="66.0" prefWidth="921.0" spacing="10.0">
                                  <children>
-                                    <ImageView fx:id="ProfileImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="ProfileImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                                     <TextArea fx:id="captionText" prefHeight="44.0" prefWidth="626.0" promptText="Exprimer vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" styleClass="text-area" stylesheets="@../Style/Blog.css" wrapText="true">
                                        <font>
                                           <Font size="14.0" />
@@ -109,6 +109,20 @@
                                     </TextArea>
                                  </children>
                               </HBox>
+                              <VBox alignment="CENTER">
+                                 <children>
+                                    <ImageView fx:id="postPreviewImg" fitHeight="150.0" fitWidth="356.0" pickOnBounds="true" preserveRatio="true">
+                                       <VBox.margin>
+                                          <Insets right="22.0" />
+                                       </VBox.margin>
+                                    </ImageView>
+                                    <Label fx:id="enlverImgBtn" alignment="CENTER" onMouseClicked="#enleverImgBtnClicked" prefHeight="18.0" prefWidth="102.0" styleClass="removeImg" text="Enlever l'image" textFill="#7b7b7b">
+                                       <VBox.margin>
+                                          <Insets right="22.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                 </children>
+                              </VBox>
                               <HBox alignment="CENTER" prefHeight="0.0" prefWidth="744.0" spacing="80.0">
                                  <children>
                                     <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="52.0" prefWidth="167.0" styleClass="addImgBtn" text="Ajouter une Photo">
