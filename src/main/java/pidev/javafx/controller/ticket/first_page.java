@@ -30,7 +30,8 @@ import javax.imageio.ImageIO;
 
 public class first_page {
 
-    private int counter = 0;
+    public static int counter;
+
     private int counter1 = 0;
     private int counter2 = 0;
 
@@ -40,11 +41,8 @@ public class first_page {
     private ImageView imageView1;
     @FXML
     private ImageView imageView2;
-    public void initialize() {
-
-    }
     public void updateImage() {
-        counter++;
+        first_page.counter++;
 
         // Create a BufferedImage with RGB color components
         BufferedImage image = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
@@ -58,7 +56,7 @@ public class first_page {
         graphic.setFont(font);
 
         // Draw the text on the image
-        String text = "Ticket No: " + String.valueOf(counter);
+        String text = "Ticket No: " + String.valueOf(first_page.counter);
         graphic.setColor(customColor);
 
         // Get the FontMetrics
@@ -183,6 +181,7 @@ public class first_page {
 
     public void showPopup() {
         try {
+
             // Load the FXML file.
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ticket/secondForm.fxml"));
             Parent root = (Parent) fxmlLoader.load();

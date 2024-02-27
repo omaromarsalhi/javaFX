@@ -3,8 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,22 +13,23 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane alignment="TOP_LEFT" stylesheets="@../../style/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="TOP_LEFT" stylesheets="@../../style/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.ticket.getTicket">
    <children>
       <HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/formLayout.css">
          <children>
             <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
                <children>
+                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
                   <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
                      <children>
-                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Name :">
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Ticket Number:">
                            <font>
                               <Font name="System Italic" size="18.0" />
                            </font>
                         </Label>
                         <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
                            <children>
-                              <TextField fx:id="Pname" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
+                              <TextField fx:id="ticketNumber" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your ticket  !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -48,14 +49,14 @@
                   </VBox>
                   <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
                      <children>
-                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Price :">
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Custom Number:">
                            <font>
                               <Font name="System Italic" size="18.0" />
                            </font>
                         </Label>
                         <HBox fx:id="formBox2" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="Pprice" prefHeight="42.0" prefWidth="270.0" promptText="Your Price here !!!" styleClass="text-field">
+                              <TextField fx:id="customName" prefHeight="42.0" prefWidth="270.0" promptText="Place you nickname here" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -79,44 +80,12 @@
                         </Label>
                         <HBox fx:id="formBox3" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="Pquantity" prefHeight="38.0" prefWidth="270.0" promptText="The Price here !!!" styleClass="text-field">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </TextField>
+                              <DatePicker fx:id="date" prefHeight="30.0" prefWidth="302.0" promptText="Date neet to be for the next 24h " styleClass="choice-box" stylesheets="@../../style/style.css" />
                            </children>
                         </HBox>
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
-                     </padding>
-                  </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="380.0" stylesheets="@../../style/scrollBarStlyle.css">
-                     <children>
-                        <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/Buttons.css">
-                           <children>
-                              <Label prefHeight="36.0" prefWidth="160.0" text="Descreption :">
-                                 <font>
-                                    <Font name="System Italic" size="18.0" />
-                                 </font>
-                              </Label>
-      
-                           </children>
-                        </HBox>
-                        <TextArea fx:id="Pdescretion" minWidth="300.0" prefHeight="417.0" prefWidth="357.0" promptText="Ai Will generate A Descreption For Your Item then You can Update It As You Want" wrapText="true">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </TextArea>
-                     </children>
-                     <padding>
-                        <Insets left="13.0" right="10.0" />
                      </padding>
                   </VBox>
                   <VBox minHeight="68.0" minWidth="300.0">
@@ -126,7 +95,7 @@
                               <Font name="System Italic" size="18.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="Pcategory" minHeight="34.0" prefHeight="34.0" prefWidth="270.0">
+                        <ChoiceBox fx:id="type" minHeight="34.0" prefHeight="34.0" prefWidth="270.0">
                            <VBox.margin>
                               <Insets left="10.0" />
                            </VBox.margin>
@@ -138,7 +107,7 @@
                   </VBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="267.0" style="-fx-background-radius: 20; -fx-border-style: 20;">
                      <children>
-                        <Label prefHeight="26.0" prefWidth="90.0" text="Image(s) :">
+                        <Label prefHeight="26.0" prefWidth="90.0" text="Print PDF">
                            <font>
                               <Font name="System Italic" size="20.0" />
                            </font>
@@ -147,7 +116,16 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../namedIcons/image.png" />
+                                    <Image url="@../../namedIcons/download-pdf.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="imageBtn1" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../../style/formLayout.css">
+                           <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../namedIcons/download-pdf.png" />
                                  </image>
                               </ImageView>
                            </graphic>

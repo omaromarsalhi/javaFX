@@ -11,6 +11,7 @@ module pidev.javafx{
     requires org.apache.httpcomponents.httpcore;
     requires aspose.imaging;
     requires javafx.swing;
+    requires org.apache.pdfbox;
 
     opens pidev.javafx.controller.ticket ;
     exports pidev.javafx.controller.ticket to javafx.fxml;
