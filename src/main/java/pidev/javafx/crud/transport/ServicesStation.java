@@ -1,10 +1,13 @@
 package pidev.javafx.crud.transport;
 
-import pidev.javafx.Controller.ConnectionDB;
-import pidev.javafx.entities.Transport.Abonnement;
-import pidev.javafx.entities.Transport.Station;
-import pidev.javafx.entities.Transport.Transport;
-import pidev.javafx.utils.DataSource;
+
+import javafx.collections.ObservableList;
+import pidev.javafx.crud.CrudInterface;
+import pidev.javafx.model.Transport.Abonnement;
+import pidev.javafx.model.Transport.Station;
+
+
+import pidev.javafx.crud.DataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,14 +16,13 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ServicesStation implements IServices<Station>{
+public class ServicesStation implements CrudInterface<Station> {
     Connection cnx = DataSource.GetInstance().getCnx();;
     private PreparedStatement prepare;
 
     @Override
-    public void ajouter(Station S) {
-        cnx = ConnectionDB.connectDb();
-        String sql = "INSERT INTO stations (NomStation,AddressStation,Type_Vehicule ) VALUES (?,?,?) ";
+    public void addItem(Station S) {
+        String sql = "INSERT INTO station (NomStation,AddressStation,Type_Vehicule ) VALUES (?,?,?) ";
         try {
             prepare = cnx.prepareStatement(sql);
             prepare.setString(1,S.getNomStation());
@@ -33,13 +35,18 @@ public class ServicesStation implements IServices<Station>{
         }
     }
     @Override
-    public void modifier(Station o) {
+    public void updateItem(Station o) {
 
     }
 
     @Override
-    public void supprimer(int id) {
-        String deleteQuery = "DELETE FROM stations WHERE idStation = ?";
+    public ObservableList<Station> selectItems() {
+        return null;
+    }
+
+    @Override
+    public void deleteItem(int id) {
+        String deleteQuery = "DELETE FROM station WHERE idStation = ?";
         try {
             prepare = cnx.prepareStatement(deleteQuery);
             prepare.setInt(1, id);
@@ -51,14 +58,19 @@ public class ServicesStation implements IServices<Station>{
     }
 
     @Override
-    public void getById(int id) {
+    public Station findById(int id) {
+return new Station();
+    }
 
+    @Override
+    public Station selectFirstItem() {
+        return null;
     }
 
     @Override
     public Set<Station> getAll() {
         Set <Station> abonnementList = new HashSet<>();
-        String req = "Select * from stations";
+        String req = "Select * from station";
 
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(req);

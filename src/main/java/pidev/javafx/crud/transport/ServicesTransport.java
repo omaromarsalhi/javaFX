@@ -1,12 +1,10 @@
 package pidev.javafx.crud.transport;
 
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import pidev.javafx.Controller.ConnectionDB;
-import pidev.javafx.entities.Transport.Abonnement;
-import pidev.javafx.entities.Transport.Transport;
-import pidev.javafx.utils.DataSource;
+import pidev.javafx.crud.CrudInterface;
+import pidev.javafx.crud.DataSource;
+import pidev.javafx.model.Transport.Transport;
 
 //import javax.swing.*;
 import java.sql.*;
@@ -14,15 +12,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class ServicesTransport implements IServices <Transport> {
+public class ServicesTransport implements CrudInterface<Transport> {
 
     Connection cnx = DataSource.GetInstance().getCnx();
     private PreparedStatement prepare;
     private Set abonnementList;
 
 
-    @Override
-    public void ajouter(Transport transport) {
+    public void addItem(Transport transport) {
 
         String sql = "INSERT INTO transport(Type_Vehicule,Depart,Arivee,Reference,Vehicule_Image,Prix,Heure) VALUES (?,?,?,?,?,?,?) ";
 
@@ -42,9 +39,8 @@ public class ServicesTransport implements IServices <Transport> {
         }
     }
 
-    @Override
-    public void modifier(Transport T) {
-        cnx = ConnectionDB.connectDb();
+    public void updateItem(Transport T) {
+
         String sql = "UPDATE transport\n" +
                 "SET Type_Vehicule=?, Depart=?, Arivee=?, Reference=?, Vehicule_Image=?, Prix=?, Heure=?\n" +
                 "WHERE idTransport=?;\n ";
@@ -69,7 +65,11 @@ public class ServicesTransport implements IServices <Transport> {
     }
 
     @Override
-    public void supprimer(int id) {
+    public ObservableList<Transport> selectItems() {
+        return null;
+    }
+
+    public void deleteItem(int id) {
         String deleteQuery = "DELETE FROM transport WHERE idTransport = ?";
         try {
                 prepare = cnx.prepareStatement(deleteQuery);
@@ -82,16 +82,19 @@ public class ServicesTransport implements IServices <Transport> {
 
     }
 
-    @Override
-    public void getById(int id) {
-
+    public Transport findById(int id) {
+return new Transport();
     }
+
+    @Override
+    public Transport selectFirstItem() {
+        return null;
+    }
+
     @Override
     public Set<Transport> getAll() {
 Set<Transport> dataList =new HashSet<>();
         String sql = "SELECT * FROM transport";
-        cnx = ConnectionDB.connectDb();
-
         try (PreparedStatement preparedStatement = cnx.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -107,7 +110,7 @@ Set<Transport> dataList =new HashSet<>();
                 data.setDepart(resultSet.getString("Depart"));
                 data.setArivee(resultSet.getString("Arivee"));
                 data.setPrix((resultSet.getFloat("Prix")));
-                data.setHeure((resultSet.getTime("Heure")));
+                data.setHeure(resultSet.getTime("Heure"));
                 data.setVehicule_Image((resultSet.getString("Vehicule_Image")));
 
                 dataList.add(data);

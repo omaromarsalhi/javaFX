@@ -1,6 +1,9 @@
 package pidev.javafx.crud;
 
 import javafx.collections.ObservableList;
+import pidev.javafx.model.Transport.Abonnement;
+
+import java.util.Set;
 
 public interface CrudInterface<T> {
 
@@ -13,5 +16,7 @@ public interface CrudInterface<T> {
     T selectFirstItem();
 
     void deleteItem(int id);
+
+    Set<T> getAll();
 }
 

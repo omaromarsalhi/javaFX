@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
 
 public class CrudContract implements CrudInterface<Contract> {
 
@@ -176,5 +177,10 @@ public class CrudContract implements CrudInterface<Contract> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public Set<Contract> getAll() {
+        return null;
     }
 }

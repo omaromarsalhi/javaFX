@@ -1,21 +1,18 @@
 package pidev.javafx.crud.transport;
 
-import javafx.fxml.FXMLLoader;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
-import pidev.javafx.Controller.ConnectionDB;
-import pidev.javafx.entities.Transport.Abonnement;
-import pidev.javafx.entities.Transport.Transport;
-import pidev.javafx.utils.DataSource;
+import pidev.javafx .crud.DataSource;
+import pidev.javafx.model.Transport.Abonnement;
+import  pidev.javafx.crud.CrudInterface;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 
-public class ServicesAbonnement implements IServices <Abonnement> {
+public class ServicesAbonnement implements CrudInterface <Abonnement> {
 
     Connection cnx = DataSource.GetInstance().getCnx();
     private PreparedStatement prepare;
@@ -25,7 +22,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
 
     @Override
-    public void ajouter(Abonnement a) {
+    public void addItem(Abonnement a) {
 
         LocalDate futureDate;
         LocalDate currentDate = LocalDate.now();
@@ -36,15 +33,14 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
               futureDate = currentDate.plusDays(31);
         }
         Date sqlDate = Date.valueOf(futureDate);
-        cnx = ConnectionDB.connectDb();
-        String sql = "INSERT INTO `abonnement`( `Type_Abonnement`,`Nom`,`Prenom`, `Date_Fin`, `Image`) " +
+        String sql = "INSERT INTO `abonnement`( `Type_Abonnement`,`Nom`,`Prenom`, `dateFin`, `Image`) " +
                 "VALUES (?,?,?,?,?)";
         try {
             prepare = cnx.prepareStatement(sql);
             prepare.setString(1,a.getType());
             prepare.setString(2, a.getNom());
             prepare.setString(3,a.getPrenom());
-            prepare.setDate(4,sqlDate);
+            prepare.setDate(4,a.getDateFin());
             prepare.setString(5,a.getImage());
 
 
@@ -55,9 +51,8 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
     }
 
     @Override
-    public void modifier(Abonnement T) {
+    public void updateItem(Abonnement T) {
 
-        cnx = ConnectionDB.connectDb();
         String sql = "UPDATE abonnement\n" +
                 "SET Type_Abonnement=?, Nom=?, Prenom=?, Image=? \n" +
                 "WHERE idAbonnement=?;\n ";
@@ -81,7 +76,12 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
     }
 
     @Override
-    public void supprimer(int id) {
+    public ObservableList<Abonnement> selectItems() {
+        return null;
+    }
+
+    @Override
+    public void deleteItem(int id) {
         String deleteQuery = "DELETE FROM abonnement WHERE idAbonnement = ?";
         try {
             prepare = cnx.prepareStatement(deleteQuery);
@@ -94,8 +94,13 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
     }
 
     @Override
-    public void getById(int id) {
+    public Abonnement findById(int id) {
+return new Abonnement();
+    }
 
+    @Override
+    public Abonnement selectFirstItem() {
+        return null;
     }
 
     @Override
@@ -112,9 +117,10 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
                 abs.setNom(resultSet.getString("Nom"));
                 abs.setPrenom(resultSet.getString("Prenom"));
                 abs.setType(resultSet.getString("Type_Abonnement"));
-                abs.setDateDebut(resultSet.getTimestamp("Date_Debut"));
-                abs.setDateFin(resultSet.getDate("Date_Fin"));
+                abs.setDateDebut(resultSet.getTimestamp("dateDebut"));
+                abs.setDateFin(resultSet.getDate("dateFin"));
                 abs.setIdAboonnement(resultSet.getInt("idAbonnement"));
+                abs.setImage(resultSet.getString("image"));
                 //System.out.println(abs);
 
                 abonnementList.add(abs);

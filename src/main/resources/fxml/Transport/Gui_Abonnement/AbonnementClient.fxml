@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="670.0" prefWidth="1034.0" styleClass="anchor-pane" stylesheets="@../../style/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.abonnement.AbonnementController">
+      <children>
+      <Pane fx:id="form" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: grey;" styleClass="pane">
+         <children>
+            <HBox fillHeight="false" layoutX="318.0" layoutY="75.0" prefHeight="521.0" prefWidth="404.0">
+               <children>
+                  <VBox fx:id="statsPannel" prefHeight="498.0" prefWidth="405.0" styleClass="form">
+                     <children>
+                        <Pane fx:id="statsPane" prefHeight="499.0" prefWidth="382.0" styleClass="form" stylesheets="@../../../style/Transport.css">
+                           <children>
+                              <Button fx:id="expandBtn" layoutX="349.0" layoutY="14.0" mnemonicParsing="false" onAction="#unexpand" prefHeight="33.0" prefWidth="31.0" styleClass="SearchBar">
+                                 <graphic>
+                                    <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../icons/404.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <VBox layoutX="27.0" layoutY="190.0" prefHeight="216.0" prefWidth="358.0">
+                                 <children>
+                                    <HBox prefHeight="39.0" prefWidth="310.0">
+                                       <children>
+                                          <Label text="Nom :      " textFill="#494949">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="NomText" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="38.0" prefWidth="229.0" promptText="Entrer la reference" styleClass="FormInputs">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="15.0" />
+                                             </font>
+                                          </TextField>
+                                          <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="32.0" styleClass="SearchBar" stylesheets="@../../../style/Transport.css">
+                                             <graphic>
+                                                <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../icons/417.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox>
+                                       <children>
+                                          <Label text="Prenom:      " textFill="#494949">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <TextField fx:id="PrenomText" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="38.0" prefWidth="214.0" promptText="Entrer la reference" styleClass="FormInputs">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="15.0" />
+                                             </font>
+                                          </TextField>
+                                          <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="32.0" styleClass="SearchBar" stylesheets="@../../../style/Transport.css">
+                                             <graphic>
+                                                <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../icons/417.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="37.0" prefWidth="346.0">
+                                       <children>
+                                          <Label prefHeight="32.0" prefWidth="102.0" text="Type :        " textFill="#494949">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="TypeAbonnementBox" prefHeight="38.0" prefWidth="212.0" styleClass="SearchBar" />
+                                          <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="37.0" styleClass="SearchBar" stylesheets="@../../../style/Transport.css">
+                                             <graphic>
+                                                <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../icons/417.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="12.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="35.0" prefWidth="346.0">
+                                       <children>
+                                          <Label prefHeight="49.0" prefWidth="84.0" text="Image : " textFill="#494949">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Button mnemonicParsing="false" onAction="#insert_Image" prefHeight="37.0" prefWidth="232.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="21.0" />
+                                             </font>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Label layoutX="53.0" layoutY="100.0" prefHeight="62.0" prefWidth="332.0" text="Ajouter Un Abonnement" textFill="#494949">
+                                 <font>
+                                    <Font name="Souliyo Unicode" size="29.0" />
+                                 </font>
+                              </Label>
+                              <Button layoutX="45.0" layoutY="430.0" mnemonicParsing="false" onAction="#unexpand" style="-fx-background-color: transparent;" text="Annuler " textFill="#e00000">
+                                 <font>
+                                    <Font name="Souliyo Unicode" size="17.0" />
+                                 </font>
+                              </Button>
+                              <Button layoutX="244.0" layoutY="425.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajouter" prefHeight="37.0" prefWidth="130.0" styleClass="Button_ajouter" text="Ajouter" textFill="WHITE">
+                                 <font>
+                                    <Font name="Souliyo Unicode" size="20.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="UpdateBtn" layoutX="244.0" layoutY="425.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#Update" prefHeight="37.0" prefWidth="130.0" styleClass="Button_ajouter" text="Update" textFill="WHITE">
+                                 <font>
+                                    <Font name="Souliyo Unicode" size="20.0" />
+                                 </font>
+                              </Button>
+                              <ImageView fx:id="imageAbn" fitHeight="99.0" fitWidth="99.0" layoutX="41.0" layoutY="10.0" pickOnBounds="true" smooth="false" styleClass="rounded-image">
+                                 <image>
+                                    <Image url="@../../../img_transport/profile-circle-icon-2048x2048-cqe5466q.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </Pane>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </Pane>
+          <Pane fx:id="displayAbonnement" prefHeight="670.0" prefWidth="1040.0" styleClass="pane" stylesheets="@../../../style/Transport.css">
+              <children>
+                  <Line endX="52.60003662109375" layoutX="939.0" layoutY="120.0" startX="-900.0" stroke="#4e4545" />
+                  <ImageView fitHeight="106.0" fitWidth="144.0" layoutX="861.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@../../../citizenHub/rrrrz.png" />
+                      </image>
+                  </ImageView>
+                  <Label layoutX="42.0" layoutY="20.0" prefHeight="50.0" prefWidth="368.0" text="Abonnements">
+                      <font>
+                          <Font name="Souliyo Unicode" size="30.0" />
+                      </font>
+                  </Label>
+                  <Label layoutX="42.0" layoutY="45.0" prefHeight="50.0" prefWidth="233.0" text="tous les details des abonnements">
+                      <font>
+                          <Font name="Souliyo Unicode" size="15.0" />
+                      </font>
+                  </Label>
+            <Pane layoutX="259.0" layoutY="148.0" prefHeight="375.0" prefWidth="614.0" styleClass="TableView">
+               <children>
+                  <Button fx:id="previousBtn" layoutX="6.0" layoutY="160.0" mnemonicParsing="false" onAction="#previousAb" prefHeight="33.0" prefWidth="63.0" styleClass="Button_abonnement">
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/882.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Pane fx:id="paneToAnnimate" layoutX="103.0" layoutY="32.0">
+                     <children>
+                        <ImageView fitHeight="313.0" fitWidth="408.0" pickOnBounds="true" preserveRatio="true" styleClass="rounded-image">
+                           <image>
+                              <Image url="@../../../img/Abonnement.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="IdLabel" layoutX="262.79999923706055" layoutY="272.0" text="0001">
+                           <font>
+                              <Font name="Souliyo Unicode" size="24.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="NomLabel" layoutX="237.79999923706055" layoutY="135.0" text="Fouleni">
+                           <font>
+                              <Font name="Souliyo Unicode" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="PrenomLabel" layoutX="245.79999923706055" layoutY="172.39999389648438" text="Lfouleni">
+                           <font>
+                              <Font name="Souliyo Unicode" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="DebutLabel" layoutX="64.79999923706055" layoutY="198.0" prefHeight="33.0" prefWidth="112.0" text="12/02/2002">
+                           <font>
+                              <Font name="Souliyo Unicode" size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="FinLabel" layoutX="49.79999923706055" layoutY="224.60000610351562" prefHeight="39.0" prefWidth="130.0" text="12/02/2002">
+                           <font>
+                              <Font name="Souliyo Unicode" size="13.0" />
+                           </font>
+                        </Label>
+                        <ImageView fx:id="imageAbonne" fitHeight="154.0" fitWidth="126.0" layoutX="9.0" layoutY="22.0" pickOnBounds="true">
+                           <image>
+                              <Image url="@../../../img/omar.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <Button fx:id="nextBtn" layoutX="536.0" layoutY="160.0" mnemonicParsing="false" onAction="#nextAb" prefHeight="40.0" prefWidth="64.0" styleClass="Button_abonnement">
+                     <graphic>
+                        <ImageView fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/263.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </Pane>
+            <HBox layoutX="494.0" layoutY="557.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#DeleteAbonnement" prefHeight="40.0" prefWidth="44.0" styleClass="SearchBar">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/delete.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#LoadUpdate" prefHeight="40.0" prefWidth="44.0" styleClass="SearchBar">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/EditIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#exportPaneToImage" prefHeight="40.0" prefWidth="44.0" styleClass="SearchBar">
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../icons/31.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+            <Button layoutX="42.0" layoutY="126.0" mnemonicParsing="false" onAction="#add_load" prefHeight="30.0" prefWidth="23.0" styleClass="SearchBar">
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../icons/166.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+              </children>
+          </Pane>
+      </children>
+  </AnchorPane>

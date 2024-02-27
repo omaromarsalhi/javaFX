@@ -18,6 +18,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public class CrudBien implements CrudInterface<Bien> {
@@ -29,7 +30,7 @@ public class CrudBien implements CrudInterface<Bien> {
     private PreparedStatement prepare4Images;
     private  ResultSet result4Images;
     private static CrudBien instance;
-
+//
     private CrudBien() {}
 
     public static CrudBien getInstance() {
@@ -97,6 +98,11 @@ public class CrudBien implements CrudInterface<Bien> {
         } catch (SQLException e) {
             System.out.println("Error deleting item: " + e.getMessage());
         }
+    }
+
+    @Override
+    public Set<Bien> getAll() {
+        return null;
     }
 
     public void deleteImages(int id) {

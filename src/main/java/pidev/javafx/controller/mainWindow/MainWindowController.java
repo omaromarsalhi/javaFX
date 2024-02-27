@@ -1,3 +1,101 @@
+//package pidev.javafx.controller.mainWindow;
+//
+//import javafx.event.ActionEvent;
+//import javafx.fxml.FXML;
+//import javafx.fxml.FXMLLoader;
+//import javafx.fxml.Initializable;
+//import javafx.scene.control.Button;
+//import javafx.scene.control.MenuButton;
+//import javafx.scene.layout.AnchorPane;
+//import javafx.scene.layout.BorderPane;
+//import javafx.scene.layout.HBox;
+//import javafx.scene.layout.VBox;
+//import pidev.javafx.controller.contrat.CheckOutController;
+//import pidev.javafx.tools.CustomMouseEvent;
+//import pidev.javafx.tools.EventBus;
+//import pidev.javafx.model.MarketPlace.Bien;
+//
+//import java.io.IOException;
+//import java.net.URL;
+//import java.util.Objects;
+//import java.util.ResourceBundle;
+//
+//public class MainWindowController implements Initializable {
+//
+//    private boolean isSideBarOpen;
+//    @FXML
+//    private Button sideBarBtn;
+//    @FXML
+//    private Button showEmp;
+//    @FXML
+//    private Button btn2;
+//    @FXML
+//    private Button marketPlaceBtn;
+//    @FXML
+//    private VBox sideBar;
+//    @FXML
+//    private VBox zipSideBar;
+//    @FXML
+//    private Button MPD;
+//    @FXML
+//    private BorderPane mainBorderPain;
+//    @FXML
+//    private AnchorPane MainAnchorPane;
+//    @FXML
+//    private MenuButton menubottons;
+//
+//
+//    private HBox mainhBox;
+//    @Override
+//    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
+//        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
+//    }
+////    btns that changes the scenes
+//    @FXML
+//    public void onShowEmpClicked(ActionEvent event) throws IOException {
+//        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+//        mainBorderPain.setCenter(showEmpAnchorPane);
+//    }
+//
+//    @FXML
+//    public void onMPDClicked(ActionEvent event) throws IOException {
+//        HBox hBox = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+//        mainBorderPain.setCenter(hBox);
+//    }
+//
+//    @FXML
+//    public void onMarketPlaceBtnClicked(ActionEvent event){
+//        mainBorderPain.getChildren().remove(mainhBox);
+//        try {
+//            mainhBox = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+//        } catch (IOException e) {
+//            throw new RuntimeException( e );
+//        }
+//        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
+//        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
+//        mainBorderPain.setCenter(mainhBox);
+//    }
+//
+//    public void laodCheckOut(CustomMouseEvent<Bien> event) {
+//        mainBorderPain.getChildren().remove(mainhBox);
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            fxmlLoader.setLocation(getClass().getResource("/fxml/Contrat/checkOut.fxml"));
+//            mainhBox = fxmlLoader.load();
+//            CheckOutController checkOutController = fxmlLoader.getController();
+//            checkOutController.setData(event.getEventData());
+//        } catch (IOException e) {
+//            throw new RuntimeException( e );
+//        }
+//        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
+//        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
+//        mainBorderPain.setCenter(mainhBox);
+//    }
+//
+//}
+
+
 package pidev.javafx.controller.mainWindow;
 
 import javafx.event.ActionEvent;
@@ -6,13 +104,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import pidev.javafx.controller.contrat.CheckOutController;
+//import pidev.javafx.controller.contrat.CheckOutController;
+import pidev.javafx.controller.transport.ListTransportController;
 import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 
 import java.io.IOException;
@@ -45,52 +144,52 @@ public class MainWindowController implements Initializable {
     private MenuButton menubottons;
 
 
-    private HBox mainhBox;
+    //    private HBox mainhBox;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
-        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
-    }
-//    btns that changes the scenes
-    @FXML
-    public void onShowEmpClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPain.setCenter(showEmpAnchorPane);
-    }
-
-    @FXML
-    public void onMPDClicked(ActionEvent event) throws IOException {
-        HBox hBox = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        mainBorderPain.setCenter(hBox);
-    }
-
-    @FXML
-    public void onMarketPlaceBtnClicked(ActionEvent event){
-        mainBorderPain.getChildren().remove(mainhBox);
         try {
-            mainhBox = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+            onTransportClicked();
         } catch (IOException e) {
-            throw new RuntimeException( e );
+            throw new RuntimeException(e);
         }
-        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-        mainBorderPain.setCenter(mainhBox);
+        //EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
+        //EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
     }
 
-    public void laodCheckOut(CustomMouseEvent<Bien> event) {
-        mainBorderPain.getChildren().remove(mainhBox);
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/fxml/Contrat/checkOut.fxml"));
-            mainhBox = fxmlLoader.load();
-            CheckOutController checkOutController = fxmlLoader.getController();
-            checkOutController.setData(event.getEventData());
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-        mainBorderPain.setCenter(mainhBox);
+    @FXML
+    public void onTransportClicked( ) throws IOException {
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Transport/Display_Transport.fxml"));
+        ScrollPane loadedPane = loader.load();
+        mainBorderPain.setCenter(loadedPane);
     }
 
+    @FXML
+    public void onTransportClientClicked(ActionEvent event) throws IOException {
+        AnchorPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Gui_Station/TransportClient.fxml")));
+
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/TransportClient.fxml"));
+        AnchorPane loadedPane = loader.load();
+        mainBorderPain.setCenter(loadedPane);
+
+
+    }
+    @FXML
+    public void onAbonnementClicked(ActionEvent event) throws IOException{
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Abonnement/AbonnementClient.fxml"));
+        AnchorPane loadedPane = loader.load();
+        mainBorderPain.setCenter(loadedPane);
+
+    }
+    @FXML
+    public void onStationClicked(ActionEvent event) throws IOException{
+        //  ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Station.fxml")));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/Station.fxml"));
+        AnchorPane loadedPane = loader.load();
+        mainBorderPain.setCenter(loadedPane);
+
+
+    }
 }
