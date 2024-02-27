@@ -64,6 +64,14 @@ public Reclamation() { }
     this.imagePath = imagePath;
     }
 
+    public int getIdReclamation(int idReclamation) {
+        return this.idReclamation;
+    }
+
+    public void setIdReclamation(int idReclamation) {
+        this.idReclamation = idReclamation;
+    }
+
     public int getId() {
         return idReclamation;
     }
@@ -131,4 +139,6 @@ public Reclamation() { }
                 ", imagePath='" + imagePath + '\'' +
                 '}';
     }
+
+
 }

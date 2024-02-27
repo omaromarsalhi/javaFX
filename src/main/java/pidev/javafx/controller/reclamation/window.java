@@ -2,10 +2,17 @@ package pidev.javafx.controller.reclamation;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
 import java.io.FileInputStream;
@@ -33,12 +40,35 @@ public class window {
     private reponse reponseController;
     private  Reclamation reclamation;
 
+    ServiceReclamation si = new ServiceReclamation();
+
+
     public void setReponseController(reponse reponseController, Reclamation reclamation) {
     this.reclamation=reclamation;
         this.reponseController = reponseController;
         System.out.println("setReponseController called");
 
     }
+    public void showPopup() {
+        try {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/intrface.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Popup Window");
+            stage.setScene(new Scene(root));
+
+            // Show the popup stage.
+            stage.show();
+        } catch (com.aspose.imaging.internal.Exceptions.IO.IOException e) {
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public void initialize() {
         update.setOnAction((ActionEvent event) -> {
             displayDetails();
@@ -69,4 +99,22 @@ public class window {
     public void displayDetails() {
         reponseController.displayReclamationDetails(reclamation);
     }
+
+    @FXML
+    void supprimer_Reclamation() {
+        // Assuming privateKey.getText() returns the id of the reclamation
+        String idReclamation = privatekey.getText();
+        si.supprimer(idReclamation);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Reclmation Delelte!");
+
+        // Show the alert
+        alert.showAndWait();
+    }
+
+
+
 }

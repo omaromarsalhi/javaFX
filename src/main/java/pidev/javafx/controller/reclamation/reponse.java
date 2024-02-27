@@ -57,12 +57,6 @@ public class reponse implements Initializable {
     }
 
 
-
-
-
-
-
-
     private void clearFields() {
         privateKey.setText("");
         title.setText("");
@@ -124,4 +118,5 @@ public class reponse implements Initializable {
         String idReclamation = privateKey.getText();
         si.supprimer(idReclamation);
     }
+
 }

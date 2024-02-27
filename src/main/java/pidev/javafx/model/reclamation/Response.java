@@ -4,48 +4,16 @@ import java.util.Objects;
 
 public class Response {
     private int id;
-      private String privateKey;
-    private String description ;
-    private String reponse;
+    private Reclamation reclamation;
+    private String description;
+    private String etatReponse;
 
-    public Response(int id, String privateKey, String description, String reponse) {
+    public Response(int id, Reclamation reclamation, String description, String etatReponse) {
         this.id = id;
-        this.privateKey = privateKey;
+        this.reclamation = reclamation;
+
         this.description = description;
-        this.reponse = reponse;
-    }
-
-    public Response(int id, String privateKey, String description) {
-        this.id = id;
-        this.privateKey = privateKey;
-        this.description = description;
-    }
-
-    public Response() {
-    }
-
-
-    @Override
-    public String toString() {
-        return "Reponse{" +
-                "id=" + id +
-                ", privateKey='" + privateKey + '\'' +
-                ", description='" + description + '\'' +
-                ", reponse='" + reponse + '\'' +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Response reponse1 = (Response) o;
-        return id == reponse1.id && Objects.equals(privateKey, reponse1.privateKey) && Objects.equals(description, reponse1.description) && Objects.equals(reponse, reponse1.reponse);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, privateKey, description, reponse);
+        this.etatReponse = etatReponse;
     }
 
     public int getId() {
@@ -56,12 +24,12 @@ public class Response {
         this.id = id;
     }
 
-    public String getPrivateKey() {
-        return privateKey;
+    public Reclamation getReclamation() {
+        return reclamation;
     }
 
-    public void setPrivateKey(String privateKey) {
-        this.privateKey = privateKey;
+    public void setReclamation(Reclamation reclamation) {
+        this.reclamation = reclamation;
     }
 
     public String getDescription() {
@@ -72,11 +40,34 @@ public class Response {
         this.description = description;
     }
 
-    public String getResponse() {
-        return reponse;
+    public String getEtatReponse() {
+        return etatReponse;
     }
 
-    public void setResponse(String reponse) {
-        this.reponse = reponse;
+    public void setEtatReponse(String etatReponse) {
+        this.etatReponse = etatReponse;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Response response = (Response) o;
+        return id == response.id && Objects.equals(reclamation, response.reclamation);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, reclamation, description, etatReponse);
+    }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "id=" + id +
+                ", reclamation=" + reclamation + '\'' +
+                ", description='" + description + '\'' +
+                ", etatReponse='" + etatReponse + '\'' +
+                '}';
     }
 }
