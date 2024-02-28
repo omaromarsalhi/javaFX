@@ -20,6 +20,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.util.Scanner;
 
 
 public class AddStationController implements Initializable {
@@ -45,8 +55,73 @@ public class AddStationController implements Initializable {
     ServicesStation ss=new ServicesStation();
     String  Address;
 
+    private static final String OPENCAGE_API_KEY = "53ee85fa919942ebb5df4021833590b4";
 
+public void load_adress(){
 
+   geocodeAddress(NomStationText.getText());
+
+}
+
+    private void geocodeAddress(String address) {
+        try {
+            String encodedAddress = URLEncoder.encode(address, "UTF-8");
+            String apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodedAddress + "&key=" + OPENCAGE_API_KEY;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(apiUrl))
+                    .build();
+
+            HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+
+            try (InputStream responseBody = response.body();
+                 Scanner scanner = new Scanner(responseBody)) {
+
+                StringBuilder result = new StringBuilder();
+                while (scanner.hasNextLine()) {
+                    result.append(scanner.nextLine());
+                }
+
+                // Parse the JSON response and extract latitude and longitude
+                String[] coordinates = extractCoordinates(result.toString());
+                if (coordinates.length == 2) {
+                    updateResultLabel(coordinates);
+                } else {
+                    updateResultLabel(new String[]{"Invalid", "format"});
+                }
+            }
+
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            e.printStackTrace();
+            updateResultLabel(new String[]{"Error", "occurred"});
+        }
+    }
+
+    private String[] extractCoordinates(String jsonResponse) {
+        // Parse the JSON response and extract latitude and longitude
+        // This is a simple example and might not cover all cases; consider using a JSON library for robust parsing
+        String[] coordinates = new String[2];
+
+        int indexLat = jsonResponse.indexOf("\"lat\":");
+        int indexLng = jsonResponse.indexOf("\"lng\":");
+
+        if (indexLat != -1 && indexLng != -1) {
+            coordinates[0] = jsonResponse.substring(indexLat + 6, jsonResponse.indexOf(",", indexLat));
+            coordinates[1] = jsonResponse.substring(indexLng + 6, jsonResponse.indexOf("}", indexLng));
+        }
+
+        // Remove \u00b0 (degree symbol)
+        coordinates[0] = coordinates[0].replace("\u00b0", "");
+        coordinates[1] = coordinates[1].replace("\u00b0", "");
+        System.out.println( coordinates[0].replace("\u00b0", "°")+coordinates[1].replace("\u00b0", "°"));
+
+        return coordinates;
+    }
+
+    private void updateResultLabel(String[] coordinates) {
+   AdressText.setText(coordinates[0]+","+coordinates[1]);
+    }
     @FXML
     protected void onTextChanged() {
         String[] text = new String[10];

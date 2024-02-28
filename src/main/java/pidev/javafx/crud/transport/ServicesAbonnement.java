@@ -28,9 +28,14 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
         LocalDate currentDate = LocalDate.now();
         if(a.getType().equals("Annuel")) {
               futureDate = currentDate.plusDays(365);
+            java.sql.Date sqlDate = java.sql.Date.valueOf(futureDate);
         }
         else{
               futureDate = currentDate.plusDays(31);
+
+            java.sql.Date sqlDate = java.sql.Date.valueOf(futureDate);
+
+
         }
         Date sqlDate = Date.valueOf(futureDate);
         String sql = "INSERT INTO `abonnement`( `Type_Abonnement`,`Nom`,`Prenom`, `dateFin`, `Image`) " +
@@ -40,13 +45,40 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
             prepare.setString(1,a.getType());
             prepare.setString(2, a.getNom());
             prepare.setString(3,a.getPrenom());
-            prepare.setDate(4,a.getDateFin());
+            prepare.setDate(4,sqlDate);
             prepare.setString(5,a.getImage());
 
 
             prepare.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    @Override
+    public Abonnement findById(int id) {
+        String req = "SELECT * FROM abonnement WHERE idAbonnement = ?";
+
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(req)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                Abonnement abs = new Abonnement();
+                abs.setIdAboonnement(resultSet.getInt("idAbonnement"));
+                abs.setNom(resultSet.getString("Nom"));
+                abs.setPrenom(resultSet.getString("Prenom"));
+                abs.setType(resultSet.getString("Type_Abonnement"));
+                abs.setDateDebut(resultSet.getTimestamp("dateDebut"));
+                abs.setDateFin(resultSet.getDate("dateFin"));
+                abs.setImage(resultSet.getString("image"));
+                return abs;
+            } else {
+                // Handle case when no record is found
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching Abonnement: " + e.getMessage());
+            return null;
         }
     }
 
@@ -93,10 +125,6 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
         }
     }
 
-    @Override
-    public Abonnement findById(int id) {
-return new Abonnement();
-    }
 
     @Override
     public Abonnement selectFirstItem() {

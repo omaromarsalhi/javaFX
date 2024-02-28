@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
@@ -89,7 +90,7 @@ String imagePath;
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TypeAbonnementBox.getItems().addAll("Annuel", "mensuel");
 
-        TypeAbonnementBox.getItems().addAll("Annuel","mensuel");
+
        // toolsBar.setVisible(false);
         afficher();
         if (abonnementList.size() > 0)
@@ -205,6 +206,8 @@ String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
         }
     }
 
+    // Set a custom cell factory to display name and photo
+
 
     @FXML
     public void previousAb() {
@@ -248,7 +251,6 @@ String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
     }
 @FXML
     VBox statsPannel;
-
     @FXML
     Pane statsPane;
     @FXML
@@ -286,49 +288,7 @@ Button openBtn;
             }
         }
     }
-//    @FXML
-//    public void expand(){
-//
-//        Timeline timeline = new Timeline();
-//        timeline.setCycleCount(1);
-//        timeline.setAutoReverse(false);
-//        KeyValue initWidth = new KeyValue(statsPannel.prefWidthProperty(), 380);
-//        KeyValue initTranslateX = new KeyValue(statsPannel.translateXProperty(), 50);
-//        KeyValue finalWidth = new KeyValue(statsPannel.prefWidthProperty(), 50);
-//        KeyValue finalTranslateX = new KeyValue(statsPannel.translateXProperty(), 380);
-//        KeyFrame initFrame = new KeyFrame(Duration.ZERO, initWidth, initTranslateX);
-//        KeyFrame finalFrame = new KeyFrame(Duration.seconds(1), finalWidth, finalTranslateX);
-//        timeline.getKeyFrames().addAll(initFrame, finalFrame);
-//        openBtn.setVisible(true);
-//        statsPane.setVisible(false);
-//        expandBtn.setVisible(true);
-//         timeline.play();
-//
-//
-//
-//
-//    }
 
-//
-//    @FXML
-//    public void unexpand(){
-//
-//        Timeline timeline2 = new Timeline();
-//        timeline2.setCycleCount(1);
-//        timeline2.setAutoReverse(false);
-//        KeyValue initWidth2 = new KeyValue(statsPannel.prefWidthProperty(), 50);
-//        KeyValue initTranslateX2 = new KeyValue(statsPannel.translateXProperty(), 404);
-//        KeyValue finalWidth2 = new KeyValue(statsPannel.prefWidthProperty(), 404);
-//        KeyValue finalTranslateX2 = new KeyValue(statsPannel.translateXProperty(), 50);
-//        KeyFrame initFrame2 = new KeyFrame(Duration.ZERO, initWidth2, initTranslateX2);
-//        KeyFrame finalFrame2 = new KeyFrame(Duration.seconds(1), finalWidth2, finalTranslateX2);
-//        timeline2.getKeyFrames().addAll(initFrame2, finalFrame2);
-//        statsPane.setVisible(true);
-//        expandBtn.setVisible(true);
-//        openBtn.setVisible(false);
-//        timeline2.play();
-//
-//    }
 @FXML
 public void unexpand() {
     Timeline timeline = new Timeline();
@@ -353,10 +313,18 @@ public void unexpand() {
     timeline.play();
 
 
+
+
+    BoxBlur blur = new BoxBlur();
+    blur.setWidth(10);
+    blur.setHeight(10);
+    blur.setIterations(3);
     displayAbonnement.toFront();
+    displayAbonnement.setEffect(null);
     form.toBack();
     displayAbonnement.setOpacity(1);
-    form.setOpacity(0);
+
+
 
 }
 
@@ -383,9 +351,16 @@ public void unexpand() {
         statsPane.setVisible(true);
         expandBtn.setVisible(true);
         displayAbonnement.toBack();
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+        displayAbonnement.toBack();
+        displayAbonnement.setEffect(blur);
+
         form.toFront();
-        displayAbonnement.setOpacity(0.75);
         form.setOpacity(0.85);
+        displayAbonnement.setOpacity(0.85);
 
     }
 

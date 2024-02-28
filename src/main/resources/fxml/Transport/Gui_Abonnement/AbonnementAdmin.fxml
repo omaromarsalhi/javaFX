@@ -15,9 +15,9 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.abonnement.AbonnementController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.abonnement.abonnementAdminController">
    <children>
+      <Pane fx:id="displayTransport1" layoutX="1.0" opacity="0.88" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: grey;" styleClass="pane" stylesheets="@../../../style/Transport.css" />
       <Pane fx:id="displayTransport" layoutX="1.0" layoutY="1.0" prefHeight="670.0" prefWidth="1040.0" styleClass="pane" stylesheets="@../../../style/Transport.css">
          <children>
             <Line endX="52.60003662109375" layoutX="939.0" layoutY="120.0" startX="-900.0" stroke="#4e4545" />
@@ -56,7 +56,7 @@
                </image>
             </ImageView>
             <ComboBox layoutX="84.0" layoutY="131.0" prefHeight="33.0" prefWidth="118.0" promptText="By Name" styleClass="SearchBar" />
-            <Button fx:id="insertStation" layoutX="406.0" layoutY="602.0" mnemonicParsing="false" onAction="#onInsertStationClicked" prefHeight="32.0" prefWidth="24.0" styleClass="SearchBar">
+            <Button fx:id="insertStation" layoutX="423.0" layoutY="602.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="24.0" styleClass="SearchBar">
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -65,16 +65,16 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ListView fx:id="StationListView" layoutX="50.0" layoutY="193.0" onMouseClicked="#onListViewClicked" prefHeight="466.0" prefWidth="349.0" style="-fx-background-color: C8transparentC8C8; -fx-border-radius: 10px; -fx-background-radius: 10px;" stylesheets="@../../../style/Station.css" />
+            <ListView fx:id="abonnementListView" layoutX="50.0" layoutY="193.0" onMouseClicked="#onListViewClicked" prefHeight="466.0" prefWidth="367.0" style="-fx-background-color: C8transparentC8C8; -fx-border-radius: 10px; -fx-background-radius: 10px;" stylesheets="@../../../style/Station.css" />
          </children>
       </Pane>
       <HBox fillHeight="false" layoutX="605.0" layoutY="153.0" prefHeight="521.0" prefWidth="404.0" stylesheets="@../../../style/Transport.css">
          <children>
-            <VBox fx:id="statsPannel" prefHeight="498.0" prefWidth="405.0" styleClass="form">
+            <VBox fx:id="statsPannel" prefHeight="498.0" prefWidth="464.0" styleClass="form">
                <children>
-                  <Pane fx:id="statsPane" prefHeight="499.0" prefWidth="382.0" styleClass="form">
+                  <Pane fx:id="statsPane" prefHeight="498.0" prefWidth="456.0" styleClass="form">
                      <children>
-                        <Button fx:id="expandBtn" layoutX="349.0" layoutY="14.0" mnemonicParsing="false" onAction="#unexpand" prefHeight="33.0" prefWidth="31.0" styleClass="SearchBar">
+                        <Button fx:id="expandBtn" layoutX="349.0" layoutY="14.0" mnemonicParsing="false" prefHeight="33.0" prefWidth="31.0" styleClass="SearchBar">
                            <graphic>
                               <ImageView fitHeight="26.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -92,7 +92,7 @@
                                           <Font name="Souliyo Unicode" size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="NomText" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="38.0" prefWidth="229.0" promptText="Entrer la reference" styleClass="FormInputs">
+                                    <TextField fx:id="NomText" minWidth="-Infinity" prefHeight="38.0" prefWidth="229.0" promptText="Entrer la reference" styleClass="FormInputs">
                                        <font>
                                           <Font name="Souliyo Unicode" size="15.0" />
                                        </font>
@@ -118,7 +118,7 @@
                                           <Font name="Souliyo Unicode" size="20.0" />
                                        </font>
                                     </Label>
-                                    <TextField fx:id="PrenomText" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="38.0" prefWidth="214.0" promptText="Entrer la reference" styleClass="FormInputs">
+                                    <TextField fx:id="PrenomText" minWidth="-Infinity" prefHeight="38.0" prefWidth="214.0" promptText="Entrer la reference" styleClass="FormInputs">
                                        <font>
                                           <Font name="Souliyo Unicode" size="15.0" />
                                        </font>
@@ -166,7 +166,7 @@
                                           <Font name="Souliyo Unicode" size="20.0" />
                                        </font>
                                     </Label>
-                                    <Button mnemonicParsing="false" onAction="#insert_Image" prefHeight="37.0" prefWidth="232.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
+                                    <Button mnemonicParsing="false" prefHeight="37.0" prefWidth="232.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
                                        <font>
                                           <Font name="Souliyo Unicode" size="21.0" />
                                        </font>
@@ -185,12 +185,12 @@
                               <Font name="Souliyo Unicode" size="17.0" />
                            </font>
                         </Button>
-                        <Button layoutX="244.0" layoutY="425.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajouter" prefHeight="37.0" prefWidth="130.0" styleClass="Button_ajouter" text="Ajouter" textFill="WHITE">
+                        <Button layoutX="244.0" layoutY="425.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="37.0" prefWidth="130.0" styleClass="Button_ajouter" text="Ajouter" textFill="WHITE">
                            <font>
                               <Font name="Souliyo Unicode" size="20.0" />
                            </font>
                         </Button>
-                        <Button fx:id="UpdateBtn" layoutX="244.0" layoutY="425.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#Update" prefHeight="37.0" prefWidth="130.0" styleClass="Button_ajouter" text="Update" textFill="WHITE">
+                        <Button fx:id="UpdateBtn" layoutX="244.0" layoutY="425.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#LoadUpdate" prefHeight="37.0" prefWidth="130.0" styleClass="Button_ajouter" text="Update" textFill="WHITE">
                            <font>
                               <Font name="Souliyo Unicode" size="20.0" />
                            </font>

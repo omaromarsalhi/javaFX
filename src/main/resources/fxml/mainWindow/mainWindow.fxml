@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -29,7 +28,7 @@
                   <Insets />
                </opaqueInsets>
             </HBox>
-            <VBox alignment="CENTER" prefHeight="304.0" prefWidth="180.0" spacing="15.0">
+            <VBox alignment="CENTER" prefHeight="304.0" prefWidth="151.0" spacing="15.0">
                <children>
                   <Button alignment="BASELINE_LEFT" minWidth="153.0" mnemonicParsing="false" onAction="#onTransportClicked" prefHeight="40.0" prefWidth="153.0" text="  Transport" textFill="WHITE">
                      <graphic>
@@ -68,6 +67,18 @@
                      </font>
                   </Button>
                   <Button alignment="BASELINE_LEFT" minWidth="153.0" mnemonicParsing="false" onAction="#onStationClicked" prefHeight="40.0" prefWidth="153.0" text="  Stations" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icon/transport.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="BASELINE_LEFT" minWidth="153.0" mnemonicParsing="false" onAction="#onAbnClicked" prefHeight="40.0" prefWidth="153.0" text="Abn" textFill="WHITE">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -123,4 +134,3 @@
       </BorderPane>
    </center>
 </BorderPane>
-

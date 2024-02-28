@@ -7,6 +7,7 @@ module pidev.javafx{
     requires transitive java.desktop;
     requires itextpdf;
     requires android.json;
+    requires java.net.http;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

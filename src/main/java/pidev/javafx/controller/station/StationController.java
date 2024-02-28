@@ -237,6 +237,9 @@
 
 package pidev.javafx.controller.station;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -248,12 +251,18 @@ import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
 
 import java.io.IOException;
+import java.io.PipedReader;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -266,6 +275,8 @@ public class StationController implements Initializable {
 
     @FXML
     private Button showBtn;
+    @FXML
+    private Button Updatebtn;
 
     @FXML
     private Button deleteBtn;
@@ -281,6 +292,10 @@ public class StationController implements Initializable {
     private AnchorPane mainBorderPain;
 
     private ServicesStation ss = new ServicesStation();
+    @FXML
+    private Pane UpdatePane;
+    @FXML
+    private Pane UpdateBox;
 
     @FXML
     protected void onTextChanged() {
@@ -314,6 +329,32 @@ public class StationController implements Initializable {
         }
     }
 
+
+
+    @FXML
+    public void unexpand() {
+
+
+
+
+
+
+
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+        displayTransport.toFront();
+        displayTransport.setEffect(null);
+        UpdatePane.toBack();
+        displayTransport.setOpacity(1);
+
+
+
+    }
+
+
+
     private void addHoverEffect(XYChart.Series<String, Number> series) {
         for (XYChart.Data<String, Number> data : series.getData()) {
             javafx.scene.Node bar = data.getNode();
@@ -330,8 +371,6 @@ public class StationController implements Initializable {
         }
     }
     String[] name = new String[10];
-//    StationListView.setVisible(false);
-//    name[1] = Referance_text.getText();
 
     private void stats_() {
         StationListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -348,6 +387,25 @@ public class StationController implements Initializable {
         });
     }
 
+    public void delete_Btn(){
+        ss.deleteItem(StationListView.getSelectionModel().getSelectedItem().getIdStation());
+        afficher();
+    }
+@FXML
+    private Pane displayTransport;
+
+    public void load_update(){
+
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+        displayTransport.setEffect(blur);
+        UpdatePane.setVisible(true);
+        UpdatePane.toFront();
+        UpdatePane.setOpacity(0.85);
+        UpdateBox.setOpacity(1);
+    }
     Station selectedItem = new Station();
     Station selectedItem_1 = new Station();
 
@@ -365,41 +423,36 @@ public class StationController implements Initializable {
     Map<String, Integer> stationMap = new HashMap<>();
     public void afficher() {
         Set<Station> dataList;
-//        dataList = ss.getAll();
-//        ObservableList<Station> data = FXCollections.observableArrayList(dataList);
-//        StationListView.getItems().addAll(dataList);
-//        StationListView.setCellFactory(param -> new ListCell<Station>() {
-//            @Override
-//            protected void updateItem(Station item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty || item == null) {
-//                    setText(null);
-//                } else {
-//                    setText(item.getNomStation());
-//                    stationMap.put(item.getNomStation(), item.getIdStation());
-//                }
-//            }
-//        });
+
+        // Étape 1 : Effacer les éléments existants
+        dataList = ss.getAll();
+        dataList.clear();
+        dataList = ss.getAll();
+        ObservableList<Station> data = FXCollections.observableArrayList(dataList);
+        StationListView.setItems(data);
+
+        // Configurer la cellule de la TableView (si nécessaire)
+        StationListView.setCellFactory(param -> new ListCell<Station>() {
+            @Override
+            protected void updateItem(Station item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNomStation());
+                    stationMap.put(item.getNomStation(), item.getIdStation());
+                }
+            }
+        });
     }
+
     public void onInsertStationClicked(ActionEvent event) throws IOException {
         ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Transport/Gui_Station/AddStation.fxml")));
         scrollPane.setPrefHeight(mainBorderPain.getPrefHeight());
         scrollPane.setPrefWidth(mainBorderPain.getPrefWidth());
+        mainBorderPain.getChildren().add(scrollPane);
     }
-//public void afficher (){
-//    Set<Station> dataList;
-//    dataList=ss.getAll();
-//
-//    ObservableList<Station> data = FXCollections.observableArrayList(dataList);
-//    StationListView.setItems(data);
-//}
-//
-//    public void onInsertStationClicked(ActionEvent event)  throws IOException {
-//        ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/AddStation.fxml")));
-//        scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
-//        scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
-//        mainBorderPain.getChildren().setAll(scrollPane);
-//    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         afficher();

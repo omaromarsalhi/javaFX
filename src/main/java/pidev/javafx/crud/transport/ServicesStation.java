@@ -3,7 +3,6 @@ package pidev.javafx.crud.transport;
 
 import javafx.collections.ObservableList;
 import pidev.javafx.crud.CrudInterface;
-import pidev.javafx.model.Transport.Abonnement;
 import pidev.javafx.model.Transport.Station;
 
 
@@ -78,12 +77,10 @@ return new Station();
 
             while (resultSet.next()) {
                 Station abs = new Station();
-                abs.setAddressStation(resultSet.getString("NomStation"));
-                abs.setNomStation(resultSet.getString("AddressStation"));
+                abs.setAddressStation(resultSet.getString("AddressStation"));
+                abs.setNomStation(resultSet.getString("NomStation"));
                 abs.setType_Vehicule(resultSet.getString("Type_Vehicule"));
-
-                //System.out.println(abs);
-
+                abs.setIdStation(resultSet.getInt("idStation"));
                 abonnementList.add(abs);
 
             }
