@@ -45,21 +45,11 @@
                         </Label>
                         <HBox>
                            <children>
-                              <TextField fx:id="privateKey" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="65.0" prefWidth="399.0" promptText="Entrer la reference" styleClass="FormInputs">
+                              <TextField fx:id="privateKey" disable="true" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="65.0" prefWidth="399.0" promptText="Entrer la reference" styleClass="FormInputs">
                                  <font>
                                     <Font name="Souliyo Unicode" size="15.0" />
                                  </font>
                               </TextField>
-            
-                                                <Button mnemonicParsing="false" prefHeight="39.0" prefWidth="32.0" styleClass="SearchBar">
-                                 <graphic>
-                                    <ImageView fitHeight="24.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
                            </children>
                         </HBox>
                      </children>

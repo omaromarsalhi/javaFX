@@ -11,11 +11,6 @@
 
 <AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.modifer">
    <children>
-      <ImageView fitHeight="744.0" fitWidth="1164.0" layoutX="-11.0" layoutY="-37.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../../../../sql/photo/citizenHub%20img/Asset%202@4x.png" />
-         </image>
-      </ImageView>
       <ListView fx:id="lista" layoutX="71.0" layoutY="104.0" onMouseClicked="#displayDetailsInTextField" prefHeight="461.0" prefWidth="362.0" style="-fx-background-color: #f0f0f0; -fx-padding: 10px; -fx-border-color: #e0e0e0; -fx-border-width: 1px;" />
       <TextField fx:id="privateKey" layoutX="466.0" layoutY="196.0" prefHeight="25.0" prefWidth="478.0" promptText="Private_key" />
       <TextField fx:id="subject" layoutX="466.0" layoutY="259.0" prefHeight="25.0" prefWidth="478.0" promptText="Subject" />

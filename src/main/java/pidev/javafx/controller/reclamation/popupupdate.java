@@ -30,6 +30,10 @@ public class popupupdate {
     @FXML
     private ChoiceBox<String> aaaa;
     @FXML
+    private MenuButton menu;
+    @FXML
+    private TextField subject;
+    @FXML
     ServiceReclamation si = new ServiceReclamation();
     @FXML
     protected void onTextChanged() {
@@ -63,8 +67,16 @@ public class popupupdate {
 
         onTextChanged();
         if (title.getStyle().equals("-fx-text-fill: #25c12c;") && description.getStyle().equals("-fx-text-fill: #25c12c")) {
-            Reclamation rec = new Reclamation(privateKey.getText(), title.getText(), description.getText(), imagePath);
+            Reclamation   rec = new Reclamation(privateKey.getText(), subject.getText(), title.getText(),description.getText());
             si.modifier(rec);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("Reclmation has been modified !");
+
+            // Show the alert
+            alert.show();
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -77,7 +89,8 @@ public class popupupdate {
         System.out.println("initialize called with Reclamation: " + reclamation);
         privateKey.setText(reclamation.getPrivateKey());
         title.setText(reclamation.getTitre());
+        subject.setText(reclamation.getSubject());
         description.setText(reclamation.getDescription());
-        aaaa.getItems().addAll("Problem technique", "application", "testt", "omar salhi", "khalil rmila ");
     }
+
 }

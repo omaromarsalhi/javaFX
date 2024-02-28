@@ -39,7 +39,7 @@ public class DemandeController {
         box1.setEffect(new DropShadow(BlurType.GAUSSIAN, Color.BLACK, 10, 0, 0, 0));
         box2.setEffect(new BoxBlur(10, 10, 3));
         box3.setEffect(new BoxBlur(10, 10, 3));
-        // timer1();
+         timer1();
        //  FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/Demande/intrface.fxml"));
         ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/ticket/ticket.fxml")));
         scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
@@ -72,13 +72,15 @@ public class DemandeController {
         box2.setEffect(new BoxBlur(10, 10, 3));
         box1.setEffect(new BoxBlur(10, 10, 3));
         timer3();
-        AnchorPane showEmpAnchorPane = null;
+
         try {
-            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/showuser_modife.fxml"));
+            ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/reclamation/testt.fxml")));
+            scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
+            scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
+            mainBorderPain.getChildren().setAll(scrollPane);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        mainBorderPain.getChildren().setAll(showEmpAnchorPane);
     }
     public void timer1()
     {

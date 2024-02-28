@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
@@ -11,5 +12,6 @@
             <VBox fx:id="reclamationcontrainer" alignment="TOP_CENTER" prefHeight="561.0" prefWidth="989.0" spacing="10.0" styleClass="scroll-bar" stylesheets="@../../style/scrollBarStlyle.css" />
          </content>
       </ScrollPane>
+      <Button fx:id="ajouter" layoutX="30.0" layoutY="38.0" mnemonicParsing="false" onAction="#show_ajouter" text="ajouter reclamation" />
    </children>
 </AnchorPane>
