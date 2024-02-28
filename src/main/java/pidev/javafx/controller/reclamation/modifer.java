@@ -73,15 +73,15 @@ public class modifer {
 
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
-                    if (!empty && reclamation.getImagePath() != null) {
-                        try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
-                            Image image = new Image(is);
-                            imageView.setImage(image);
-                            setGraphic(imageView);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
+//                    if (!empty && reclamation.getImagePath() != null) {
+//                        try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
+//                            Image image = new Image(is);
+//                            imageView.setImage(image);
+//                            setGraphic(imageView);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
                     setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
                 }
             }

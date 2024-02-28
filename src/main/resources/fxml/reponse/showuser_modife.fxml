@@ -18,10 +18,10 @@
             <String fx:value="table-view" />
             <String fx:value="label" />
          </styleClass></ListView>
-      <TextField fx:id="privateKey" layoutX="464.0" layoutY="103.0" prefHeight="25.0" prefWidth="478.0" promptText="Private_key" />
-      <TextField fx:id="subject" layoutX="466.0" layoutY="197.0" prefHeight="25.0" prefWidth="478.0" promptText="Subject" />
-      <TextField fx:id="title" layoutX="470.0" layoutY="279.0" prefHeight="25.0" prefWidth="478.0" promptText="Titre" />
-      <TextArea fx:id="description" layoutX="466.0" layoutY="364.0" prefHeight="100" promptText="Description" />
+      <TextField fx:id="privateKey" disable="true" layoutX="464.0" layoutY="103.0" prefHeight="25.0" prefWidth="478.0" promptText="Private_key" />
+      <TextField fx:id="subject" disable="true" layoutX="466.0" layoutY="197.0" prefHeight="25.0" prefWidth="478.0" promptText="Subject" />
+      <TextField fx:id="title" disable="true" layoutX="470.0" layoutY="279.0" prefHeight="25.0" prefWidth="478.0" promptText="Titre" />
+      <TextArea fx:id="description" disable="true" layoutX="466.0" layoutY="364.0" prefHeight="100" promptText="Description" />
       <Button layoutX="177.0" layoutY="592.0" onAction="#modifer_Reclamation" prefHeight="51.0" prefWidth="52.0" style="-fx-background-color: orange; -fx-text-fill: white;">
          <graphic>
             <ImageView fitHeight="43.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
@@ -60,5 +60,14 @@
             <Font name="Souliyo Unicode" size="24.0" />
          </font>
       </Label>
+      <Button layoutX="275.0" layoutY="592.0" mnemonicParsing="false" onAction="#showPopup" prefHeight="51.0" prefWidth="57.0" style="-fx-background-color: orange;">
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../namedIcons/database-table.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

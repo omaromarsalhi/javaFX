@@ -72,7 +72,6 @@ public Reclamation() { }
         this.date = date;
         this.description = description;
     }
-
     public int getIdReclamation() {
         return this.idReclamation;
     }
