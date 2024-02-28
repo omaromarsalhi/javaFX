@@ -64,6 +64,15 @@ public Reclamation() { }
     this.imagePath = imagePath;
     }
 
+    public Reclamation( String privateKey, String subject, String titre, Date date, String description) {
+
+        this.privateKey = privateKey;
+        this.subject = subject;
+        this.titre = titre;
+        this.date = date;
+        this.description = description;
+    }
+
     public int getIdReclamation(int idReclamation) {
         return this.idReclamation;
     }

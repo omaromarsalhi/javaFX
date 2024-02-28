@@ -51,28 +51,31 @@ public class window {
     }
     public void showPopup() {
         try {
-
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/intrface.fxml"));
             Parent root = (Parent) fxmlLoader.load();
+
+            // Get the controller of the FXML file
+            popupupdate controller = fxmlLoader.getController();
+
+            // Call the method to pass the data
+            controller.setData(reclamation);
+
+            controller.initialize(reclamation);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Popup Window");
             stage.setScene(new Scene(root));
-
-            // Show the popup stage.
             stage.show();
-        } catch (com.aspose.imaging.internal.Exceptions.IO.IOException e) {
-            e.printStackTrace();
-        } catch (java.io.IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
 
     public void initialize() {
-        update.setOnAction((ActionEvent event) -> {
-            displayDetails();
-        });
+       // update.setOnAction((ActionEvent event) -> {
+//displayDetails();
+      //  });
     }
 
     public void setReclamation(Reclamation reclamation) {
@@ -80,18 +83,7 @@ public class window {
         subject.setText(reclamation.getSubject());
         titre.setText(reclamation.getTitre());
         descirption.setText(reclamation.getDescription());
-        ImageView imageView = new ImageView();
-        imageView.setFitHeight(50);
-        imageView.setFitWidth(50);
-        if ( reclamation.getImagePath() != null) {
-            try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
-                Image image = new Image(is);
-                imageView.setImage(image);
-                imagePath.setImage(imageView.getImage());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        imagePath.setImage(new Image("file:"+reclamation.getImagePath(),50,50,true,true));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
     }
