@@ -198,8 +198,4 @@ public class first_page {
             throw new RuntimeException(e);
         }
     }
-
-
-
-
 }

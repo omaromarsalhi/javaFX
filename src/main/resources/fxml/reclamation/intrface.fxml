@@ -21,7 +21,7 @@
       <Label layoutX="322.0" layoutY="314.0" text="Description" />
       <Pane fx:id="box1" layoutX="73.0" layoutY="106.0" opacity="0.64" prefHeight="269.0" prefWidth="224.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
          <children>
-            <ImageView fitHeight="231.0" fitWidth="246.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="269.0" fitWidth="246.0" layoutX="-7.0" pickOnBounds="true" preserveRatio="true">
                <image>
                </image>
             </ImageView>

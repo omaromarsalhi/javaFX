@@ -16,39 +16,39 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class getTicket {
-
-    @FXML
-    private VBox Box1;
-
-    @FXML
-    private TextField customName;
-
-    @FXML
-    private DatePicker date;
-
-    @FXML
-    private HBox formBox;
-
-    @FXML
-    private HBox formBox1;
-
-    @FXML
-    private HBox formBox2;
-
-    @FXML
-    private HBox formBox3;
-
-    @FXML
-    private Button imageBtn;
-
-    @FXML
-    private Button imageBtn1;
-
-    @FXML
-    private ImageView imageView;
-
-    @FXML
-    private TextField ticketNumber;
+//
+//    @FXML
+//    private VBox Box1;
+//
+//    @FXML
+//    private TextField customName;
+//
+//    @FXML
+//    private DatePicker date;
+//
+//    @FXML
+//    private HBox formBox;
+//
+//    @FXML
+//    private HBox formBox1;
+//
+//    @FXML
+//    private HBox formBox2;
+//
+//    @FXML
+//    private HBox formBox3;
+//
+//    @FXML
+//    private Button imageBtn;
+//
+//    @FXML
+//    private Button imageBtn1;
+//
+//    @FXML
+//    private ImageView imageView;
+//
+//    @FXML
+//    private TextField ticketNumber;
 
 
 

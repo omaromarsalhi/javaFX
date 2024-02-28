@@ -45,7 +45,7 @@
                         </Label>
                         <HBox>
                            <children>
-                              <TextField fx:id="privateKey" disable="true" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="65.0" prefWidth="399.0" promptText="Entrer la reference" styleClass="FormInputs">
+                              <TextField fx:id="privateKey" disable="true" minWidth="-Infinity" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="65.0" prefWidth="399.0" promptText="Auto generated" styleClass="FormInputs">
                                  <font>
                                     <Font name="Souliyo Unicode" size="15.0" />
                                  </font>
@@ -73,7 +73,7 @@
                         </Label>
                         <HBox>
                            <children>
-                              <TextField fx:id="title" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="40.0" prefWidth="399.0" promptText="Entrer le num de la ligne" styleClass="SearchBar">
+                              <TextField fx:id="title" onInputMethodTextChanged="#onTextChanged" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" onKeyTyped="#onTextChanged" prefHeight="40.0" prefWidth="399.0" promptText="Titre" styleClass="SearchBar">
                                  <font>
                                     <Font name="Souliyo Unicode" size="15.0" />
                                  </font>
@@ -91,18 +91,17 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox layoutX="553.0" layoutY="344.0" />
-                  <VBox layoutX="75.0" layoutY="408.0" prefHeight="86.0" prefWidth="886.0">
+                  <VBox layoutX="75.0" layoutY="435.0" prefHeight="86.0" prefWidth="886.0">
                      <children>
-                        <Label prefHeight="47.0" prefWidth="221.0" text="Type de Vehicule" textFill="#494949">
+                        <Label prefHeight="47.0" prefWidth="221.0" text="Description" textFill="#494949">
                            <font>
                               <Font name="Souliyo Unicode" size="20.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="description" />
+                        <TextArea fx:id="description" promptText="whrite heree ............................." />
                      </children>
                   </VBox>
-                  <Button layoutX="715.0" layoutY="563.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajouter_Reclamation" prefHeight="65.0" prefWidth="217.0" styleClass="Button_ajouter" text="Ajouter" textFill="WHITE">
+                  <Button layoutX="715.0" layoutY="563.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajouter_Reclamation" prefHeight="65.0" prefWidth="217.0" styleClass="Button_ajouter" text="Ajouter" textFill="#3a9432">
                      <font>
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>
