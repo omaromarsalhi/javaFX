@@ -30,7 +30,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <Line endX="46.0" layoutX="939.0" layoutY="120.0" startX="-900.0" />
+                  <Line endX="46.0" layoutX="939.0" layoutY="93.0" startX="-900.0" />
                   <ImageView fitHeight="109.0" fitWidth="186.0" layoutX="807.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
 
@@ -118,12 +118,12 @@
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>
                   </Label>
-                  <Button fx:id="importButton" layoutX="737.0" layoutY="148.0" mnemonicParsing="false" onAction="#importFile" prefHeight="57.0" prefWidth="251.0" style="-fx-background-color: transparent;" text="Insert photo / video" textFill="#20749c">
+                  <Button fx:id="importButton" layoutX="646.0" layoutY="152.0" mnemonicParsing="false" onAction="#importFile" prefHeight="95.0" prefWidth="358.0" style="-fx-background-color: transparent;" text="Insert photo / video" textFill="#20749c">
                      <font>
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>
                   </Button>
-                  <ImageView fx:id="Image" fitHeight="114.0" fitWidth="114.0" layoutX="71.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="Image" fitHeight="166.0" fitWidth="176.0" layoutX="55.0" layoutY="97.0" pickOnBounds="true" preserveRatio="true">
                      <image>
 
                      </image>

@@ -13,7 +13,7 @@
 
       <Pane fx:id="box1" layoutX="259.0" layoutY="402.0" prefHeight="96.0" prefWidth="200.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
          <children>
-            <Label layoutX="21.0" layoutY="14.0" text="Total reclamtion">
+            <Label layoutX="69.0" layoutY="4.0" text="Ticket">
                <font>
                   <Font name="DG Heaven" size="22.0" />
                </font>
@@ -24,7 +24,7 @@
       </Pane>
       <Pane fx:id="box2" layoutX="420.0" layoutY="258.0" prefHeight="102.0" prefWidth="200.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
          <children>
-            <Label layoutX="22.0" layoutY="14.0" text=" Problem solved">
+            <Label layoutX="46.0" text="Reclamtion">
                <font>
                   <Font name="DG Heaven" size="22.0" />
                </font>
@@ -35,7 +35,7 @@
       </Pane>
       <Pane fx:id="box3" layoutX="580.0" layoutY="395.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="110.0" prefWidth="200.0" style="-fx-background-color: FAEBD7; -fx-background-radius: 55;">
          <children>
-            <Label layoutX="17.0" layoutY="14.0" text="Total reservation">
+            <Label layoutX="53.0" layoutY="14.0" text="Reponse" textAlignment="CENTER">
                <font>
                   <Font name="DG Heaven" size="22.0" />
                </font>

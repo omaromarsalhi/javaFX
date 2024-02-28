@@ -60,7 +60,7 @@ public class window {
             // Call the method to pass the data
             controller.setData(reclamation);
 
-            controller.initialize(reclamation);
+            controller.setData(reclamation);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Popup Window");

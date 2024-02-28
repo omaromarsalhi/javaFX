@@ -6,15 +6,14 @@ public class Response {
     private int id;
     private Reclamation reclamation;
     private String description;
-    private String etatReponse;
 
-    public Response(int id, Reclamation reclamation, String description, String etatReponse) {
+    public Response(int id, Reclamation reclamation, String description) {
         this.id = id;
         this.reclamation = reclamation;
-
         this.description = description;
-        this.etatReponse = etatReponse;
     }
+
+    public Response() {}
 
     public int getId() {
         return id;
@@ -40,14 +39,6 @@ public class Response {
         this.description = description;
     }
 
-    public String getEtatReponse() {
-        return etatReponse;
-    }
-
-    public void setEtatReponse(String etatReponse) {
-        this.etatReponse = etatReponse;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -58,7 +49,7 @@ public class Response {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, reclamation, description, etatReponse);
+        return Objects.hash(id, reclamation, description);
     }
 
     @Override
@@ -67,7 +58,6 @@ public class Response {
                 "id=" + id +
                 ", reclamation=" + reclamation + '\'' +
                 ", description='" + description + '\'' +
-                ", etatReponse='" + etatReponse + '\'' +
                 '}';
     }
 }

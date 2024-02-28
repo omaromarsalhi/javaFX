@@ -27,7 +27,7 @@
             </ImageView>
          </children>
       </Pane>
-      <TextField fx:id="subject" layoutX="322.0" layoutY="280.0" prefHeight="25.0" prefWidth="478.0" promptText="subject" styleClass="recc" stylesheets="@../../styles/style.css" />
+      <TextField fx:id="subject" disable="true" layoutX="322.0" layoutY="280.0" prefHeight="25.0" prefWidth="478.0" promptText="subject" styleClass="recc" stylesheets="@../../styles/style.css" />
    </children>
 
 

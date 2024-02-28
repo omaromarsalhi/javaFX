@@ -73,7 +73,7 @@ public Reclamation() { }
         this.description = description;
     }
 
-    public int getIdReclamation(int idReclamation) {
+    public int getIdReclamation() {
         return this.idReclamation;
     }
 
