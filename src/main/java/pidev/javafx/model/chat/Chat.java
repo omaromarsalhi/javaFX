@@ -1,11 +1,13 @@
 package pidev.javafx.model.chat;
 
+import pidev.javafx.model.User.User;
+
 import java.sql.Timestamp;
 
 public class Chat {
     private int idChat;
-    private int idSender;
-    private int idReciver;
+    private User userSender;
+    private User userReciver;
     private String message;
     private boolean msgState;
     private Timestamp timestamp;
@@ -14,13 +16,12 @@ public class Chat {
     public Chat() {
     }
 
-    public Chat(int idChat, int idSender, int idReciver, String message, boolean msgState, Timestamp timestamp) {
+    public Chat(int idChat, User userSender, User userReciver, String message, boolean msgState) {
         this.idChat = idChat;
-        this.idSender = idSender;
-        this.idReciver = idReciver;
+        this.userSender = userSender;
+        this.userReciver = userReciver;
         this.message = message;
         this.msgState = msgState;
-        this.timestamp = timestamp;
     }
 
     public int getIdChat() {
@@ -31,20 +32,20 @@ public class Chat {
         this.idChat = idChat;
     }
 
-    public int getIdSender() {
-        return idSender;
+    public User getUserSender() {
+        return userSender;
     }
 
-    public void setIdSender(int idSender) {
-        this.idSender = idSender;
+    public void setUserSender(User userSender) {
+        this.userSender = userSender;
     }
 
-    public int getIdReciver() {
-        return idReciver;
+    public User getUserReciver() {
+        return userReciver;
     }
 
-    public void setIdReciver(int idReciver) {
-        this.idReciver = idReciver;
+    public void setUserReciver(User userReciver) {
+        this.userReciver = userReciver;
     }
 
     public String getMessage() {

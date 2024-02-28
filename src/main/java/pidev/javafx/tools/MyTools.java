@@ -8,6 +8,7 @@ import javafx.animation.ScaleTransition;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -202,21 +203,7 @@ public class MyTools {
             scaleTransition.setToX( 1 );
             scaleTransition.setToY( 1 );
             scaleTransition.play();
-            scaleTransition.play();
         } );
-    }
-
-
-    public Popup sendNotification(String text) {
-        Popup popup = new Popup();
-        Label popupContent = new Label(text);
-        popupContent.setStyle( "-fx-border-color: #fdc847; -fx-border-width: 1px; -fx-padding: 5px; -fx-text-fill: black;" +
-                "-fx-border-radius: 15;" +
-                "-fx-background-radius: 15;" );
-        popupContent.setAlignment( Pos.CENTER );
-        popupContent.setFont( Font.font( "System", FontWeight.MEDIUM, FontPosture.REGULAR, 16 ) );
-        popup.getContent().add( popupContent );
-        return popup;
     }
 
 

@@ -7,8 +7,6 @@ import pidev.javafx.controller.user.UserController;
 
 import java.io.*;
 import java.net.*;
-
-
 public class ChatClient {
 
     private static ChatClient instance;
@@ -25,6 +23,10 @@ public class ChatClient {
         return instance;
     }
 
+    public void isUserConnected(int userID){
+        writer.println("[o^^{[|{|>__"+userID);
+    }
+
 
     public boolean establishConnection() {
             try {
@@ -32,10 +34,10 @@ public class ChatClient {
                  reader = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
                  writer = new PrintWriter( socket.getOutputStream(), true );
 
-                 String username = UserController.getInstance().getCurrentUser().getFirstname();
+                 int userID = UserController.getInstance().getCurrentUser().getId();
                  String pwd = UserController.getInstance().getCurrentUser().getPassword();
 
-                 if (!ChatServer.authenticateClient( username, pwd )) {
+                 if (!ChatServer.authenticateClient( userID, pwd )) {
                      System.out.println( "not connected" );
                      try {
                          socket.close();
@@ -44,7 +46,8 @@ public class ChatClient {
                      }
                      return false;
                  }
-                 writer.println(username);
+                 writer.println(userID);
+
             } catch (IOException ex) {
                 throw new RuntimeException( ex );
             }
@@ -53,17 +56,23 @@ public class ChatClient {
 
 
 
-    public void reciveMessagesFromOtherUser(VBox chatContainer){
+    public void reciveMessagesFromOtherUser(VBox chatContainer,ResultHolder resultHolder){
         new Thread(() -> {
             try {
                 while (socket.isConnected()) {
                     String recivedMessage = reader.readLine();
-                    Platform.runLater( () -> {
-                        chatContainer.getChildren().add(ChatController.createTextChatBox(recivedMessage,true));
-                    } );
+                    if(recivedMessage.contains( "[o^^{[|{|>__" )){
+                        String[] parts = recivedMessage.split( "__", 2 );
+                        resultHolder.setResult(parts[1]);
+                    }
+                    else {
+                        Platform.runLater( () -> {
+                            chatContainer.getChildren().add( ChatController.createTextChatBox( recivedMessage, true ) );
+                        } );
+                    }
                 }
             } catch (IOException e) {
-                closeConnection();
+                System.out.println(e.getMessage());
             }
         }).start();
     }
@@ -72,7 +81,8 @@ public class ChatClient {
             writer.println(msg);
     }
 
-    public void closeConnection() {
+    public void closeConnection(int userID) {
+        writer.println("[|@><{__"+userID);
         try {
             if(socket!=null)
                 socket.close();

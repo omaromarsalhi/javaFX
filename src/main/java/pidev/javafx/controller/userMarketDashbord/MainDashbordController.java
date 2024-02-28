@@ -159,7 +159,6 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "add2Grid",this::add2Grid );
 
         loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
-
     }
 
 
@@ -236,17 +235,19 @@ public class MainDashbordController implements Initializable {
 
     private void openChatWindow() {
         Stage newStage = new Stage();
+        VBox vBox=null;
         FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "/fxml/chat/seperatedChat.fxml" ));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
+            vBox=fxmlLoader.load();
+            scene = new Scene(vBox, Color.TRANSPARENT);
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
         ChatController controller=fxmlLoader.getController();
         controller.initliazeData();
         controller.getExitBtn().setOnMouseClicked( event ->{
-            ChatClient.getInstance().closeConnection();
+            ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
             newStage.close();
         }  );
         controller.getContainer().setOnMousePressed(event -> {
@@ -283,6 +284,7 @@ public class MainDashbordController implements Initializable {
         newStage.setOnCloseRequest(event -> System.exit(0));
         newStage.initStyle( StageStyle.TRANSPARENT);
         newStage.setScene(scene);
+        MyTools.getInstance().showAnimation( vBox );
         newStage.show();
     }
 

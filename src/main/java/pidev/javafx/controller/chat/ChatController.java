@@ -22,9 +22,12 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.controller.user.UserController;
+import pidev.javafx.crud.marketplace.CrudChat;
 import pidev.javafx.model.User.User;
+import pidev.javafx.model.chat.Chat;
 import pidev.javafx.tools.ChatClient;
 import pidev.javafx.tools.ChatServer;
+import pidev.javafx.tools.ResultHolder;
 
 import java.io.*;
 import java.net.Socket;
@@ -106,6 +109,8 @@ public class ChatController implements Initializable {
     private String searchBarState;
     private Timer animTimer;
     private User reciver;
+    private ResultHolder resultHolder=new ResultHolder();
+    private boolean isConnected;
 
 
     @Override
@@ -123,17 +128,27 @@ public class ChatController implements Initializable {
         searchBtn.setStyle( "-fx-border-radius: 20;" +
                 "-fx-background-radius:20;" );
         searchBtn.setOnMouseClicked(event -> animateSearchBar());
-        ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer );
+        ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer,resultHolder);
     }
 
 
     @FXML
     public void onSendMsgBtnClicked(){
-        System.out.println(ChatServer.getClientsSize());
         if(chosenFiles==null) {
             amIAReciver=false;
-            ChatClient.getInstance().sendMessages( "@"+reciver.getFirstname()+"_"+messageTextField.getText() );
+            ChatClient.getInstance().isUserConnected(reciver.getId());
+            try {
+                isConnected=Boolean.parseBoolean(resultHolder.getResult());
+            } catch (InterruptedException e) {
+                throw new RuntimeException( e );
+            }
+            System.out.println(isConnected);
+            if(isConnected)
+                ChatClient.getInstance().sendMessages( "@" + reciver.getId() + "_" + messageTextField.getText() );
             chatContainer.getChildren().add( createTextChatBox( messageTextField.getText(), false ) );
+            CrudChat.getInstance().addItem( new Chat( 0, UserController.getInstance().getCurrentUser(), reciver, messageTextField.getText(),isConnected) );
+            resultHolder.setResult( "false" );
+
         }
         else {
             for (int i = 0; i < chosenFiles.size(); i++)
@@ -142,8 +157,6 @@ public class ChatController implements Initializable {
         }
         scroll.setVvalue( 1 );
         messageTextField.clear();
-
-
     }
 
 
@@ -155,7 +168,7 @@ public class ChatController implements Initializable {
         notif.setFont(Font.font( "System", FontWeight.BOLD, FontPosture.ITALIC,14 ));
         notif.setStyle( "-fx-font-size: 16;");
         notif.setAlignment( Pos.CENTER );
-        notif.setMinSize(24,24);
+        notif.setMinSize(28,24);
         notif.setStyle( "-fx-text-fill: red;" +
                 "-fx-border-radius: 50;" +
                 "-fx-background-radius: 50");
@@ -176,7 +189,7 @@ public class ChatController implements Initializable {
 
         hBox.hoverProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue)
-                hBox.setStyle( "-fx-background-color: #faf2dc;" +
+                hBox.setStyle( "-fx-background-color: #fdc847;" +
                         "-fx-background-radius: 10;"  );
             else
                 hBox.setStyle( "-fx-background-color: transparent" );
@@ -196,7 +209,7 @@ public class ChatController implements Initializable {
     public void setSelectedUserData(User user){
         this.reciver=user;
         userImage.setImage(new Image( "file:src/main/resources/"+user.getImagePath() ,46,46,true,true)) ;
-        userName.setText( user.getFirstname()+" "+user.getLastname() );
+        userName.setText( user.getFirstname().toUpperCase()+" "+user.getLastname().toUpperCase() );
         userName.setMinHeight( Region.USE_PREF_SIZE);
         connState.setImage(new Image( "file:src/main/resources/namedIcons/button.png" ,12,12,true,true));
     }

@@ -49,8 +49,6 @@ public class MarketController implements Initializable {
     @FXML
     private MenuBar menuBar;
     @FXML
-    private Menu filter;
-    @FXML
     private AnchorPane secondInterface;
 
     private VBox itemInfo;
@@ -58,9 +56,6 @@ public class MarketController implements Initializable {
     private VBox chatBox;
     private Timer animTimer;
     private Image image;
-    private MyListener myListener;
-    private MyListener MainWindowListener;
-    private Timeline fiveSecondsWonder;
     private String searchBarState;
     private int idProd4nextSelection;
     private String whoIsActiveNow;
@@ -72,7 +67,7 @@ public class MarketController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         secondInterface.setVisible( false );
-        fiveSecondsWonder=new Timeline();
+
         itemInfo=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
@@ -87,9 +82,7 @@ public class MarketController implements Initializable {
 
         whoIsActiveNow="hepfullBar";
 
-
         setMenueBar();
-
 
         searchBarState="closed";
         animTimer = new Timer();
@@ -154,7 +147,6 @@ public class MarketController implements Initializable {
             EventBus.getInstance().publish( "filter",event );
             whoIsActiveNow="hepfullBar";
         } );
-
     }
 
     public void animateSearchBar(){
@@ -226,17 +218,20 @@ public class MarketController implements Initializable {
         loadingAllProductsThread(customMouseEvent.getEventData()).start();
     }
 
+
     public void loadAndSetItemInfo(CustomMouseEvent<Product> customMouseEvent){
         EventBus.getInstance().publish( "setItemInfoData", customMouseEvent);
         mainHbox.setOpacity( 0.4 );
         secondInterface.setVisible( true );
         ((HBox)secondInterface.getChildren().get( 0 )).getChildren().add(itemInfo );
+//        MyTools.getInstance().showAnimation( itemInfo );
     }
 
+
     public void exitItemInfo(MouseEvent event){
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
         mainHbox.setOpacity( 1 );
         secondInterface.setVisible( false );
-        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
     }
 
 
@@ -321,6 +316,7 @@ public class MarketController implements Initializable {
 
         myTask.setOnSucceeded(e ->
             Platform.runLater( () -> {
+                Timeline fiveSecondsWonder=new Timeline();
                 myTask.getValue().getSecond().setData((Bien) prod);
                 myTask.getValue().getSecond().animateImages(fiveSecondsWonder,(Bien) prod);
                 getProduct(myTask.getValue().getFirst(),myTask.getValue().getSecond());
@@ -331,14 +327,11 @@ public class MarketController implements Initializable {
     }
 
 
-
-
-
     public void loadChat(MouseEvent event){
-        if(whoIsActiveNow.equals( "hepfullBar" ))
-            animateChanges(hepfullBar, chatBox );
-        else if (whoIsActiveNow.equals( "itemInfo" ))
-            animateChanges( itemInfo, chatBox );
+//        if(whoIsActiveNow.equals( "hepfullBar" ))
+//            animateChanges(hepfullBar, chatBox );
+//        else if (whoIsActiveNow.equals( "itemInfo" ))
+//            animateChanges( itemInfo, chatBox );
         whoIsActiveNow="chatBox";
     }
 
