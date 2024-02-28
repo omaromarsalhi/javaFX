@@ -202,6 +202,7 @@ public class MyTools {
             scaleTransition.setToX( 1 );
             scaleTransition.setToY( 1 );
             scaleTransition.play();
+            scaleTransition.play();
         } );
     }
 
