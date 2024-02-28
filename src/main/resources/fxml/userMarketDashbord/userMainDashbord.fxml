@@ -117,6 +117,14 @@
                                                       <Insets />
                                                    </opaqueInsets>
                                                 </Button>
+                                                <ImageView fx:id="searchInfoBtn" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../namedIcons/info16w.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
                                              </children>
                                           </HBox>
                                        </children>
@@ -129,7 +137,7 @@
                                     </HBox>
                                     <HBox prefHeight="120.0" prefWidth="763.0" spacing="10.0">
                                        <children>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #b8bdb5; -fx-background-radius: 20;">
                                              <children>
                                                 <VBox alignment="CENTER" layoutX="17.0" layoutY="7.0" prefHeight="86.0" prefWidth="143.0" AnchorPane.bottomAnchor="7.400000000000006" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="18.200000000000017" AnchorPane.topAnchor="7.0">
                                                    <padding>
@@ -150,7 +158,7 @@
                                                 </VBox>
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #b8bdb5; -fx-background-radius: 20;">
                                              <children>
                                                 <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
                                                    <padding>
@@ -171,7 +179,7 @@
                                                 </VBox>
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #b8bdb5; -fx-background-radius: 20;">
                                              <children>
                                                 <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
                                                    <padding>
@@ -192,7 +200,7 @@
                                                 </VBox>
                                              </children>
                                           </AnchorPane>
-                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #b8bdb5; -fx-background-radius: 20;">
                                              <children>
                                                 <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
                                                    <padding>
@@ -229,11 +237,73 @@
                   </VBox>
                   <HBox fx:id="ultraBigContainer">
                      <children>
-                        <VBox fx:id="bigContainer" alignment="CENTER" prefHeight="528.0" prefWidth="1018.0">
+                        <VBox fx:id="bigContainer" alignment="CENTER" prefHeight="528.0" prefWidth="1018.0" spacing="4.0">
                            <children>
-                              <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxWidth="1.7976931348623157E308" prefHeight="504.0" prefWidth="1004.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent;" vbarPolicy="NEVER">
+                              <StackPane>
+                                 <children>
+                                    <HBox fx:id="tableHead" alignment="CENTER" prefHeight="50.0" prefWidth="995.0" spacing="20.0" style="-fx-background-color: #5f7470; -fx-background-radius: 20; -fx-border-radius: 20;">
+                                       <children>
+                                          <Label fx:id="name1" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Image" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="name" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Prod Name" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="descreption" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Descreption" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="price" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Price" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="quantity" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Quantity" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="state" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="State" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="creationDate" alignment="CENTER" prefHeight="46.0" prefWidth="129.0" text="Creation Date" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="category" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="category" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="category1" alignment="CENTER" prefHeight="46.0" prefWidth="118.0" text="Actions" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="transactionsHead" alignment="CENTER" prefHeight="50.0" prefWidth="995.0" spacing="20.0" style="-fx-background-color: #5f7470; -fx-background-radius: 20; -fx-border-radius: 20;">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="46.0" prefWidth="594.0" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </StackPane>
+                              <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="438.0" prefWidth="1002.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent; -fx-background-color: transparent;" vbarPolicy="NEVER">
                                  <content>
-                                    <AnchorPane fx:id="showAllProdsInfo" prefHeight="490.0" prefWidth="995.0" />
+                                    <VBox fx:id="showAllProdsInfo" alignment="TOP_CENTER" prefHeight="434.0" prefWidth="998.0" spacing="5.0" />
                                  </content>
                               </ScrollPane>
                            </children>

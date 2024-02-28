@@ -40,6 +40,43 @@ public class CrudBien implements CrudInterface<Bien> {
         return instance;
     }
 
+
+
+    public ObservableList<Bien> searchItems(String culumn,String value) {
+
+        Bien bien = null;
+        String sql = "SELECT * FROM products where "+culumn+" like ? and isDeleted=false ";
+
+        connect = ConnectionDB.getInstance().getCnx();
+        ObservableList<Bien> BienList = FXCollections.observableArrayList();
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setString(  1, "%"+value+"%");
+            result = prepare.executeQuery();
+            while (result.next()) {
+                bien=new Bien(result.getInt("idProd"),
+                        result.getInt("idUser"),
+                        result.getString("name"),
+                        result.getString("descreption"),
+                        "",
+                        result.getFloat("price"),
+                        result.getFloat("quantity"),
+                        result.getBoolean("state"),
+                        result.getTimestamp("timestamp"),
+                        Categorie.valueOf(result.getString("category")));
+                bien.setAllImagesSources( selectImagesById(bien.getId()) );
+                bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                BienList.add(bien);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error selecting items: " + e.getMessage());
+        }
+
+        return BienList;
+    }
+
+
     public void addItem(Bien bien) {
         String sql = "INSERT INTO products "
                 + "(idUser, name, descreption,isDeleted, price, quantity, state, type, category)"
@@ -290,6 +327,38 @@ public class CrudBien implements CrudInterface<Bien> {
                         result.getBoolean("state"),
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    public Bien selectItemById(int id) {
+        String Sql = "SELECT * FROM products where idProd= ?";
+        connect = ConnectionDB.getInstance().getCnx();
+        try {
+            prepare = connect.prepareStatement(Sql);
+            prepare.setInt( 1,id );
+            result = prepare.executeQuery();
+
+            if (result.next()) {
+                Bien bien= new Bien(result.getInt("idProd"),
+                        result.getInt("idUser"),
+                        result.getString("name"),
+                        result.getString("descreption"),
+                        "",
+                        result.getFloat("price"),
+                        result.getFloat("quantity"),
+                        result.getBoolean("state"),
+                        result.getTimestamp("timestamp"),
+                        Categorie.valueOf(result.getString("category")));
+                bien.setAllImagesSources( selectImagesById(bien.getId()) );
+                bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                return bien;
             }
 
         } catch (SQLException e) {

@@ -23,13 +23,10 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.ChatGPTAPIDescriber;
-import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
+import pidev.javafx.tools.*;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Product;
-import pidev.javafx.tools.MyTools;
 
 import java.io.File;
 import java.net.URL;
@@ -385,13 +382,16 @@ public class FormController implements Initializable {
                     Boolean.TRUE,
                     Timestamp.valueOf( LocalDateTime.now() ),
                     Pcategory.getValue() );
-            if(isImageUpdated)
-                bien.setAllImagesSources( product.getAllImagesSources() );
-            else if(chosenFiles!=null) {
+//            if(isImageUpdated)
+//                bien.setAllImagesSources( product.getAllImagesSources() );
+            if(chosenFiles!=null) {
                 List<String> imagesList = new ArrayList<>();
                 for (File file : chosenFiles)
                     imagesList.add(MyTools.getInstance().getPathAndSaveIMG(file.getAbsolutePath()) );
                 bien.setAllImagesSources( imagesList );
+            }
+            else {
+                bien.setAllImagesSources( product.getAllImagesSources() );
             }
             if (usageOfThisForm.equals( "add_prod" )) {
                 CrudBien.getInstance().addItem( bien );
@@ -400,7 +400,7 @@ public class FormController implements Initializable {
                 CrudBien.getInstance().updateItem( bien );
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             }
-            Thread thread = sleepThread( event );
+            Thread thread = sleepThread(event);
             loadinPage.setVisible( true );
             thread.start();
         }
@@ -421,13 +421,13 @@ public class FormController implements Initializable {
         Task<Void> myTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                Thread.sleep(2500);
+                Thread.sleep(2000);
                 return null;
             }
         };
 
         myTask.setOnSucceeded(e -> {
-            EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
+            EventBus.getInstance().publish( "refreshProdContainer", event );
             EventBus.getInstance().publish( "onExitForm", event );
             loadinPage.setVisible( false );
         });
