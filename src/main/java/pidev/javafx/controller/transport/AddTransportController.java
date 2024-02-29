@@ -14,17 +14,16 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import pidev.javafx.crud.DataSource;
 import pidev.javafx.crud.marketplace.ConnectionDB;
 import pidev.javafx.crud.transport.ServicesTransport;
+import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Transport;
 import pidev.javafx.model.Transport.Type_Vehicule;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Time;
+import java.sql.*;
 import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -95,15 +94,15 @@ public  void intialiase_timer(){
 
 }
 
+    Connection cnx = DataSource.GetInstance().getCnx();
 
 
      public Set<String> Load_Locations(){
 
         String sql = "SELECT * FROM station";
-        connect =  ConnectionDB.connectDb();;
 
         try (
-                PreparedStatement preparedStatement = connect.prepareStatement(sql);
+                PreparedStatement preparedStatement = cnx.prepareStatement(sql);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
 
@@ -117,6 +116,11 @@ public  void intialiase_timer(){
             System.out.println(e.getMessage());
             return null;
         }
+
+
+
+
+
 
     }
 
@@ -148,7 +152,7 @@ public  void intialiase_timer(){
         else
             ReferenceText.setStyle("-fx-text-fill: #bb2020;");
 
-        if (text[2].matches("[0-9 -.]+"))
+        if (text[2].length() > 2 && text[2].matches("^\\d+(\\.\\d+)?$"))
             PrixText.setStyle("-fx-text-fill: #25c12c");
         else
             PrixText.setStyle("-fx-text-fill: #bb2020 ");
@@ -202,28 +206,29 @@ public  void intialiase_timer(){
                 String Reference = ReferenceText.getText();
                 Float Prix = Float.parseFloat(PrixText.getText());
                 Transport T = new Transport( Type,  DEPART, ARRIVEE, Reference, imagePath, Prix,time);
-                sp.addItem(T);
-            Pane successPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Transport/added_succesfully.fxml")));
 
-            // Set content
-            successPane.setPrefHeight(mainBorderPain.getMaxHeight());
-            successPane.setPrefWidth(mainBorderPain.getMinWidth());
-            mainBorderPain.setContent(successPane);
+                if(true == sp.addItem(T)) {
+                    Pane successPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Transport/added_succesfully.fxml")));
 
-            // Create PauseTransition for a 5-second delay
-            PauseTransition pause = new PauseTransition(Duration.seconds(2.33));
-            pause.setOnFinished(event -> {
-                // Load another FXML after 5 seconds
-                try {
-                    Return(event);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    // Set content
+                    successPane.setPrefHeight(mainBorderPain.getMaxHeight());
+                    successPane.setPrefWidth(mainBorderPain.getMinWidth());
+                    mainBorderPain.setContent(successPane);
+
+                    // Create PauseTransition for a 5-second delay
+                    PauseTransition pause = new PauseTransition(Duration.seconds(2.33));
+                    pause.setOnFinished(event -> {
+                        // Load another FXML after 5 seconds
+                        try {
+                            Return(event);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
+
+                    // Start the PauseTransition
+                    pause.play();
                 }
-            });
-
-            // Start the PauseTransition
-            pause.play();
-
               //  showDialog();
 
             return true;

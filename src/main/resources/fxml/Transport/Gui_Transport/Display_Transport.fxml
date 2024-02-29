@@ -61,15 +61,15 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <TableView fx:id="Transport_table" layoutX="17.0" layoutY="176.0" prefHeight="483.0" prefWidth="1012.0" styleClass="TableView">
+                  <TableView fx:id="Transport_table" layoutX="17.0" layoutY="176.0" prefHeight="470.0" prefWidth="995.0" styleClass="TableView">
                     <columns>
+                        <TableColumn fx:id="ImageCol" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Societe" />
                       <TableColumn fx:id="ReferenceCol" maxWidth="135.0" minWidth="125.0" prefWidth="135.0" resizable="false" text="Reference" />
                       <TableColumn fx:id="DepartCol" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Depart" />
                         <TableColumn fx:id="ArriveCol" maxWidth="125.0" minWidth="125.0" prefWidth="140.0" resizable="false" text="Arrivé" />
-                        <TableColumn fx:id="HeureCol" maxWidth="125.0" minWidth="125.0" prefWidth="135.0" resizable="false" text="Heure" />
-                        <TableColumn fx:id="PrixCol" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Prix" />
                         <TableColumn fx:id="TypeCol" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Type" />
-                        <TableColumn fx:id="ImageCol" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Image" />
+                        <TableColumn fx:id="PrixCol" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" resizable="false" text="Prix/dt" />
+                        <TableColumn fx:id="HeureCol" maxWidth="125.0" minWidth="125.0" prefWidth="135.0" resizable="false" text="Heure" />
                     </columns>
                   </TableView>
                </children>

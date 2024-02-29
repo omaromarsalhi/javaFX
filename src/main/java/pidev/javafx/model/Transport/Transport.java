@@ -8,14 +8,47 @@ import java.sql.SQLException;
 import java.sql.Time;
 
 public class Transport {
-private int idTransport;
-private String type_vehicule;
+    private int idTransport;
+    private String type_vehicule;
+    private String Vehicule_Image;
+    private Station station_depart;
+    private Float Prix;
+    private Station station_arrive;
+    private Time Heure;
+    private String Reference;
+
+    public Transport(int idTransport, String type_vehicule, Station station_depart, Station station_arrive, String reference, String vehicule_Image, Float prix, Time heure) {
+        this.idTransport = idTransport;
+        this.type_vehicule = type_vehicule;
+        this.station_depart = station_depart;
+        this.station_arrive = station_arrive;
+        Reference = reference;
+        Vehicule_Image = vehicule_Image;
+        Prix = prix;
+        Heure = heure;
+    }
 
     public String depart;
-    private Station depart_;
-    private Station arrive_;
+    public void setStation_depart(Station station_depart) {
+        this.station_depart = station_depart;
+    }
+    public Station getStation_depart() {
+        return station_depart;
+    }
+    public void setStation_arrive(Station station_arrive) {
+        this.station_arrive = station_arrive;
+    }
+
+
+
+
+    public Station getStation_arrive() {
+        return station_arrive;
+    }
+
+
     public   String arivee;
-    private String Reference;
+
     @Override
     public String toString() {
         return "Transport{" +
@@ -30,11 +63,7 @@ private String type_vehicule;
                 '}';
     }
 
-    private String Vehicule_Image;
 
-private Float Prix;
-
-private Time Heure;
 
     public Transport() {
     }

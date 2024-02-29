@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import pidev.javafx.crud.DataSource;
 import pidev.javafx.crud.marketplace.ConnectionDB;
 import pidev.javafx.crud.transport.ServicesTransport;
 import pidev.javafx.model.Transport.Transport;
@@ -63,6 +64,7 @@ public class UpdateTransport implements Initializable {
     String imagePath=loadedTransport.getVehicule_Image();
     private PreparedStatement prepare;
     ServicesTransport st=new ServicesTransport();
+    Connection cnx = DataSource.GetInstance().getCnx();
 
     public static void setData(Transport transportData) {
         loadedTransport = transportData;
@@ -80,6 +82,9 @@ public class UpdateTransport implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Load_Arrivee();
+        Load_Depart();
+        Load_types();
         Pane.setPrefHeight(mainBorderPain.getPrefHeight());
         Pane.setPrefWidth(mainBorderPain.getPrefWidth());
 
@@ -124,7 +129,7 @@ public class UpdateTransport implements Initializable {
         else
             ReferenceText.setStyle("-fx-text-fill: #bb2020;");
 
-        if (text[2].matches("[0-9-.]+"))
+        if (text[2].length() > 2 && text[2].matches("^\\d+(\\.\\d+)?$"))
             PrixText.setStyle("-fx-text-fill: #25c12c");
         else
             PrixText.setStyle("-fx-text-fill: #bb2020 ");
@@ -133,28 +138,24 @@ public class UpdateTransport implements Initializable {
 
     public Set<String> Load_Locations(){
 
-        String sql = "SELECT * FROM stations";
-        connect =      ConnectionDB.connectDb();
-
+        String sql = "SELECT * FROM station";
 
         try (
-                PreparedStatement preparedStatement = connect.prepareStatement(sql);
+                PreparedStatement preparedStatement = cnx.prepareStatement(sql);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
 
                 String name = resultSet.getString("NomStation");
                 resultSetItems.add(name);
-                System.out.println(name);
 
             }
+            System.out.println(resultSetItems);
             return resultSetItems;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
-        }
-
-    }
+        }}
 
     @FXML
     protected  void     Load_Depart(){

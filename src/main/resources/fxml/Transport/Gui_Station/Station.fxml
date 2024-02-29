@@ -20,16 +20,16 @@
 
 <AnchorPane fx:id="mainBorderPain" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" styleClass="anchor-pane" stylesheets="@../../../style/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.StationController">
    <children>
-      <Pane fx:id="UpdatePane" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: gray;" styleClass="pane" visible="false">
+      <Pane fx:id="UpdatePane" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: gray;" styleClass="pane">
          <children>
             <Pane fx:id="updateBox" layoutX="212.0" layoutY="110.0" prefHeight="452.0" prefWidth="634.0" style="-fx-background-color: C8C8C8; -fx-border-color: 000000; -fx-border-radius: 10px; -fx-background-radius: 10px;">
                <children>
-                  <TextField fx:id="NomStationText" layoutX="46.0" layoutY="234.0" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" prefHeight="39.0" prefWidth="272.0" promptText="Entrer la reference" styleClass="SearchBar">
+                  <TextField fx:id="NomStationText" editable="false" layoutX="46.0" layoutY="234.0" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" prefHeight="39.0" prefWidth="272.0" promptText="Entrer la reference" styleClass="SearchBar">
                      <font>
                         <Font name="Souliyo Unicode" size="15.0" />
                      </font>
                   </TextField>
-                  <Button layoutX="390.0" layoutY="388.0" minWidth="-Infinity" mnemonicParsing="false" prefHeight="39.0" prefWidth="171.0" styleClass="Button_ajouter" text="Update" textFill="WHITE">
+                  <Button layoutX="390.0" layoutY="388.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#update_action" prefHeight="39.0" prefWidth="171.0" styleClass="Button_ajouter" text="Update" textFill="WHITE">
                      <font>
                         <Font name="Souliyo Unicode" size="20.0" />
                      </font>
@@ -60,7 +60,7 @@
                         <Font name="Souliyo Unicode" size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="Ajouter_imageBtn" layoutX="385.0" layoutY="113.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
+                  <Button fx:id="Ajouter_imageBtn" layoutX="385.0" layoutY="113.0" mnemonicParsing="false" onAction="#insert_Image" prefHeight="41.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
                      <font>
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>
@@ -127,18 +127,18 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ListView fx:id="StationListView" layoutX="50.0" layoutY="193.0" onMouseClicked="#onListViewClicked" prefHeight="452.0" prefWidth="313.0" style="-fx-background-color: C8transparentC8C8; -fx-border-radius: 10px; -fx-background-radius: 10px;" stylesheets="@../../../style/Station.css" />
+            <ListView fx:id="StationListView" layoutX="46.0" layoutY="204.0" onMouseClicked="#onListViewClicked" prefHeight="452.0" prefWidth="313.0" style="-fx-background-color: C8transparentC8C8; -fx-border-radius: 10px; -fx-background-radius: 10px;" stylesheets="@../../../style/Station.css" />
             <HBox layoutX="231.0" layoutY="343.0" />
-            <Pane layoutX="369.0" layoutY="194.0" prefHeight="452.0" prefWidth="634.0" style="-fx-background-color: C8C8C8; -fx-border-color: 000000; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+            <Pane layoutX="379.0" layoutY="204.0" prefHeight="452.0" prefWidth="634.0" style="-fx-background-color: C8C8C8; -fx-border-color: 000000; -fx-border-radius: 10px; -fx-background-radius: 10px;">
                <children>
                   <VBox layoutX="33.0" layoutY="10.0">
                      <children>
-                        <Label text="Station : ">
+                        <Label text="Stats des stations :">
                            <font>
                               <Font name="Souliyo Unicode" size="28.0" />
                            </font>
                         </Label>
-                        <Label text="Slimane Kahia">
+                        <Label text="Chart">
                            <font>
                               <Font name="Souliyo Unicode" size="20.0" />
                            </font>
@@ -207,11 +207,11 @@
                         </Button>
                      </children>
                   </HBox>
-                  <Pane layoutX="420.0" layoutY="7.0" prefHeight="112.0" prefWidth="164.0" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-radius: 10px;">
+                  <Pane layoutX="498.0" layoutY="14.0" prefHeight="87.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-radius: 10px;">
                      <children>
-                        <ImageView fitHeight="106.0" fitWidth="161.0" layoutX="2.0" layoutY="3.0" pickOnBounds="true">
+                        <ImageView fitHeight="76.0" fitWidth="90.0" layoutX="17.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../img_transport/Gare_de_Tunis.jpg" />
+                              <Image url="@../../../citizenHub/rrrtt.png" />
                            </image>
                         </ImageView>
                      </children>

@@ -39,7 +39,7 @@ public class CrudBien implements CrudInterface<Bien> {
         return instance;
     }
 
-    public void addItem(Bien bien) {
+    public boolean addItem(Bien bien) {
         String sql = "INSERT INTO products "
                 + "(idUser, name, descreption,isDeleted, price, quantity, state, type, category)"
                 + " VALUES (?, ?, ?, ?, ?, ? ,? , ?, ?)";
@@ -63,6 +63,7 @@ public class CrudBien implements CrudInterface<Bien> {
         } catch (SQLException e) {
             System.out.println("Error adding item: " + e.getMessage());
         }
+        return false;
     }
 
     public void addItemImages(List<String> imageList,int id) {

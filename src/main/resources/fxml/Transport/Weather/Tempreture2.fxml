@@ -11,14 +11,19 @@
    <children>
       <AnchorPane prefHeight="99.0" prefWidth="331.0" style="-fx-background-color: transparent;">
          <children>
-            <ImageView fitHeight="72.0" fitWidth="80.0" layoutX="35.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="72.0" fitWidth="80.0" layoutX="147.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../img_transport/812-wind.gif" />
                </image>
             </ImageView>
-            <Label fx:id="windLabel" layoutX="166.0" layoutY="18.0" text="25.7 km/h" textFill="#70affa">
+            <Label fx:id="windLabel" layoutX="226.0" layoutY="19.0" text="25.7 km/h" textFill="#70affa">
                <font>
-                  <Font name="beIN Black " size="25.0" />
+                  <Font name="Souliyo Unicode" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="windLabel1" layoutX="14.0" layoutY="21.0" text="wind_speed :" textFill="#494949">
+               <font>
+                  <Font name="Souliyo Unicode" size="23.0" />
                </font>
             </Label>
          </children>

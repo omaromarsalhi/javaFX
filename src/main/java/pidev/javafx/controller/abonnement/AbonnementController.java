@@ -34,7 +34,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
+import okhttp3.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 public class AbonnementController implements Initializable {
 
     private Connection connect;
@@ -75,7 +83,8 @@ public class AbonnementController implements Initializable {
     private ImageView imageAbonne;
     @FXML
     private ImageView imageAbn;
-
+    private static final String API_KEY = "acc_94dd4f1769c190a";
+    private static final String API_SECRET = "5a56d117d922cf4da9488e1349dd7c09";
 
 
        int i;
@@ -105,6 +114,7 @@ String imagePath;
     private Pane displayAbonnement;
     @FXML
    private Pane form;
+    Map<String, Double> tagMap = new HashMap<>();
 
     @FXML
     public void afficher() {
@@ -119,10 +129,14 @@ String imagePath;
         fileChooser.setTitle("Choose a File");
         var selectedFile = fileChooser.showOpenDialog(primaryStage);
         if (selectedFile != null) {
-            imagePath=selectedFile.getAbsolutePath() ;
-            Image image=new Image(imagePath);
-            imageAbn.setImage(image);
-
+           Map result= image_api(imagePath);
+            if(!result.isEmpty()&&result.containsKey("man")) {
+                System.out.println("yes");
+                imagePath = selectedFile.getAbsolutePath();
+                Image image = new Image(imagePath);
+                imageAbn.setImage(image);
+            }
+            else System.out.println("image should be of a humain being and in portrait mode");
         }
     }
     public void add_load(){
@@ -364,9 +378,61 @@ public void unexpand() {
 
     }
 
+public Map<String, Double> image_api(String s){
+    String imagePath = s; // Replace with your local image path
+
+    OkHttpClient client = new OkHttpClient();
+    Request request = buildRequest(imagePath);
+
+    try (Response response = client.newCall(request).execute()) {
+        String responseBody = response.body().string();
+        JsonObject json = JsonParser.parseString(responseBody).getAsJsonObject();
 
 
+        // Extract tags and confidence from the JSON response
+        JsonArray tagsArray = json.getAsJsonObject("result").getAsJsonArray("tags");
 
+        // Create Map to store the first 5 tags and their confidence
+
+        tagMap.clear();
+        for (int i = 0; i < Math.min(tagsArray.size(), 5); i++) {
+            JsonObject tagObject = tagsArray.get(i).getAsJsonObject();
+            String tag = tagObject.getAsJsonObject("tag").get("en").getAsString();
+            double confidence = tagObject.get("confidence").getAsDouble();
+            tagMap.put(tag, confidence);
+        }
+
+        // Print the contents of the map
+        tagMap.forEach((tag, confidence) -> System.out.println("Tag: " + tag + ", Confidence: " + confidence));
+        System.out.println(tagMap.toString());
+        return tagMap;
+
+    } catch (IOException e) {
+        e.printStackTrace();
+        return null;
+    }
+
+}
+
+    private static Request buildRequest(String imagePath) {
+        File imageFile = new File(imagePath);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", imageFile.getName(),
+                        RequestBody.create(MediaType.parse("image/*"), imageFile))
+                .build();
+
+        return new Request.Builder()
+                .url("https://api.imagga.com/v2/tags")
+                .header("Authorization", "Basic " + getBasicAuth())
+                .post(requestBody)
+                .build();
+    }
+
+    private static String getBasicAuth() {
+        String credentials = API_KEY + ":" + API_SECRET;
+        return java.util.Base64.getEncoder().encodeToString(credentials.getBytes());
+    }
 
 
 }

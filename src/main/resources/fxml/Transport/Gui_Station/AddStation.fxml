@@ -96,7 +96,7 @@
                         <Image url="@../../../img/rrrtt.png" />
                      </image>
                   </ImageView>
-                  <Button fx:id="Ajouter_imageBtn" layoutX="692.0" layoutY="179.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="251.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
+                  <Button fx:id="Ajouter_imageBtn" layoutX="692.0" layoutY="179.0" mnemonicParsing="false" onAction="#insert_Image" prefHeight="57.0" prefWidth="251.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
                      <font>
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>

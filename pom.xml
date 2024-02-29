@@ -10,6 +10,7 @@
   <name>javaFX</name>
 
   <properties>
+    <okhttp.version>4.9.3</okhttp.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <junit.version>5.10.0</junit.version>  </properties>
 
@@ -74,6 +75,21 @@
       <groupId>com.vaadin.external.google</groupId>
       <artifactId>android-json</artifactId>
       <version>0.0.20131108.vaadin1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>${gson.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.10</version>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>${okhttp.version}</version>
     </dependency>
   </dependencies>
 

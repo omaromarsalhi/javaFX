@@ -7,8 +7,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
@@ -56,13 +61,30 @@ public class AddStationController implements Initializable {
     String  Address;
 
     private static final String OPENCAGE_API_KEY = "53ee85fa919942ebb5df4021833590b4";
+    private Stage primaryStage;
 
-public void load_adress(){
+    public void load_adress(){
 
    geocodeAddress(NomStationText.getText());
 
 }
+    @FXML
+    private ImageView Image;
 
+String imagePath;
+    public void insert_Image(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose a File");
+        var selectedFile = fileChooser.showOpenDialog(primaryStage);
+        if (selectedFile != null) {
+            imagePath=selectedFile.getAbsolutePath() ;
+
+            Image image = new Image(imagePath);
+            Image.setFitHeight(114);
+            Image.setFitWidth(114);
+            Image.setImage(image);
+        }
+    }
     private void geocodeAddress(String address) {
         try {
             String encodedAddress = URLEncoder.encode(address, "UTF-8");
@@ -153,7 +175,7 @@ public void load_adress(){
         String nomStation = NomStationText.getText();
         String address = AdressText.getText();  // Replace with the actual address or get it from a control
 
-        Station st = new Station(nomStation, address, BoxTypeVehicule.getValue().toString());
+        Station st = new Station(nomStation,imagePath,address,  BoxTypeVehicule.getValue().toString());
         ss.addItem(st);
 
         Pane successPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Transport/added_succesfully.fxml")));

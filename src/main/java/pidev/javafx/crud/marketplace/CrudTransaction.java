@@ -27,7 +27,7 @@ public class CrudTransaction implements CrudInterface<Transaction> {
     }
 
     @Override
-    public void addItem(Transaction transaction) {
+    public boolean addItem(Transaction transaction) {
         String sql = "INSERT INTO transactions (idProd,idContract, idSeller, idBuyer,pricePerUnit,quantity, transactionMode) " +
                 "VALUES (?, ?, ?, ? ,? ,?,?)";
 
@@ -47,6 +47,7 @@ public class CrudTransaction implements CrudInterface<Transaction> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override

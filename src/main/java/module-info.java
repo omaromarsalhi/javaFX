@@ -8,6 +8,8 @@ module pidev.javafx{
     requires itextpdf;
     requires android.json;
     requires java.net.http;
+    requires com.google.gson;
+    requires okhttp3;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

@@ -83,10 +83,9 @@ public class abonnementAdminController implements Initializable {
                 if (!selectedItem_1.equals(selectedItem)) {
                     selectedItem = selectedItem_1;
 
-                    //stats();
+
                 }
             }
-            else System.out.println(11+i);
 
     }
     public void afficher() {

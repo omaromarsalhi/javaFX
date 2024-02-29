@@ -3,64 +3,91 @@ package pidev.javafx.model.Transport;
 import java.util.Objects;
 
 public class Station {
-
-    String NomStation;
-    String AddressStation;
-    String Type_Vehicule;
+    String nomStation;
+    String image_station;
+    String addressStation;
+    String type_Vehicule;
     int idStation;
+
+
+    public Station(String nomStation, String image_station, String addressStation, String type_Vehicule, int idStation) {
+        this.nomStation = nomStation;
+        this.image_station = image_station;
+        this.addressStation = addressStation;
+        this.type_Vehicule = type_Vehicule;
+        this.idStation = idStation;
+    }
+
+
+    public Station(String nomStation, String image_station, String addressStation, String type_Vehicule) {
+        this.nomStation = nomStation;
+        this.image_station = image_station;
+        this.addressStation = addressStation;
+        this.type_Vehicule = type_Vehicule;
+    }
+
+    public String getImage_station() {
+        return image_station;
+    }
+
+    public void setImage_station(String image_station) {
+        this.image_station = image_station;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Station station = (Station) o;
-        return idStation == station.idStation && Objects.equals(NomStation, station.NomStation) && Objects.equals(AddressStation, station.AddressStation) && Objects.equals(Type_Vehicule, station.Type_Vehicule);
+        return idStation == station.idStation && Objects.equals(nomStation, station.nomStation) && Objects.equals(addressStation, station.addressStation) && Objects.equals(type_Vehicule, station.type_Vehicule);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(NomStation, AddressStation, Type_Vehicule, idStation);
+        return Objects.hash(nomStation, addressStation, type_Vehicule, idStation);
     }
 
     @Override
     public String toString() {
         return "Station{" +
-                "NomStation='" + NomStation + '\'' +
-                ", AddressStation='" + AddressStation + '\'' +
-                ", Type_Vehicule='" + Type_Vehicule + '\'' +
+                "NomStation='" + nomStation + '\'' +
+                ", AddressStation='" + addressStation + '\'' +
+                ", Type_Vehicule='" + type_Vehicule + '\'' +
                 ", idStation=" + idStation +
                 '}';
     }
 
     public String getNomStation() {
-        return NomStation;
+        return nomStation;
     }
 
     public void setNomStation(String nomStation) {
-        NomStation = nomStation;
+        this.nomStation = nomStation;
     }
 
     public String getAddressStation() {
-        return AddressStation;
+        return addressStation;
     }
 
     public void setAddressStation(String addressStation) {
-        AddressStation = addressStation;
+        this.addressStation = addressStation;
     }
 public Station(){}
     public Station(String nomStation, String addressStation, String type_Vehicule) {
-        NomStation = nomStation;
-        AddressStation = addressStation;
-        Type_Vehicule = type_Vehicule;
+        this.nomStation = nomStation;
+        this.addressStation = addressStation;
+        this.type_Vehicule = type_Vehicule;
 
     }
 
     public String getType_Vehicule() {
-        return Type_Vehicule;
+        return type_Vehicule;
     }
 
     public void setType_Vehicule(String type_Vehicule) {
-        Type_Vehicule = type_Vehicule;
+        this.type_Vehicule = type_Vehicule;
     }
 
     public int getIdStation() {

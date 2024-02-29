@@ -22,7 +22,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
 
     @Override
-    public void addItem(Abonnement a) {
+    public boolean addItem(Abonnement a) {
 
         LocalDate futureDate;
         LocalDate currentDate = LocalDate.now();
@@ -53,6 +53,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
     @Override
     public Abonnement findById(int id) {

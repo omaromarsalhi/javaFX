@@ -2,6 +2,7 @@ package pidev.javafx.crud.transport;
 
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.Transport.Station;
 
@@ -14,28 +15,68 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
+import java.sql.SQLIntegrityConstraintViolationException;
+
 
 public class ServicesStation implements CrudInterface<Station> {
     Connection cnx = DataSource.GetInstance().getCnx();;
     private PreparedStatement prepare;
 
     @Override
-    public void addItem(Station S) {
-        String sql = "INSERT INTO station (NomStation,AddressStation,Type_Vehicule ) VALUES (?,?,?) ";
+    public boolean addItem(Station S) {
+        String sql = "INSERT INTO station (NomStation,AddressStation,Type_Vehicule,Image_Station) VALUES (?,?,?,?) ";
         try {
             prepare = cnx.prepareStatement(sql);
             prepare.setString(1,S.getNomStation());
             prepare.setString(2,S.getAddressStation());
             prepare.setString(3, S.getType_Vehicule());
+            prepare.setString(4,S.getImage_station());
 
             prepare.executeUpdate();
-    } catch (SQLException e) {
+    }
+        catch (SQLIntegrityConstraintViolationException e) {
+            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Erreur d'insertion");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+        catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return false;
     }
     @Override
     public void updateItem(Station o) {
+        String sql = "UPDATE `station` " +
+                "SET  `NomStation`=?,`AddressStation`=?" +
+                ",`Type_Vehicule`=?,`Image_Station`=? " +
+                "WHERE idStation=?";
 
+
+        try {
+            prepare = cnx.prepareStatement(sql);
+            prepare.setString(1,o.getNomStation());
+            prepare.setString(2, o.getAddressStation());
+            prepare.setString(3,o.getType_Vehicule() );
+            prepare.setString(4, o.getImage_station());
+            prepare.setInt(5,o.getIdStation());
+
+            prepare.executeUpdate();
+            System.out.println("oui");
+
+
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+
+            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Erreur d'insertion");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Error inserting data.");
+        }
     }
 
     @Override
@@ -80,6 +121,7 @@ return new Station();
                 abs.setAddressStation(resultSet.getString("AddressStation"));
                 abs.setNomStation(resultSet.getString("NomStation"));
                 abs.setType_Vehicule(resultSet.getString("Type_Vehicule"));
+                abs.setImage_station(resultSet.getString("Image_Station"));
                 abs.setIdStation(resultSet.getInt("idStation"));
                 abonnementList.add(abs);
 

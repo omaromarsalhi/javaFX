@@ -253,13 +253,18 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
+import pidev.javafx.model.Transport.Type_Vehicule;
 
 import java.io.IOException;
 import java.io.PipedReader;
@@ -284,6 +289,7 @@ public class StationController implements Initializable {
     private Connection connect;
     private Statement statement;
     private PreparedStatement prepare;
+    private Stage primaryStage;
 
     @FXML
     private ListView<Station> StationListView;
@@ -297,15 +303,16 @@ public class StationController implements Initializable {
     @FXML
     private Pane UpdateBox;
 
+
     @FXML
     protected void onTextChanged() {
         String[] name = new String[10];
         StationListView.setVisible(false);
-        name[1] = Referance_text.getText();
+        name[1] = NomStationText.getText();
         if (name[1].matches("[a-zA-Z]+"))
-            Referance_text.setStyle("-fx-control-inner-background: #25c12c;");
+            NomStationText.setStyle("-fx-control-inner-background: #25c12c;");
         else
-            Referance_text.setStyle("-fx-control-inner-background: #bb2020;");
+            NomStationText.setStyle("-fx-control-inner-background: #bb2020;");
     }
     @FXML
     private BarChart<String, Number> series1;
@@ -334,12 +341,6 @@ public class StationController implements Initializable {
     @FXML
     public void unexpand() {
 
-
-
-
-
-
-
         BoxBlur blur = new BoxBlur();
         blur.setWidth(10);
         blur.setHeight(10);
@@ -348,8 +349,6 @@ public class StationController implements Initializable {
         displayTransport.setEffect(null);
         UpdatePane.toBack();
         displayTransport.setOpacity(1);
-
-
 
     }
 
@@ -394,6 +393,15 @@ public class StationController implements Initializable {
 @FXML
     private Pane displayTransport;
 
+    @FXML
+    private TextField AdressText;
+    @FXML
+    private  TextField NomStationText;
+    @FXML
+    private ComboBox BoxTypeVehicule;
+    @FXML
+    private ImageView Image;
+    String image_path;
     public void load_update(){
 
         BoxBlur blur = new BoxBlur();
@@ -404,7 +412,38 @@ public class StationController implements Initializable {
         UpdatePane.setVisible(true);
         UpdatePane.toFront();
         UpdatePane.setOpacity(0.85);
-        UpdateBox.setOpacity(1);
+        NomStationText.setText(selectedItem.getNomStation());
+        AdressText.setText(selectedItem.getAddressStation());
+        BoxTypeVehicule.setValue(selectedItem.getType_Vehicule());
+        image_path=selectedItem.getImage_station();
+        Image.setImage(new Image(image_path));
+    }
+    public void insert_Image(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose a File");
+        var selectedFile = fileChooser.showOpenDialog(primaryStage);
+        if (selectedFile != null) {
+            image_path=selectedFile.getAbsolutePath() ;
+
+            Image image = new Image(image_path);
+            Image.setFitHeight(114);
+            Image.setFitWidth(114);
+            Image.setImage(image);
+        }
+    }
+    @FXML
+    protected  void Load_types() {
+
+        String a;
+        if(BoxTypeVehicule.getValue()==null)
+            BoxTypeVehicule.getItems().addAll(Type_Vehicule.values());
+    }
+    public void update_action(){
+        Station updated_s=new Station(NomStationText.getText(),image_path,AdressText.getText(),BoxTypeVehicule.getValue().toString(),selectedItem.getIdStation());
+        System.out.println(updated_s);
+        ss.updateItem(updated_s);
+        afficher();
+        unexpand();
     }
     Station selectedItem = new Station();
     Station selectedItem_1 = new Station();
@@ -415,6 +454,7 @@ public class StationController implements Initializable {
                 selectedItem_1 = StationListView.getSelectionModel().getSelectedItem();
                 if (!selectedItem_1.equals(selectedItem)) {
                     selectedItem = selectedItem_1;
+                    System.out.println(selectedItem);
                     stats();
                 }
             }
@@ -456,6 +496,7 @@ public class StationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         afficher();
+        Load_types();
     }
 }
 

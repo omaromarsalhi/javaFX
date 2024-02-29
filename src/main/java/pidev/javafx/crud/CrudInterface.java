@@ -1,13 +1,12 @@
 package pidev.javafx.crud;
 
 import javafx.collections.ObservableList;
-import pidev.javafx.model.Transport.Abonnement;
 
 import java.util.Set;
 
 public interface CrudInterface<T> {
 
-    void addItem(T variable);
+    boolean addItem(T variable);
 
     void updateItem(T variable);
 

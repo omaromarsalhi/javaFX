@@ -2,6 +2,7 @@ package pidev.javafx.crud.transport;
 
 
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.crud.DataSource;
 import pidev.javafx.model.Transport.Transport;
@@ -10,6 +11,7 @@ import pidev.javafx.model.Transport.Transport;
 import java.sql.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 
 public class ServicesTransport implements CrudInterface<Transport> {
@@ -19,7 +21,7 @@ public class ServicesTransport implements CrudInterface<Transport> {
     private Set abonnementList;
 
 
-    public void addItem(Transport transport) {
+    public boolean addItem(Transport transport) {
 
         String sql = "INSERT INTO transport(Type_Vehicule,Depart,Arivee,Reference,Vehicule_Image,Prix,Heure) VALUES (?,?,?,?,?,?,?) ";
 
@@ -34,8 +36,19 @@ public class ServicesTransport implements CrudInterface<Transport> {
             prepare.setTime(7, transport.getHeure());
             prepare.executeUpdate();
             System.out.println("Personne added !");
-        } catch (SQLException e) {
+
+            return true;
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Reference duplicated");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+return false;
+        }
+        catch (SQLException e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
@@ -58,10 +71,21 @@ public class ServicesTransport implements CrudInterface<Transport> {
             prepare.executeUpdate();
 
 
-        } catch (SQLException e) {
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+
+            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Reference duplicated");
+            alert.setContentText(e.getMessage());
+            alert.showAndWait();
+
+        }
+        catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Error inserting data.");
+
         }
+
     }
 
     @Override

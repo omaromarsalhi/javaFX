@@ -29,7 +29,7 @@ public class CrudContract implements CrudInterface<Contract> {
     }
 
     @Override
-    public void addItem(Contract contract) {
+    public boolean addItem(Contract contract) {
         String sql = "INSERT INTO contracts (title, terminationDate, purpose, termsAndConditions, paymentMethod,recivingLocation) " +
                 "VALUES (?, ?, ?, ?, ? ,?)";
 
@@ -48,6 +48,7 @@ public class CrudContract implements CrudInterface<Contract> {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     @Override
