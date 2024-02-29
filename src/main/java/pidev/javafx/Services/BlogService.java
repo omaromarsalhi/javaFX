@@ -1,6 +1,7 @@
 package pidev.javafx.Services;
 
 
+import javafx.geometry.Pos;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Utils.DataSource;
@@ -13,15 +14,13 @@ public class BlogService implements IService<Post> {
     Connection cnx = DataSource.getInstance().getCnx();
     @Override
     public void ajouter(Post post) {
-        String req = "INSERT INTO `post`(`date_post`, `caption`, `image`, `compte`, `nbReactions`, `nbComments`) VALUES (?,?,?,?,?,?)";
+        String req = "INSERT INTO `post`(`date_post`, `caption`, `compte`, `nbReactions`) VALUES (?,?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setObject(1, post.getDate());
             ps.setString(2,post.getCaption());
-            ps.setString(3,post.getImage());
-            ps.setInt(4, post.getIdCompte());
-            ps.setInt(5,post.getTotalReactions());
-            ps.setInt(6,post.getNbComments());
+            ps.setInt(3, post.getIdCompte());
+            ps.setInt(4,post.getTotalReactions());
             ps.executeUpdate();
             System.out.println("Post added !");
         } catch (SQLException e) {
@@ -31,13 +30,12 @@ public class BlogService implements IService<Post> {
 
     @Override
     public void modifier(Post post) {
-        String req = "UPDATE `post` SET `date_post`=?, `caption`=?, `image`=? WHERE id=?";
+        String req = "UPDATE `post` SET `date_post`=?, `caption`=? WHERE id=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setObject(1, post.getDate());
             ps.setString(2, post.getCaption());
-            ps.setString(3, post.getImage());
-            ps.setInt(4, post.getId());
+            ps.setInt(3, post.getId());
             ps.executeUpdate();
             System.out.println("Post updated !");
         } catch (SQLException e) {
@@ -68,11 +66,11 @@ public class BlogService implements IService<Post> {
             if (res.next()) {
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
-                String img = res.getString(4);
-                int idCompte = res.getInt(5);
-                int nbReactions = res.getInt(6);
-                int nbComments = res.getInt(7);
-                return new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                int idCompte = res.getInt(4);
+                int nbReactions = res.getInt(5);
+                Post p = new Post(id, timestamp, caption, idCompte, nbReactions);
+                p.setImages(getImages(id));
+                return p;
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -91,11 +89,10 @@ public class BlogService implements IService<Post> {
                 int id = res.getInt(1);
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
-                String img = res.getString(4);
-                int idCompte = res.getInt(5);
-                int nbReactions = res.getInt(6);
-                int nbComments = res.getInt(7);
-                Post p = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                int idCompte = res.getInt(4);
+                int nbReactions = res.getInt(5);
+                Post p = new Post(id, timestamp, caption, idCompte, nbReactions);
+                p.setImages(getImages(id));
                 posts.add(p);
             }
         } catch (SQLException e) {
@@ -130,12 +127,11 @@ public class BlogService implements IService<Post> {
                 int id = res.getInt(1);
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
-                String img = res.getString(4);
-                int idCompte = res.getInt(5);
-                int nbReactions = res.getInt(6);
-                int nbComments = res.getInt(7);
-                Post post = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
-                resultat.add(post);
+                int idCompte = res.getInt(4);
+                int nbReactions = res.getInt(5);
+                Post p = new Post(id, timestamp, caption, idCompte, nbReactions);
+                p.setImages(getImages(id));
+                resultat.add(p);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -163,12 +159,13 @@ public class BlogService implements IService<Post> {
         return null;
     }
 
-    public void modifierNombreReactions(int idPost, int nouveauNbReactions) {
-        String req = "UPDATE `post` SET `nbReactions`=? WHERE id=?";
+    public void modifierNombreReactions(int idPost, int nouveauNbReactions, Timestamp date) {
+        String req = "UPDATE `post` SET `date_post`=?, `nbReactions`=? WHERE id=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setInt(1, nouveauNbReactions);
-            ps.setInt(2, idPost);
+            ps.setObject(1, date);
+            ps.setInt(2, nouveauNbReactions);
+            ps.setInt(3, idPost);
             ps.executeUpdate();
             System.out.println("Nombre de réactions du post avec l'ID " + idPost + " mis à jour !");
         } catch (SQLException e) {
@@ -186,12 +183,11 @@ public class BlogService implements IService<Post> {
                 int id = res.getInt(1);
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
-                String img = res.getString(4);
-                int idCompte = res.getInt(5);
-                int nbReactions = res.getInt(6);
-                int nbComments = res.getInt(7);
-                Post post = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
-                posts.add(post);
+                int idCompte = res.getInt(4);
+                int nbReactions = res.getInt(5);
+                Post p = new Post(id, timestamp, caption, idCompte, nbReactions);
+                p.setImages(getImages(id));
+                posts.add(p);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -209,11 +205,10 @@ public class BlogService implements IService<Post> {
                 int id = res.getInt(1);
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
-                String img = res.getString(4);
-                int idCompte = res.getInt(5);
-                int nbReactions = res.getInt(6);
-                int nbComments = res.getInt(7);
-                Post p = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                int idCompte = res.getInt(4);
+                int nbReactions = res.getInt(5);
+                Post p = new Post(id, timestamp, caption, idCompte, nbReactions);
+                p.setImages(getImages(id));
                 unverifiedPosts.add(p);
             }
         } catch (SQLException e) {
@@ -232,17 +227,58 @@ public class BlogService implements IService<Post> {
                 int id = res.getInt(1);
                 Timestamp timestamp = res.getTimestamp(2);
                 String caption = res.getString(3);
-                String img = res.getString(4);
-                int idCompte = res.getInt(5);
-                int nbReactions = res.getInt(6);
-                int nbComments = res.getInt(7);
-                Post p = new Post(id, timestamp, caption, img, idCompte, nbReactions, nbComments);
+                int idCompte = res.getInt(4);
+                int nbReactions = res.getInt(5);
+                Post p = new Post(id, timestamp, caption, idCompte, nbReactions);
+                p.setImages(getImages(id));
                 unverifiedPosts.add(p);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         return unverifiedPosts;
+    }
+
+    public void ajouterImages (String path, int idPost) {
+        String req = "INSERT INTO `image_psot`(`path`, `idPost`) VALUES (?,?)";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1,path);
+            ps.setInt(2,idPost);
+            ps.executeUpdate();
+            System.out.println("img added !");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public List<String> getImages(int idPost) {
+        List<String> imagePaths = new ArrayList<>();
+        String req = "SELECT `path` FROM `image_psot` WHERE `idPost` = ?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, idPost);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String path = rs.getString("path");
+                imagePaths.add(path);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving images: " + e.getMessage());
+        }
+        return imagePaths;
+    }
+
+    public void supprimerImages (int idPost) {
+        String req = "DELETE FROM `image_psot` WHERE idPost=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, idPost);
+            ps.executeUpdate();
+            System.out.println("image deleted !");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 

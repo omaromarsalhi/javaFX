@@ -4,6 +4,8 @@ import pidev.javafx.Models.Account;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Post {
@@ -11,20 +13,18 @@ public class Post {
     private int idCompte;
     private Timestamp date;
     private String caption;
-    private String image;
     private int totalReactions;
-    private int nbComments;
+    private List<String> images;
 
-    public Post () {}
+    public Post () {images = new ArrayList<>();}
 
-    public Post(int id , Timestamp date, String caption, String image, int idCompte, int totalReactions, int nbComments) {
+    public Post(int id , Timestamp date, String caption, int idCompte, int totalReactions) {
+        images = new ArrayList<>();
         this.id = id;
         this.date = date;
         this.caption = caption;
-        this.image = image;
         this.idCompte = idCompte;
         this.totalReactions = totalReactions;
-        this.nbComments = nbComments;
     }
 
     @Override
@@ -47,61 +47,41 @@ public class Post {
                 "account=" + idCompte +
                 ", date=" + date +
                 ", caption='" + caption + '\'' +
-                ", image='" + image + '\'' +
                 ", totalReactions=" + totalReactions +
-                ", nbComments=" + nbComments +
                 '}';
     }
 
     public int getId() {return id;}
-
     public void setId(int id) {this.id = id;}
-
     public int getIdCompte() {
         return idCompte;
     }
-
     public void setIdCompte(int idCompte) {
         this.idCompte = idCompte;
     }
-
     public Timestamp getDate() {
         return date;
     }
-
     public void setDate(Timestamp date) {
         this.date = date;
     }
-
     public String getCaption() {
         return caption;
     }
-
     public void setCaption(String caption) {
         this.caption = caption;
     }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
     public int getTotalReactions() {
         return totalReactions;
     }
-
     public void setTotalReactions(int totalReactions) {
         this.totalReactions = totalReactions;
     }
-
-    public int getNbComments() {
-        return nbComments;
+    public List<String> getImages() {
+        return images;
     }
 
-    public void setNbComments(int nbComments) {
-        this.nbComments = nbComments;
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

@@ -59,9 +59,15 @@ public class PopUpCommentsController implements Initializable {
     private Label username;
     @FXML
     private ImageView imgVerified;
+    @FXML
+    private ImageView rightArrow;
+    @FXML
+    private ImageView leftArrow;
 
+    private List<String> images;
     private int id;
     private int ConectedAccount;
+    private int currentImgToShow;
     List<Comment> comments;
 
     public void setId(int id) {
@@ -86,6 +92,10 @@ public class PopUpCommentsController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        images = new ArrayList<>();
+        leftArrow.setVisible(false);
+        rightArrow.setVisible(false);
+        currentImgToShow = 0;
         commentContainer.heightProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -207,9 +217,41 @@ public class PopUpCommentsController implements Initializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());
         date.setText(formattedDate);
-        if (post.getImage() != null && !post.getImage().isEmpty()) {
-            img = new Image("file:src/main/resources" + post.getImage());
+        images = post.getImages();
+        if (!images.isEmpty()) {
+            if (images.size() > 1) {
+                rightArrow.setVisible(true);
+            }
+            img = new Image("file:src/main/resources" + images.get(0));
             imgPost.setImage(img);
+
+            rightArrow.setOnMouseClicked(mouseEvent -> {
+                currentImgToShow ++;
+                if (currentImgToShow > 0) {
+                    leftArrow.setVisible(true);
+                    leftArrow.setManaged(true);
+                }
+                if (currentImgToShow == images.size() - 1) {
+                    rightArrow.setVisible(false);
+                }
+                if (currentImgToShow < images.size()) {
+                    Image img2 = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
+                    imgPost.setImage(img2);
+                }
+            });
+            leftArrow.setOnMouseClicked(mouseEvent -> {
+                currentImgToShow --;
+                if (currentImgToShow == 0) {
+                    leftArrow.setVisible(false);
+                }
+                if (currentImgToShow < images.size() - 1) {
+                    rightArrow.setVisible(true);
+                }
+                if (currentImgToShow < images.size()) {
+                    Image img3 = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
+                    imgPost.setImage(img3);
+                }
+            });
         } else {
             //popUpVbox.setPrefHeight(popUpVbox.getPrefHeight() - imgPost.getFitHeight());
             imgPost.setVisible(false);
@@ -221,14 +263,17 @@ public class PopUpCommentsController implements Initializable {
 
     @FXML
     void onSendBtnClicked() {
-        if (!CommentText.getText().isEmpty()) {
+        String commentTrim = CommentText.getText().trim();
+        boolean captionContainsOnlySpaces = commentTrim.isEmpty() || commentTrim.matches("[\\s\\n]+");
+
+        if (!captionContainsOnlySpaces) {
             CommentService cs = new CommentService();
             Comment comment = new Comment();
 
             long currentTimeMillis = System.currentTimeMillis();
             Timestamp timestamp = new Timestamp(currentTimeMillis);
             comment.setDate(timestamp);
-            comment.setCaption(CommentText.getText());
+            comment.setCaption(CommentText.getText().trim());
             comment.setIdPost(id);
             comment.setIdCompte(ConectedAccount);
 

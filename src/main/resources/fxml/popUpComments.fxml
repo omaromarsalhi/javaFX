@@ -98,11 +98,25 @@
                            </font></Label>
                         <VBox alignment="CENTER">
                            <children>
-                              <ImageView fx:id="imgPost" fitHeight="259.0" fitWidth="528.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../img/reclamation.png" />
-                                 </image>
-                              </ImageView>
+                              <HBox alignment="CENTER" spacing="20.0">
+                                 <children>
+                                    <ImageView fx:id="leftArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+                                       <image>
+                                          <Image url="@../icon/left-arrow-W.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="imgPost" fitHeight="259.0" fitWidth="528.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/reclamation.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="rightArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+                                       <image>
+                                          <Image url="@../icon/right-arrow-W.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                         <HBox alignment="CENTER_LEFT" prefHeight="36.0" prefWidth="686.0" spacing="10.0">

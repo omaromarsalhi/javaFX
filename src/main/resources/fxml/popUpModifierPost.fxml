@@ -11,15 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="popUpPane" prefHeight="507.0" prefWidth="437.0" styleClass="AnchorPane" stylesheets="@../Style/popUpModifierPost.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.PopUpModifierPostController">
+<AnchorPane fx:id="popUpPane" prefHeight="507.0" prefWidth="473.0" styleClass="AnchorPane" stylesheets="@../Style/popUpModifierPost.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.Controller.Blog.PopUpModifierPostController">
    <children>
-      <VBox fx:id="popUpVbox" alignment="TOP_CENTER" layoutX="13.800000190734863" prefHeight="507.0" prefWidth="437.0" spacing="30.0" AnchorPane.rightAnchor="0.0">
+      <VBox fx:id="popUpVbox" alignment="TOP_CENTER" layoutX="13.800000190734863" prefHeight="507.0" prefWidth="473.0" spacing="30.0" AnchorPane.rightAnchor="0.0">
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="48.0" prefWidth="423.0">
                <children>
                   <Label prefHeight="22.0" prefWidth="152.0" text="Modifier la publication" textFill="#e1e1e1">
                      <HBox.margin>
-                        <Insets right="115.0" />
+                        <Insets right="128.0" />
                      </HBox.margin>
                      <font>
                         <Font size="15.0" />
@@ -50,8 +50,8 @@
                   </Label>
                   <HBox alignment="TOP_RIGHT" prefHeight="63.0" prefWidth="438.0" spacing="10.0">
                      <children>
-                        <ImageView fx:id="AccountImg" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" />
-                        <TextArea fx:id="caption" maxWidth="400.0" prefHeight="63.0" prefWidth="350.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;">
+                        <ImageView fx:id="AccountImg" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
+                        <TextArea fx:id="caption" maxWidth="400.0" prefHeight="58.0" prefWidth="388.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;">
                            <HBox.margin>
                               <Insets right="18.0" />
                            </HBox.margin>
@@ -60,16 +60,30 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="CENTER" spacing="10.0">
+            <HBox alignment="CENTER" spacing="15.0">
                <children>
-                  <ImageView fx:id="imgPost" fitHeight="209.0" fitWidth="390.0" pickOnBounds="true" preserveRatio="true" />
-                  <Label fx:id="enlverImgBtn" alignment="CENTER" onMouseClicked="#enleverImgBtnClicked" prefHeight="18.0" prefWidth="102.0" styleClass="removeImg" text="Enlever l'image" textFill="#7b7b7b">
-                     <VBox.margin>
-                        <Insets right="10.0" />
-                     </VBox.margin>
-                  </Label>
+                  <ImageView fx:id="leftArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+                     <image>
+                        <Image url="@../icon/left-arrow-W.png" />
+                     </image>
+                  </ImageView>
+                  <VBox alignment="CENTER" spacing="10.0">
+                     <children>
+                        <ImageView fx:id="imgPost" fitHeight="209.0" fitWidth="374.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="enlverImgBtn" alignment="CENTER" onMouseClicked="#enleverImgBtnClicked" prefHeight="18.0" prefWidth="102.0" styleClass="removeImg" text="Enlever les images" textFill="#7b7b7b">
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <ImageView fx:id="rightArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+                     <image>
+                        <Image url="@../icon/right-arrow-W.png" />
+                     </image>
+                  </ImageView>
                </children>
-            </VBox>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="58.0" prefWidth="438.0" spacing="90.0">
                <children>
                   <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="37.0" prefWidth="143.0" style="-fx-background-color: transperent;" text="Changer la photo" textFill="#c7c7c7">

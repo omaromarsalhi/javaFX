@@ -1,14 +1,19 @@
 package pidev.javafx.Controller.Blog;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
+import javafx.util.Duration;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
 import pidev.javafx.Models.Reactions;
@@ -27,6 +32,7 @@ import javafx.scene.shape.Rectangle;
 import pidev.javafx.Services.BlogService;
 import pidev.javafx.Services.ReactionService;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -95,11 +101,18 @@ public class PostController extends VBox implements Initializable {
     private Button translateBtn;
     @FXML
     private VBox captionContainer;
+    @FXML
+    private ImageView rightArrow;
+    @FXML
+    private ImageView leftArrow;
+    @FXML
+    private HBox imageContainer;
 
     private Post post;
     private int idPost;
     private int idCompte;
     private boolean translated;
+    int currentImgToShow = 0;
 
     public ImageView getImgLike() {return imgLike;}
     public ImageView getImgAngry() {
@@ -151,6 +164,8 @@ public class PostController extends VBox implements Initializable {
         IconReaction3.setManaged(false);
         IconReaction4.setVisible(false);
         IconReaction4.setManaged(false);
+        leftArrow.setVisible(false);
+        rightArrow.setVisible(false);
         translated = false;
     }
 
@@ -190,26 +205,6 @@ public class PostController extends VBox implements Initializable {
             return true;
         }
     }
-
-    /*@FXML
-    public void onReactionImgPressed(MouseEvent me){
-        switch (((ImageView) me.getSource()).getId()){
-            case "imgHaha":
-                setReaction(Reactions.HAHA);
-                break;
-            case "imgSad":
-                setReaction(Reactions.SAD);
-                break;
-            case "imgAngry":
-                setReaction(Reactions.ANGRY);
-                break;
-            default:
-                setReaction(Reactions.LIKE);
-                break;
-        }
-        reactionsContainer.setVisible(false);
-        iconLikeContainer.setVisible(true);
-    }*/
 
     @FXML
     public void onLikePressed() {
@@ -319,7 +314,6 @@ public class PostController extends VBox implements Initializable {
                 postContainer.setPrefHeight(postContainer.getPrefHeight() + captionHeight);
                 VBox.setVgrow(caption, Priority.ALWAYS);
             });
-
         }else{
             caption.setVisible(false);
             translateBtn.setVisible(false);
@@ -327,18 +321,69 @@ public class PostController extends VBox implements Initializable {
             postContainer.setPrefHeight(postContainer.getPrefHeight() - 62.4);
         }
 
-        if(post.getImage() != null && !post.getImage().isEmpty()){
-            img = new Image("file:src/main/resources" + post.getImage());
+        if(!post.getImages().isEmpty() /*&& !post.getImage().isEmpty()*/){
+            img = new Image("file:src/main/resources" + post.getImages().get(0));
             imgPost.setImage(img);
+            if (post.getImages().size() > 1) {
+                rightArrow.setVisible(true);
+            }
         }else{
             imgPost.setVisible(false);
             imgPost.setManaged(false);
-            postContainer.setPrefHeight(postContainer.getPrefHeight() - imgPost.getFitHeight() - 14);
+            imageContainer.setManaged(false);
+            postContainer.setPrefHeight(postContainer.getPrefHeight() - (imgPost.getFitHeight() + 30));
         }
+        rightArrow.setOnMouseClicked(mouseEvent -> {
+            currentImgToShow ++;
+            if (currentImgToShow > 0) {
+                leftArrow.setVisible(true);
+                leftArrow.setManaged(true);
+            }
+            if (currentImgToShow == post.getImages().size() - 1) {
+                rightArrow.setVisible(false);
+            }
+            if (currentImgToShow < post.getImages().size()) {
+                animateImageTransition(-17);
+            }
+        });
+        leftArrow.setOnMouseClicked(mouseEvent -> {
+            currentImgToShow --;
+            if (currentImgToShow == 0) {
+                leftArrow.setVisible(false);
+            }
+            if (currentImgToShow < post.getImages().size() - 1) {
+                rightArrow.setVisible(true);
+            }
+            if (currentImgToShow < post.getImages().size()) {
+                animateImageTransition(17);
+            }
+        });
 
-        nbReactions.setText(String.valueOf(post.getTotalReactions()));
-        nbComments.setText(post.getNbComments() + " comments");
-
+        //nbReactions.setText(String.valueOf(post.getTotalReactions()));
         currentReaction = Reactions.NON;
+    }
+
+    private void animateImageTransition(double targetTranslateX) {
+        FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(0.2), imgPost);
+        fadeOutTransition.setFromValue(1.0);
+        fadeOutTransition.setToValue(0.0);
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2), imgPost);
+        translateTransition.setByX(targetTranslateX);
+
+        ParallelTransition parallelTransition = new ParallelTransition(fadeOutTransition, translateTransition);
+        parallelTransition.play();
+
+        parallelTransition.setOnFinished(event -> {
+            Image img = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
+            imgPost.setImage(img);
+            imgPost.setTranslateX(0);
+
+            FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(0.2), imgPost);
+            fadeInTransition.setFromValue(0.0);
+            fadeInTransition.setToValue(1.0);
+
+            fadeInTransition.play();
+        });
     }
 }

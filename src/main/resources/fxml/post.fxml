@@ -124,7 +124,21 @@
             </Button>
          </children>
       </VBox>
-        <ImageView fx:id="imgPost" fitHeight="291.0" fitWidth="551.0" pickOnBounds="true" preserveRatio="true" styleClass="imagePost" />
+      <HBox fx:id="imageContainer" alignment="CENTER" spacing="20.0">
+         <children>
+            <ImageView fx:id="leftArrow" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+               <image>
+                  <Image url="@../icon/left-arrow.png" />
+               </image>
+            </ImageView>
+              <ImageView fx:id="imgPost" fitHeight="270.0" fitWidth="551.0" pickOnBounds="true" preserveRatio="true" styleClass="imagePost" />
+            <ImageView fx:id="rightArrow" fitHeight="17.0" fitWidth="17.0" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+               <image>
+                  <Image url="@../icon/right-arrow.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
         <StackPane alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="739.0">
             <children>
                 <HBox alignment="CENTER_LEFT" spacing="10.0">

@@ -76,9 +76,16 @@ public class BlogController implements Initializable {
     private ImageView postPreviewImg;
     @FXML
     private Label enlverImgBtn;
+    @FXML
+    private ImageView rightArrow;
+    @FXML
+    private ImageView leftArrow;
     private int ConnectedAccount;
     List<Post> posts;
+    List<String>images = new ArrayList<>();
     String SourceString;
+    List<String> imagesToShow;
+    int currentImgToShow = 0;
     final String destinationString = "src/main/resources/blogImgPosts";
 
     public TextField getSearchBar() {
@@ -92,6 +99,10 @@ public class BlogController implements Initializable {
         postPreviewImg.setManaged(false);
         enlverImgBtn.setVisible(false);
         enlverImgBtn.setManaged(false);
+        rightArrow.setVisible(false);
+        rightArrow.setManaged(false);
+        leftArrow.setVisible(false);
+        leftArrow.setManaged(false);
         BlogService blogService = new BlogService();
         Account account = blogService.getComte(ConnectedAccount);
         Image img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
@@ -200,7 +211,6 @@ public class BlogController implements Initializable {
 
         postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
             supprimerPost(post.getId(), postController, vBox);
-            postsContainer.getChildren().remove(vBox);
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
@@ -266,41 +276,92 @@ public class BlogController implements Initializable {
 
     @FXML
     void onAddImgBtnClicked(MouseEvent event) {
+        images = new ArrayList<>();
+        imagesToShow = new ArrayList<>();
+        currentImgToShow = 0;
         FileChooser fileChooser = new FileChooser();
-
-        fileChooser.setTitle("Choisisez une image");
+        fileChooser.setTitle("Choisisez des images/videos");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Fichiers .png", "*.png"),
-                new FileChooser.ExtensionFilter("Fichiers .jpg", "*.jpg")
+                new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png"),
+                new FileChooser.ExtensionFilter("Videos", "*.mp4")
         );
-        File selectedFile = fileChooser.showOpenDialog(Stage.getWindows().get(0));
+        List<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
 
-        if (selectedFile != null) {
-            SourceString = selectedFile.getAbsolutePath();
-            addImgBtn.setText(SourceString);
-            String correctedPath = SourceString.replace("\\", "/");
-            Image img = new Image(new File(correctedPath).toURI().toString());
+        if (selectedFiles != null && !selectedFiles.isEmpty()) {
+            for (File selectedFile : selectedFiles) {
+                SourceString = selectedFile.getAbsolutePath();
+                images.add(SourceString);
+
+                String correctedPath = SourceString.replace("\\", "/");
+                imagesToShow.add(correctedPath);
+            }
+            addImgBtn.setText("remplacer les images");
+            Image img = new Image(new File(imagesToShow.get(0)).toURI().toString());
             postPreviewImg.setImage(img);
             postPreviewImg.setManaged(true);
             postPreviewImg.setVisible(true);
             enlverImgBtn.setVisible(true);
             enlverImgBtn.setManaged(true);
+            if (imagesToShow.size() > 1) {
+                rightArrow.setVisible(true);
+                rightArrow.setManaged(true);
+                leftArrow.setManaged(true);
+            }
+        }
+    }
+
+    @FXML
+    void rightArrowClicked(MouseEvent event) {
+        currentImgToShow ++;
+        if (currentImgToShow > 0) {
+            leftArrow.setVisible(true);
+            leftArrow.setManaged(true);
+        }
+        if (currentImgToShow == imagesToShow.size() - 1) {
+            rightArrow.setVisible(false);
+        }
+        if (currentImgToShow < imagesToShow.size()) {
+            Image img = new Image(new File(imagesToShow.get(currentImgToShow)).toURI().toString());
+            postPreviewImg.setImage(img);
+        }
+    }
+    @FXML
+    void leftArrowClicked(MouseEvent event) {
+        currentImgToShow --;
+        if (currentImgToShow == 0) {
+            leftArrow.setVisible(false);
+        }
+        if (currentImgToShow < imagesToShow.size() - 1) {
+            rightArrow.setVisible(true);
+        }
+        if (currentImgToShow < imagesToShow.size()) {
+            Image img = new Image(new File(imagesToShow.get(currentImgToShow)).toURI().toString());
+            postPreviewImg.setImage(img);
         }
     }
 
     @FXML
     void enleverImgBtnClicked(MouseEvent event) {
-        SourceString = null;
-        addImgBtn.setText("Ajouter une Photo");
+        imagesToShow.clear();
+        images.clear();
+        addImgBtn.setText("Ajouter des Photos");
         postPreviewImg.setVisible(false);
         postPreviewImg.setManaged(false);
         enlverImgBtn.setVisible(false);
         enlverImgBtn.setManaged(false);
+        rightArrow.setVisible(false);
+        rightArrow.setManaged(false);
+        leftArrow.setVisible(false);
+        leftArrow.setManaged(false);
     }
 
     @FXML
     void onPublierClicked(MouseEvent event) {
-        if (!captionText.getText().isEmpty() || SourceString != null) {
+        String caption = captionText.getText().trim();
+        boolean captionContainsOnlySpaces = caption.isEmpty() || caption.matches("[\\s\\n]+");
+
+        if (!captionContainsOnlySpaces || !images.isEmpty()) {
+            int lastid = 0;
             String imgPath = null;
             String randomFileName = null;
             Post p = new Post();
@@ -313,45 +374,52 @@ public class BlogController implements Initializable {
             if (captionText.getText().isEmpty()) {
                 p.setCaption(null);
             } else {
-                p.setCaption(captionText.getText());
+                p.setCaption(captionText.getText().trim());
             }
 
-            if (SourceString != null) {
-                try {
-                    Path sourcePath = Paths.get(SourceString);
-                    if (SourceString.endsWith(".png")) {
-                        randomFileName = UUID.randomUUID().toString() + ".png";
-                    } else {
-                        randomFileName = UUID.randomUUID().toString() + ".jpg";
-                    }
-                    Path destinationPath = Paths.get(destinationString, randomFileName);
-                    Files.copy(sourcePath, destinationPath);
-                    imgPath = "/blogImgPosts" + "/" + randomFileName;
-                } catch (IOException e) {
-                    System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
-                }
-                p.setImage(imgPath);
-            } else {
-                p.setImage(imgPath);
-            }
             p.setIdCompte(ConnectedAccount);
-            p.setNbComments(0);
             p.setTotalReactions(0);
             bs.ajouter(p);
             captionText.clear();
-            SourceString = null;
             addImgBtn.setText("Ajouter une Photo");
             postPreviewImg.setVisible(false);
             postPreviewImg.setManaged(false);
             enlverImgBtn.setVisible(false);
             enlverImgBtn.setManaged(false);
-            p.setId(bs.getLastId());
+            leftArrow.setVisible(false);
+            leftArrow.setManaged(false);
+            rightArrow.setVisible(false);
+            rightArrow.setManaged(false);
+            lastid = bs.getLastId();
+            p.setId(lastid);
+
+            if (!images.isEmpty()) {
+                for (String image : images) {
+                    try {
+                        Path sourcePath = Paths.get(image);
+                        if (image.endsWith(".png")) {
+                            randomFileName = UUID.randomUUID().toString() + ".png";
+                        } else {
+                            randomFileName = UUID.randomUUID().toString() + ".jpg";
+                        }
+                        Path destinationPath = Paths.get(destinationString, randomFileName);
+                        Files.copy(sourcePath, destinationPath);
+                        imgPath = "/blogImgPosts" + "/" + randomFileName;
+                        bs.ajouterImages(imgPath, lastid);
+                        p.getImages().add(imgPath);
+                    } catch (IOException e) {
+                        System.err.println("Erreur lors de la copie du fichier : " + e.getMessage());
+                    }
+                }
+            }
+
             posts.add(0, p);
             try {
                 loadPostAbove(p);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+            images.clear();
         }
     }
 
@@ -362,7 +430,7 @@ public class BlogController implements Initializable {
         alert.setContentText("Êtes-vous sûr de vouloir supprimer ce post ?");
         ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/icon/supp.png")));
         alert.setGraphic(icon);
-        Stage primaryStage = (Stage) vBox.getScene().getWindow(); // Remplacez "yourParentNode" par le noeud parent de votre scène principale
+        Stage primaryStage = (Stage) vBox.getScene().getWindow();
         alert.initOwner(primaryStage);
         alert.initStyle(StageStyle.TRANSPARENT);
         DialogPane dialogPane = alert.getDialogPane();
@@ -373,7 +441,6 @@ public class BlogController implements Initializable {
         alert.getButtonTypes().setAll(buttonTypeOui, buttonTypeNon);
         alert.showAndWait().ifPresent(response -> {
             if (response == buttonTypeOui) {
-                // L'utilisateur confirme la suppression
                 BlogService bs = new BlogService();
                 bs.supprimer(idPost);
                 Optional<Post> optionalPost = posts.stream()
@@ -423,7 +490,9 @@ public class BlogController implements Initializable {
 
             popUpController.getData(idPost);
             popUpController.getPublierBtn().setOnAction(actionEvent -> {
-                if (popUpController.getImgPath() != null || !popUpController.getCaption().getText().isEmpty()) {
+                String caption = popUpController.getCaption().getText().trim();
+                boolean captionContainsOnlySpaces = caption.isEmpty() || caption.matches("[\\s\\n]+");
+                if (!captionContainsOnlySpaces || !popUpController.getImages().isEmpty()) {
                     BlogService bs = new BlogService();
                     popUpController.modifierPost();
                     postsContainer.getChildren().remove(postVbox);
@@ -449,7 +518,7 @@ public class BlogController implements Initializable {
                     closeTransition.setToY(600);
                     closeTransition.setOnFinished(event -> {
                         stage.close();
-                        scene.getRoot().setEffect(null); //
+                        scene.getRoot().setEffect(null);
                     });
                     closeTransition.play();
                 }
@@ -461,7 +530,7 @@ public class BlogController implements Initializable {
                 closeTransition.setToY(600);
                 closeTransition.setOnFinished(event -> {
                     stage.close();
-                    scene.getRoot().setEffect(null); //
+                    scene.getRoot().setEffect(null);
                 });
                 closeTransition.play();
             });
@@ -482,7 +551,7 @@ public class BlogController implements Initializable {
         int nbrReaction = rs.nbrReaction(post.getId());
         postController.setNbReactions(nbrReaction);
         post.setTotalReactions(nbrReaction);
-        blogService.modifierNombreReactions(post.getId(), nbrReaction);
+        blogService.modifierNombreReactions(post.getId(), nbrReaction, post.getDate());
         ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(post.getId()));
         postController.setIconReaction(types);
     }
@@ -499,7 +568,7 @@ public class BlogController implements Initializable {
         int nbrReaction = rs.nbrReaction(post.getId());
         postController.setNbReactions(nbrReaction);
         post.setTotalReactions(nbrReaction);
-        blogService.modifierNombreReactions(post.getId(), nbrReaction);
+        blogService.modifierNombreReactions(post.getId(), nbrReaction, post.getDate());
         ArrayList<String> types = new ArrayList<>(rs.getTypeReaction(post.getId()));
         postController.setIconReaction(types);
     }
@@ -530,7 +599,7 @@ public class BlogController implements Initializable {
         postController.setNbComments(cs.nbrComment(idPost));
     }
 
-    public void afficherPopUpComments(PostController postController, int idPost) {
+   public void afficherPopUpComments(PostController postController, int idPost) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PopUpComments.fxml"));
             PopUpCommentsController popUpCommentsController = new PopUpCommentsController(idPost);
