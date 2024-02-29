@@ -13,3 +13,6 @@
     -fx-border-style: solid;
     -fx-border-radius: 0 10 10 10;
 }
+.btn {
+    -fx-cursor: hand;
+}

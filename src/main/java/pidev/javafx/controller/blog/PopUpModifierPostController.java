@@ -1,11 +1,10 @@
-package pidev.javafx.Controller.Blog;
+package pidev.javafx.controller.blog;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -14,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Post;
@@ -74,21 +72,27 @@ public class PopUpModifierPostController implements Initializable {
     public int getId() {
         return idPostUpadte;
     }
+
     public Button getPublierBtn() {
         return publierBtn;
     }
+
     public int getIdCompteUpdate() {
         return idCompteUpdate;
     }
+
     public ImageView getCloseBtn() {
         return closeBtn;
     }
+
     public TextArea getCaption() {
         return caption;
     }
+
     public String getImgPath() {
         return imgPath;
     }
+
     public List<String> getImages() {
         return images;
     }
@@ -135,7 +139,7 @@ public class PopUpModifierPostController implements Initializable {
                 leftArrow.setManaged(true);
             }
             rightArrow.setOnMouseClicked(mouseEvent -> {
-                currentImgToShow ++;
+                currentImgToShow++;
                 if (currentImgToShow > 0) {
                     leftArrow.setVisible(true);
                     leftArrow.setManaged(true);
@@ -149,7 +153,7 @@ public class PopUpModifierPostController implements Initializable {
                 }
             });
             leftArrow.setOnMouseClicked(mouseEvent -> {
-                currentImgToShow --;
+                currentImgToShow--;
                 if (currentImgToShow == 0) {
                     leftArrow.setVisible(false);
                 }
@@ -164,16 +168,15 @@ public class PopUpModifierPostController implements Initializable {
         }
     }
 
-    public void getData(int idPost) {
+    public void getData(Post post) {
         BlogService bs = new BlogService();
-        Post post = bs.getOneById(idPost);
         Account account = bs.getComte(post.getIdCompte());
         Image img;
 
         Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         AccountImg.setImage(img1);
 
-        idPostUpadte = idPost;
+        idPostUpadte = post.getId();
         idCompteUpdate = post.getIdCompte();
         caption.setText(post.getCaption());
         images = post.getImages();
@@ -190,7 +193,7 @@ public class PopUpModifierPostController implements Initializable {
             enlverImgBtn.setVisible(true);
 
             rightArrow.setOnMouseClicked(mouseEvent -> {
-                currentImgToShow ++;
+                currentImgToShow++;
                 if (currentImgToShow > 0) {
                     leftArrow.setVisible(true);
                     leftArrow.setManaged(true);
@@ -199,12 +202,11 @@ public class PopUpModifierPostController implements Initializable {
                     rightArrow.setVisible(false);
                 }
                 if (currentImgToShow < images.size()) {
-                    Image img2 = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
-                    imgPost.setImage(img2);
+                    animateImageTransition(-17, post);
                 }
             });
             leftArrow.setOnMouseClicked(mouseEvent -> {
-                currentImgToShow --;
+                currentImgToShow--;
                 if (currentImgToShow == 0) {
                     leftArrow.setVisible(false);
                 }
@@ -212,8 +214,7 @@ public class PopUpModifierPostController implements Initializable {
                     rightArrow.setVisible(true);
                 }
                 if (currentImgToShow < images.size()) {
-                    Image img3 = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
-                    imgPost.setImage(img3);
+                    animateImageTransition(17, post);
                 }
             });
         } else {
@@ -236,12 +237,7 @@ public class PopUpModifierPostController implements Initializable {
         long currentTimeMillis = System.currentTimeMillis();
         Timestamp timestamp = new Timestamp(currentTimeMillis);
         p.setDate(timestamp);
-
-        if (caption.getText().isEmpty()) {
-            p.setCaption(null);
-        } else {
-            p.setCaption(caption.getText().trim());
-        }
+        p.setCaption(caption.getText().trim());
         if (!images.isEmpty() && imageUpdeted) {
             bs.supprimerImages(idPostUpadte);
             for (String image : images) {
@@ -286,5 +282,29 @@ public class PopUpModifierPostController implements Initializable {
         imgPath = null;
         images.clear();
 
+    }
+
+    private void animateImageTransition(double targetTranslateX, Post post) {
+        FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(0.2), imgPost);
+        fadeOutTransition.setFromValue(1.0);
+        fadeOutTransition.setToValue(0.0);
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2), imgPost);
+        translateTransition.setByX(targetTranslateX);
+
+        ParallelTransition parallelTransition = new ParallelTransition(fadeOutTransition, translateTransition);
+        parallelTransition.play();
+
+        parallelTransition.setOnFinished(event -> {
+            Image img = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
+            imgPost.setImage(img);
+            imgPost.setTranslateX(0);
+
+            FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(0.2), imgPost);
+            fadeInTransition.setFromValue(0.0);
+            fadeInTransition.setToValue(1.0);
+
+            fadeInTransition.play();
+        });
     }
 }

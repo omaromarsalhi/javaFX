@@ -1,4 +1,4 @@
-package pidev.javafx.Controller.Blog;
+package pidev.javafx.controller.blog;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -6,7 +6,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Comment;
 import pidev.javafx.Services.BlogService;

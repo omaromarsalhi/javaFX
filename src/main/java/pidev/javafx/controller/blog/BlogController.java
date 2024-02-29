@@ -1,4 +1,4 @@
-package pidev.javafx.Controller.Blog;
+package pidev.javafx.controller.blog;
 
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -40,8 +40,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.*;
-import org.json.JSONObject;
 
+import org.json.JSONObject;
 
 
 public class BlogController implements Initializable {
@@ -82,7 +82,7 @@ public class BlogController implements Initializable {
     private ImageView leftArrow;
     private int ConnectedAccount;
     List<Post> posts;
-    List<String>images = new ArrayList<>();
+    List<String> images = new ArrayList<>();
     String SourceString;
     List<String> imagesToShow;
     int currentImgToShow = 0;
@@ -127,7 +127,13 @@ public class BlogController implements Initializable {
         postController.setIdPost(post.getId());
         postController.setIdCompte(post.getIdCompte());
         postController.setData(post, post.getIdCompte());
-        postsContainer.getChildren().add(vBox);
+
+        if (posts.contains(post)) {
+            postsContainer.getChildren().add(vBox);
+        } else {
+            postsContainer.getChildren().add(2, vBox);
+        }
+
 
         if (post.getIdCompte() == ConnectedAccount) {
             postController.getMenuBtnPost().setVisible(true);
@@ -140,7 +146,7 @@ public class BlogController implements Initializable {
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopupModifier(post.getId(), postsContainer, vBox);
+            afficherPopupModifier(post, postsContainer, vBox);
         });
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
             postController.onAngryClicked();
@@ -167,26 +173,26 @@ public class BlogController implements Initializable {
         setReaction(postController, post, ConnectedAccount);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
-            afficherPopUpComments(postController, post.getId());
+            afficherPopUpComments(postController, post);
         });
         setNbComments(postController, post.getId());
 
         postController.getTranslateBtn().setOnAction(actionEvent -> {
             String originalText = postController.getCaption().getText();
-            if(!postController.isTranslated()) {
+            if (!postController.isTranslated()) {
                 try {
                     String translatedText = translateText(originalText, "fr", "ar");
                     postController.getCaption().setText(translatedText);
                     if (translatedText.equals(originalText)) {
                         postController.getTranslateBtn().setText("Non disponible");
-                    }else {
+                    } else {
                         postController.getTranslateBtn().setText("Version Original");
                     }
                     postController.setTranslated(true);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            }else {
+            } else {
                 postController.getCaption().setText(post.getCaption());
                 postController.getTranslateBtn().setText("Traduire");
                 postController.setTranslated(false);
@@ -194,7 +200,7 @@ public class BlogController implements Initializable {
         });
     }
 
-    public void loadPostAbove(Post post) throws IOException {
+    /*public void loadPostAbove(Post post) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
         VBox vBox = fxmlLoader.load();
@@ -214,7 +220,7 @@ public class BlogController implements Initializable {
         });
 
         postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopupModifier(post.getId(), postsContainer, vBox);
+            afficherPopupModifier(post, postsContainer, vBox);
         });
 
         postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
@@ -242,7 +248,7 @@ public class BlogController implements Initializable {
         setReaction(postController, post, ConnectedAccount);
 
         postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
-            afficherPopUpComments(postController, post.getId());
+            afficherPopUpComments(postController, post);
         });
         setNbComments(postController, post.getId());
 
@@ -267,7 +273,7 @@ public class BlogController implements Initializable {
                 postController.setTranslated(false);
             }
         });
-    }
+    }*/
 
     public List<Post> getPost() {
         BlogService bs = new BlogService();
@@ -312,7 +318,7 @@ public class BlogController implements Initializable {
 
     @FXML
     void rightArrowClicked(MouseEvent event) {
-        currentImgToShow ++;
+        currentImgToShow++;
         if (currentImgToShow > 0) {
             leftArrow.setVisible(true);
             leftArrow.setManaged(true);
@@ -325,9 +331,10 @@ public class BlogController implements Initializable {
             postPreviewImg.setImage(img);
         }
     }
+
     @FXML
     void leftArrowClicked(MouseEvent event) {
-        currentImgToShow --;
+        currentImgToShow--;
         if (currentImgToShow == 0) {
             leftArrow.setVisible(false);
         }
@@ -370,13 +377,7 @@ public class BlogController implements Initializable {
             long currentTimeMillis = System.currentTimeMillis();
             Timestamp timestamp = new Timestamp(currentTimeMillis);
             p.setDate(timestamp);
-
-            if (captionText.getText().isEmpty()) {
-                p.setCaption(null);
-            } else {
-                p.setCaption(captionText.getText().trim());
-            }
-
+            p.setCaption(captionText.getText().trim());
             p.setIdCompte(ConnectedAccount);
             p.setTotalReactions(0);
             bs.ajouter(p);
@@ -412,13 +413,13 @@ public class BlogController implements Initializable {
                     }
                 }
             }
-
-            posts.add(0, p);
             try {
-                loadPostAbove(p);
+                loadPost(p);
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
+
+            posts.add(0, p);
             images.clear();
         }
     }
@@ -459,7 +460,7 @@ public class BlogController implements Initializable {
         });
     }
 
-    public void afficherPopupModifier(int idPost, VBox postsContainer, VBox postVbox) {
+    public void afficherPopupModifier(Post post, VBox postsContainer, VBox postVbox) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/popUpModifierPost.fxml"));
             Parent parent = fxmlLoader.load();
@@ -488,7 +489,7 @@ public class BlogController implements Initializable {
             transition.setToY(0);
             transition.play();
 
-            popUpController.getData(idPost);
+            popUpController.getData(post);
             popUpController.getPublierBtn().setOnAction(actionEvent -> {
                 String caption = popUpController.getCaption().getText().trim();
                 boolean captionContainsOnlySpaces = caption.isEmpty() || caption.matches("[\\s\\n]+");
@@ -504,15 +505,16 @@ public class BlogController implements Initializable {
                     if (optionalPost.isPresent()) {
                         Post oldPost = optionalPost.get();
                         posts.remove(oldPost);
+                        try {
+                            loadPost(psotUpdeted);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
                         posts.add(0, psotUpdeted);
                     } else {
-                        System.out.println("Aucun post trouvé avec l'ID : " + idPost);
+                        System.out.println("Aucun post trouvé avec l'ID : " + post.getId());
                     }
-                    try {
-                        loadPostAbove(psotUpdeted);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+
                     TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
                     closeTransition.setFromY(0);
                     closeTransition.setToY(600);
@@ -575,7 +577,6 @@ public class BlogController implements Initializable {
 
     public void setReaction(PostController postController, Post post, int idCompte) {
         ReactionService rs = new ReactionService();
-        BlogService blogService = new BlogService();
         String reaction = rs.getReaction(post.getId(), idCompte);
         if (reaction == null) {
             postController.setReaction(Reactions.NON);
@@ -599,10 +600,10 @@ public class BlogController implements Initializable {
         postController.setNbComments(cs.nbrComment(idPost));
     }
 
-   public void afficherPopUpComments(PostController postController, int idPost) {
+    public void afficherPopUpComments(PostController postController, Post post) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/PopUpComments.fxml"));
-            PopUpCommentsController popUpCommentsController = new PopUpCommentsController(idPost);
+            PopUpCommentsController popUpCommentsController = new PopUpCommentsController(post.getId());
             fxmlLoader.setControllerFactory(controllerClass -> popUpCommentsController);
             Parent parent = fxmlLoader.load();
 
@@ -630,18 +631,18 @@ public class BlogController implements Initializable {
             transition.setFromY(600);
             transition.setToY(0);
             transition.play();
-            popUpCommentsController.getData(idPost);
+            popUpCommentsController.getData(post);
 
             popUpCommentsController.getSendBtn().setOnMouseClicked(mouseEvent -> {
                 popUpCommentsController.onSendBtnClicked();
-                setNbComments(postController, idPost);
+                setNbComments(postController, post.getId());
             });
             popUpCommentsController.getCloseBtn().setOnMouseClicked(mouseEvent -> {
                 TranslateTransition closeTransition = new TranslateTransition(Duration.seconds(0.3), parent);
                 closeTransition.setFromY(0);
                 closeTransition.setToY(600);
                 closeTransition.setOnFinished(event -> {
-                    setNbComments(postController, idPost);
+                    setNbComments(postController, post.getId());
                     stage.close();
                     scene.getRoot().setEffect(null);
                 });
@@ -670,7 +671,7 @@ public class BlogController implements Initializable {
                 }
             }
         }
-        if(searchBar.getText().isEmpty()) {
+        if (searchBar.getText().isEmpty()) {
             postCherche = blogService.getAll();
             int size = postsContainer.getChildren().size();
             if (size > 2) {

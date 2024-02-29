@@ -8,9 +8,9 @@ module pidev.javafx{
 
     opens pidev.javafx to javafx.fxml;
     exports pidev.javafx;
-    exports pidev.javafx.Controller;
-    opens pidev.javafx.Controller to javafx.fxml;
-    opens pidev.javafx.Controller.Blog to javafx.fxml;
+    exports pidev.javafx.controller;
+    opens pidev.javafx.controller to javafx.fxml;
+    opens pidev.javafx.controller.blog to javafx.fxml;
     exports pidev.javafx.Models;
     opens pidev.javafx.Models to javafx.fxml;
 }

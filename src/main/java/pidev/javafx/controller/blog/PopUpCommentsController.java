@@ -1,5 +1,8 @@
-package pidev.javafx.Controller.Blog;
+package pidev.javafx.controller.blog;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,7 +17,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+import javafx.util.Duration;
 import pidev.javafx.Models.Account;
 import pidev.javafx.Models.Comment;
 import pidev.javafx.Models.Post;
@@ -24,7 +27,6 @@ import pidev.javafx.Services.ReactionService;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -63,6 +65,8 @@ public class PopUpCommentsController implements Initializable {
     private ImageView rightArrow;
     @FXML
     private ImageView leftArrow;
+    @FXML
+    private Label commentName;
 
     private List<String> images;
     private int id;
@@ -127,7 +131,8 @@ public class PopUpCommentsController implements Initializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(comment.getDate());
         commentController.getDate().setText(formattedDate);
-        commentContainer.getChildren().add(vBox);
+        if (comments.contains(comment)) { commentContainer.getChildren().add(vBox); }
+        else { commentContainer.getChildren().add(5, vBox); }
 
         if (comment.getIdCompte() == ConectedAccount) {
             commentController.getSupprimerBtn().setVisible(true);
@@ -148,7 +153,7 @@ public class PopUpCommentsController implements Initializable {
         });
     }
 
-    private void loadCommentAbove(Comment comment) throws IOException {
+    /*private void loadCommentAbove(Comment comment) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/Comment.fxml"));
         VBox vBox = fxmlLoader.load();
@@ -178,19 +183,18 @@ public class PopUpCommentsController implements Initializable {
             modiferComment(commentController, comment.getId());
             commentContainer.getChildren().remove(vBox);
         });
-    }
+    }*/
 
     public List<Comment> getComments() {
         CommentService cs = new CommentService();
         return cs.getAll(id);
     }
 
-    public void getData(int idPost) {
+    public void getData(Post post) {
         BlogService bs = new BlogService();
-        Post post = bs.getOneById(idPost);
         Account account = bs.getComte(post.getIdCompte());
+        commentName.setText("Publication de " + account.getName());
         Image img;
-
         Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         CommentProp.setImage(img1);
         username.setText(account.getName());
@@ -200,7 +204,7 @@ public class PopUpCommentsController implements Initializable {
             imgVerified.setVisible(false);
         }
 
-        id = idPost;
+        id = post.getId();
         if (post.getCaption() != null && !post.getCaption().isEmpty()) {
             caption.setText(post.getCaption());
             caption.setMinHeight(Region.USE_PREF_SIZE);
@@ -235,8 +239,7 @@ public class PopUpCommentsController implements Initializable {
                     rightArrow.setVisible(false);
                 }
                 if (currentImgToShow < images.size()) {
-                    Image img2 = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
-                    imgPost.setImage(img2);
+                    animateImageTransition(-17, post);
                 }
             });
             leftArrow.setOnMouseClicked(mouseEvent -> {
@@ -248,8 +251,7 @@ public class PopUpCommentsController implements Initializable {
                     rightArrow.setVisible(true);
                 }
                 if (currentImgToShow < images.size()) {
-                    Image img3 = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
-                    imgPost.setImage(img3);
+                    animateImageTransition(17, post);
                 }
             });
         } else {
@@ -258,7 +260,7 @@ public class PopUpCommentsController implements Initializable {
             imgPost.setManaged(false);
         }
         ReactionService rs = new ReactionService();
-        nbReactions.setText(String.valueOf(rs.nbrReaction(idPost)));
+        nbReactions.setText(String.valueOf(rs.nbrReaction(post.getId())));
     }
 
     @FXML
@@ -279,15 +281,10 @@ public class PopUpCommentsController implements Initializable {
 
             cs.ajouterComment(comment);
             comment.setId(cs.getLastId());
+            try { loadComment(comment); }
+            catch (IOException e) { throw new RuntimeException(e); }
             comments.add(0, comment);
-
             CommentText.setText("");
-
-            try {
-                loadCommentAbove(comment);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
@@ -301,14 +298,35 @@ public class PopUpCommentsController implements Initializable {
             Comment oldComment = optionalPost.get();
             comments.remove(oldComment);
             Comment commentUpdeted = cs.getOneById(id);
+            try { loadComment(commentUpdeted); }
+            catch (IOException e) { throw new RuntimeException(e); }
             comments.add(0, commentUpdeted);
-            try {
-                loadCommentAbove(commentUpdeted);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         } else {
             System.out.println("Aucun comment trouvé avec l'ID : " + id);
         }
+    }
+
+    private void animateImageTransition(double targetTranslateX, Post post) {
+        FadeTransition fadeOutTransition = new FadeTransition(Duration.seconds(0.2), imgPost);
+        fadeOutTransition.setFromValue(1.0);
+        fadeOutTransition.setToValue(0.0);
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.2), imgPost);
+        translateTransition.setByX(targetTranslateX);
+
+        ParallelTransition parallelTransition = new ParallelTransition(fadeOutTransition, translateTransition);
+        parallelTransition.play();
+
+        parallelTransition.setOnFinished(event -> {
+            Image img = new Image("file:src/main/resources" + post.getImages().get(currentImgToShow));
+            imgPost.setImage(img);
+            imgPost.setTranslateX(0);
+
+            FadeTransition fadeInTransition = new FadeTransition(Duration.seconds(0.2), imgPost);
+            fadeInTransition.setFromValue(0.0);
+            fadeInTransition.setToValue(1.0);
+
+            fadeInTransition.play();
+        });
     }
 }

@@ -1,16 +1,11 @@
-package pidev.javafx.Controller.Blog;
+package pidev.javafx.controller.blog;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
@@ -19,21 +14,14 @@ import pidev.javafx.Models.Post;
 import pidev.javafx.Models.Reactions;
 
 import javafx.fxml.FXML;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import pidev.javafx.Services.BlogService;
-import pidev.javafx.Services.ReactionService;
 
-import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -114,44 +102,70 @@ public class PostController extends VBox implements Initializable {
     private boolean translated;
     int currentImgToShow = 0;
 
-    public ImageView getImgLike() {return imgLike;}
+    public ImageView getImgLike() {
+        return imgLike;
+    }
+
     public ImageView getImgAngry() {
         return imgAngry;
     }
+
     public ImageView getImgHaha() {
         return imgHaha;
     }
+
     public ImageView getImgSad() {
         return imgSad;
     }
+
     public HBox getLikeContainer() {
         return likeContainer;
     }
+
     public HBox getCommentContainer() {
         return CommentContainer;
     }
-    public int getIdPost() {return idPost;}
-    public void setIdPost(int idPost) {this.idPost = idPost;}
+
+    public int getIdPost() {
+        return idPost;
+    }
+
+    public void setIdPost(int idPost) {
+        this.idPost = idPost;
+    }
+
     public int getIdCompte() {
         return idCompte;
     }
+
     public void setIdCompte(int idCompte) {
         this.idCompte = idCompte;
     }
+
     public MenuButton getMenuBtnPost() {
         return menuBtnPost;
     }
-    public MenuItem getSupprimerPostBtn() {return supprimerPostBtn;}
-    public MenuItem getModifierPost() {return ModifierPost;}
+
+    public MenuItem getSupprimerPostBtn() {
+        return supprimerPostBtn;
+    }
+
+    public MenuItem getModifierPost() {
+        return ModifierPost;
+    }
+
     public Label getCaption() {
         return caption;
     }
+
     public Button getTranslateBtn() {
         return translateBtn;
     }
+
     public boolean isTranslated() {
         return translated;
     }
+
     public void setTranslated(boolean translated) {
         this.translated = translated;
     }
@@ -177,29 +191,29 @@ public class PostController extends VBox implements Initializable {
     }
 
     @FXML
-    public void onLikeContainerPressed(MouseEvent me){
+    public void onLikeContainerPressed(MouseEvent me) {
         startTime = System.currentTimeMillis();
     }
 
     @FXML
-    public boolean onLikeContainerMouseReleased(){
-        if(System.currentTimeMillis() - startTime > 250){
-            if(!reactionsContainer.isVisible()) {
+    public boolean onLikeContainerMouseReleased() {
+        if (System.currentTimeMillis() - startTime > 250) {
+            if (!reactionsContainer.isVisible()) {
                 reactionsContainer.setVisible(true);
                 iconLikeContainer.setVisible(false);
-            }else {
+            } else {
                 reactionsContainer.setVisible(false);
                 iconLikeContainer.setVisible(true);
             }
             return false;
-        }else {
+        } else {
             iconLikeContainer.setVisible(true);
-            if(reactionsContainer.isVisible()){
+            if (reactionsContainer.isVisible()) {
                 reactionsContainer.setVisible(false);
             }
-            if(currentReaction == Reactions.NON){
+            if (currentReaction == Reactions.NON) {
                 setReaction(Reactions.LIKE);
-            }else{
+            } else {
                 setReaction(Reactions.NON);
             }
             return true;
@@ -212,61 +226,60 @@ public class PostController extends VBox implements Initializable {
         reactionsContainer.setVisible(false);
         iconLikeContainer.setVisible(true);
     }
+
     public void onHahaClicked() {
         setReaction(Reactions.HAHA);
         reactionsContainer.setVisible(false);
         iconLikeContainer.setVisible(true);
     }
+
     public void onSadClicked() {
         setReaction(Reactions.SAD);
         reactionsContainer.setVisible(false);
         iconLikeContainer.setVisible(true);
     }
+
     public void onAngryClicked() {
         setReaction(Reactions.ANGRY);
         reactionsContainer.setVisible(false);
         iconLikeContainer.setVisible(true);
     }
 
-    public void setReaction(Reactions reaction){
+    public void setReaction(Reactions reaction) {
         Image image = new Image(getClass().getResourceAsStream(reaction.getImgSrc()));
         imgReaction.setImage(image);
         reactionName.setText(reaction.getName());
         reactionName.setTextFill(Color.web(reaction.getColor()));
     }
 
-    public void setIconReaction(ArrayList<String> types){
+    public void setIconReaction(ArrayList<String> types) {
         Image image;
-        int k=0;
-        if(types.size() == 0){
+        int k = 0;
+        if (types.size() == 0) {
             image = new Image(getClass().getResourceAsStream(Reactions.LIKE.getImgSrc()));
             IconReaction1.setImage(image);
-        }
-        else {
-            for(int i = 1; i <= types.size(); i++){
+        } else {
+            for (int i = 1; i <= types.size(); i++) {
                 try {
                     k++;
                     Field field = getClass().getDeclaredField("IconReaction" + i);
                     ImageView value = (ImageView) field.get(this);
                     value.setVisible(true);
                     value.setManaged(true);
-                    if(types.get(i-1).equals("Like")) {
+                    if (types.get(i - 1).equals("Like")) {
                         image = new Image(getClass().getResourceAsStream(Reactions.LIKE.getImgSrc()));
                         value.setImage(image);
-                    }
-                    else if(types.get(i-1).equals("Haha")) {
+                    } else if (types.get(i - 1).equals("Haha")) {
                         image = new Image(getClass().getResourceAsStream(Reactions.HAHA.getImgSrc()));
                         value.setImage(image);
-                    }
-                    else if(types.get(i-1).equals("Sad")) {
+                    } else if (types.get(i - 1).equals("Sad")) {
                         image = new Image(getClass().getResourceAsStream(Reactions.SAD.getImgSrc()));
                         value.setImage(image);
-                    }
-                    else if(types.get(i-1).equals("Angry")) {
+                    } else if (types.get(i - 1).equals("Angry")) {
                         image = new Image(getClass().getResourceAsStream(Reactions.ANGRY.getImgSrc()));
                         value.setImage(image);
                     }
-                    for(int j = k+1; j <= 4; j++){
+                    for (int j = k + 1; j <= 4; j++) {
                         Field field1 = null;
                         field = getClass().getDeclaredField("IconReaction" + j);
                         ImageView value1 = (ImageView) field.get(this);
@@ -276,16 +289,19 @@ public class PostController extends VBox implements Initializable {
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
-        }
+            }
         }
     }
 
     public void setNbReactions(int nbr) {
         nbReactions.setText(String.valueOf(nbr));
     }
-    public void setNbComments(int nbr){nbComments.setText(String.valueOf(nbr) + " commentaires");}
 
-    public void setData(Post post, int idCompte){
+    public void setNbComments(int nbr) {
+        nbComments.setText(String.valueOf(nbr) + " commentaires");
+    }
+
+    public void setData(Post post, int idCompte) {
         this.post = post;
         Image img;
         BlogService bs = new BlogService();
@@ -294,9 +310,9 @@ public class PostController extends VBox implements Initializable {
         img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         imgProfile.setImage(img);
         username.setText(account.getName());
-        if(account.isVerified()){
+        if (account.isVerified()) {
             imgVerified.setVisible(true);
-        }else{
+        } else {
             imgVerified.setVisible(false);
         }
 
@@ -304,37 +320,37 @@ public class PostController extends VBox implements Initializable {
         String formattedDate = dateFormat.format(post.getDate());
         date.setText(formattedDate);
 
-        if(post.getCaption() != null && !post.getCaption().isEmpty()){
+        if (!post.getCaption().isEmpty()) {
             caption.setText(post.getCaption());
-            caption.setMinHeight( Region.USE_PREF_SIZE);
-            caption.setWrapText( true );
+            caption.setMinHeight(Region.USE_PREF_SIZE);
+            caption.setWrapText(true);
             caption.applyCss();
             Platform.runLater(() -> {
                 double captionHeight = caption.getBoundsInLocal().getHeight();
                 postContainer.setPrefHeight(postContainer.getPrefHeight() + captionHeight);
                 VBox.setVgrow(caption, Priority.ALWAYS);
             });
-        }else{
+        } else {
             caption.setVisible(false);
             translateBtn.setVisible(false);
             captionContainer.setManaged(false);
             postContainer.setPrefHeight(postContainer.getPrefHeight() - 62.4);
         }
 
-        if(!post.getImages().isEmpty() /*&& !post.getImage().isEmpty()*/){
+        if (!post.getImages().isEmpty() /*&& !post.getImage().isEmpty()*/) {
             img = new Image("file:src/main/resources" + post.getImages().get(0));
             imgPost.setImage(img);
             if (post.getImages().size() > 1) {
                 rightArrow.setVisible(true);
             }
-        }else{
+        } else {
             imgPost.setVisible(false);
             imgPost.setManaged(false);
             imageContainer.setManaged(false);
             postContainer.setPrefHeight(postContainer.getPrefHeight() - (imgPost.getFitHeight() + 30));
         }
         rightArrow.setOnMouseClicked(mouseEvent -> {
-            currentImgToShow ++;
+            currentImgToShow++;
             if (currentImgToShow > 0) {
                 leftArrow.setVisible(true);
                 leftArrow.setManaged(true);
@@ -347,7 +363,7 @@ public class PostController extends VBox implements Initializable {
             }
         });
         leftArrow.setOnMouseClicked(mouseEvent -> {
-            currentImgToShow --;
+            currentImgToShow--;
             if (currentImgToShow == 0) {
                 leftArrow.setVisible(false);
             }
@@ -358,8 +374,6 @@ public class PostController extends VBox implements Initializable {
                 animateImageTransition(17);
             }
         });
-
-        //nbReactions.setText(String.valueOf(post.getTotalReactions()));
         currentReaction = Reactions.NON;
     }
 
