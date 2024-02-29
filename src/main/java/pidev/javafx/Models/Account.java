@@ -1,7 +1,7 @@
 package pidev.javafx.Models;
 
 public class Account {
-    private int id;
+    private int id ;
     private String name;
     private String profileImg;
     private boolean isVerified;
