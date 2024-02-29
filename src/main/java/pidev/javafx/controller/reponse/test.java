@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.controller.reclamation.modifer;
 import pidev.javafx.controller.reclamation.popupupdate;
+import pidev.javafx.controller.reclamation.tool;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.crud.reclamation.ServiceReponse;
 import pidev.javafx.model.reclamation.Reclamation;
@@ -187,9 +188,25 @@ public class test {
     }
     @FXML
     void showPopup(ActionEvent event) {
+        tool t= new tool() {
+            @Override
+            public void onclic(Reclamation event) {
+                System.out.println(event.getDate());
+                id.setText(event.getPrivateKey());
+                privateKey.setText(event.getPrivateKey());
+                subject.setText(event.getSubject());
+                title.setText(event.getTitre());
+                description.setText(event.getDescription());
+                description1.setText(event.getDescription());
+
+            }
+        };
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/showallreclamation.fxml"));
                 Parent root = (Parent) fxmlLoader.load();
+                modifer m =fxmlLoader.getController();
+                m.onlic(t);
+
                // popupupdate controller = fxmlLoader.getController();
                 //controller.setData(reclamation);
                 Stage stage = new Stage();

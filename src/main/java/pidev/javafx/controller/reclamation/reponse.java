@@ -99,6 +99,7 @@ public class reponse implements Initializable {
         subject.setText(reclamation.getSubject());
         title.setText(reclamation.getTitre());
         description.setText(reclamation.getDescription());
+
     }
 
 

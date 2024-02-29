@@ -117,7 +117,7 @@
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>
                   </Label>
-                  <Button fx:id="importButton" layoutX="646.0" layoutY="152.0" mnemonicParsing="false" onAction="#importFile" prefHeight="95.0" prefWidth="358.0" style="-fx-background-color: transparent;" text="Insert photo / video" textFill="#20749c">
+                  <Button fx:id="importButton" layoutX="646.0" layoutY="152.0" mnemonicParsing="false" onAction="#insert_Image" prefHeight="95.0" prefWidth="358.0" style="-fx-background-color: transparent;" text="Insert photo / video" textFill="#20749c">
                      <font>
                         <Font name="Souliyo Unicode" size="25.0" />
                      </font>

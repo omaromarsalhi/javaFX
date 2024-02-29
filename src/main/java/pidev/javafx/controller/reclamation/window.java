@@ -83,7 +83,8 @@ public class window {
         subject.setText(reclamation.getSubject());
         titre.setText(reclamation.getTitre());
         descirption.setText(reclamation.getDescription());
-        imagePath.setImage(new Image("file:"+reclamation.getImagePath(),50,50,true,true));
+        imagePath.setImage(new Image("file:"+reclamation.getImagePath(),50,50,false,true));
+        System.out.println(reclamation.getImagePath());
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
     }

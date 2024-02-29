@@ -31,6 +31,7 @@ public class modifer {
 
     @FXML
     private TextArea description ;
+    private tool tool1;
 
     ServiceReclamation si = new ServiceReclamation();
 
@@ -88,52 +89,52 @@ public class modifer {
         });
     }
 
-    @FXML
-    void modifer_Reclamation()
-    {
-        Reclamation   rec = new Reclamation(privateKey.getText(), subject.getText(), title.getText(),description.getText());
-        si.modifier(rec);
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Reclmation has been modified !");
 
-        // Show the alert
-        alert.show();
+//    @FXML
+//    void modifer_Reclamation()
+//    {
+//        Reclamation   rec = new Reclamation(privateKey.getText(), subject.getText(), title.getText(),description.getText());
+//        si.modifier(rec);
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Confirmation");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Reclmation has been modified !");
+//
+//        // Show the alert
+//        alert.show();
+//    }
+
+    public void onlic(tool t)
+    {
+        this.tool1=t;
     }
     public void displayDetailsInTextField() {
+        Reclamation selectedItem = (Reclamation) lista.getSelectionModel().getSelectedItem();
+
         lista.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && (!lista.getSelectionModel().isEmpty())) {
-                // Get the selected item
-                Reclamation selectedItem = (Reclamation) lista.getSelectionModel().getSelectedItem();
-                // Display the details in the text fields
-                privateKey.setText(selectedItem.getPrivateKey());
-                subject.setText(selectedItem.getSubject());
-                title.setText(selectedItem.getTitre());
-                description.setText(selectedItem.getDescription());
-            }
+            tool1.onclic(selectedItem);
         });
     }
-    @FXML
-    void supprimer_Reclamation() {
-        // Assuming privateKey.getText() returns the id of the reclamation
-        String idReclamation = privateKey.getText();
-        si.supprimer(idReclamation);
-        clearFields();
-
-        displayDetailsInTextField();
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Reclmation Delelte!");
-
-        // Show the alert
-        alert.showAndWait();
-    }
-    void clearFields() {
-        privateKey.setText("");
-        title.setText("");
-        subject.setText("");
-        description.setText("");
-    }
+//    @FXML
+//    void supprimer_Reclamation() {
+//        // Assuming privateKey.getText() returns the id of the reclamation
+//        String idReclamation = privateKey.getText();
+//        si.supprimer(idReclamation);
+//        clearFields();
+//
+//        displayDetailsInTextField();
+//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//        alert.setTitle("Confirmation");
+//        alert.setHeaderText(null);
+//        alert.setContentText("Reclmation Delelte!");
+//
+//        // Show the alert
+//        alert.showAndWait();
+//    }
+//    void clearFields() {
+//        privateKey.setText("");
+//        title.setText("");
+//        subject.setText("");
+//        description.setText("");
+//    }
 }

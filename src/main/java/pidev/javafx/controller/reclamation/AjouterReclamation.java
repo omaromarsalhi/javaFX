@@ -53,6 +53,9 @@ public class AjouterReclamation {
     @FXML
     public ComboBox ChoixMul;
     @FXML
+    private Stage primaryStage;
+    String getImagePath;
+    @FXML
     ServiceReclamation si = new ServiceReclamation();
     //String imagePath;
     @FXML
@@ -74,24 +77,24 @@ public class AjouterReclamation {
     }
     private String imagePath; // Class variable to store the image path
 
-    public void importFile(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        File selectedFile = fileChooser.showOpenDialog(null);
-
-        if (selectedFile != null) {
-            imagePath = selectedFile.toURI().toString(); // Store the file path
-            System.out.println("File imported: " + imagePath);
-
-            // Create an Image object from the file path
-            Image image = new Image(imagePath);
-
-            // Assuming you have an ImageView field named imageView
-            Image.setImage(image);
-
-        } else {
-            System.out.println("File selection cancelled."); // Default image path
-        }
-    }
+//    public void importFile(ActionEvent event) {
+//        FileChooser fileChooser = new FileChooser();
+//        File selectedFile = fileChooser.showOpenDialog(null);
+//
+//        if (selectedFile != null) {
+//            imagePath = selectedFile.toURI().toString(); // Store the file path
+//            System.out.println("File imported: " + imagePath);
+//
+//            // Create an Image object from the file path
+//            Image image = new Image(imagePath);
+//
+//            // Assuming you have an ImageView field named imageView
+//            Image.setImage(image);
+//
+//        } else {
+//            System.out.println("File selection cancelled."); // Default image path
+//        }
+//    }
 
 
 
@@ -104,7 +107,7 @@ public class AjouterReclamation {
         System.out.println(generatedString);
         if(imagePath==null)
         {
-            imagePath = "src/main/java/pidev/javafx/controller/reclamation/" + generatedString + ".png";
+//imagePath = "src/main/java/pidev/javafx/controller/reclamation/" + generatedString + ".png";
         }
 
         // Call the onTextChanged function here
@@ -114,7 +117,7 @@ public class AjouterReclamation {
         if (title.getStyle().equals("-fx-text-fill: #25c12c;") && description.getStyle().equals("-fx-text-fill: #25c12c")) {
             Reclamation rec = new Reclamation(privateKey.getText(), selectedSubject, title.getText(), description.getText(), imagePath);
             si.ajouter(rec);
-
+            System.out.println(imagePath);
             // Generate a QR code for the reclamation
             String data = URLEncoder.encode(rec.toString(), StandardCharsets.UTF_8); // URL-encode the data
             String size = "200x200"; // Replace this with the desired size of the QR code
@@ -212,6 +215,18 @@ public class AjouterReclamation {
         scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
         mainBorderPain.getChildren().setAll(scrollPane);
     }
+    public void insert_Image(){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose a File");
+        var selectedFile = fileChooser.showOpenDialog(primaryStage);
+        if (selectedFile != null) {
+            imagePath=selectedFile.getAbsolutePath() ;
 
+            Image image = new Image(imagePath);
+            Image.setFitHeight(114);
+            Image.setFitWidth(114);
+            Image.setImage(image);
+        }
+    }
 
 }
