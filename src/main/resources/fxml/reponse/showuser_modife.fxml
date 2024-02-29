@@ -69,5 +69,6 @@
             </ImageView>
          </graphic>
       </Button>
+      <TextField fx:id="id" layoutX="560.0" layoutY="27.0" />
    </children>
 </AnchorPane>

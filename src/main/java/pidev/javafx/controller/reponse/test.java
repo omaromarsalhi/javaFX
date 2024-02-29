@@ -25,6 +25,7 @@ import pidev.javafx.model.reclamation.Response;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,12 +40,16 @@ public class test {
     private TextField privateKey;
     @FXML
     private TextField title;
-
+   @FXML
+   private TextField id;
     @FXML
     private ImageView imageView;
 
     @FXML
     private TextArea description ;
+    @FXML
+    private TextArea description1 ;
+
     ServiceReclamation si = new ServiceReclamation();
     ServiceReponse sirep = new ServiceReponse();
 
@@ -114,18 +119,18 @@ public class test {
         });
 
         // Handle double-click events
-        lista.setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2 && (!lista.getSelectionModel().isEmpty())) {
-                // Get the selected item
-                Reclamation selectedItem = (Reclamation) lista.getSelectionModel().getSelectedItem();
-
-                // Create an instance of the other controller
-                modifer testController = new modifer();
-
-                // Use the details of the selected item to populate the fields in the other controller
-                testController.displayDetailsInTextField();
-            }
-        });
+//        lista.setOnMouseClicked(event -> {
+//            if (event.getClickCount() == 2 && (!lista.getSelectionModel().isEmpty())) {
+//                // Get the selected item
+//                Reclamation selectedItem = (Reclamation) lista.getSelectionModel().getSelectedItem();
+//
+//                // Create an instance of the other controller
+//                modifer testController = new modifer();
+//
+//                // Use the details of the selected item to populate the fields in the other controller
+//                testController.displayDetailsInTextField();
+//            }
+//        });
     }
 
 
@@ -170,12 +175,13 @@ public class test {
         lista.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && (!lista.getSelectionModel().isEmpty())) {
                 // Get the selected item
-                Reclamation selectedItem = (Reclamation) lista.getSelectionModel().getSelectedItem();
-                // Display the details in the text fields
-                privateKey.setText(selectedItem.getPrivateKey());
-                subject.setText(selectedItem.getSubject());
-                title.setText(selectedItem.getTitre());
-                description.setText(selectedItem.getDescription());
+                Response selectedItem = (Response) lista.getSelectionModel().getSelectedItem();
+                id.setText(String.valueOf(selectedItem.getId()));
+                privateKey.setText(selectedItem.getReclamation().getPrivateKey());
+                subject.setText(selectedItem.getReclamation().getSubject());
+                title.setText(selectedItem.getReclamation().getTitre());
+                description.setText(selectedItem.getReclamation().getDescription());
+                description1.setText(selectedItem.getDescription());
             }
         });
     }
@@ -197,8 +203,32 @@ public class test {
         }
 
     public void modifer_Reclamation(ActionEvent actionEvent) {
+        int idInt = Integer.parseInt(id.getText());
+
+        Response   rec = new Response(idInt,description.getText());
+        sirep.modifier(rec);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Reclmation has been modified !");
+
+        // Show the alert
+        alert.show();
     }
 
-    public void supprimer_Reclamation(ActionEvent actionEvent) {
+    public void supprimer_Reclamation() {
+        int iddd= Integer.parseInt(id.getText());
+
+        sirep.supprimer(iddd);
+
+
+        displayDetailsInTextField();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Reclmation Delelte!");
+
+        // Show the alert
+        alert.showAndWait();
     }
 }

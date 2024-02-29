@@ -181,15 +181,12 @@ public class first_page {
 
     public void showPopup() {
         try {
-
-            // Load the FXML file.
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ticket/secondForm.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Popup Window");
             stage.setScene(new Scene(root));
-            first_page form =new first_page();
 
             stage.show();
         } catch (IOException e) {

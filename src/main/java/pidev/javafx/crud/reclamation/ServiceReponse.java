@@ -43,7 +43,15 @@ public class ServiceReponse  implements  Iservice<Response> {
 
     @Override
     public void supprimer(String idReclamation) {
-
+        String req = "DELETE FROM `reclamation` WHERE `privateKey`=?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, idReclamation);
+            ps.executeUpdate();
+            System.out.println("Reclamation deleted !");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     @Override

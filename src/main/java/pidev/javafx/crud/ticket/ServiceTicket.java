@@ -18,14 +18,12 @@ public class ServiceTicket implements Iservice<ticket> {
 
     @Override
     public void ajouter(ticket ticket) {
-        String req = "INSERT INTO `ticket`(`idTicket`, `customName`, `date`, `type`, `ticketNumber`) VALUES (?,?,?,?,?)";
+        String req = "INSERT INTO `ticket`( `customName`, `type`, `ticketNumber`) VALUES (?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setInt(1, ticket.getIdTicket());
-            ps.setString(2, ticket.getCustomName());
-            ps.setDate(3, new java.sql.Date(ticket.getDate().getTime()));
-            ps.setString(4, ticket.getType().toString());
-            ps.setInt(5, ticket.getTicketNumber());
+            ps.setString(1, ticket.getCustomName());
+            ps.setString(2, ticket.getType().toString());
+            ps.setInt(3, ticket.getTicketNumber());
             ps.executeUpdate();
             System.out.println("Ticket added !");
         } catch (SQLException e) {
@@ -40,7 +38,7 @@ public class ServiceTicket implements Iservice<ticket> {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, ticket.getCustomName());
             ps.setDate(2, new java.sql.Date(ticket.getDate().getTime()));
-            ps.setString(3, ticket.getType().toString());
+            ps.setString(3, ticket.getType());
             ps.setInt(4, ticket.getTicketNumber());
             ps.setInt(5, ticket.getIdTicket());
             ps.executeUpdate();
@@ -77,7 +75,7 @@ public class ServiceTicket implements Iservice<ticket> {
             ps.setInt(1, idTicket);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ticket = new ticket(rs.getInt("idTicket"), rs.getString("customName"), rs.getDate("date"), TicketType.valueOf(rs.getString("type")), rs.getInt("ticketNumber"));
+                ticket = new ticket(rs.getInt("idTicket"), rs.getString("customName"), rs.getString("type"), rs.getInt("ticketNumber"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -93,7 +91,7 @@ public class ServiceTicket implements Iservice<ticket> {
             PreparedStatement ps = cnx.prepareStatement(req);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                tickets.add(new ticket(rs.getInt("idTicket"), rs.getString("customName"), rs.getDate("date"), TicketType.valueOf(rs.getString("type")), rs.getInt("ticketNumber")));
+                tickets.add(new ticket(rs.getInt("idTicket"), rs.getString("customName"),  rs.getString("type"), rs.getInt("ticketNumber")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

@@ -15,6 +15,13 @@ public class Response {
 
     public Response() {}
 
+    public Response(int id ,String description) {
+        this.id = id;
+        this.description=description;
+    }
+
+
+
     public int getId() {
         return id;
     }

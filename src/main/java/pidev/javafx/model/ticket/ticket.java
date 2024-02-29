@@ -7,18 +7,24 @@ public class ticket {
     private int idTicket;
     private String customName;
     private Date date;
-    private TicketType type;
+    private String type;
     private int ticketNumber;
 
-    public ticket(int idTicket, String customName, Date date, TicketType type, int ticketNumber) {
+    public ticket(int idTicket, String customName, String type, int ticketNumber) {
         this.idTicket = idTicket;
         this.customName = customName;
-        this.date = date;
+
         this.type = type;
         this.ticketNumber = ticketNumber;
     }
 
     public ticket() {
+    }
+
+    public ticket(String customName, String type, int ticketNumber) {
+        this.customName = customName;
+        this.type = type;
+        this.ticketNumber = ticketNumber;
     }
 
     public int getIdTicket() {
@@ -45,11 +51,11 @@ public class ticket {
         this.date = date;
     }
 
-    public TicketType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(TicketType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

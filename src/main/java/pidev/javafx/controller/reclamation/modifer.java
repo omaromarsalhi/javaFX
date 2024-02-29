@@ -66,7 +66,7 @@ public class modifer {
                 if (empty || reclamation == null) {
                     setText(null);
                 } else {
-                    setText(reclamation.getPrivateKey() + " | " + reclamation.getDate() +" | "+reclamation.getSubject() + " | " + reclamation.getTitre());
+                    setText("private Key : "+ reclamation.getPrivateKey() + " | date :  " + reclamation.getDate() +" |  subject : "+reclamation.getSubject() + " | titre :  " + reclamation.getTitre());
                 //    System.out.println(reclamation.toString());
 
                     ImageView imageView = new ImageView();
