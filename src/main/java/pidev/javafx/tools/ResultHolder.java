@@ -10,6 +10,7 @@ public class ResultHolder {
 
         public synchronized String getResult() throws InterruptedException {
             while (result == null) {
+                System.out.println("waiting");
                 wait(); // Wait until result is set
             }
             return result;

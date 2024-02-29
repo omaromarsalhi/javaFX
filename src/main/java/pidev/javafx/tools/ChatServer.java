@@ -1,5 +1,7 @@
 package pidev.javafx.tools;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -44,6 +46,14 @@ public class ChatServer {
         }
     }
 
+    public static void sendImage(Integer userId,byte[] bytes) {
+        ClientHandler client = users.get(userId);
+        if (client != null) {
+            System.out.println(userId);
+            client.sendImageBytes(bytes);
+        }
+    }
+
     public static boolean authenticateClient(int userID,String pwd) {
         return userCredentials.containsKey(userID) && userCredentials.get(userID).equals(pwd);
     }
@@ -51,12 +61,15 @@ public class ChatServer {
     public static Map<Integer, ClientHandler> getClients() {
         return users;
     }
+
     public static String isUserConnected(int userID) {
+        System.out.println("connection test "+users.containsKey(userID));
         return "[o^^{[|{|>__" + users.containsKey(userID);
     }
 
     public static void closeConnection(int userID) {
         users.remove(userID);
+        System.out.println("size after close: "+users.size());
     }
 }
 

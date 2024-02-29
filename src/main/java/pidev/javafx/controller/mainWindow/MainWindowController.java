@@ -52,7 +52,7 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
         EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
-        btn2.setOnMouseClicked( event ->  MyTools.getInstance().generatePDFWithApi());
+
     }
 
 
@@ -66,13 +66,14 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void onMPDClicked(ActionEvent event) throws IOException {
+        ((VBox)mainBorderPain.getCenter()).getChildren().remove( 1 );
         StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        mainBorderPain.setCenter(stackPane);
+        ((VBox)mainBorderPain.getCenter()).getChildren().add(1,stackPane);
     }
 
     @FXML
     public void onMarketPlaceBtnClicked(ActionEvent event){
-        mainBorderPain.getChildren().remove(mainhBox);
+        ((VBox)mainBorderPain.getCenter()).getChildren().remove( 1 );
         try {
             mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
         } catch (IOException e) {
@@ -80,11 +81,11 @@ public class MainWindowController implements Initializable {
         }
         mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight()  );
         mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
-        mainBorderPain.setCenter(mainhBox2);
+        ((VBox)mainBorderPain.getCenter()).getChildren().add(1,mainhBox2);
     }
 
     public void laodCheckOut(CustomMouseEvent<Bien> event) {
-        mainBorderPain.getChildren().remove(mainhBox);
+        ((VBox)mainBorderPain.getCenter()).getChildren().remove( 1 );
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource( "/fxml/Contract/checkOut.fxml" ));
@@ -96,7 +97,7 @@ public class MainWindowController implements Initializable {
         }
         mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
         mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-        mainBorderPain.setCenter(mainhBox);
+        ((VBox)mainBorderPain.getCenter()).getChildren().add(1,mainhBox);
     }
 
 }

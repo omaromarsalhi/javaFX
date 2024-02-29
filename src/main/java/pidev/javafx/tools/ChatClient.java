@@ -5,6 +5,8 @@ import javafx.scene.layout.VBox;
 import pidev.javafx.controller.chat.ChatController;
 import pidev.javafx.controller.user.UserController;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 public class ChatClient {
@@ -13,6 +15,9 @@ public class ChatClient {
     Socket socket;
     BufferedReader reader;
     PrintWriter  writer;
+    byte[] imageBytes;
+    int bytesRead;
+    ByteArrayOutputStream bos;
 
 
     private ChatClient() {}
@@ -33,6 +38,8 @@ public class ChatClient {
                  socket = new Socket( "localhost", 8001 );
                  reader = new BufferedReader( new InputStreamReader( socket.getInputStream() ) );
                  writer = new PrintWriter( socket.getOutputStream(), true );
+                imageBytes = new byte[1024];
+                bos = new ByteArrayOutputStream();
 
                  int userID = UserController.getInstance().getCurrentUser().getId();
                  String pwd = UserController.getInstance().getCurrentUser().getPassword();
@@ -63,7 +70,15 @@ public class ChatClient {
                     String recivedMessage = reader.readLine();
                     if(recivedMessage.contains( "[o^^{[|{|>__" )){
                         String[] parts = recivedMessage.split( "__", 2 );
+                        System.out.println("chat server result "+parts[1]);
                         resultHolder.setResult(parts[1]);
+                    }
+                    else if(recivedMessage.equals( "uploadImage" )){
+                        while ((bytesRead = socket.getInputStream().read(imageBytes)) != -1) {
+                            bos.write(imageBytes, 0, bytesRead);
+                        }
+//                        !:;
+                        chatContainer.getChildren().add( ChatController.createImageChatBoxFromBytes(bos.toByteArray(), true ) );
                     }
                     else {
                         Platform.runLater( () -> {
@@ -80,9 +95,33 @@ public class ChatClient {
     public void sendMessages(String msg) {
             writer.println(msg);
     }
+//
+//    public void sendImageBytes(Byte[] bytes) {
+//        writer.println(bytes);
+//    }
+
+
+    public void sendImage(int userId,File imageFile) {
+        try {
+            // Read the image file and convert it to a byte array
+            BufferedImage bufferedImage = ImageIO.read(imageFile);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", bos);
+            byte[] imageBytes = bos.toByteArray();
+
+            // Send the image byte array over the socket
+            writer.println("@"+userId+"_uploadImage");
+            socket.getOutputStream().write(imageBytes);
+            socket.getOutputStream().flush();
+            System.out.println("flushed successfuly");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void closeConnection(int userID) {
         writer.println("[|@><{__"+userID);
+        System.out.println("disconnected");
         try {
             if(socket!=null)
                 socket.close();

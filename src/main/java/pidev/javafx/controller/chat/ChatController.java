@@ -29,6 +29,7 @@ import pidev.javafx.tools.ChatClient;
 import pidev.javafx.tools.ChatServer;
 import pidev.javafx.tools.ResultHolder;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
 import java.net.URL;
@@ -118,6 +119,7 @@ public class ChatController implements Initializable {
         chosenFiles=null;
         ancherPaneOfgridPaneMain.setVisible( false );
         amIAReciver=false;
+        resultHolder.setResult( "false" );
     }
 
     public void initliazeData(){
@@ -147,12 +149,13 @@ public class ChatController implements Initializable {
                 ChatClient.getInstance().sendMessages( "@" + reciver.getId() + "_" + messageTextField.getText() );
             chatContainer.getChildren().add( createTextChatBox( messageTextField.getText(), false ) );
             CrudChat.getInstance().addItem( new Chat( 0, UserController.getInstance().getCurrentUser(), reciver, messageTextField.getText(),isConnected) );
-            resultHolder.setResult( "false" );
-
+            resultHolder.setResult( null );
         }
         else {
-            for (int i = 0; i < chosenFiles.size(); i++)
-                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(),amIAReciver ) );
+            for (int i = 0; i < chosenFiles.size(); i++) {
+                ChatClient.getInstance().sendImage(reciver.getId(),chosenFiles.get( i ));
+                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(), amIAReciver ) );
+            }
             chosenFiles=null;
         }
         scroll.setVvalue( 1 );
@@ -331,6 +334,43 @@ public class ChatController implements Initializable {
         return msgBox;
     }
 
+
+    public static HBox createImageChatBoxFromBytes(byte[] bytes, boolean changeOrder){
+        HBox msgBox=new HBox();
+//        msgBox.setPrefWidth( chatContainer.getPrefWidth());
+//        msgBox.setStyle( "-fx-background-color: red" );
+        msgBox.setAlignment( Pos.BOTTOM_RIGHT );
+        msgBox.setPadding( new Insets( 0,0,0,10 ) );
+        msgBox.setSpacing( 4 );
+
+
+        ImageView image=new ImageView( new Image(new ByteArrayInputStream(bytes),80,100,true,true) );
+//        msgLabel.setStyle( "-fx-background-color: blue" );
+        image.setStyle( "-fx-background-radius: 10;" +
+                "-fx-border-radius: 10;");
+
+        Label timeLabel=new Label();
+        timeLabel.setStyle( "-fx-font-size: 10;");
+        timeLabel.setMinSize( 25,15 );
+
+        timeLabel.setText( LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")) );
+
+        ImageView usernIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,false,false) );
+        ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,true,true) );
+        setMargin(usernIcon,new Insets( 0,0,4,10 ));
+        setMargin(deleteIcon,new Insets( 0,0,4,10 ));
+
+
+        if(!changeOrder) {
+            msgBox.setAlignment( Pos.BOTTOM_RIGHT );
+            msgBox.getChildren().addAll(deleteIcon, image, timeLabel, usernIcon );
+        }
+        else {
+            msgBox.setAlignment( Pos.BOTTOM_LEFT );
+            msgBox.getChildren().addAll(deleteIcon, usernIcon, timeLabel, image );
+        }
+        return msgBox;
+    }
 
 
     @FXML

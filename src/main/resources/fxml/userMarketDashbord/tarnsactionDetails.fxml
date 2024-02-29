@@ -12,7 +12,7 @@
 
 <HBox fx:id="purshaseDetailsBox" alignment="CENTER" prefHeight="232.0" prefWidth="294.0" style="-fx-background-color: transparent;" stylesheets="@../../style/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.TransactionDetailsController">
    <children>
-      <StackPane prefHeight="269.0" prefWidth="247.0" scaleShape="false" style="-fx-background-color: #fdc847;">
+      <StackPane prefHeight="269.0" prefWidth="247.0" scaleShape="false" style="-fx-background-color: transparent;">
          <children>
             <VBox fx:id="contratDetails" prefHeight="263.0" prefWidth="247.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20;">
                <children>
