@@ -10,7 +10,7 @@ public class Account {
         this.id = id;
         this.name = name;
         this.profileImg = profileImg;
-        this.isVerified = isVerified;
+        this.isVerified =  isVerified;
     }
     public Account() {}
 
