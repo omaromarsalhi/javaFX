@@ -198,7 +198,6 @@ public class test {
                 title.setText(event.getTitre());
                 description.setText(event.getDescription());
                 description1.setText(event.getDescription());
-
             }
         };
             try {
@@ -221,14 +220,12 @@ public class test {
 
     public void modifer_Reclamation(ActionEvent actionEvent) {
         int idInt = Integer.parseInt(id.getText());
-
-        Response   rec = new Response(idInt,description.getText());
+        Response   rec = new Response(idInt,description1.getText());
         sirep.modifier(rec);
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText(null);
         alert.setContentText("Reclmation has been modified !");
-
         // Show the alert
         alert.show();
     }

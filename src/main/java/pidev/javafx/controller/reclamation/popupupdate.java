@@ -59,11 +59,14 @@ public class popupupdate {
     public void setData(Reclamation reclamation) {
         this.reclamation = reclamation;
         System.out.println("setData called with Reclamation: " + reclamation);
+        privateKey.setText(reclamation.getPrivateKey());
+        title.setText(reclamation.getTitre());
+        subject.setText(reclamation.getSubject());
+        description.setText(reclamation.getDescription());
     }
 
     @FXML
     void modifier_reclmation() throws IOException {
-         //initialize(reclamation);
 
         onTextChanged();
         if (title.getStyle().equals("-fx-text-fill: #25c12c;") && description.getStyle().equals("-fx-text-fill: #25c12c")) {

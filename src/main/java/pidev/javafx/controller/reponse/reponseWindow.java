@@ -54,13 +54,6 @@ public class reponseWindow {
 
 
 
-
-
-
-
-
-
-
     public void setReponse( Response response) {
         this.response = response;
         privatekey.setText(reclamation.getPrivateKey());
