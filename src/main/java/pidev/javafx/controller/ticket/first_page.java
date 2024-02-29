@@ -6,6 +6,8 @@ import com.aspose.imaging.Graphics;
 import com.aspose.imaging.internal.Exceptions.IO.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.embed.swing.SwingFXUtils;
@@ -14,6 +16,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,6 +28,10 @@ import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 
 import javafx.fxml.FXML;
+import pidev.javafx.crud.reclamation.ServiceReclamation;
+import pidev.javafx.crud.ticket.ServiceTicket;
+import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.ticket.ticket;
 
 import javax.imageio.ImageIO;
 
@@ -41,6 +49,9 @@ public class first_page {
     private ImageView imageView1;
     @FXML
     private ImageView imageView2;
+    @FXML
+    private ListView lista;
+    ServiceTicket si = new ServiceTicket();
     public void updateImage() {
         first_page.counter++;
 
@@ -194,5 +205,26 @@ public class first_page {
         } catch (java.io.IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public void initialize() {
+
+        List<ticket> tickets = new ArrayList<>(si.getAll());
+
+        // Add the Reclamation objects to the ListView
+        lista.getItems().addAll(tickets);
+
+        // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
+        lista.setCellFactory(reclamationListView -> new ListCell<ticket>() {
+            @Override
+            protected void updateItem(ticket ticket, boolean empty) {
+                super.updateItem(ticket, empty);
+                if (empty || ticket == null) {
+                    setText(null);
+                } else {
+                    setText(" tickt number: "+ ticket.getTicketNumber() + " | date :  " + ticket.getDate() +" |  nam : "+ticket.getCustomName() + " | type :  " + ticket.getType());
+                    setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
+                }
+            }
+        });
     }
 }
