@@ -39,9 +39,9 @@ public class AddTransportController implements Initializable {
     @FXML
     private TextField PrixText;
     @FXML
-    private ComboBox Depart;
+    private ComboBox<Station> Depart;
     @FXML
-    private ComboBox Arrive;
+    private ComboBox<Station> Arrive;
     @FXML
     private ComboBox BoxTypeVehicule;
     private Connection connect;
@@ -97,20 +97,28 @@ public  void intialiase_timer(){
     Connection cnx = DataSource.GetInstance().getCnx();
 
 
-     public Set<String> Load_Locations(){
+     public Set<Station> Load_Locations(){
 
         String sql = "SELECT * FROM station";
+
+        Set<Station> s=new HashSet<>();
 
         try (
                 PreparedStatement preparedStatement = cnx.prepareStatement(sql);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
+                Station sn=new Station();
+                String nomStation=resultSet.getString("NomStation");
+                int id=resultSet.getInt("idStation");
 
-                String name = resultSet.getString("NomStation");
-                resultSetItems.add(name);
+               sn.setNomStation(nomStation);
+               sn.setIdStation(id);
+
+                s.add(sn);
+
 
             }
-            return resultSetItems;
+            return s;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -193,8 +201,8 @@ public  void intialiase_timer(){
         }
         else {
             String Type = BoxTypeVehicule.getValue().toString();
-            String DEPART = Depart.getValue().toString();
-            String ARRIVEE = Arrive.getValue().toString();
+            Station DEPART = Depart.getValue();
+            Station ARRIVEE = Arrive.getValue();
             Time Temp;
             int totalMinutes = timeSpinner.getValue();
             int hours = totalMinutes / 60;

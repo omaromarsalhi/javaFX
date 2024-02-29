@@ -17,16 +17,7 @@ public class Transport {
     private Time Heure;
     private String Reference;
 
-    public Transport(int idTransport, String type_vehicule, Station station_depart, Station station_arrive, String reference, String vehicule_Image, Float prix, Time heure) {
-        this.idTransport = idTransport;
-        this.type_vehicule = type_vehicule;
-        this.station_depart = station_depart;
-        this.station_arrive = station_arrive;
-        Reference = reference;
-        Vehicule_Image = vehicule_Image;
-        Prix = prix;
-        Heure = heure;
-    }
+
 
     public String depart;
     public void setStation_depart(Station station_depart) {
@@ -78,7 +69,16 @@ public class Transport {
         Prix = prix;
         Heure = heure;
     }
-
+    public Transport( String type_vehicule, Station station_depart, Station station_arrive, String reference, String vehicule_Image, Float prix, Time heure) {
+        this.idTransport = idTransport;
+        this.type_vehicule = type_vehicule;
+        this.station_depart = station_depart;
+        this.station_arrive = station_arrive;
+        Reference = reference;
+        Vehicule_Image = vehicule_Image;
+        Prix = prix;
+        Heure = heure;
+    }
 
     public Boolean Supprimer(int id){
         String deleteQuery = "DELETE FROM transport WHERE idTransport = ?";

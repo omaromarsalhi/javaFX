@@ -15,6 +15,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
+import org.json.JSONException;
+import org.json.JSONObject;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Type_Vehicule;
@@ -23,6 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.io.IOException;
@@ -85,7 +88,7 @@ String imagePath;
             Image.setImage(image);
         }
     }
-    private void geocodeAddress(String address) {
+    private  void geocodeAddress(String address) {
         try {
             String encodedAddress = URLEncoder.encode(address, "UTF-8");
             String apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodedAddress + "&key=" + OPENCAGE_API_KEY;
@@ -108,42 +111,43 @@ String imagePath;
                 // Parse the JSON response and extract latitude and longitude
                 String[] coordinates = extractCoordinates(result.toString());
                 if (coordinates.length == 2) {
-                    updateResultLabel(coordinates);
+                    AdressText.setText(coordinates[0]+","+coordinates[1]);
                 } else {
-                    updateResultLabel(new String[]{"Invalid", "format"});
+                    AdressText.setText(Arrays.toString(new String[]{"Invalid", "format"}));
                 }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
             }
 
         } catch (URISyntaxException | IOException | InterruptedException e) {
             e.printStackTrace();
-            updateResultLabel(new String[]{"Error", "occurred"});
+            AdressText.setText(Arrays.toString(new String[]{"Error", "occurred"}));
         }
     }
 
-    private String[] extractCoordinates(String jsonResponse) {
-        // Parse the JSON response and extract latitude and longitude
-        // This is a simple example and might not cover all cases; consider using a JSON library for robust parsing
+    private static String[] extractCoordinates(String jsonResponse) throws JSONException {
+        // Parse the JSON response and extract latitude and longitude using org.json library
+        JSONObject json = new JSONObject(jsonResponse);
+        JSONObject firstResult = json.getJSONArray("results").optJSONObject(0);
+
         String[] coordinates = new String[2];
 
-        int indexLat = jsonResponse.indexOf("\"lat\":");
-        int indexLng = jsonResponse.indexOf("\"lng\":");
-
-        if (indexLat != -1 && indexLng != -1) {
-            coordinates[0] = jsonResponse.substring(indexLat + 6, jsonResponse.indexOf(",", indexLat));
-            coordinates[1] = jsonResponse.substring(indexLng + 6, jsonResponse.indexOf("}", indexLng));
+        if (firstResult != null) {
+            JSONObject geometry = firstResult.optJSONObject("geometry");
+            if (geometry != null) {
+                coordinates[0] = geometry.optString("lat", "N/A");
+                coordinates[1] = geometry.optString("lng", "N/A");
+            }
         }
 
         // Remove \u00b0 (degree symbol)
         coordinates[0] = coordinates[0].replace("\u00b0", "");
         coordinates[1] = coordinates[1].replace("\u00b0", "");
-        System.out.println( coordinates[0].replace("\u00b0", "°")+coordinates[1].replace("\u00b0", "°"));
 
         return coordinates;
     }
 
-    private void updateResultLabel(String[] coordinates) {
-   AdressText.setText(coordinates[0]+","+coordinates[1]);
-    }
+
     @FXML
     protected void onTextChanged() {
         String[] text = new String[10];

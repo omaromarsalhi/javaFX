@@ -23,13 +23,13 @@ public class ServicesTransport implements CrudInterface<Transport> {
 
     public boolean addItem(Transport transport) {
 
-        String sql = "INSERT INTO transport(Type_Vehicule,Depart,Arivee,Reference,Vehicule_Image,Prix,Heure) VALUES (?,?,?,?,?,?,?) ";
+        String sql = "INSERT INTO transport(Type_Vehicule,Station_depart,Station_arrive,Reference,Vehicule_Image,Prix,Heure) VALUES (?,?,?,?,?,?,?) ";
 
         try {
              prepare = cnx.prepareStatement(sql);
             prepare.setString(1, transport.getType_vehicule());
-            prepare.setString(2, transport.getDepart());
-            prepare.setString(3, transport.getArivee());
+            prepare.setInt(2, transport.getStation_depart().getIdStation());
+            prepare.setInt(3, transport.getStation_arrive().getIdStation());
             prepare.setString(4, transport.getReference());
             prepare.setString(5, transport.getVehicule_Image());
             prepare.setFloat(6, transport.getPrix());
@@ -118,7 +118,12 @@ return new Transport();
     @Override
     public Set<Transport> getAll() {
 Set<Transport> dataList =new HashSet<>();
-        String sql = "SELECT * FROM transport";
+        String sql = "SELECT transport.*, station.nom_station\n" +
+                "FROM transport\n" +
+                "LEFT JOIN station " +
+                "ON transport.Station_depart = station.id_station\n" +
+                "WHERE votre_condition;\n ";
+
         try (PreparedStatement preparedStatement = cnx.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
@@ -131,8 +136,8 @@ Set<Transport> dataList =new HashSet<>();
                 data.setIdTransport(Integer.parseInt(resultSet.getString("idTransport")));
                 data.setType_vehicule(resultSet.getString("Type_Vehicule"));
                 data.setReference(resultSet.getString("Reference"));
-                data.setDepart(resultSet.getString("Depart"));
-                data.setArivee(resultSet.getString("Arivee"));
+             //  data.setDepart(resultSet.getInt("Station_depart"));
+//                data.setArivee(resultSet.getInt("Station_arrive"));
                 data.setPrix((resultSet.getFloat("Prix")));
                 data.setHeure(resultSet.getTime("Heure"));
                 data.setVehicule_Image((resultSet.getString("Vehicule_Image")));
