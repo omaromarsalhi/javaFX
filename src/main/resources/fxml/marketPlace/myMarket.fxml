@@ -18,6 +18,11 @@
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.MarketController">
    <children>
+      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox alignment="CENTER" layoutX="51.2" layoutY="108.8" prefHeight="407.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="155.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="109.0" />
+         </children>
+      </AnchorPane>
       <HBox fx:id="mainHbox" alignment="CENTER_LEFT" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;">
          <children>
 <<<<<<< HEAD
@@ -34,17 +39,42 @@
 =======
             <VBox>
                <children>
+<<<<<<< HEAD
                   <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../style/toolBarStyle.css">
 >>>>>>> omar_salhi_branch
+=======
+                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../style/marketPlace/toolBarStyle.css">
+>>>>>>> omar_salhi_branch
                      <children>
-                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="237.0">
+                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="305.0">
                            <menus>
-                              <Menu mnemonicParsing="false" text="Products" />
-                              <Menu mnemonicParsing="false" text="Services" />
-                              <Menu fx:id="filter" mnemonicParsing="false" text="Filter" />
+                              <Menu mnemonicParsing="false" text="Products">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/packaging.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Menu>
+                              <Menu mnemonicParsing="false" text="Services">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/service.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Menu>
+                              <Menu fx:id="filter" mnemonicParsing="false" text="Filter">
+                                 <graphic>
+                                    <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../namedIcons/selective.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Menu>
                            </menus>
                         </MenuBar>
-                        <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../../style/toolBarStyle.css">
+                        <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;" stylesheets="@../../style/marketPlace/toolBarStyle.css">
                            <children>
                               <TextField fx:id="searchTextField" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
                               <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
@@ -66,7 +96,7 @@
                         <Insets right="22.0" top="4.0" />
                      </padding>
                   </HBox>
-                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="775.0" style="-fx-border-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/scrollBarStlyle.css">
+                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="775.0" style="-fx-border-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/marketPlace/scrollBarStlyle.css">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -86,10 +116,5 @@
             </VBox>
          </children>
       </HBox>
-      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
-         <children>
-            <HBox alignment="CENTER" layoutX="51.2" layoutY="108.8" prefHeight="407.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="155.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="109.0" />
-         </children>
-      </AnchorPane>
    </children>
 </StackPane>

@@ -2,7 +2,9 @@ package pidev.javafx.controller.marketPlace;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,9 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
+import pidev.javafx.tools.*;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
@@ -26,6 +26,10 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class MarketController implements Initializable {
@@ -45,8 +49,6 @@ public class MarketController implements Initializable {
     @FXML
     private MenuBar menuBar;
     @FXML
-    private Menu filter;
-    @FXML
     private AnchorPane secondInterface;
 
     private VBox itemInfo;
@@ -54,9 +56,6 @@ public class MarketController implements Initializable {
     private VBox chatBox;
     private Timer animTimer;
     private Image image;
-    private MyListener myListener;
-    private MyListener MainWindowListener;
-    private Timeline fiveSecondsWonder;
     private String searchBarState;
     private int idProd4nextSelection;
     private String whoIsActiveNow;
@@ -65,11 +64,10 @@ public class MarketController implements Initializable {
 
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         secondInterface.setVisible( false );
-        fiveSecondsWonder=new Timeline();
+
         itemInfo=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
@@ -81,12 +79,10 @@ public class MarketController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
+
         whoIsActiveNow="hepfullBar";
 
-
-        showGridPane(CrudBien.getInstance().selectItems() );
         setMenueBar();
-
 
         searchBarState="closed";
         animTimer = new Timer();
@@ -96,35 +92,39 @@ public class MarketController implements Initializable {
 
         searchBtn.setOnMouseClicked(event -> animateSearchBar());
 
-//        scroll.vvalueProperty().addListener((observable, oldValue, newValue) -> {
-//            if (newValue.doubleValue() >= 1.0) {
-//                System.out.println("Reached the end of the scroll pane!");
-//                showGridPane(CrudBien.getInstance().selectItems());
-////                changeGridPaneContent(CrudBien.getInstance().selectItems());
-//                scroll.setVvalue(0.0);
-//            }
-//        });
-
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
         EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
         EventBus.getInstance().subscribe( "showHelfullBar",this::showHelfullBar);
         EventBus.getInstance().subscribe( "exitItemInfo",this::exitItemInfo);
 
-
+        loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
     }
 
 
+
+    public Thread loadingAllProductsThread(ObservableList<Bien> prods){
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                showGridPane(prods);
+                return null;
+            }
+        };
+        return new Thread(myTask);
+    }
 
     public void setMenueBar(){
         var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
         var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
         allProducts.setOnAction( event -> {
-            showGridPane(CrudBien.getInstance().selectItems() );
+            loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
         } );
         todayProducts.setOnAction( event -> {
-            showGridPane(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" ));
+            loadingAllProductsThread(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" )).start();
         } );
+
+
         menuBar.getMenus().get( 0 ).getItems().addAll(allProducts,todayProducts);
 
 
@@ -147,7 +147,6 @@ public class MarketController implements Initializable {
             EventBus.getInstance().publish( "filter",event );
             whoIsActiveNow="hepfullBar";
         } );
-
     }
 
     public void animateSearchBar(){
@@ -216,25 +215,23 @@ public class MarketController implements Initializable {
 
 
     public void onFilterClicked(CustomMouseEvent<ObservableList<Bien>> customMouseEvent){
-        showGridPane(customMouseEvent.getEventData());
+        loadingAllProductsThread(customMouseEvent.getEventData()).start();
     }
+
 
     public void loadAndSetItemInfo(CustomMouseEvent<Product> customMouseEvent){
         EventBus.getInstance().publish( "setItemInfoData", customMouseEvent);
-//        if(whoIsActiveNow.equals( "hepfullBar" ))
-//            animateChanges(hepfullBar, itemInfo );
-//        else if (whoIsActiveNow.equals( "chatBox" ))
-//            animateChanges( chatBox, itemInfo );
-//        whoIsActiveNow = "itemInfo";
         mainHbox.setOpacity( 0.4 );
         secondInterface.setVisible( true );
         ((HBox)secondInterface.getChildren().get( 0 )).getChildren().add(itemInfo );
+//        MyTools.getInstance().showAnimation( itemInfo );
     }
 
+
     public void exitItemInfo(MouseEvent event){
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
         mainHbox.setOpacity( 1 );
         secondInterface.setVisible( false );
-        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
     }
 
 
@@ -247,45 +244,94 @@ public class MarketController implements Initializable {
     }
 
 
+//    public void showGridPane(ObservableList<Bien> biens){
+//        grid.getChildren().clear();
+//        int column = 0;
+//        int row = 1;
+//        for (int i = 0; i < biens.size() ; i++) {
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
+//            AnchorPane anchorPane = null;
+//            try {
+//                anchorPane = fxmlLoader.load();
+//            } catch (IOException e) {
+//                throw new RuntimeException( e );
+//            }
+//
+//            ItemController itemController = fxmlLoader.getController();
+//            itemController.setData(biens.get( i ));
+//            itemController.animateImages(fiveSecondsWonder,biens.get(i));
+//            getProduct(anchorPane,itemController);
+//
+//            if (column == 3) {
+//                column = 0;
+//                row++;
+//            }
+//            grid.add(anchorPane, column++, row);
+//        }
+//        grid.setHgap( 25 );
+//        grid.setVgap( 25 );
+//        grid.setPadding( new Insets( 0,0,40,0 ));
+//    }
+
     public void showGridPane(ObservableList<Bien> biens){
-        grid.getChildren().clear();
+        Platform.runLater( () -> {
+            grid.getChildren().clear();
+            grid.setHgap( 25 );
+            grid.setVgap( 25 );
+            grid.setPadding( new Insets( 0,0,40,0 ));
+        } );
+
         int column = 0;
         int row = 1;
+        var executer= Executors.newFixedThreadPool(6);
         for (int i = 0; i < biens.size() ; i++) {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
-            AnchorPane anchorPane = null;
-            try {
-                anchorPane = fxmlLoader.load();
-            } catch (IOException e) {
-                throw new RuntimeException( e );
-            }
-
-            ItemController itemController = fxmlLoader.getController();
-            itemController.setData(biens.get( i ));
-            itemController.animateImages(fiveSecondsWonder,biens.get(i));
-            getProduct(anchorPane,itemController);
-
             if (column == 3) {
                 column = 0;
                 row++;
             }
-            grid.add(anchorPane, column++, row);
+            executer.submit(loadingItemsThread(biens.get( i ),column++,row));
         }
-        grid.setHgap( 25 );
-        grid.setVgap( 25 );
-        grid.setPadding( new Insets( 0,0,40,0 ));
+        executer.shutdown();
     }
 
 
+    private Task<CustomReturnItem>  loadingItemsThread(Product prod,int column,int row) {
+        Task<CustomReturnItem> myTask = new Task<>() {
+            @Override
+            protected CustomReturnItem call() throws Exception {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
+                AnchorPane anchorPane = null;
+                try {
+                    anchorPane = fxmlLoader.load();
+                    anchorPane.setPrefWidth( anchorPane.getPrefWidth()+30 );
+                } catch (IOException e) {
+                    throw new RuntimeException( e );
+                }
+                ItemController itemController = fxmlLoader.getController();
+                return new CustomReturnItem(anchorPane,itemController);
+            }
+        };
 
+        myTask.setOnSucceeded(e ->
+            Platform.runLater( () -> {
+                Timeline fiveSecondsWonder=new Timeline();
+                myTask.getValue().getSecond().setData((Bien) prod);
+                myTask.getValue().getSecond().animateImages(fiveSecondsWonder,(Bien) prod);
+                getProduct(myTask.getValue().getFirst(),myTask.getValue().getSecond());
+                grid.add(myTask.getValue().getFirst(), column, row);
+            } )
+        );
+        return myTask;
+    }
 
 
     public void loadChat(MouseEvent event){
-        if(whoIsActiveNow.equals( "hepfullBar" ))
-            animateChanges(hepfullBar, chatBox );
-        else if (whoIsActiveNow.equals( "itemInfo" ))
-            animateChanges( itemInfo, chatBox );
+//        if(whoIsActiveNow.equals( "hepfullBar" ))
+//            animateChanges(hepfullBar, chatBox );
+//        else if (whoIsActiveNow.equals( "itemInfo" ))
+//            animateChanges( itemInfo, chatBox );
         whoIsActiveNow="chatBox";
     }
 

@@ -1,18 +1,13 @@
 package pidev.javafx.controller.chat;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
@@ -22,12 +17,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.controller.user.UserController;
+import pidev.javafx.crud.marketplace.CrudChat;
 import pidev.javafx.model.User.User;
+import pidev.javafx.model.chat.Chat;
 import pidev.javafx.tools.ChatClient;
-import pidev.javafx.tools.ChatServer;
+import pidev.javafx.tools.ResultHolder;
 
 import java.io.*;
-import java.net.Socket;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -106,6 +102,8 @@ public class ChatController implements Initializable {
     private String searchBarState;
     private Timer animTimer;
     private User reciver;
+    private ResultHolder resultHolder=new ResultHolder();
+    private boolean isConnected;
 
 
     @Override
@@ -113,6 +111,7 @@ public class ChatController implements Initializable {
         chosenFiles=null;
         ancherPaneOfgridPaneMain.setVisible( false );
         amIAReciver=false;
+        resultHolder.setResult( "false" );
     }
 
     public void initliazeData(){
@@ -123,27 +122,36 @@ public class ChatController implements Initializable {
         searchBtn.setStyle( "-fx-border-radius: 20;" +
                 "-fx-background-radius:20;" );
         searchBtn.setOnMouseClicked(event -> animateSearchBar());
-        ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer );
+        ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer,resultHolder);
     }
 
 
     @FXML
     public void onSendMsgBtnClicked(){
-        System.out.println(ChatServer.getClientsSize());
         if(chosenFiles==null) {
             amIAReciver=false;
-            ChatClient.getInstance().sendMessages( "@"+reciver.getFirstname()+"_"+messageTextField.getText() );
+            ChatClient.getInstance().isUserConnected(reciver.getId());
+            try {
+                isConnected=Boolean.parseBoolean(resultHolder.getResult());
+            } catch (InterruptedException e) {
+                throw new RuntimeException( e );
+            }
+            System.out.println(isConnected);
+            if(isConnected)
+                ChatClient.getInstance().sendMessages( "@" + reciver.getId() + "_" + messageTextField.getText() );
             chatContainer.getChildren().add( createTextChatBox( messageTextField.getText(), false ) );
+            CrudChat.getInstance().addItem( new Chat( 0, UserController.getInstance().getCurrentUser(), reciver, messageTextField.getText(),isConnected) );
+            resultHolder.setResult( null );
         }
         else {
-            for (int i = 0; i < chosenFiles.size(); i++)
-                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(),amIAReciver ) );
+            for (int i = 0; i < chosenFiles.size(); i++) {
+                ChatClient.getInstance().sendImage(reciver.getId(),chosenFiles.get( i ));
+                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(), amIAReciver ) );
+            }
             chosenFiles=null;
         }
         scroll.setVvalue( 1 );
         messageTextField.clear();
-
-
     }
 
 
@@ -155,7 +163,7 @@ public class ChatController implements Initializable {
         notif.setFont(Font.font( "System", FontWeight.BOLD, FontPosture.ITALIC,14 ));
         notif.setStyle( "-fx-font-size: 16;");
         notif.setAlignment( Pos.CENTER );
-        notif.setMinSize(24,24);
+        notif.setMinSize(28,24);
         notif.setStyle( "-fx-text-fill: red;" +
                 "-fx-border-radius: 50;" +
                 "-fx-background-radius: 50");
@@ -168,7 +176,7 @@ public class ChatController implements Initializable {
         Button deleteBtn= new Button();
         deleteBtn.setGraphic(new ImageView(new Image( "file:src/main/resources/namedIcons/delete2.png",16,16,true,true ))  );         ;
         deleteBtn.setStyle("-fx-background-color: tarnsparent");
-        deleteBtn.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
+        deleteBtn.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         hBox.setAlignment( Pos.CENTER_LEFT );
         hBox.setSpacing(6);
         hBox.setPadding( new Insets( 0,0,0,20 ) );
@@ -176,7 +184,7 @@ public class ChatController implements Initializable {
 
         hBox.hoverProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue)
-                hBox.setStyle( "-fx-background-color: #faf2dc;" +
+                hBox.setStyle( "-fx-background-color: #fdc847;" +
                         "-fx-background-radius: 10;"  );
             else
                 hBox.setStyle( "-fx-background-color: transparent" );
@@ -196,7 +204,7 @@ public class ChatController implements Initializable {
     public void setSelectedUserData(User user){
         this.reciver=user;
         userImage.setImage(new Image( "file:src/main/resources/"+user.getImagePath() ,46,46,true,true)) ;
-        userName.setText( user.getFirstname()+" "+user.getLastname() );
+        userName.setText( user.getFirstname().toUpperCase()+" "+user.getLastname().toUpperCase() );
         userName.setMinHeight( Region.USE_PREF_SIZE);
         connState.setImage(new Image( "file:src/main/resources/namedIcons/button.png" ,12,12,true,true));
     }
@@ -318,6 +326,43 @@ public class ChatController implements Initializable {
         return msgBox;
     }
 
+
+    public static HBox createImageChatBoxFromBytes(byte[] bytes, boolean changeOrder){
+        HBox msgBox=new HBox();
+//        msgBox.setPrefWidth( chatContainer.getPrefWidth());
+//        msgBox.setStyle( "-fx-background-color: red" );
+        msgBox.setAlignment( Pos.BOTTOM_RIGHT );
+        msgBox.setPadding( new Insets( 0,0,0,10 ) );
+        msgBox.setSpacing( 4 );
+
+
+        ImageView image=new ImageView( new Image(new ByteArrayInputStream(bytes),80,100,true,true) );
+//        msgLabel.setStyle( "-fx-background-color: blue" );
+        image.setStyle( "-fx-background-radius: 10;" +
+                "-fx-border-radius: 10;");
+
+        Label timeLabel=new Label();
+        timeLabel.setStyle( "-fx-font-size: 10;");
+        timeLabel.setMinSize( 25,15 );
+
+        timeLabel.setText( LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")) );
+
+        ImageView usernIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,false,false) );
+        ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,true,true) );
+        setMargin(usernIcon,new Insets( 0,0,4,10 ));
+        setMargin(deleteIcon,new Insets( 0,0,4,10 ));
+
+
+        if(!changeOrder) {
+            msgBox.setAlignment( Pos.BOTTOM_RIGHT );
+            msgBox.getChildren().addAll(deleteIcon, image, timeLabel, usernIcon );
+        }
+        else {
+            msgBox.setAlignment( Pos.BOTTOM_LEFT );
+            msgBox.getChildren().addAll(deleteIcon, usernIcon, timeLabel, image );
+        }
+        return msgBox;
+    }
 
 
     @FXML

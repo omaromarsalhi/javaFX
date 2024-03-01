@@ -1,5 +1,7 @@
 package pidev.javafx.tools;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
@@ -10,13 +12,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class ChatServer {
-    private static ExecutorService threadPool = Executors.newFixedThreadPool(10);
-    private static Map<String, ClientHandler> clients = new HashMap<>();
-    private static Map<String, String> userCredentials = new HashMap<>();
+    private static ExecutorService threadPool = Executors.newFixedThreadPool(3);
+    private static Map<Integer, ClientHandler> users = new HashMap<>();
+    private static Map<Integer, String> userCredentials = new HashMap<>();
 
     static {
-        userCredentials.put("omar", "salhi");
-        userCredentials.put("latifa", "benzaied");
+        userCredentials.put(1, "salhi");
+        userCredentials.put(2, "benzaied");
     }
 
     public static void main(String[] args) {
@@ -32,67 +34,42 @@ public class ChatServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        threadPool.shutdown();
     }
 
 
-    public static void sendMessageToUser(String username,String message) {
-        ClientHandler client = clients.get(username);
+    public static void sendMessageToUser(Integer userId,String message) {
+        ClientHandler client = users.get(userId);
         if (client != null) {
-            System.out.println(username);
+            System.out.println(userId);
             client.sendMessage(message);
         }
     }
 
-    public static boolean authenticateClient(String username,String pwd) {
-        return userCredentials.containsKey(username) && userCredentials.get(username).equals(pwd);
-    }
-
-    public static int getClientsSize() {
-        System.out.println(clients.size());
-        return clients.size();
-    }
-    public static Map<String, ClientHandler> getClients() {
-        return clients;
-    }
-}
-
-class ClientHandler extends Thread {
-    private Socket socket;
-    private BufferedReader reader;
-    private PrintWriter writer;
-    private String clientMessage;
-
-    public ClientHandler(Socket socket) {
-        this.socket = socket;
-    }
-
-    public void run() {
-        try {
-
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-
-            writer = new PrintWriter(socket.getOutputStream(), true);
-
-            ChatServer.getClients().put(reader.readLine(), this);
-
-
-            while ((clientMessage = reader.readLine()) != null) {
-                if (clientMessage.startsWith("@")) {
-                    String[] parts = clientMessage.split( "_", 2 );
-                    String recipient = parts[0].substring( 1 );
-                    String message = parts[1];
-                    ChatServer.sendMessageToUser(recipient,message);
-                }
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static void sendImage(Integer userId,byte[] bytes) {
+        ClientHandler client = users.get(userId);
+        if (client != null) {
+            System.out.println(userId);
+            client.sendImageBytes(bytes);
         }
     }
 
-    public void sendMessage(String message) {
-        writer.println(message);
+    public static boolean authenticateClient(int userID,String pwd) {
+        return userCredentials.containsKey(userID) && userCredentials.get(userID).equals(pwd);
     }
 
+    public static Map<Integer, ClientHandler> getClients() {
+        return users;
+    }
 
+    public static String isUserConnected(int userID) {
+        System.out.println("connection test "+users.containsKey(userID));
+        return "[o^^{[|{|>__" + users.containsKey(userID);
+    }
+
+    public static void closeConnection(int userID) {
+        users.remove(userID);
+        System.out.println("size after close: "+users.size());
+    }
 }
+

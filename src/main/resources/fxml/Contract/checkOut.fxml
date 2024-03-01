@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="mainHbox" alignment="CENTER" prefHeight="670.0" prefWidth="1020.0" spacing="50.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.contrat.CheckOutController">
+<HBox fx:id="mainHbox" alignment="CENTER" prefHeight="670.0" prefWidth="1020.0" spacing="50.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #f4f4f4;" stylesheets="@../../style/marketPlace/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.contrat.CheckOutController">
    <children>
       <VBox alignment="CENTER" minWidth="275.0" prefHeight="670.0" prefWidth="399.0">
          <children>
@@ -24,7 +24,7 @@
             </ImageView>
          </children>
       </VBox>
-      <VBox prefHeight="670.0" prefWidth="366.0" spacing="6.0" stylesheets="@../../style/FilterStyle.css">
+      <VBox prefHeight="670.0" prefWidth="366.0" spacing="6.0" stylesheets="@../../style/marketPlace/FilterStyle.css">
          <children>
             <HBox fx:id="mainHbox" alignment="CENTER" prefHeight="40.0" prefWidth="218.0">
                <children>
@@ -165,7 +165,7 @@
             <Insets top="8.0" />
          </padding>
       </VBox>
-      <VBox fx:id="checkout" alignment="CENTER" prefHeight="670.0" prefWidth="103.0" spacing="30.0" stylesheets="@../../style/Buttons.css">
+      <VBox fx:id="checkout" alignment="CENTER" prefHeight="670.0" prefWidth="103.0" spacing="30.0" stylesheets="@../../style/marketPlace/Buttons.css">
          <children>
             <Button fx:id="generatePDFbtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: transparent;">
                <graphic>

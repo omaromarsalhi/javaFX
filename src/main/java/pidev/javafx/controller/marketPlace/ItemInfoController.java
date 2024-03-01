@@ -124,7 +124,6 @@ public class ItemInfoController implements Initializable {
         exitImageBtn.setOnMouseClicked( event ->  {
             EventBus.getInstance().publish( "onExitForm",event );
         } );
-
     }
 
     public void createUpdateAndDeleteBtns(){
@@ -164,7 +163,6 @@ public class ItemInfoController implements Initializable {
     }
 
     public void onExitBtnClicked(MouseEvent event){
-        System.out.println("waaa");
 //        if(whereAmI.equals("show4TheOwner"))
             EventBus.getInstance().publish( "onExitForm",event );
 //        else

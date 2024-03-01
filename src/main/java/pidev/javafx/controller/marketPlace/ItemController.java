@@ -18,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
@@ -153,7 +152,7 @@ public class ItemController implements Initializable {
         hbox.setSpacing( 10 );
         hbox.setAlignment(Pos.CENTER);
         hbox.setId( "itemInfo" );
-        hbox.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
+        hbox.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         return hbox;
     }
 

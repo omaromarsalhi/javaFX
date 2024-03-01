@@ -23,13 +23,10 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.ChatGPTAPIDescriber;
-import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
+import pidev.javafx.tools.*;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Product;
-import pidev.javafx.tools.MyTools;
 
 import java.io.File;
 import java.net.URL;
@@ -212,21 +209,28 @@ public class FormController implements Initializable {
     @FXML
     public void generateDescription(ActionEvent event){
         if(!Pname.getText().isEmpty()&&isAllInpulValid[0]){
-            Task<String> myTask = new Task<>() {
-                @Override
-                protected String call() throws Exception {
-                    return ChatGPTAPIDescriber.chatGPT( Pname.getText() );
-                }
-            };
 
-            myTask.setOnSucceeded(e -> {
-                Platform.runLater( () -> Pdescretion.setText( myTask.getValue() ) );
-                loadinPage.setVisible( false );
-            });
-            Thread thread = new Thread(myTask);
+            Thread thread =loadingPageThread();
             thread.start();
             loadinPage.setVisible( true );
         }
+    }
+
+    private Thread loadingPageThread() {
+
+        Task<String> myTask = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                return ChatGPTAPIDescriber.chatGPT( Pname.getText() );
+            }
+        };
+
+        myTask.setOnSucceeded(e -> {
+            Platform.runLater( () -> Pdescretion.setText( myTask.getValue() ) );
+            loadinPage.setVisible( false );
+        });
+
+        return new Thread(myTask);
     }
 
     private void setRegEx(){
@@ -378,38 +382,27 @@ public class FormController implements Initializable {
                     Boolean.TRUE,
                     Timestamp.valueOf( LocalDateTime.now() ),
                     Pcategory.getValue() );
-            if(isImageUpdated)
-                bien.setAllImagesSources( product.getAllImagesSources() );
-            else if(chosenFiles!=null) {
+//            if(isImageUpdated)
+//                bien.setAllImagesSources( product.getAllImagesSources() );
+            if(chosenFiles!=null) {
                 List<String> imagesList = new ArrayList<>();
                 for (File file : chosenFiles)
                     imagesList.add(MyTools.getInstance().getPathAndSaveIMG(file.getAbsolutePath()) );
                 bien.setAllImagesSources( imagesList );
             }
+            else {
+                bien.setAllImagesSources( product.getAllImagesSources() );
+            }
             if (usageOfThisForm.equals( "add_prod" )) {
                 CrudBien.getInstance().addItem( bien );
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
-            } else if (usageOfThisForm.equals( "update_prod" ))
+            } else if (usageOfThisForm.equals( "update_prod" )) {
                 CrudBien.getInstance().updateItem( bien );
-
-            Task<Void> myTask = new Task<>() {
-                @Override
-                protected Void call() throws Exception {
-                    Thread.sleep(2500);
-                    return null;
-                }
-            };
-
-            myTask.setOnSucceeded(e -> {
-                EventBus.getInstance().publish( "refreshTableOnAddOrUpdate", event );
-                EventBus.getInstance().publish( "onExitForm",event );
-                loadinPage.setVisible( false );
-            });
-            Thread thread = new Thread(myTask);
+                MyTools.getInstance().notifyUser4NewAddedProduct( bien );
+            }
+            Thread thread = sleepThread(event);
             loadinPage.setVisible( true );
             thread.start();
-
-
         }
         else{
             Alert confirmationAlert = new Alert( Alert.AlertType.ERROR );
@@ -421,6 +414,24 @@ public class FormController implements Initializable {
             confirmationAlert.show();
         }
 
+    }
+
+
+    private Thread sleepThread(MouseEvent event) {
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                Thread.sleep(2000);
+                return null;
+            }
+        };
+
+        myTask.setOnSucceeded(e -> {
+            EventBus.getInstance().publish( "refreshProdContainer", event );
+            EventBus.getInstance().publish( "onExitForm", event );
+            loadinPage.setVisible( false );
+        });
+        return new Thread(myTask);
     }
 
 
@@ -470,7 +481,7 @@ public class FormController implements Initializable {
         buttonsBox.setSpacing( 20 );
         buttonsBox.setAlignment( Pos.CENTER);
         buttonsBox.setId( "itemInfo" );
-        buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
+        buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         buttonsBox.setPadding( new Insets( 0,0,10,0 ) );
     }
 

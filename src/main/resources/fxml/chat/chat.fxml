@@ -19,8 +19,8 @@
 
 <VBox fx:id="itemDeatails" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefHeight="632.0" prefWidth="250.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.chat.ChatController">
     <stylesheets>
-        <URL value="@../../style/Buttons.css" />
-        <URL value="@../../style/chatStyle.css" />
+        <URL value="@../../style/marketPlace/Buttons.css" />
+        <URL value="@../../style/marketPlace/chatStyle.css" />
     </stylesheets>
    <children>
       <AnchorPane prefHeight="174.0" prefWidth="242.0">
@@ -33,7 +33,7 @@
          </children></AnchorPane>
       <StackPane fx:id="chatStackPane">
          <children>
-            <VBox fx:id="chat" stylesheets="@../../style/scrollBarStlyle.css">
+            <VBox fx:id="chat" stylesheets="@../../style/marketPlace/scrollBarStlyle.css">
                <children>
                   <HBox fx:id="userBox" alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="249.0">
                      <children>

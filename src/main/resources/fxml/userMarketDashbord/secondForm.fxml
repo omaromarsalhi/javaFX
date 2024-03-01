@@ -15,6 +15,7 @@
 <?import javafx.scene.text.Font?>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <VBox fx:id="formBox" alignment="CENTER" prefHeight="450.0" prefWidth="267.0" spacing="4.0" style="-fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
    <children>
       <VBox prefHeight="43.0" prefWidth="267.0">
@@ -107,8 +108,11 @@
             <Button fx:id="imageBtn" mnemonicParsing="false" stylesheets="@../../style/formLayout.css">
 =======
 <StackPane alignment="TOP_LEFT" stylesheets="@../../style/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
+=======
+<StackPane alignment="TOP_LEFT" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
+>>>>>>> omar_salhi_branch
    <children>
-      <HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/formLayout.css">
+      <HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
          <children>
             <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
                <children>
@@ -211,7 +215,7 @@
                               <Font name="System Italic" size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="imageBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../../style/formLayout.css">
+                        <Button fx:id="imageBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../../style/marketPlace/formLayout.css">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -233,9 +237,9 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="380.0" stylesheets="@../../style/scrollBarStlyle.css">
+            <VBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="380.0" stylesheets="@../../style/marketPlace/scrollBarStlyle.css">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/Buttons.css">
+                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
                         <Label prefHeight="36.0" prefWidth="160.0" text="Descreption :">
                            <font>

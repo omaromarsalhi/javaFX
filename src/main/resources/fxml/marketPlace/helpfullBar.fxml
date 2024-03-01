@@ -63,7 +63,11 @@
                   </AnchorPane>
                </children>
             </VBox>
+<<<<<<< HEAD
             <VBox fx:id="filterAnchorPane" alignment="CENTER" style="-fx-background-radius: 10; -fx-background-color: white; -fx-background-color: #fdc847;" stylesheets="@../../style/FilterStyle.css">
+=======
+            <VBox fx:id="filterAnchorPane" alignment="CENTER" prefHeight="461.0" prefWidth="234.0" style="-fx-background-radius: 10; -fx-background-color: white; -fx-background-color: #fdc847;" stylesheets="@../../style/marketPlace/FilterStyle.css">
+>>>>>>> omar_salhi_branch
                <children>
                   <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="125.0" text="Products Filter" textAlignment="CENTER">
                      <font>
@@ -196,7 +200,7 @@
                         <Insets left="8.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="234.0" spacing="6.0" stylesheets="@../../style/Buttons.css">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="234.0" spacing="6.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
                         <Button mnemonicParsing="false" text="Cancel" />
                         <Button mnemonicParsing="false" onMouseClicked="#onFilterClicked" text="Filter" />

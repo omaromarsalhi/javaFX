@@ -39,10 +39,10 @@ public class CrudChat implements CrudInterface<Chat> {
 
         try {
             prepare = connect.prepareStatement(sql);
-            prepare.setInt(1, chat.getIdSender());
-            prepare.setInt(2,chat.getIdReciver() );
+            prepare.setInt(1, chat.getUserSender().getId());
+            prepare.setInt(2,chat.getUserReciver().getId() );
             prepare.setString(3, chat.getMessage() );
-            prepare.setBoolean(4,false);
+            prepare.setBoolean(4,chat.isMsgState());
             prepare.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Error adding item: " + e.getMessage());
@@ -73,27 +73,28 @@ public class CrudChat implements CrudInterface<Chat> {
 
     @Override
     public ObservableList<Chat> selectItems() {
-        Chat chat = null;
-        String sql = "SELECT * FROM products  where isDeleted=false order by idProd desc";
-
-        connect = ConnectionDB.getInstance().getCnx();
-        ObservableList<Chat> chatList = FXCollections.observableArrayList();
-        try {
-            prepare = connect.prepareStatement(sql);
-            result = prepare.executeQuery();
-            while (result.next()) {
-                chat=new Chat(result.getInt("idChat"),
-                        result.getInt("idSender"),
-                        result.getInt("idReciver"),
-                        result.getString("messge"),
-                        result.getBoolean("msgState"),
-                        result.getTimestamp( "timestamp"));
-                chatList.add(chat);
-            }
-        } catch (SQLException e) {
-            System.out.println("Error selecting items: " + e.getMessage());
-        }
-        return chatList;
+//        Chat chat = null;
+//        String sql = "SELECT * FROM chat  where isDeleted=false order by idProd desc";
+//
+//        connect = ConnectionDB.getInstance().getCnx();
+//        ObservableList<Chat> chatList = FXCollections.observableArrayList();
+//        try {
+//            prepare = connect.prepareStatement(sql);
+//            result = prepare.executeQuery();
+//            while (result.next()) {
+//                chat=new Chat(result.getInt("idChat"),
+//                        result.getInt("idSender"),
+//                        result.getInt("idReciver"),
+//                        result.getString("messge"),
+//                        result.getBoolean("msgState"),
+//                        result.getTimestamp( "timestamp"));
+//                chatList.add(chat);
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Error selecting items: " + e.getMessage());
+//        }
+//        return chatList;
+        return null;
     }
 
 

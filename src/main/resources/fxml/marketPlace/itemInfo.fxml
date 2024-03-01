@@ -153,8 +153,8 @@
                   </HBox>
                </children>
                <stylesheets>
-                  <URL value="@../../style/Buttons.css" />
-                  <URL value="@../../style/formLayout.css" />
+                  <URL value="@../../style/marketPlace/Buttons.css" />
+                  <URL value="@../../style/marketPlace/formLayout.css" />
                </stylesheets>
             </VBox>
             <VBox alignment="CENTER" prefHeight="366.0" prefWidth="234.0">
@@ -293,8 +293,8 @@
       <TextArea fx:id="itemDesc" editable="false" prefHeight="58.0" prefWidth="220.0" wrapText="true" />
 =======
          <stylesheets>
-            <URL value="@../../style/formLayout.css" />
-            <URL value="@../../style/Buttons.css" />
+            <URL value="@../../style/marketPlace/formLayout.css" />
+            <URL value="@../../style/marketPlace/Buttons.css" />
          </stylesheets>
       </HBox>
 >>>>>>> omar_salhi_branch
