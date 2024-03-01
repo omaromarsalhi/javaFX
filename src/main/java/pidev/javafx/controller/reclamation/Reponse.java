@@ -65,8 +65,6 @@ public class Reponse implements Initializable {
         alert.show();
         clearFields();
     }
-
-
     private void clearFields() {
         privateKey.setText("");
         title.setText("");
@@ -97,14 +95,10 @@ public class Reponse implements Initializable {
         description.setText(reclamation.getDescription());
 
     }
-
-
     public List<Reclamation> getReclamations(){
         ServiceReclamation bs = new ServiceReclamation();
         return new ArrayList<>(bs.getAll());
     }
-
-
     private void loadReclamation(Reclamation reclamation) throws IOException {
         System.out.println("loadReclamation called");
 
@@ -124,10 +118,4 @@ public class Reponse implements Initializable {
         si.setReclamation(reclamation);
         reclamationcontrainer.getChildren().add(hBox);
     }
-    @FXML
-    void supprimer_Reclamation() {
-        String idReclamation = privateKey.getText();
-        si.supprimer(idReclamation);
-    }
-
 }

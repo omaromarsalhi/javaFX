@@ -36,10 +36,7 @@ public class Window {
     private Button Delete;
     private Reponse reponseController;
     private  Reclamation reclamation;
-
     ServiceReclamation si = new ServiceReclamation();
-
-
     public void setReponseController(Reponse reponseController, Reclamation reclamation) {
     this.reclamation=reclamation;
         this.reponseController = reponseController;
@@ -50,13 +47,8 @@ public class Window {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/intrface.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-
-            // Get the controller of the FXML file
             Popupupdate controller = fxmlLoader.getController();
-
-            // Call the method to pass the data
             controller.setData(reclamation);
-
             controller.setData(reclamation);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -67,14 +59,6 @@ public class Window {
             throw new RuntimeException(e);
         }
     }
-
-
-    public void initialize() {
-       // update.setOnAction((ActionEvent event) -> {
-//displayDetails();
-      //  });
-    }
-
     public void setReclamation(Reclamation reclamation) {
         privatekey.setText(reclamation.getPrivateKey());
         subject.setText(reclamation.getSubject());
@@ -92,7 +76,6 @@ public class Window {
 
     @FXML
     void supprimer_Reclamation() {
-        // Assuming privateKey.getText() returns the id of the reclamation
         String idReclamation = privatekey.getText();
         si.supprimer(idReclamation);
 
@@ -100,8 +83,6 @@ public class Window {
         alert.setTitle("Confirmation");
         alert.setHeaderText(null);
         alert.setContentText("Reclmation Delelte!");
-
-        // Show the alert
         alert.showAndWait();
     }
 

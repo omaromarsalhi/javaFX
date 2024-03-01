@@ -56,10 +56,8 @@ public class Test {
         ServiceReponse service = new ServiceReponse();
         List<Response> reclamationsrp = new ArrayList<>(service.getAll());
 
-        // Add the Reclamation objects to the ListView
         lista.getItems().addAll(reclamationsrp);
 
-        // Set a custom cell factory
         lista.setCellFactory(reclamationListView -> new ListCell<Response>() {
             private HBox hbox = new HBox();
             private Label label = new Label();
@@ -84,7 +82,6 @@ public class Test {
                 imageView.setFitHeight(50);
                 imageView.setFitWidth(50);
 
-                // Add a fade in animation to the HBox
                 FadeTransition ft = new FadeTransition(Duration.millis(300), hbox);
                 ft.setFromValue(0.0);
                 ft.setToValue(1.0);
@@ -116,59 +113,8 @@ public class Test {
             }
         });
 
-        // Handle double-click events
-//        lista.setOnMouseClicked(event -> {
-//            if (event.getClickCount() == 2 && (!lista.getSelectionModel().isEmpty())) {
-//                // Get the selected item
-//                Reclamation selectedItem = (Reclamation) lista.getSelectionModel().getSelectedItem();
-//
-//                // Create an instance of the other controller
-//                modifer testController = new modifer();
-//
-//                // Use the details of the selected item to populate the fields in the other controller
-//                testController.displayDetailsInTextField();
-//            }
-//        });
     }
 
-
-
-    //    public void initialize() {
-//        ServiceReponse service = new ServiceReponse();
-//        List<Response> reclamationsrp = new ArrayList<>(service.getAll());
-//
-//        // Add the Reclamation objects to the ListView
-//        lista.getItems().addAll(reclamationsrp);
-//
-//        // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
-//        lista.setCellFactory(reclamationListView -> new ListCell<Response>() {
-//            @Override
-//            protected void updateItem(Response reclamation, boolean empty) {
-//                super.updateItem(reclamation, empty);
-//                if (empty || reclamation == null) {
-//                    setText(null);
-//                } else {
-//                    setText(reclamation.getReclamation().getPrivateKey() + " | " + reclamation.getReclamation().getDate() +" | "+reclamation.getReclamation().getSubject() + " | " + reclamation.getReclamation().getTitre() +" | "+reclamation.getDescription() );
-//                    //    System.out.println(reclamation.toString());
-//
-//                    ImageView imageView = new ImageView();
-//
-//                    imageView.setFitHeight(50);
-//                    imageView.setFitWidth(50);
-//                    if (!empty && reclamation.getReclamation().getImagePath() != null) {
-//                        try (InputStream is = new FileInputStream(reclamation.getReclamation().getImagePath())) {
-//                            Image image = new Image(is);
-//                            imageView.setImage(image);
-//                            setGraphic(imageView);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                    setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
-//                }
-//            }
-//        });
-//    }
     public void displayDetailsInTextField() {
         lista.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2 && (!lista.getSelectionModel().isEmpty())) {
@@ -202,9 +148,6 @@ public class Test {
                 Parent root = (Parent) fxmlLoader.load();
                 modifer m =fxmlLoader.getController();
                 m.onlic(t);
-
-               // Popupupdate controller = fxmlLoader.getController();
-                //controller.setData(reclamation);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.setTitle("Popup Window");

@@ -197,10 +197,7 @@ public class First_page {
 
         List<Ticket> Tickets = new ArrayList<>(si.getAll());
 
-        // Add the Reclamation objects to the ListView
         lista.getItems().addAll(Tickets);
-
-        // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
         lista.setCellFactory(reclamationListView -> new ListCell<Ticket>() {
             @Override
             protected void updateItem(Ticket ticket, boolean empty) {

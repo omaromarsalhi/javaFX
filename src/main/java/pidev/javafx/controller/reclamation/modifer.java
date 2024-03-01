@@ -31,16 +31,12 @@ public class modifer {
 
     ServiceReclamation si = new ServiceReclamation();
 
-
-
     public void initialize() {
         ServiceReclamation service = new ServiceReclamation();
         List<Reclamation> reclamations = new ArrayList<>(service.getAll());
 
-        // Add the Reclamation objects to the ListView
         lista.getItems().addAll(reclamations);
 
-        // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
         lista.setCellFactory(reclamationListView -> new ListCell<Reclamation>() {
             @Override
             protected void updateItem(Reclamation reclamation, boolean empty) {
@@ -49,8 +45,6 @@ public class modifer {
                     setText(null);
                 } else {
                     setText("private Key : "+ reclamation.getPrivateKey() + " | date :  " + reclamation.getDate() +" |  subject : "+reclamation.getSubject() + " | titre :  " + reclamation.getTitre());
-                //    System.out.println(reclamation.toString());
-
                     ImageView imageView = new ImageView();
 
                     imageView.setFitHeight(50);

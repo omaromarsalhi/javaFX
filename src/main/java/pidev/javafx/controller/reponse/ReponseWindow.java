@@ -58,7 +58,6 @@ public class ReponseWindow {
         this.response = response;
         privatekey.setText(reclamation.getPrivateKey());
         subject.setText(reclamation.getSubject());
-        //etat.setText(response.getEtatReponse());
         imagePath.setImage(new Image("file:"+reclamation.getImagePath(),50,50,true,true));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date.setText(reclamation.getDate() != null ? formatter.format(reclamation.getDate()) : "empty");
@@ -84,7 +83,6 @@ public class ReponseWindow {
 
     @FXML
     void supprimer_Reclamation(ActionEvent event) {
-        // Assuming privateKey.getText() returns the id of the reclamation
         String idReclamation = privatekey.getText();
         siResponse.supprimer(idReclamation);
 

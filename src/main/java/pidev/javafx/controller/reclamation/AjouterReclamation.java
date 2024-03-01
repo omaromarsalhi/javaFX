@@ -145,7 +145,6 @@ public class AjouterReclamation {
             }
             randomString = sb.toString();
 
-            // Check if the generated string exists in the database
             if (!doesExist(randomString)) {
                 break;
             }
