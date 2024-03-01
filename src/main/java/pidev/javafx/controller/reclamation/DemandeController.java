@@ -12,6 +12,7 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.AnchorPane;
 
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -54,9 +55,9 @@ public class DemandeController {
         box1.setEffect(new BoxBlur(10, 10, 3));
         box3.setEffect(new BoxBlur(10, 10, 3));
         timer2();
-        AnchorPane showEmpAnchorPane = null;
+        BorderPane showEmpAnchorPane = null;
         try {
-            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/reponse.fxml"));
+            showEmpAnchorPane = FXMLLoader.load(getClass().getResource("/fxml/reclamation/menuavance.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

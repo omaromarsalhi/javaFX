@@ -11,58 +11,63 @@
 
 <HBox alignment="CENTER" prefHeight="394.0" prefWidth="844.0" style="-fx-background-color: #D0D0D0; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.Window">
    <children>
-      <VBox>
+      <VBox style="-fx-border-color: black;">
          <children>
             <ImageView fx:id="imagePath" fitHeight="278.0" fitWidth="283.0" pickOnBounds="true" preserveRatio="true" />
-            <Label fx:id="date1" prefHeight="38.0" prefWidth="163.0" styleClass="recc" text="date">
-               <font>
-                  <Font name="Souliyo Unicode" size="24.0" />
-               </font>
-            </Label>
-            <Separator orientation="VERTICAL" prefHeight="17.0" prefWidth="7.0" visible="false" />
-            <Label fx:id="date" prefHeight="30.0" prefWidth="274.0" text="date">
-               <font>
-                  <Font name="Souliyo Unicode" size="18.0" />
-               </font></Label>
+            <VBox style="-fx-border-color: BLACK;">
+               <children>
+                  <Label fx:id="date1" prefHeight="38.0" prefWidth="163.0" styleClass="recc" text="date">
+                     <font>
+                        <Font name="Souliyo Unicode" size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator orientation="VERTICAL" prefHeight="17.0" prefWidth="7.0" visible="false" />
+                  <Label fx:id="date" prefHeight="47.0" prefWidth="274.0" text="date">
+                     <font>
+                        <Font name="Souliyo Unicode" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </VBox>
-      <VBox alignment="CENTER_LEFT" spacing="20.0">
+      <VBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-border-color: black;">
          <children>
-            <Label fx:id="privatekey1" prefHeight="76.0" prefWidth="112.0" text="privatekey" textAlignment="CENTER">
+            <Label fx:id="privatekey1" prefHeight="96.0" prefWidth="157.0" style="-fx-border-color: black;" text="privatekey" textAlignment="CENTER">
                <font>
                   <Font name="Souliyo Unicode" size="24.0" />
                </font>
             </Label>
             <Separator orientation="VERTICAL" prefHeight="43.0" prefWidth="7.0" visible="false" />
-            <Label fx:id="privatekey" prefHeight="88.0" prefWidth="160.0" text="privatekey">
+            <Label fx:id="privatekey" prefHeight="88.0" prefWidth="160.0" style="-fx-border-color: black;" text="privatekey">
                <font>
                   <Font name="Souliyo Unicode" size="12.0" />
                </font></Label>
          </children>
       </VBox>
-      <VBox alignment="CENTER_LEFT" spacing="20.0">
+      <VBox alignment="CENTER_LEFT" spacing="20.0" style="-fx-border-color: black;">
          <children>
-            <Label fx:id="subject1" prefHeight="38.0" prefWidth="140.0" styleClass="recc" text="Subject">
+            <Label fx:id="subject1" prefHeight="38.0" prefWidth="140.0" style="-fx-border-color: black;" styleClass="recc" text="Subject">
                <font>
                   <Font name="Souliyo Unicode" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="subject" prefHeight="160.0" prefWidth="158.0" styleClass="recc" text="Subject">
+            <Label fx:id="subject" prefHeight="160.0" prefWidth="158.0" style="-fx-border-color: black;" styleClass="recc" text="Subject">
                <font>
                   <Font name="Souliyo Unicode" size="24.0" />
                </font></Label>
-            <Label fx:id="titre1" prefHeight="17.0" prefWidth="99.0" styleClass="recc" text="titre">
+            <Label fx:id="titre1" prefHeight="40.0" prefWidth="159.0" style="-fx-border-color: black;" styleClass="recc" text="titre">
                <font>
                   <Font name="Souliyo Unicode" size="24.0" />
                </font>
             </Label>
-            <Label fx:id="titre" prefHeight="17.0" prefWidth="99.0" styleClass="recc" text="titre">
+            <Label fx:id="titre" prefHeight="59.0" prefWidth="156.0" style="-fx-border-color: black;" styleClass="recc" text="titre">
                <font>
                   <Font name="Souliyo Unicode" size="12.0" />
                </font></Label>
          </children>
       </VBox>
-      <VBox alignment="CENTER">
+      <VBox alignment="CENTER" style="-fx-border-color: black;">
          <children>
             <Label prefHeight="38.0" prefWidth="143.0" text="Description">
                <font>

@@ -12,6 +12,7 @@ module pidev.javafx{
     requires aspose.imaging;
     requires javafx.swing;
     requires org.apache.pdfbox;
+    opens pidev.javafx.model.reclamation to javafx.base;
 
     opens pidev.javafx.controller.ticket ;
     exports pidev.javafx.controller.ticket to javafx.fxml;
