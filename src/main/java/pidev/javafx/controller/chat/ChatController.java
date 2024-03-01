@@ -1,18 +1,13 @@
 package pidev.javafx.controller.chat;
 
 import javafx.animation.FadeTransition;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
@@ -26,12 +21,9 @@ import pidev.javafx.crud.marketplace.CrudChat;
 import pidev.javafx.model.User.User;
 import pidev.javafx.model.chat.Chat;
 import pidev.javafx.tools.ChatClient;
-import pidev.javafx.tools.ChatServer;
 import pidev.javafx.tools.ResultHolder;
 
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.net.Socket;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -184,7 +176,7 @@ public class ChatController implements Initializable {
         Button deleteBtn= new Button();
         deleteBtn.setGraphic(new ImageView(new Image( "file:src/main/resources/namedIcons/delete2.png",16,16,true,true ))  );         ;
         deleteBtn.setStyle("-fx-background-color: tarnsparent");
-        deleteBtn.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
+        deleteBtn.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         hBox.setAlignment( Pos.CENTER_LEFT );
         hBox.setSpacing(6);
         hBox.setPadding( new Insets( 0,0,0,20 ) );

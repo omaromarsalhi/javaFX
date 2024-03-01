@@ -481,7 +481,7 @@ public class FormController implements Initializable {
         buttonsBox.setSpacing( 20 );
         buttonsBox.setAlignment( Pos.CENTER);
         buttonsBox.setId( "itemInfo" );
-        buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
+        buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         buttonsBox.setPadding( new Insets( 0,0,10,0 ) );
     }
 

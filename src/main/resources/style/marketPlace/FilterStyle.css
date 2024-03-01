@@ -30,7 +30,7 @@
 }
 
 .date-picker > .arrow-button {
-    -fx-background-image: url("../namedIcons/calendar.png"); /* Url of the icon */
+    -fx-background-image: url("../../namedIcons/calendar.png"); /* Url of the icon */
     -fx-background-size: 60% 60%; /* Can be `cover` or `100% 100%` ect. */
     -fx-background-repeat: no-repeat;
     -fx-background-position: center center; /* Put the icon in the center */

@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-import pidev.javafx.controller.userMarketDashbord.FavoriteController;
 import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.model.MarketPlace.Bien;
@@ -215,7 +214,7 @@ public class helpfullBarController implements Initializable {
         serie.getData().add(new XYChart.Data("Su", 13 ));
 
         lineChart.getData().addAll(serie);
-        lineChart.getStylesheets().add( String.valueOf( getClass().getResource("/style/lineChartStyle.css") ) );
+        lineChart.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/lineChartStyle.css" ) ) );
 
 
         stachBarChart.getYAxis().setLabel("value in $");
@@ -252,7 +251,7 @@ public class helpfullBarController implements Initializable {
 
 
         stachBarChart.getData().addAll(selled,purshased,traded);
-        stachBarChart.getStylesheets().add( String.valueOf( getClass().getResource("/style/lineChartStyle.css") ) );
+        stachBarChart.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/lineChartStyle.css" ) ) );
 
     }
 

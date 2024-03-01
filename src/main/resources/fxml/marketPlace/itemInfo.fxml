@@ -106,8 +106,8 @@
                   </HBox>
                </children>
                <stylesheets>
-                  <URL value="@../../style/Buttons.css" />
-                  <URL value="@../../style/formLayout.css" />
+                  <URL value="@../../style/marketPlace/Buttons.css" />
+                  <URL value="@../../style/marketPlace/formLayout.css" />
                </stylesheets>
             </VBox>
             <VBox alignment="CENTER" prefHeight="366.0" prefWidth="234.0">
@@ -171,8 +171,8 @@
             </VBox>
          </children>
          <stylesheets>
-            <URL value="@../../style/formLayout.css" />
-            <URL value="@../../style/Buttons.css" />
+            <URL value="@../../style/marketPlace/formLayout.css" />
+            <URL value="@../../style/marketPlace/Buttons.css" />
          </stylesheets>
       </HBox>
    </children>

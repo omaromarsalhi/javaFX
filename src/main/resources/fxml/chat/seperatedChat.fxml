@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="container" prefHeight="422.0" prefWidth="497.0" style="-fx-border-color: black; -fx-background-color: #a5a5a5; -fx-border-radius: 10; -fx-background-radius: 10;" stylesheets="@../../style/chatStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.chat.ChatController">
+<VBox fx:id="container" prefHeight="422.0" prefWidth="497.0" style="-fx-border-color: black; -fx-background-color: #a5a5a5; -fx-border-radius: 10; -fx-background-radius: 10;" stylesheets="@../../style/marketPlace/chatStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.chat.ChatController">
    <children>
       <HBox alignment="CENTER_RIGHT" minHeight="29.0" prefHeight="38.0" prefWidth="452.0" spacing="235.0">
          <children>
@@ -162,7 +162,7 @@
                   </VBox>
                   <AnchorPane fx:id="ancherPaneOfgridPaneMain" prefHeight="351.0" prefWidth="174.0" style="-fx-background-color: transparent;">
                      <children>
-                        <AnchorPane fx:id="ancherPaneOfgridPane" layoutX="7.0" layoutY="195.0" prefHeight="135.0" prefWidth="148.0" stylesheets="@../../style/chatStyle.css">
+                        <AnchorPane fx:id="ancherPaneOfgridPane" layoutX="7.0" layoutY="195.0" prefHeight="135.0" prefWidth="148.0" stylesheets="@../../style/marketPlace/chatStyle.css">
                            <children>
                               <GridPane alignment="CENTER" layoutX="12.0" layoutY="3.0" prefHeight="106.0" prefWidth="126.0">
                                  <columnConstraints>

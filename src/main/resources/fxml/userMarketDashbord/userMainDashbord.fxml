@@ -60,7 +60,7 @@
                               </AnchorPane>
                               <VBox>
                                  <children>
-                                    <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="80.0" stylesheets="@../../style/toolBarStyle.css">
+                                    <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="80.0" stylesheets="@../../style/marketPlace/toolBarStyle.css">
                                        <children>
                                           <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="370.0">
                                             <menus>
