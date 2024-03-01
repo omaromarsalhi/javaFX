@@ -1,0 +1,18 @@
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+.yel-border {
+    -fx-border-color: #ffce4b;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-radius: 0 10 10 10;
+}
+.btn {
+    -fx-cursor: hand;
+}

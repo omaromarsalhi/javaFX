@@ -52,7 +52,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../namedIcons/update16C.png" />
+                        <Image url="@../../icons/marketPlace/update16C.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -61,7 +61,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../namedIcons/delete16C.png" />
+                        <Image url="@../../icons/marketPlace/delete16C.png" />
                      </image>
                   </ImageView>
                </graphic>

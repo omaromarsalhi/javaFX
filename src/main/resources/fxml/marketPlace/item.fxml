@@ -23,7 +23,7 @@
                   </Label>
                   <ImageView fx:id="img" fitHeight="115.0" fitWidth="180.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../img/cherry.png" />
+                        <Image url="@../../img/marketPlace/cherry.png" />
                      </image>
                   </ImageView>
                   <HBox alignment="CENTER" prefHeight="30.0" prefWidth="218.0">

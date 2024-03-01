@@ -6,17 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import pidev.javafx.controller.contrat.CheckOutController;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
-import pidev.javafx.tools.MyTools;
 
 
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -44,6 +42,14 @@ public class MainWindowController implements Initializable {
     private AnchorPane MainAnchorPane;
     @FXML
     private MenuButton menubottons;
+    @FXML
+    private Button closeBtn;
+    @FXML
+    private Button reduireBtn;
+    @FXML
+    private Button agrendirBtn;
+    @FXML
+
 
 
     private HBox mainhBox;
@@ -98,6 +104,34 @@ public class MainWindowController implements Initializable {
         mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
         mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
         ((VBox)mainBorderPain.getCenter()).getChildren().add(1,mainhBox);
+    }
+
+
+    @FXML
+    void onCloseBtnClicked() {
+        closeBtn.setOnMouseClicked(event -> {
+            System.exit(0);
+        });
+    }
+
+//    @FXML
+//    void onReduireBtnClicked(ActionEvent event) {
+//        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
+//        currentStage.setIconified(true);
+//    }
+
+//    @FXML
+//    void onAgrendirBtnClicked(ActionEvent event) {
+//        Stage currentStage = (Stage) agrendirBtn.getScene().getWindow();
+//        boolean etatFenetre = currentStage.isMaximized();
+//        currentStage.setMaximized(!etatFenetre);
+//    }
+
+    @FXML
+    void onBlogClicked(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/blog/blog.fxml"));
+        AnchorPane blogPane = loader.load();
+        mainBorderPain.setCenter(blogPane);
     }
 
 }

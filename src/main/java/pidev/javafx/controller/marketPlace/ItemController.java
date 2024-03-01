@@ -16,8 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
@@ -130,9 +130,9 @@ public class ItemController implements Initializable {
         add2Card.setMinHeight( 32 );
 
 
-        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/newBuy.png")),24,24,true,true );
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/lending.png")),24,24,true,true );
-        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/information.png")),24,24,true,true );
+        Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/newBuy.png" )),24,24,true,true );
+        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/lending.png" )),24,24,true,true );
+        Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/information.png" )),24,24,true,true );
 
         add2Card.setGraphic( new ImageView( img1 ));
         trade.setGraphic( new ImageView( img2 ));

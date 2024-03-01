@@ -219,7 +219,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../namedIcons/image.png" />
+                                    <Image url="@../../icons/marketPlace/image.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -253,7 +253,7 @@
                            <graphic>
                               <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../namedIcons/ai-file.png" />
+                                    <Image url="@../../icons/marketPlace/ai-file.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -282,7 +282,7 @@
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../namedIcons/cross.png" />
+                        <Image url="@../../icons/marketPlace/cross.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -296,7 +296,7 @@
                   </Label>
                   <ImageView fx:id="relativeImageVieur" fitHeight="354.0" fitWidth="301.0" onDragDropped="#handelDrag" onDragOver="#handelDragOver" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../img/mySelf.jpg" />
+                        <Image url="@../../img/marketPlace/mySelf.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -307,7 +307,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../namedIcons/left-arrow.png" />
+                              <Image url="@../../icons/marketPlace/left-arrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -316,7 +316,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../namedIcons/trash.png" />
+                              <Image url="@../../icons/marketPlace/trash.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -325,7 +325,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../namedIcons/right-arrow.png" />
+                              <Image url="@../../icons/marketPlace/right-arrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -343,7 +343,7 @@
          <children>
             <ImageView fitHeight="85.0" fitWidth="90.0" layoutX="343.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="212.60000000000002" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="212.0">
                <image>
-                  <Image url="@../../img/grey-9026_256.gif" />
+                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
                </image>
             </ImageView>
          </children>

@@ -9,6 +9,7 @@ module pidev.javafx{
     requires twilio;
     requires org.json;
     requires org.apache.pdfbox;
+    requires javafx.web;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
@@ -34,5 +35,7 @@ module pidev.javafx{
     exports pidev.javafx.controller.user;
     exports pidev.javafx.model.User;
     exports pidev.javafx.model.chat;
+    exports pidev.javafx.tools.marketPlace;
+    opens pidev.javafx.tools.marketPlace to javafx.fxml;
 }
 

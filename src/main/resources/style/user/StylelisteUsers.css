@@ -1,0 +1,228 @@
+.split-pane-divider {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+
+.Hbox{
+    -fx-border-radius: 10px; /* Rayon de courbure des coins du bord */
+    -fx-background-radius: 10;
+}
+
+.Hbox .label{
+
+    -fx-font-size: 13px;
+    -fx-font-family: "Souliyo Regular";
+    -fx-text-fill: #000000;
+    -fx-padding: 5px;
+    -fx-background-color: transparent; /* Couleur de fond transparente */
+
+}
+.Hbox1 .button{
+    -fx-background-color: transparent; /* Couleur de fond transparente */
+    -fx-border-color: transparent; /* Couleur de bordure transparente */
+    -fx-border-radius: 5px; /* Rayon des coins de la bordure */
+    -fx-text-fill: #000000; /* Couleur du texte */
+    -fx-padding: 5px 10px;
+}
+.Hbox2 .label{
+
+    -fx-font-size: 12px; /* Taille de la police */
+    -fx-font-family: "Souliyo Regular"; /* Police de caractères */
+    -fx-font-weight: bold; /* Poids de la police (bold, normal, etc.) */
+    -fx-text-fill: #333333; /* Couleur du texte */
+
+    -fx-background-color: transparent; /* Couleur de fond transparente */
+
+}
+
+.scrollpane .scroll-bar:vertical,
+.scrollpane .scroll-bar:horizontal {
+    -fx-opacity: 0; /* Rendre la barre de défilement invisible */
+    -fx-size: 0; /* Définir la taille de la barre de défilement à 0 */
+}
+.Hbox1{
+-fx-border-color: #D9D9D9;
+-fx-background-radius: 10;
+}
+.Hbox1 .label {
+    -fx-font-size: 11px; /* Taille de la police */
+    -fx-font-family: "Arial"; /* Police de caractères */
+    -fx-font-weight: bold; /* Poids de la police */
+    -fx-text-fill: #333333; /* Couleur du texte */
+}
+.label:pressed {
+    -fx-text-fill: #777777; /* Couleur du texte enfoncé */
+}
+.bar_recherche{
+    -fx-background-color: white;
+
+    -fx-border-radius: 20px;
+    -fx-padding: 5px;
+    -fx-font-size: 14px;
+}
+.btn_chercher{
+    -fx-background-color: transparent; /* Couleur de fond transparente */
+}
+.scrollpane{
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+    -fx-control-inner-background: transparent;
+}
+@font-face {
+    font-family: 'Souliyo Regular';
+    src: url('../font/Souliyo-Regular.ttf');
+}
+.Hbox1{
+    -fx-border-radius: 10px; /* Rayon de courbure des coins du bord */
+    -fx-background-radius: 10;
+    -fx-alignment: center;
+}
+
+.Hbox1:hover {
+    -fx-background-color: lightgray; /* Couleur de fond lorsque survolé */
+    -fx-border-color: black; /* Couleur de la bordure lorsque survolé */
+    -fx-border-width: 1px; /* Largeur de la bordure lorsque survolé */
+    -fx-background-radius: 10px; /* Largeur de la bordure lorsque survolé */
+}
+.hbox_filtre .button{
+    -fx-background-color: transparent;
+    -fx-border-color: #20749C; /* Couleur de bordure transparente */
+    -fx-border-radius: 10px; /* Rayon des coins de la bordure */
+    -fx-text-fill: #000000; /* Couleur du texte */
+
+}
+.hbox_filtre .button:hover{
+    -fx-background-color: #20749C;
+    -fx-border-color: #transparent; /* Couleur de bordure transparente */
+    -fx-border-radius: 10px; /* Rayon des coins de la bordure */
+
+
+}
+.hbox_filtre{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent; /* Couleur de bordure transparente */
+}
+.custom-user{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+
+}
+.custom-user:hover{
+    -fx-border-color:  transparent transparent #20749C transparent ; /* Couleur de la bordure */
+    -fx-border-width: 0 0 2px 0; /* Épaisseur de la bordure (0 pour les autres côtés, 2px pour le côté droit) */
+    -fx-text-fill: #20749C;
+}
+.vboxinfo{
+
+    -fx-border-radius: 20px;
+    -fx-background-color: transparent;
+    -fx-border-color: black;
+    -fx-background-radius:20px;
+
+
+}
+.vboxinfo .text-field{
+
+
+    -fx-text-fill: black; /* Couleur du texte */
+    -fx-font-size: 14px; /* Taille de la police */
+    /*-fx-border-width: 1px;*/
+    /*-fx-border-radius: 5px;*/
+    -fx-background-color: transparent;
+    /*-fx-border-color: #d3d3d3;*/
+
+}
+.vboxinfo .date-picker{
+
+
+    -fx-text-fill: black; /* Couleur du texte */
+    -fx-font-size: 13px; /* Taille de la police */
+    -fx-border-width: 1px; /* Largeur de la bordure */
+    -fx-border-radius: 5px;
+    -fx-background-color: transparent;
+    -fx-border-color: #d3d3d3;
+
+}
+
+.add {
+    -fx-background-color: transparent;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30;
+    -fx-border-color: transparent;
+}
+
+.add:hover {
+ -fx-border-color:#fdc847 ;
+}
+
+.hboxbtn .button{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+.pane {
+    -fx-background-color: #C8C8C8; /* Couleur de fond *//*9FE7F5*/
+    -fx-border-color: #C8C8C8; /* Couleur de la bordure */
+    -fx-border-width: 1px;   /* Largeur de la bordure */
+    -fx-border-radius: 10px; /* Rayon de la bordure arrondie*/
+    -fx-background-radius: 10px;
+    -fx-border-style: solid;
+    -fx-border-width: 2px 2px 2px 2px;
+    -fx-effect: null;
+    -fx-transition: all 0.3s ease;
+}
+.pane:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 10, 0.5, 0, 0); /* Ombre portée avec couleur et rayon */
+
+}
+.calendrier{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.panecalendrier {
+    -fx-background-radius: 10px;
+
+}
+.Hbox_recherche{
+    -fx-border-radius: 50px;
+        -fx-border-color: #D7D7D7;
+
+}
+.text1{
+    -fx-background-color: transparent;
+}
+.fleche{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+.scroll-pane .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+.hboxselected{
+
+    -fx-background-color: #D7D7D7;
+}
+.vboxinfo .button:hover{
+
+
+
+        -fx-text-fill: white; /* Changez la couleur du texte lors du survol */
+        -fx-font-weight: bold; /* Changez le style du texte lors du survol */
+        -fx-background-radius: 10px;
+        -fx-border-radius: 10px;
+    -fx-border-color: #fdc847;
+
+
+
+}
+

@@ -90,7 +90,7 @@
       </VBox>
       <ImageView fx:id="deleteBtn" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../namedIcons/delete.png" />
+            <Image url="@../../icons/marketPlace/delete.png" />
          </image>
       </ImageView>
    </children>

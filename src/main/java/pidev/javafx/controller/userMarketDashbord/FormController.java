@@ -23,10 +23,13 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.*;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Product;
+import pidev.javafx.tools.marketPlace.ChatGPTAPIDescriber;
+import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.marketPlace.MyListener;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.io.File;
 import java.net.URL;
@@ -202,7 +205,7 @@ public class FormController implements Initializable {
     public void handelDrag(DragEvent dragEvent){
         for (File file : dragEvent.getDragboard().getFiles()){
             relativeImageVieur.setImage( new Image( file.getAbsolutePath() ) );
-            product.addFromImagesSources(MyTools.getInstance().getPathAndSaveIMG(file.getAbsolutePath() ) );
+            product.addFromImagesSources( MyTools.getInstance().getPathAndSaveIMG(file.getAbsolutePath() ) );
         }
     }
 
@@ -450,9 +453,9 @@ public class FormController implements Initializable {
         clearProd.setPrefHeight( 32 );
         cancel.setPrefHeight( 32 );
 
-        Image  img1= new Image(String.valueOf( getClass().getResource("/namedIcons/tab2.png") ));
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/broom.png")));
-        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/paper.png")));
+        Image  img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/tab2.png" ) ));
+        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/broom.png" )));
+        Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/paper.png" )));
 
         addProd.setGraphic( new ImageView( img1 ));
         clearProd.setGraphic( new ImageView( img2 ));
@@ -498,7 +501,7 @@ public class FormController implements Initializable {
             Pprice.setText( Float.toString( product.getPrice() ) );
             Pquantity.setText( Float.toString( product.getQuantity() ) );
             usageOfThisForm="update_prod";
-            Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/validation.png") ));
+            Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/validation.png" ) ));
             ((Button)buttonsBox.getChildren().get( 0 )).setGraphic( new ImageView(img1) );
             Pcategory.setValue(  ((Bien) product).getCategorie());
             isAllInpulValid[0]=true;

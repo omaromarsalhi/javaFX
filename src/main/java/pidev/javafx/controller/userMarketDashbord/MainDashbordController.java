@@ -36,10 +36,10 @@ import pidev.javafx.controller.marketPlace.*;
 import pidev.javafx.model.MarketPlace.Favorite;
 import pidev.javafx.model.User.Role;
 import pidev.javafx.model.User.User;
-import pidev.javafx.tools.*;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 import pidev.javafx.model.Wrapper.LocalWrapper;
+import pidev.javafx.tools.marketPlace.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -143,7 +143,7 @@ public class MainDashbordController implements Initializable {
                 animateSearchBar();
         } );
 
-        Popup popup =MyTools.getInstance().createPopUp();
+        Popup popup = MyTools.getInstance().createPopUp();
         ((Label)popup.getContent().get( 0 )).setText("we have provided you with an advanced search so in it you use COMMANDS as the follow columnName_value ");
         popup.getContent().get( 0 ).setStyle(popup.getContent().get( 0 ).getStyle()+"-fx-background-color: #64b5f6;");
         ((Label)popup.getContent().get( 0 )).setMaxWidth( 250 );
@@ -195,10 +195,10 @@ public class MainDashbordController implements Initializable {
 
 
     public void setMenueBar(){
-        var addProduct=new MenuItem("Add Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
-        var showAllProduct=new MenuItem("Show  My Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var showForPushasedProduct=new MenuItem("Show Purshased Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var showForSelledProduct=new MenuItem("Show Selled Prod",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var addProduct=new MenuItem("Add Prod",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+        var showAllProduct=new MenuItem("Show  My Prod",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+        var showForPushasedProduct=new MenuItem("Show Purshased Prod",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+        var showForSelledProduct=new MenuItem("Show Selled Prod",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         addProduct.setOnAction( event -> {
             secondInterface.setVisible( true );
             firstInterface.setOpacity( 0.4 );
@@ -214,11 +214,11 @@ public class MainDashbordController implements Initializable {
 
         menuBar.getMenus().get( 0 ).getItems().addAll(addProduct ,showAllProduct,showForPushasedProduct,showForSelledProduct);
 
-        var addService=new MenuItem("Add Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
-        var showService=new MenuItem("Show Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var addService=new MenuItem("Add Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+        var showService=new MenuItem("Show Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         menuBar.getMenus().get( 1 ).getItems().addAll(addService ,showService);
 
-        var add2Favorite=new MenuItem("Manage",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var add2Favorite=new MenuItem("Manage",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         menuBar.getMenus().get( 2 ).getItems().add(add2Favorite);
 
         add2Favorite.setOnAction( event -> {
@@ -227,7 +227,7 @@ public class MainDashbordController implements Initializable {
             EventBus.getInstance().publish( "showFavorite",event);
         });
 
-        var openChat=new MenuItem("open chat ",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var openChat=new MenuItem("open chat ",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         menuBar.getMenus().get( 3 ).getItems().add(openChat);
         openChat.setOnAction( event -> openChatWindow() );
     }
@@ -268,7 +268,7 @@ public class MainDashbordController implements Initializable {
                 "beb saadoun",
                 Role.simpleutlisateur,
                 "salhi",
-                "img/me.png" ) ,
+                        "img/marketPlace/me.png" ) ,
                 new User( 2,
                 "latifa",
                 "benzaied",
@@ -279,7 +279,7 @@ public class MainDashbordController implements Initializable {
                 "menzah 1",
                 Role.simpleutlisateur,
                 "benzaied",
-                "img/latifa.png") ) );
+                        "img/marketPlace/latifa.png" ) ) );
         newStage.setResizable( false );
         newStage.setOnCloseRequest(event -> System.exit(0));
         newStage.initStyle( StageStyle.TRANSPARENT);

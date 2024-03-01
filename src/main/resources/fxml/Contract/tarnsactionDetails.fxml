@@ -20,7 +20,7 @@
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="50.0" layoutX="14.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../img/mySelf.jpg" />
+                              <Image url="@../../img/marketPlace/mySelf.jpg" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER" layoutX="64.0" layoutY="-2.0" prefHeight="67.0" prefWidth="60.0">
@@ -40,7 +40,7 @@
                      <children>
                         <ImageView fitHeight="100.0" fitWidth="50.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../img/omar.jpg" />
+                              <Image url="@../../img/marketPlace/omar.jpg" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER" layoutX="50.0" prefHeight="68.0" prefWidth="68.0">

@@ -1,7 +1,9 @@
 package pidev.javafx.controller.user;
 
-import pidev.javafx.model.User.Role;
-import pidev.javafx.model.User.User;
+
+import pidev.javafx.model.user.Role;
+import pidev.javafx.model.user.User;
+
 
 public class UserController {
 
@@ -19,7 +21,7 @@ public class UserController {
                     22,
                     29624921,
                     "beb saadoun",
-                    Role.simpleutlisateur,
+                    Role.Citoyen,
                     "salhi",
                     "img/me.png" );
         }
@@ -32,7 +34,7 @@ public class UserController {
                     22,
                     50421001,
                     "menzah 1",
-                    Role.simpleutlisateur,
+                    Role.Citoyen,
                     "benzaied",
                     "img/latifa.png");
         }

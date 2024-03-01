@@ -1,0 +1,46 @@
+.hbox1{
+
+
+    -fx-border-radius: 50px;
+    -fx-border-color: #D7D7D7;
+
+}
+.text1{
+    -fx-background-color: transparent;
+}
+.hbox1 .button{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+
+}
+.imageview{
+    -fx-background-color: transparent;
+}
+.box{
+    -fx-border-radius: 15px;
+    -fx-border-color: #FF0000;
+    -fx-background-radius: 15px;
+    -fx-background-color: #FF0000;
+
+
+}
+.scroll-pane {
+    width: 300px; /* largeur du panneau */
+    height: 200px; /* hauteur du panneau */
+    overflow: auto; /* ajouter une barre de défilement lorsque le contenu dépasse */
+    border: 1px solid #ccc; /* ajouter une bordure pour le panneau */
+    padding: 10px; /* espace intérieur du panneau */
+}
+
+/* Styling de la barre de défilement */
+.scroll-pane{
+    width: 10px; /* largeur de la barre de défilement */
+}
+
+.scroll-pane {
+    background-color: #888; /* couleur du curseur de la barre de défilement */
+}
+
+.scroll-pane{
+    background-color: #f1f1f1; /* couleur de la piste de la barre de défilement */
+}

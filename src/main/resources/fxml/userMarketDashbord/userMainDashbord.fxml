@@ -76,7 +76,7 @@
                                  <children>
                                     <ImageView fx:id="userImage" fitHeight="79.0" fitWidth="71.0" layoutX="45.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../img/mySelf.jpg" />
+                                          <Image url="@../../img/marketPlace/mySelf.jpg" />
                                        </image>
                                     </ImageView>
                                     <Line endX="-1.0000228881835938" endY="59.399986267089844" layoutX="127.0" layoutY="46.0" startX="-1.0000228881835938" startY="-14.799995422363281" />
@@ -114,7 +114,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../namedIcons/packaging.png" />
+                                                            <Image url="@../../icons/marketPlace/packaging.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -123,7 +123,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../namedIcons/service.png" />
+                                                            <Image url="@../../icons/marketPlace/service.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -132,7 +132,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../namedIcons/star.png" />
+                                                            <Image url="@../../icons/marketPlace/star.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -141,7 +141,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../namedIcons/notification.png" />
+                                                            <Image url="@../../icons/marketPlace/notification.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -155,7 +155,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../namedIcons/loupe.png" />
+                                                            <Image url="@../../icons/marketPlace/loupe.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -165,7 +165,7 @@
                                                 </Button>
                                                 <ImageView fx:id="searchInfoBtn" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../../namedIcons/info16w.png" />
+                                                      <Image url="@../../icons/marketPlace/info16w.png" />
                                                    </image>
                                                    <HBox.margin>
                                                       <Insets left="10.0" />

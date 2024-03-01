@@ -11,8 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
@@ -137,8 +137,8 @@ public class ItemInfoController implements Initializable {
         update.setPrefHeight( 32 );
         delete.setPrefHeight( 32 );
 
-        Image img1= new Image(String.valueOf( getClass().getResource( "/namedIcons/sync24.png" ) ),24,24,true,true);
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/delete24c.png")),24,24,true,true);
+        Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/sync24.png" ) ),24,24,true,true);
+        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/delete24c.png" )),24,24,true,true);
 
         update.setGraphic( new ImageView( img1 ));
         delete.setGraphic( new ImageView( img2 ));

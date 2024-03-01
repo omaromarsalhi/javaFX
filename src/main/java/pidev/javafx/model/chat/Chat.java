@@ -1,6 +1,6 @@
 package pidev.javafx.model.chat;
 
-import pidev.javafx.model.User.User;
+import pidev.javafx.model.user.User;
 
 import java.sql.Timestamp;
 

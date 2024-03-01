@@ -52,7 +52,7 @@
                                  <graphic>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../namedIcons/packaging.png" />
+                                          <Image url="@../../icons/marketPlace/packaging.png" />
                                        </image>
                                     </ImageView>
                                  </graphic></Menu>
@@ -60,7 +60,7 @@
                                  <graphic>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../namedIcons/service.png" />
+                                          <Image url="@../../icons/marketPlace/service.png" />
                                        </image>
                                     </ImageView>
                                  </graphic></Menu>
@@ -68,7 +68,7 @@
                                  <graphic>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../namedIcons/selective.png" />
+                                          <Image url="@../../icons/marketPlace/selective.png" />
                                        </image>
                                     </ImageView>
                                  </graphic></Menu>
@@ -81,7 +81,7 @@
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../namedIcons/loupe.png" />
+                                          <Image url="@../../icons/marketPlace/loupe.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>

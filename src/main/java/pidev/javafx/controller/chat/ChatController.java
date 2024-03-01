@@ -18,10 +18,10 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.controller.user.UserController;
 import pidev.javafx.crud.marketplace.CrudChat;
-import pidev.javafx.model.User.User;
 import pidev.javafx.model.chat.Chat;
-import pidev.javafx.tools.ChatClient;
-import pidev.javafx.tools.ResultHolder;
+import pidev.javafx.model.user.User;
+import pidev.javafx.tools.marketPlace.ChatClient;
+import pidev.javafx.tools.marketPlace.ResultHolder;
 
 import java.io.*;
 import java.net.URL;

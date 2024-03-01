@@ -17,20 +17,18 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.*;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.CustomReturnItem;
+import pidev.javafx.tools.marketPlace.EventBus;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.CyclicBarrier;
-import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MarketController implements Initializable {
 
@@ -115,8 +113,8 @@ public class MarketController implements Initializable {
     }
 
     public void setMenueBar(){
-        var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
-        var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+        var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         allProducts.setOnAction( event -> {
             loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
         } );
@@ -128,13 +126,13 @@ public class MarketController implements Initializable {
         menuBar.getMenus().get( 0 ).getItems().addAll(allProducts,todayProducts);
 
 
-        var allServices=new MenuItem("All Services",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var todayServices=new MenuItem("Today's Services",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var allServices=new MenuItem("All Services",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+        var todayServices=new MenuItem("Today's Services",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         menuBar.getMenus().get( 1 ).getItems().addAll(allServices ,todayServices);
 
 
-        var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+        var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         menuBar.getMenus().get( 2 ).getItems().addAll(filterProd ,filterService);
 
 
@@ -296,7 +294,7 @@ public class MarketController implements Initializable {
     }
 
 
-    private Task<CustomReturnItem>  loadingItemsThread(Product prod,int column,int row) {
+    private Task<CustomReturnItem>  loadingItemsThread(Product prod, int column, int row) {
         Task<CustomReturnItem> myTask = new Task<>() {
             @Override
             protected CustomReturnItem call() throws Exception {
