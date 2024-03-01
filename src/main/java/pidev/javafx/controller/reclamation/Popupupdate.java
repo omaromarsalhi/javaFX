@@ -43,7 +43,7 @@ public class Popupupdate {
         else
             description.setStyle("-fx-text-fill: #bb2020 ");
     }
-    Connection cnx = DataSource.getInstance().getCnx();
+
 
     private String imagePath;
     private Reclamation reclamation;
@@ -86,5 +86,12 @@ public class Popupupdate {
         subject.setText(reclamation.getSubject());
         description.setText(reclamation.getDescription());
     }
+
+
+
+
+
+
+
 
 }

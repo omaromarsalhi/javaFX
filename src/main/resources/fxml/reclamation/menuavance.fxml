@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -22,15 +23,31 @@
     <!-- Central Area -->
     <center>
         <VBox style="-fx-background-radius: 20; -fx-border-color: black;">
-            <Label text="Home" />
+            <Label text="Home">
+            <VBox.margin>
+               <Insets left="350.0" />
+            </VBox.margin></Label>
          <Separator orientation="VERTICAL" prefHeight="126.0" prefWidth="58.0" visible="false" />
-            <Label text="Hello Amine, welcome!" />
-            <TextField fx:id="searchBar" promptText="Search file..." />
+            <Label text="Hello , welcome!" />
+         <HBox alignment="CENTER">
+            <children>
+                  <TextField fx:id="searchBar" prefHeight="35.0" prefWidth="690.0" promptText="Search bar ..." />
+               <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0">
+                  <graphic>
+                     <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../namedIcons/icons8-chercher-32.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+               </Button>
+            </children>
+         </HBox>
          <Separator orientation="VERTICAL" prefHeight="35.0" prefWidth="5.0" visible="false" />
             <!-- Folder Icons -->
             <GridPane alignment="CENTER" prefHeight="93.0" prefWidth="585.0">
                 <VBox alignment="CENTER" prefHeight="183.0" prefWidth="166.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
-               <Button mnemonicParsing="false">
+               <Button fx:id="btn3" mnemonicParsing="false" onAction="#showReclmation">
                   <graphic>
                           <ImageView fx:id="assetsIcon" fitHeight="148.0" fitWidth="206.0">
                               <image>
@@ -43,7 +60,7 @@
                     <Label text="147 Files" />
                 </VBox>
                 <VBox alignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="0">
-               <Button mnemonicParsing="false">
+               <Button fx:id="btn2" mnemonicParsing="false" onAction="#showReponse">
                   <graphic>
                           <ImageView fx:id="analyticsIcon" fitHeight="148.0" fitWidth="191.0">
                               <image>
@@ -56,7 +73,7 @@
                     <Label text="17 Files" />
                 </VBox>
                 <VBox alignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="0">
-               <Button mnemonicParsing="false">
+               <Button fx:id="btn1" mnemonicParsing="false" onAction="#showticket">
                   <graphic>
                           <ImageView fx:id="marketingIcon" fitHeight="148.0" fitWidth="191.0">
                               <image>
@@ -88,11 +105,11 @@
                <children>
                       <Label prefHeight="30.0" prefWidth="276.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Recent Reclamation" />
                   <Separator prefHeight="6.0" prefWidth="390.0" visible="false" />
-                      <Button style="-fx-background-color: #0078D7; -fx-text-fill: white; -fx-font-size: 14;" text="View all" />
+                      <Button style="-fx-background-color: #0078D7; -fx-text-fill: white; -fx-font-size: 14;" text="Video" />
                </children>
             </HBox>
             </VBox>
-             <TableView fx:id="lista" onMouseClicked="#displayDetailsInTableView" style="-fx-background-color: #FFFFFF; -fx-border-color: #D0D0D0;" stylesheets="@../../style/tableview.css">
+             <TableView fx:id="lista" onMouseClicked="#displayDetailsInTableView" style="-fx-background-color: #FFFFFF; -fx-border-color: #D0D0D0;" stylesheets="@../../styles/tableview.css">
                  <columns>
                      <TableColumn fx:id="image" style="-fx-background-color: #F0F0F0;" text="Reclamation">
                             <!-- Add cell value factory -->
@@ -108,12 +125,13 @@
                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
             </columnResizePolicy>
             <styleClass>
-               <String fx:value="label" />
-               <String fx:value="table-row-cell" />
-               <String fx:value="column-header-background" />
                <String fx:value="column-header" />
+               <String fx:value="btn" />
+               <String fx:value="column-header-background" />
                <String fx:value="filler" />
+               <String fx:value="label" />
                <String fx:value="table-cell" />
+               <String fx:value="table-row-cell" />
                <String fx:value="table-view" />
             </styleClass>
                  <!-- Add items -->

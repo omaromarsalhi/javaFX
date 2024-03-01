@@ -156,7 +156,7 @@ public class Test {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-        }
+    }
 
     public void modifer_Reclamation(ActionEvent actionEvent) {
         int idInt = Integer.parseInt(id.getText());

@@ -3,7 +3,11 @@ package pidev.javafx.controller.reclamation;
 import com.aspose.imaging.internal.Exceptions.IO.IOException;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -11,8 +15,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
@@ -23,6 +31,7 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 
 public class Menu {
     @FXML
@@ -59,12 +68,18 @@ public class Menu {
     private TextField titre;
 
     @FXML
+    private AnchorPane mainBorderPain;
+
+    @FXML
     private TableColumn<Reclamation, String> image;
     @FXML
     private TableColumn<Reclamation, String> titrec;
     @FXML
     private TableColumn<Reclamation, String> categoriec;
     ServiceReclamation si = new ServiceReclamation();
+
+
+
     public void initialize() {
         // Initialize columns
         categoriec.setCellValueFactory(new PropertyValueFactory<>("subject"));
@@ -73,6 +88,7 @@ public class Menu {
 
         image.setCellFactory(param -> new TableCell<Reclamation, String>() {
             private final ImageView imageView = new ImageView();
+
             {
                 imageView.setFitHeight(50); // set height
                 imageView.setFitWidth(50); // set width
@@ -157,7 +173,7 @@ public class Menu {
 
                 // Add details
                 document.add(new Paragraph("Private Key: " + privateKey.getText()));
-                document.add(new Paragraph("Subject: " +  categorie.getText()));
+                document.add(new Paragraph("Subject: " + categorie.getText()));
                 document.add(new Paragraph("Title: " + titre.getText()));
                 document.add(new Paragraph("Date: " + date.getText()));
                 document.add(new Paragraph("Description: " + desciption.getText()));
@@ -190,8 +206,69 @@ public class Menu {
         }
     }
 
+    void showPopup(ActionEvent event) {
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/showallreclamation.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            modifer m = fxmlLoader.getController();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Popup Window");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
+    }
+    public void showticket() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ticket/ticket.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Popup Window");
+            stage.setScene(new Scene(root));
 
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void showReclmation() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/reponse.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Popup Window");
+            stage.setScene(new Scene(root));
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void showReponse() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reponse/showuser_modife.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Popup Window");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (java.io.IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }
