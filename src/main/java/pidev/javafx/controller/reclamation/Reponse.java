@@ -7,12 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -23,10 +20,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class reponse implements Initializable {
+public class Reponse implements Initializable {
     @FXML
     private TextArea description;
 
@@ -122,7 +118,7 @@ public class reponse implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        window si = fxmlLoader.getController();
+        Window si = fxmlLoader.getController();
         si.setReponseController(this, reclamation);
 
         si.setReclamation(reclamation);

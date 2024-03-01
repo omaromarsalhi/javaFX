@@ -12,7 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import pidev.javafx.controller.reclamation.popupupdate;
+import pidev.javafx.controller.reclamation.Popupupdate;
 import pidev.javafx.crud.reclamation.ServiceReponse;
 import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.model.reclamation.Response;
@@ -20,7 +20,7 @@ import pidev.javafx.model.reclamation.Response;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
-public class reponseWindow {
+public class ReponseWindow {
 
     @FXML
     private Button Delete;
@@ -70,7 +70,7 @@ public class reponseWindow {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/intrface.fxml"));
             Parent root = (Parent) fxmlLoader.load();
-            popupupdate controller = fxmlLoader.getController();
+            Popupupdate controller = fxmlLoader.getController();
             controller.setData(reclamation);
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);

@@ -2,14 +2,10 @@ package pidev.javafx.controller.reclamation;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,25 +27,10 @@ public class modifer {
 
     @FXML
     private TextArea description ;
-    private tool tool1;
+    private Tool tool1;
 
     ServiceReclamation si = new ServiceReclamation();
 
-    //    public void initialize() {
-//        try {
-//            // Get the data from the database
-//
-//            VBox box = new VBox();
-//
-//            // Iterate through the result set and create labels
-//            for (Reclamation reclamation : si.getAllPrivateKeys()) {
-//                String data = reclamation.getPrivateKey()+" "+ reclamation.getSubject() + " " + reclamation.getTitre(); // replace with your method names
-//                Label label = new Label(data);
-//                box.getChildren().add(label);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
 
     public void initialize() {
@@ -74,15 +55,7 @@ public class modifer {
 
                     imageView.setFitHeight(50);
                     imageView.setFitWidth(50);
-//                    if (!empty && reclamation.getImagePath() != null) {
-//                        try (InputStream is = new FileInputStream(reclamation.getImagePath())) {
-//                            Image image = new Image(is);
-//                            imageView.setImage(image);
-//                            setGraphic(imageView);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
+
                     setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
                 }
             }
@@ -90,21 +63,7 @@ public class modifer {
     }
 
 
-//    @FXML
-//    void modifer_Reclamation()
-//    {
-//        Reclamation   rec = new Reclamation(privateKey.getText(), subject.getText(), title.getText(),description.getText());
-//        si.modifier(rec);
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Confirmation");
-//        alert.setHeaderText(null);
-//        alert.setContentText("Reclmation has been modified !");
-//
-//        // Show the alert
-//        alert.show();
-//    }
-
-    public void onlic(tool t)
+    public void onlic(Tool t)
     {
         this.tool1=t;
     }
@@ -115,26 +74,4 @@ public class modifer {
             tool1.onclic(selectedItem);
         });
     }
-//    @FXML
-//    void supprimer_Reclamation() {
-//        // Assuming privateKey.getText() returns the id of the reclamation
-//        String idReclamation = privateKey.getText();
-//        si.supprimer(idReclamation);
-//        clearFields();
-//
-//        displayDetailsInTextField();
-//        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//        alert.setTitle("Confirmation");
-//        alert.setHeaderText(null);
-//        alert.setContentText("Reclmation Delelte!");
-//
-//        // Show the alert
-//        alert.showAndWait();
-//    }
-//    void clearFields() {
-//        privateKey.setText("");
-//        title.setText("");
-//        subject.setText("");
-//        description.setText("");
-//    }
 }

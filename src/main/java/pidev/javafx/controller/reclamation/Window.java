@@ -1,6 +1,5 @@
 package pidev.javafx.controller.reclamation;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,12 +14,10 @@ import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 
-public class window {
+public class Window {
     @FXML
     private Label date;
     @FXML
@@ -37,13 +34,13 @@ public class window {
     private Button update;
     @FXML
     private Button Delete;
-    private reponse reponseController;
+    private Reponse reponseController;
     private  Reclamation reclamation;
 
     ServiceReclamation si = new ServiceReclamation();
 
 
-    public void setReponseController(reponse reponseController, Reclamation reclamation) {
+    public void setReponseController(Reponse reponseController, Reclamation reclamation) {
     this.reclamation=reclamation;
         this.reponseController = reponseController;
         System.out.println("setReponseController called");
@@ -55,7 +52,7 @@ public class window {
             Parent root = (Parent) fxmlLoader.load();
 
             // Get the controller of the FXML file
-            popupupdate controller = fxmlLoader.getController();
+            Popupupdate controller = fxmlLoader.getController();
 
             // Call the method to pass the data
             controller.setData(reclamation);

@@ -8,9 +8,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.ticket.ServiceTicket;
-import pidev.javafx.model.ticket.ticket;
+import pidev.javafx.model.ticket.Ticket;
 
-public class getTicket {
+public class GetTicket {
 
     @FXML
     private VBox Box1;
@@ -45,7 +45,7 @@ public class getTicket {
 
     @FXML
     void ajouterTicket(ActionEvent event) {
-        ticket ticket = new ticket(customNa1.getText(),typeT1.getText(), Integer.parseInt(ticketNuM1.getText()));
+        Ticket ticket = new Ticket(customNa1.getText(),typeT1.getText(), Integer.parseInt(ticketNuM1.getText()));
         si.ajouter(ticket);
     }
 

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox alignment="CENTER" prefHeight="394.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reponse.reponseWindow">
+<HBox alignment="CENTER" prefHeight="394.0" prefWidth="844.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reponse.ReponseWindow">
     <children>
         <ImageView fx:id="imagePath" fitHeight="278.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true" />
         <Separator prefHeight="0.0" prefWidth="35.0" visible="false" />

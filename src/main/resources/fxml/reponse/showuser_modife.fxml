@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reponse.test">
+<AnchorPane prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reponse.Test">
    <children>
       <ListView fx:id="lista" layoutX="13.0" layoutY="104.0" onMouseClicked="#displayDetailsInTextField" prefHeight="461.0" prefWidth="420.0" style="-fx-background-color: #D0D0D0; -fx-padding: 10px; -fx-border-color: #e0e0e0; -fx-border-width: 2 px;" stylesheets="@../../style/tableview.css">
          <styleClass>

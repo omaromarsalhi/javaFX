@@ -2,8 +2,7 @@ package pidev.javafx.crud.ticket;
 
 import pidev.javafx.crud.reclamation.DataSource;
 import pidev.javafx.crud.reclamation.Iservice;
-import pidev.javafx.model.ticket.TicketType;
-import pidev.javafx.model.ticket.ticket;
+import pidev.javafx.model.ticket.Ticket;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +11,12 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ServiceTicket implements Iservice<ticket> {
+public class ServiceTicket implements Iservice<Ticket> {
 
     Connection cnx = DataSource.getInstance().getCnx();
 
     @Override
-    public void ajouter(ticket ticket) {
+    public void ajouter(Ticket ticket) {
         String req = "INSERT INTO `ticket`( `customName`, `type`, `ticketNumber`) VALUES (?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
@@ -32,7 +31,7 @@ public class ServiceTicket implements Iservice<ticket> {
     }
 
     @Override
-    public void modifier(ticket ticket) {
+    public void modifier(Ticket ticket) {
         String req = "UPDATE `ticket` SET `customName`=?, `date`=?, `type`=?, `ticketNumber`=? WHERE `idTicket`=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
@@ -67,15 +66,15 @@ public class ServiceTicket implements Iservice<ticket> {
     }
 
     @Override
-    public ticket getOneById(int idTicket) {
-        ticket ticket = null;
+    public Ticket getOneById(int idTicket) {
+        Ticket ticket = null;
         String req = "SELECT * FROM `ticket` WHERE `idTicket`=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1, idTicket);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                ticket = new ticket(rs.getInt("idTicket"), rs.getString("customName"), rs.getString("type"), rs.getInt("ticketNumber"));
+                ticket = new Ticket(rs.getInt("idTicket"), rs.getString("customName"), rs.getString("type"), rs.getInt("ticketNumber"));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -84,18 +83,18 @@ public class ServiceTicket implements Iservice<ticket> {
     }
 
     @Override
-    public Set<ticket> getAll() {
-        Set<ticket> tickets = new HashSet<>();
+    public Set<Ticket> getAll() {
+        Set<Ticket> Tickets = new HashSet<>();
         String req = "SELECT * FROM `ticket`";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                tickets.add(new ticket(rs.getInt("idTicket"), rs.getString("customName"),  rs.getString("type"), rs.getInt("ticketNumber")));
+                Tickets.add(new Ticket(rs.getInt("idTicket"), rs.getString("customName"),  rs.getString("type"), rs.getInt("ticketNumber")));
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return tickets;
+        return Tickets;
     }
 }

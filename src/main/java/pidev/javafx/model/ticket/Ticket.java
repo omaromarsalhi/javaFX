@@ -3,14 +3,14 @@ package pidev.javafx.model.ticket;
 import java.util.Date;
 import java.util.Objects;
 
-public class ticket {
+public class Ticket {
     private int idTicket;
     private String customName;
     private Date date;
     private String type;
     private int ticketNumber;
 
-    public ticket(int idTicket, String customName, String type, int ticketNumber) {
+    public Ticket(int idTicket, String customName, String type, int ticketNumber) {
         this.idTicket = idTicket;
         this.customName = customName;
 
@@ -18,10 +18,10 @@ public class ticket {
         this.ticketNumber = ticketNumber;
     }
 
-    public ticket() {
+    public Ticket() {
     }
 
-    public ticket(String customName, String type, int ticketNumber) {
+    public Ticket(String customName, String type, int ticketNumber) {
         this.customName = customName;
         this.type = type;
         this.ticketNumber = ticketNumber;
@@ -71,7 +71,7 @@ public class ticket {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ticket ticket = (ticket) o;
+        Ticket ticket = (Ticket) o;
         return idTicket == ticket.idTicket && ticketNumber == ticket.ticketNumber && Objects.equals(customName, ticket.customName) && Objects.equals(date, ticket.date) && type == ticket.type;
     }
 
@@ -82,7 +82,7 @@ public class ticket {
 
     @Override
     public String toString() {
-        return "ticket{" +
+        return "Ticket{" +
                 "idTicket=" + idTicket +
                 ", customName='" + customName + '\'' +
                 ", date=" + date +

@@ -75,28 +75,7 @@ public class AjouterReclamation {
         else
             description.setStyle("-fx-text-fill: #bb2020 ");
     }
-    private String imagePath; // Class variable to store the image path
-
-//    public void importFile(ActionEvent event) {
-//        FileChooser fileChooser = new FileChooser();
-//        File selectedFile = fileChooser.showOpenDialog(null);
-//
-//        if (selectedFile != null) {
-//            imagePath = selectedFile.toURI().toString(); // Store the file path
-//            System.out.println("File imported: " + imagePath);
-//
-//            // Create an Image object from the file path
-//            Image image = new Image(imagePath);
-//
-//            // Assuming you have an ImageView field named imageView
-//            Image.setImage(image);
-//
-//        } else {
-//            System.out.println("File selection cancelled."); // Default image path
-//        }
-//    }
-
-
+    private String imagePath;
 
     @FXML
     void ajouter_Reclamation() throws IOException {
@@ -107,7 +86,6 @@ public class AjouterReclamation {
         System.out.println(generatedString);
         if(imagePath==null)
         {
-//imagePath = "src/main/java/pidev/javafx/controller/reclamation/" + generatedString + ".png";
         }
 
         // Call the onTextChanged function here

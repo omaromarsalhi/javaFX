@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="523.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.popupupdate">
+<AnchorPane prefHeight="523.0" prefWidth="823.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.Popupupdate">
    <children>
       <Label layoutX="420.0" layoutY="35.0" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="RECLAMATION" />
       <TextField fx:id="privateKey" disable="true" editable="false" layoutX="325.0" layoutY="152.0" prefHeight="25.0" prefWidth="478.0" promptText="Private_key" styleClass="recc" stylesheets="@../../styles/style.css" />

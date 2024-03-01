@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" prefHeight="394.0" prefWidth="844.0" style="-fx-background-color: #D0D0D0; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.window">
+<HBox alignment="CENTER" prefHeight="394.0" prefWidth="844.0" style="-fx-background-color: #D0D0D0; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.Window">
    <children>
       <VBox>
          <children>

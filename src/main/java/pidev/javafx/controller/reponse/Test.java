@@ -10,14 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.controller.reclamation.modifer;
-import pidev.javafx.controller.reclamation.popupupdate;
-import pidev.javafx.controller.reclamation.tool;
+import pidev.javafx.controller.reclamation.Tool;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.crud.reclamation.ServiceReponse;
 import pidev.javafx.model.reclamation.Reclamation;
@@ -26,11 +24,10 @@ import pidev.javafx.model.reclamation.Response;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class test {
+public class Test {
     @FXML
     public ListView lista;
     private Button importButton;
@@ -188,7 +185,7 @@ public class test {
     }
     @FXML
     void showPopup(ActionEvent event) {
-        tool t= new tool() {
+        Tool t= new Tool() {
             @Override
             public void onclic(Reclamation event) {
                 System.out.println(event.getDate());
@@ -206,7 +203,7 @@ public class test {
                 modifer m =fxmlLoader.getController();
                 m.onlic(t);
 
-               // popupupdate controller = fxmlLoader.getController();
+               // Popupupdate controller = fxmlLoader.getController();
                 //controller.setData(reclamation);
                 Stage stage = new Stage();
                 stage.initModality(Modality.APPLICATION_MODAL);

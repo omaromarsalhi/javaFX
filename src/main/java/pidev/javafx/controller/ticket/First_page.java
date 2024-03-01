@@ -1,20 +1,13 @@
 package pidev.javafx.controller.ticket;
-import com.aspose.imaging.*;
-import com.aspose.imaging.brushes.SolidBrush;
-import com.aspose.imaging.imageoptions.*;
-import com.aspose.imaging.Graphics;
 import com.aspose.imaging.internal.Exceptions.IO.IOException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.image.ImageView;
 import javafx.embed.swing.SwingFXUtils;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,21 +15,15 @@ import java.util.List;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.stage.StageStyle;
 
 import javafx.fxml.FXML;
-import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.crud.ticket.ServiceTicket;
-import pidev.javafx.model.reclamation.Reclamation;
-import pidev.javafx.model.ticket.ticket;
+import pidev.javafx.model.ticket.Ticket;
 
 import javax.imageio.ImageIO;
 
 
-public class first_page {
+public class First_page {
 
     public static int counter;
 
@@ -53,7 +40,7 @@ public class first_page {
     private ListView lista;
     ServiceTicket si = new ServiceTicket();
     public void updateImage() {
-        first_page.counter++;
+        First_page.counter++;
 
         // Create a BufferedImage with RGB color components
         BufferedImage image = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
@@ -67,7 +54,7 @@ public class first_page {
         graphic.setFont(font);
 
         // Draw the text on the image
-        String text = "Ticket No: " + String.valueOf(first_page.counter);
+        String text = "Ticket No: " + String.valueOf(First_page.counter);
         graphic.setColor(customColor);
 
         // Get the FontMetrics
@@ -80,7 +67,7 @@ public class first_page {
         // Draw the string
         graphic.drawString(text, x, y);
 
-        // Draw a rectangle around the ticket
+        // Draw a rectangle around the Ticket
         graphic.setColor(java.awt.Color.BLACK);
         graphic.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
 
@@ -127,7 +114,7 @@ public class first_page {
         // Draw the string
         graphic.drawString(text, x, y);
 
-        // Draw a rectangle around the ticket
+        // Draw a rectangle around the Ticket
         graphic.setColor(java.awt.Color.BLACK);
         graphic.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
 
@@ -172,7 +159,7 @@ public class first_page {
         // Draw the string
         graphic.drawString(text, x, y);
 
-        // Draw a rectangle around the ticket
+        // Draw a rectangle around the Ticket
         graphic.setColor(java.awt.Color.BLACK);
         graphic.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
 
@@ -208,15 +195,15 @@ public class first_page {
     }
     public void initialize() {
 
-        List<ticket> tickets = new ArrayList<>(si.getAll());
+        List<Ticket> Tickets = new ArrayList<>(si.getAll());
 
         // Add the Reclamation objects to the ListView
-        lista.getItems().addAll(tickets);
+        lista.getItems().addAll(Tickets);
 
         // Optionally, you can set a custom cell factory to control how each Reclamation is displayed
-        lista.setCellFactory(reclamationListView -> new ListCell<ticket>() {
+        lista.setCellFactory(reclamationListView -> new ListCell<Ticket>() {
             @Override
-            protected void updateItem(ticket ticket, boolean empty) {
+            protected void updateItem(Ticket ticket, boolean empty) {
                 super.updateItem(ticket, empty);
                 if (empty || ticket == null) {
                     setText(null);

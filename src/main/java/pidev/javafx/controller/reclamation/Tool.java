@@ -2,6 +2,6 @@ package pidev.javafx.controller.reclamation;
 
 import pidev.javafx.model.reclamation.Reclamation;
 
-public interface tool {
+public interface Tool {
     void onclic(Reclamation event);
 }

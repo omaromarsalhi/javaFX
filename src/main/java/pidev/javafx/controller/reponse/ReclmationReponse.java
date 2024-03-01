@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class reclmationReponse implements Initializable {
+public class ReclmationReponse implements Initializable {
     @FXML
     private Button ajouter;
 
@@ -68,7 +68,7 @@ public class reclmationReponse implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        reponseWindow si = fxmlLoader.getController();
+        ReponseWindow si = fxmlLoader.getController();
         si.setReponse(rep);
 
         reclamationcontrainer.getChildren().add(hBox);
