@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -18,65 +19,24 @@
 
 <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.MainDashbordController">
    <children>
+      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
+         </children>
+      </AnchorPane>
       <HBox fx:id="firstInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20;">
          <children>
             <VBox prefHeight="664.0" prefWidth="1018.0">
                <children>
                   <VBox prefHeight="171.0">
                      <children>
-<<<<<<< HEAD
-                        <Label prefHeight="36.0" prefWidth="83.0" text="omar">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="36.0" prefWidth="83.0" text="salhi">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Label layoutX="45.0" layoutY="115.0" prefHeight="27.0" prefWidth="162.0" text="omar.salhi@esprit.tn">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
-            </AnchorPane>
-            <VBox fx:id="informationBar" alignment="CENTER" prefHeight="487.0" prefWidth="238.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: black;">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </VBox>
-         </children>
-         <padding>
-            <Insets left="6.0" right="6.0" top="6.0" />
-         </padding>
-      </VBox>
-      <VBox prefHeight="650.0" prefWidth="766.0">
-         <children>
-            <VBox fx:id="topVbox">
-               <children>
-                  <HBox fx:id="toolBar" alignment="CENTER" prefHeight="51.0" prefWidth="763.0" spacing="200.0" stylesheets="@../../style/toolBarStyle.css">
-                     <children>
-                        <MenuBar fx:id="menuBar" prefHeight="34.0" prefWidth="238.0">
-                           <menus>
-                              <Menu mnemonicParsing="false" text="Products" />
-                              <Menu mnemonicParsing="false" text="Services" />
-                              <Menu mnemonicParsing="false" text="Contrat" />
-                           </menus>
-                        </MenuBar>
-                        <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: #f4f4f4;">
-=======
                         <HBox>
->>>>>>> omar_salhi_branch
                            <children>
                               <AnchorPane fx:id="accountInfo" prefHeight="143.0" prefWidth="236.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;">
                                  <children>
                                     <ImageView fx:id="userImage" fitHeight="79.0" fitWidth="71.0" layoutX="45.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../img/marketPlace/mySelf.jpg" />
+                                          <Image url="@../../../../../../javaFX - Copy/src/main/resources/img/mySelf.jpg" />
                                        </image>
                                     </ImageView>
                                     <Line endX="-1.0000228881835938" endY="59.399986267089844" layoutX="127.0" layoutY="46.0" startX="-1.0000228881835938" startY="-14.799995422363281" />
@@ -106,7 +66,7 @@
                               </AnchorPane>
                               <VBox>
                                  <children>
-                                    <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="80.0" stylesheets="@../../style/marketPlace/toolBarStyle.css">
+                                    <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="80.0" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/toolBarStyle.css">
                                        <children>
                                           <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="370.0">
                                             <menus>
@@ -114,7 +74,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../icons/marketPlace/packaging.png" />
+                                                            <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/packaging.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -123,7 +83,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../icons/marketPlace/service.png" />
+                                                            <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/service.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -132,7 +92,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../icons/marketPlace/star.png" />
+                                                            <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/star.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -155,7 +115,7 @@
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>
-                                                            <Image url="@../../icons/marketPlace/loupe.png" />
+                                                            <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/loupe.png" />
                                                          </image>
                                                       </ImageView>
                                                    </graphic>
@@ -165,7 +125,7 @@
                                                 </Button>
                                                 <ImageView fx:id="searchInfoBtn" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                                    <image>
-                                                      <Image url="@../../icons/marketPlace/info16w.png" />
+                                                      <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/info16w.png" />
                                                    </image>
                                                    <HBox.margin>
                                                       <Insets left="10.0" />
@@ -358,43 +318,22 @@
                            </padding>
                         </VBox>
                      </children>
-<<<<<<< HEAD
-                     <padding>
-                        <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
-                     </padding>
-<<<<<<< HEAD
                   </HBox>
-               </children>
-            </VBox>
-            <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="486.0" prefWidth="748.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: #f4f4f4;" vbarPolicy="NEVER">
-               <VBox.margin>
-                  <Insets right="10.0" />
-               </VBox.margin>
-               <content>
-                  <AnchorPane fx:id="showAllProdsInfo" prefHeight="476.0" prefWidth="739.0" />
-               </content>
-               <padding>
-                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-=======
-                  </VBox>
-=======
-                  </HBox>
->>>>>>> omar_salhi_branch
                </children>
                <padding>
                   <Insets bottom="4.0" />
->>>>>>> omar_salhi_branch
                </padding>
-            </ScrollPane>
+               <stylesheets>
+                  <URL value="@../../style/marketplace/Buttons.css" />
+                  <URL value="@../../style/marketplace/chatStyle.css" />
+                  <URL value="@../../style/marketplace/scrollBarStlyle.css" />
+                  <URL value="@../../style/marketplace/toolBarStyle.css" />
+               </stylesheets>
+            </VBox>
          </children>
          <padding>
             <Insets bottom="2.0" top="2.0" />
          </padding>
       </HBox>
-      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
-         <children>
-            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
-         </children>
-      </AnchorPane>
    </children>
 </StackPane>

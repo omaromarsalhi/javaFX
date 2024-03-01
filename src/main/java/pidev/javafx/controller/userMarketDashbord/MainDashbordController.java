@@ -34,8 +34,8 @@ import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.crud.marketplace.CrudLocalWrapper;
 import pidev.javafx.controller.marketPlace.*;
 import pidev.javafx.model.MarketPlace.Favorite;
-import pidev.javafx.model.User.Role;
-import pidev.javafx.model.User.User;
+import pidev.javafx.model.user.User;
+import pidev.javafx.model.user.Role;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 import pidev.javafx.model.Wrapper.LocalWrapper;
@@ -266,7 +266,7 @@ public class MainDashbordController implements Initializable {
                 22,
                 29624921,
                 "beb saadoun",
-                Role.simpleutlisateur,
+                Role.Citoyen,
                 "salhi",
                         "img/marketPlace/me.png" ) ,
                 new User( 2,
@@ -277,7 +277,7 @@ public class MainDashbordController implements Initializable {
                 22,
                 50421001,
                 "menzah 1",
-                Role.simpleutlisateur,
+                Role.Citoyen,
                 "benzaied",
                         "img/marketPlace/latifa.png" ) ) );
         newStage.setResizable( false );

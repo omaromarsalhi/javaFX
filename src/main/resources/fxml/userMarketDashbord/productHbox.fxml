@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -8,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="968.0" spacing="20.0" style="-fx-background-radius: 14; -fx-border-radius: 14;" stylesheets="@../../style/marketPlace/prodHboxStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.ProductsHboxController">
+<HBox fx:id="container" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="968.0" spacing="20.0" style="-fx-background-radius: 14; -fx-border-radius: 14;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.ProductsHboxController">
    <children>
       <ImageView fx:id="image" fitHeight="40.0" fitWidth="40.0" onMouseEntered="#onMouseEntered" onMouseExited="#onMouseExited" pickOnBounds="true" preserveRatio="true" />
       <Label fx:id="name" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Label" wrapText="true">
@@ -46,13 +47,13 @@
             <Font name="Cambria Math" size="14.0" />
          </font>
       </Label>
-      <HBox fx:id="actions" alignment="CENTER" prefHeight="11.0" prefWidth="88.0" spacing="4.0" stylesheets="@../../style/marketPlace/Buttons.css">
+      <HBox fx:id="actions" alignment="CENTER" prefHeight="11.0" prefWidth="88.0" spacing="4.0" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/Buttons.css">
          <children>
             <Button fx:id="updateBtn" mnemonicParsing="false">
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../icons/marketPlace/update16C.png" />
+                        <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/update16C.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -61,7 +62,7 @@
                <graphic>
                   <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../icons/marketPlace/delete16C.png" />
+                        <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/delete16C.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -71,4 +72,9 @@
    <padding>
       <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
    </padding>
+   <stylesheets>
+      <URL value="@../../../../../javaFX%20-%20Copy/src/main/resources/style/prodHboxStyle.css" />
+      <URL value="@../../style/marketplace/prodHboxStyle.css" />
+      <URL value="@../../style/marketplace/Buttons.css" />
+   </stylesheets>
 </HBox>

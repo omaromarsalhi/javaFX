@@ -23,7 +23,7 @@ public class UserController {
                     "beb saadoun",
                     Role.Citoyen,
                     "salhi",
-                    "img/me.png" );
+                    "img/marketPlace/me.png" );
         }
         else {
             user = new User( 2,
@@ -36,7 +36,7 @@ public class UserController {
                     "menzah 1",
                     Role.Citoyen,
                     "benzaied",
-                    "img/latifa.png");
+                    "img/marketPlace/latifa.png");
         }
     }
 

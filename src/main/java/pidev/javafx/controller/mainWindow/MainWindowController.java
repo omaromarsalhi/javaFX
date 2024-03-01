@@ -21,90 +21,134 @@ import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
-    private boolean isSideBarOpen;
     @FXML
-    private Button sideBarBtn;
-    @FXML
-    private Button showEmp;
-    @FXML
-    private Button btn2;
-    @FXML
-    private Button marketPlaceBtn;
-    @FXML
-    private VBox sideBar;
-    @FXML
-    private VBox zipSideBar;
-    @FXML
-    private Button MPD;
-    @FXML
-    private BorderPane mainBorderPain;
-    @FXML
-    private AnchorPane MainAnchorPane;
-    @FXML
-    private MenuButton menubottons;
-    @FXML
-    private Button closeBtn;
-    @FXML
-    private Button reduireBtn;
+    private Button accountBtn;
     @FXML
     private Button agrendirBtn;
     @FXML
+    private Button blogBtn;
+    @FXML
+    private Button closeBtn;
+    @FXML
+    private HBox header;
+    @FXML
+    private Button marketdashbordBtn;
+    @FXML
+    private Button marketplaceBtn;
+    @FXML
+    private Button newsBtn;
+    @FXML
+    private Button reduireBtn;
+    @FXML
+    private VBox sideBar;
+    @FXML
+    private Button stationsBtn;
+    @FXML
+    private Button transportBtn;
+    @FXML
+    private BorderPane mainBorderPane;
+    @FXML
+    private AnchorPane centerContainer;
 
 
-
-    private HBox mainhBox;
-    private StackPane mainhBox2;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
-        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
-
+//        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
+//        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
+//        mainBorderPane.getCenter())
     }
 
 
 
 //    btns that changes the scenes
     @FXML
-    public void onShowEmpClicked(ActionEvent event) throws IOException {
+    public void onBlogBtnClicked(ActionEvent event) throws IOException {
         VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPain.setCenter(showEmpAnchorPane);
+        mainBorderPane.setCenter(showEmpAnchorPane);
     }
 
     @FXML
-    public void onMPDClicked(ActionEvent event) throws IOException {
-        ((VBox)mainBorderPain.getCenter()).getChildren().remove( 1 );
-        StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-        ((VBox)mainBorderPain.getCenter()).getChildren().add(1,stackPane);
+    public void onTransportBtnClicked(ActionEvent event) throws IOException {
+        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+        mainBorderPane.setCenter(showEmpAnchorPane);
+    }
+
+
+    @FXML
+    public void onStationsBtnClicked(ActionEvent event) throws IOException {
+        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+        mainBorderPane.setCenter(showEmpAnchorPane);
+    }
+
+
+    @FXML
+    public void onNewsBtnClicked(ActionEvent event) throws IOException {
+        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+        mainBorderPane.setCenter(showEmpAnchorPane);
+    }
+
+
+    @FXML
+    public void onMarketPlaceBtnClicked(ActionEvent event) throws IOException {
+        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+        mainBorderPane.setCenter(showEmpAnchorPane);
+    }
+
+
+    @FXML
+    public void onMarketplaceDashbordBtnClicked(ActionEvent event) {
+        StackPane dashbord = null;
+        try {
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        mainBorderPane.setCenter(dashbord);
     }
 
     @FXML
-    public void onMarketPlaceBtnClicked(ActionEvent event){
-        ((VBox)mainBorderPain.getCenter()).getChildren().remove( 1 );
+    public void onAccountBtnClicked(ActionEvent event) {
+        StackPane account = null;
         try {
-            mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+            account = FXMLLoader.load(getClass().getResource( "/fxml/user/Account.fxml" ) );
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-        mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
-        ((VBox)mainBorderPain.getCenter()).getChildren().add(1,mainhBox2);
+        centerContainer.getChildren().add(account);
     }
 
-    public void laodCheckOut(CustomMouseEvent<Bien> event) {
-        ((VBox)mainBorderPain.getCenter()).getChildren().remove( 1 );
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource( "/fxml/Contract/checkOut.fxml" ));
-            mainhBox = fxmlLoader.load();
-            CheckOutController checkOutController = fxmlLoader.getController();
-            checkOutController.setData(event.getEventData());
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-        ((VBox)mainBorderPain.getCenter()).getChildren().add(1,mainhBox);
-    }
+//    @FXML
+//    public void onMPDClicked(ActionEvent event) throws IOException {
+//        StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+//        mainBorderPane.setCenter(stackPane);
+//    }
+
+//    @FXML
+//    public void onMarketPlaceBtnClicked(ActionEvent event){
+//        try {
+//            mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
+//        } catch (IOException e) {
+//            throw new RuntimeException( e );
+//        }
+////        mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight());
+////        mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
+//        mainBorderPane.setCenter(mainhBox2);
+//    }
+
+//    public void laodCheckOut(CustomMouseEvent<Bien> event) {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader();
+//            fxmlLoader.setLocation(getClass().getResource( "/fxml/Contract/checkOut.fxml" ));
+//            mainhBox = fxmlLoader.load();
+//            CheckOutController checkOutController = fxmlLoader.getController();
+//            checkOutController.setData(event.getEventData());
+//        } catch (IOException e) {
+//            throw new RuntimeException( e );
+//        }
+////        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
+////        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
+//       mainBorderPane.setCenter(mainhBox);
+//    }
 
 
     @FXML
@@ -127,11 +171,11 @@ public class MainWindowController implements Initializable {
 //        currentStage.setMaximized(!etatFenetre);
 //    }
 
-    @FXML
-    void onBlogClicked(MouseEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/blog/blog.fxml"));
-        AnchorPane blogPane = loader.load();
-        mainBorderPain.setCenter(blogPane);
-    }
+//    @FXML
+//    void onBlogClicked(MouseEvent event) throws IOException {
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/blog/blog.fxml"));
+//        AnchorPane blogPane = loader.load();
+//        mainBorderPane.setCenter(blogPane);
+//    }
 
 }
