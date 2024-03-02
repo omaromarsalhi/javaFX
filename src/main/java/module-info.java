@@ -15,7 +15,7 @@ module pidev.javafx{
    // requires com.google.protobuf;
     requires google.cloud.vision;
     requires proto.google.cloud.vision.v1;
-    //requires proto.google.cloud.vision.v1;
+    requires protobuf.java;
     opens pidev.javafx.model.reclamation to javafx.base;
 
     opens pidev.javafx.controller.ticket ;

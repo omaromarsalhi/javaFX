@@ -5,30 +5,35 @@ import com.google.protobuf.ByteString;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
-import pidev.javafx.crud.reclamation.DataSource;
-import pidev.javafx.crud.reclamation.ServiceReclamation;
-import pidev.javafx.model.reclamation.Reclamation;
-
-import java.io.*;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.sql.*;
-import java.util.*;
-
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import pidev.javafx.crud.reclamation.DataSource;
+import pidev.javafx.crud.reclamation.ServiceReclamation;
+import pidev.javafx.model.reclamation.Reclamation;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.*;
+
+
 
 public class AjouterReclamation {
 
@@ -201,7 +206,7 @@ public class AjouterReclamation {
             Image.setFitHeight(114);
             Image.setFitWidth(114);
             Image.setImage(image);
-            analyzeImage(imagePath);
+           // analyzeImage(imagePath);
         }
     }
     private static final String API_KEY = "AIzaSyAz4SgAFn-YwdN8CHQNLOIEnEb5iSqUq7k";
@@ -210,17 +215,14 @@ public class AjouterReclamation {
         try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
             ByteString imgBytes = ByteString.readFrom(new FileInputStream(imagePath));
             com.google.cloud.vision.v1.Image img = com.google.cloud.vision.v1.Image.newBuilder().setContent(imgBytes).build();
-
             List<Feature> featureList = new ArrayList<>();
             featureList.add(Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build());
             featureList.add(Feature.newBuilder().setType(Feature.Type.FACE_DETECTION).build());
             featureList.add(Feature.newBuilder().setType(Feature.Type.WEB_DETECTION).build());
-
             AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
                     .setImage(img)
                     .addAllFeatures(featureList)
                     .build();
-
             List<AnnotateImageRequest> requestList = new ArrayList<>();
             requestList.add(request);
 
