@@ -74,10 +74,14 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    public void onTransportBtnClicked(ActionEvent event) throws IOException {
-//        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-//        mainBorderPane.setCenter(showEmpAnchorPane);
-//        DetectProperties.detectProperties();
+    public void onTransportBtnClicked(ActionEvent event){
+        AnchorPane stations = null;
+        try {
+            stations = FXMLLoader.load( getClass().getResource( "/fxml/Transport/Gui_Station/TransportClient.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        mainBorderPane.setCenter(stations);
     }
 
 

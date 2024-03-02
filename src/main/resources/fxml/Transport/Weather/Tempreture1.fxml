@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.StationInfosController">
+   <children>
+      <AnchorPane prefHeight="90.0" prefWidth="331.0" style="-fx-background-color: transparent;">
+         <children>
+            <ImageView fitHeight="88.0" fitWidth="85.0" layoutX="147.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../img_transport/sun-icon-animation.gif" />
+               </image>
+            </ImageView>
+            <Label fx:id="temperatureLabel" layoutX="244.0" layoutY="19.0" text="23°C" textFill="#70affa">
+               <font>
+                  <Font name="Souliyo Unicode" size="26.0" />
+               </font>
+            </Label>
+            <Label fx:id="temperatureLabel1" layoutX="14.0" layoutY="21.0" text="Temperature :" textFill="#494949">
+               <font>
+                  <Font name="Souliyo Unicode" size="23.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

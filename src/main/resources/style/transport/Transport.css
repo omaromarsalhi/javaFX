@@ -254,34 +254,34 @@
     -fx-background-color: transparent;
 }
 #btn:hover #btnImageview1{
-    -fx-image: url('../img_transport/Untitled-2.png');
+    -fx-image: url('../../img_transport/Untitled-2.png');
 
 }
 #btn #btnImageview1{
-    -fx-image: url('../img_transport/Untitled-1.png');
+    -fx-image: url('../../img_transport/Untitled-1.png');
 
 }
 #btn #ArriveImageView{
-    -fx-image: url('../img_transport/arrive.png');
+    -fx-image: url('../../img_transport/arrive.png');
 }
 
 #btn:hover #ArriveImageView{
-    -fx-image: url('../img_transport/arrive1.png');
+    -fx-image: url('../../img_transport/arrive1.png');
 }
 
 #btn:hover #DepartImageView{
-    -fx-image: url('../img_transport/depart1.png');
+    -fx-image: url('../../img_transport/depart1.png');
 
 }
 #btn #DepartImageView{
-    -fx-image: url('../img_transport/depart.png');
+    -fx-image: url('../../img_transport/depart.png');
 }
 
 #btn #StationImageView{
-    -fx-image: url('../img_transport/station.png');
+    -fx-image: url('../../img_transport/station.png');
 }
 #btn:hover #StationImageView{
-    -fx-image: url('../img_transport/station1.png');
+    -fx-image: url('../../img_transport/station1.png');
 }
 /* styles.css */
 .rounded-image {
@@ -314,3 +314,10 @@
 /*    -fx-transform: scale(2.2); !* Add scaling effect on hover *!*/
 /*}*/
 
+
+
+#mainanchor{
+    -fx-background-color: #333;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}
