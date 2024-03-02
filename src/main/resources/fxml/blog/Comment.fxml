@@ -19,7 +19,7 @@
                   <Insets top="16.0" />
                </HBox.margin>
                <image>
-                  <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/send.png" />
+                  <Image url="@../../icons/blogIcons/send.png" />
                </image>
             </ImageView>
          </children>

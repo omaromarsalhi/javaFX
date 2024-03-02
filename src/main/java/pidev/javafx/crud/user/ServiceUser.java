@@ -339,4 +339,21 @@ public class ServiceUser implements IserviceUser<User> {
             System.out.println(e.getMessage());
         }
     }
+
+    public String getImgUser (int idUser) {
+        Connection cnx = ConnectionDB.getInstance().getCnx();
+        String req = "SELECT * FROM `user` WHERE idUser=?";
+        String photos = null;
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, idUser);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                photos = rs.getString("photos");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return photos;
+    }
 }

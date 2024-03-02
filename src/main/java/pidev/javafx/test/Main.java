@@ -15,13 +15,15 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/mainWindow/mainWindow.fxml" ));
-        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/user/LoginSignup.fxml" ));
+//        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/user/LoginSignup.fxml" ));
+        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/mainWindow/mainWindow.fxml" ));
+//        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/user/LoginSignup.fxml" ));
 
         Scene scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
-        scene.getStylesheets().add( String.valueOf( getClass().getResource("/style/user/styleLogin.css") ) );
+//        scene.getStylesheets().add( String.valueOf( getClass().getResource("/style/user/styleLogin.css") ) );
         stage.initStyle( StageStyle.TRANSPARENT);
         stage.setTitle("Hello!");
+        UserController.setUser( null );
         stage.setResizable( true );
         stage.setScene(scene);
         stage.show();

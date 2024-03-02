@@ -42,6 +42,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import org.json.JSONObject;
+import pidev.javafx.tools.UserController;
 
 
 public class BlogController implements Initializable {
@@ -94,7 +95,7 @@ public class BlogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        ConnectedAccount = 5;
+        ConnectedAccount = UserController.getInstance().getCurrentUser().getId();
         postPreviewImg.setVisible(false);
         postPreviewImg.setManaged(false);
         enlverImgBtn.setVisible(false);
@@ -104,9 +105,8 @@ public class BlogController implements Initializable {
         leftArrow.setVisible(false);
         leftArrow.setManaged(false);
         BlogService blogService = new BlogService();
-        Account account = blogService.getComte(ConnectedAccount);
-        //Image img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
-        //ProfileImg.setImage(img);
+        Image img = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getImagePath() );
+        ProfileImg.setImage(img);
         posts = new ArrayList<>(getPost());
         for (Post post : posts) {
             try {
@@ -391,9 +391,10 @@ public class BlogController implements Initializable {
             rightArrow.setManaged(false);
             lastid = bs.getLastId();
             p.setId(lastid);
-
             if (!images.isEmpty()) {
                 for (String image : images) {
+                    System.out.println(image);
+                    System.out.println("asbaaaaaaaaa");
                     try {
                         Path sourcePath = Paths.get(image);
                         if (image.endsWith(".png")) {
@@ -403,7 +404,7 @@ public class BlogController implements Initializable {
                         }
                         Path destinationPath = Paths.get(destinationString, randomFileName);
                         Files.copy(sourcePath, destinationPath);
-                        imgPath = "/blogImgPosts" + "/" + randomFileName;
+                        imgPath = "/blogImgPosts/" + randomFileName;
                         bs.ajouterImages(imgPath, lastid);
                         p.getImages().add(imgPath);
                     } catch (IOException e) {
@@ -416,7 +417,6 @@ public class BlogController implements Initializable {
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
-
             posts.add(0, p);
             images.clear();
         }

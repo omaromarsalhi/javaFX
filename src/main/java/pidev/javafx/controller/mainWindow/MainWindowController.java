@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+//import pidev.javafx.tools.marketPlace.DetectProperties;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 
@@ -63,21 +64,32 @@ public class MainWindowController implements Initializable {
 //    btns that changes the scenes
     @FXML
     public void onBlogBtnClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPane.setCenter(showEmpAnchorPane);
+        AnchorPane stations = null;
+        try {
+            stations = FXMLLoader.load( getClass().getResource( "/fxml/blog/blog.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        mainBorderPane.setCenter(stations);
     }
 
     @FXML
     public void onTransportBtnClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPane.setCenter(showEmpAnchorPane);
+//        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
+//        mainBorderPane.setCenter(showEmpAnchorPane);
+//        DetectProperties.detectProperties();
     }
 
 
     @FXML
-    public void onStationsBtnClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPane.setCenter(showEmpAnchorPane);
+    public void onStationsBtnClicked(ActionEvent event){
+        AnchorPane stations = null;
+        try {
+            stations = FXMLLoader.load( getClass().getResource( "/fxml/Transport/Gui_Station/TransportClient.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        mainBorderPane.setCenter(stations);
     }
 
 

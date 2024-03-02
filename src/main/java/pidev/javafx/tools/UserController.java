@@ -11,22 +11,24 @@ public class UserController {
     private static UserController instance;
 
     private UserController(User user) {
-        this.user=user;
-//        System.out.println(number);
-//        if(number==1) {
-//            user = new User( 1,
-//                    "omar",
-//                    "salhi",
-//                    "salhiomar362@gmail.com",
-//                    "12710434",
-//                    22,
-//                    29624921,
-//                    "beb saadoun",
-//                    Role.Citoyen,
-//                    "salhi",
-//                    "img/marketPlace/me.png"
-//                    );
-//        }
+        if(user==null) {
+            this.user = new User( 1,
+                    "omar",
+                    "salhi",
+                    "salhiomar362@gmail.com",
+                    "12710434",
+                    22,
+                    29624921,
+                    "beb saadoun",
+                    Role.Citoyen,
+                    "salhi",
+                    "img/marketPlace/me.png"
+                    );
+        }
+        else
+            this.user=user;
+
+
 //        else {
 //            user = new User( 2,
 //                    "latifa",

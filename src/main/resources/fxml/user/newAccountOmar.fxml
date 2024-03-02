@@ -155,7 +155,7 @@
       </VBox>
       <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
          <children>
-            <VBox fx:id="formContainer" layoutX="164.0" layoutY="91.0" prefHeight="552.0" prefWidth="711.0" />
+            <VBox fx:id="formContainer" layoutX="317.0" layoutY="96.0" prefHeight="552.0" prefWidth="406.0" />
          </children>
       </AnchorPane>
    </children>

@@ -24,6 +24,7 @@ import pidev.javafx.model.blog.Post;
 import pidev.javafx.crud.blog.BlogService;
 import pidev.javafx.crud.blog.CommentService;
 import pidev.javafx.crud.blog.ReactionService;
+import pidev.javafx.tools.UserController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -106,10 +107,9 @@ public class PopUpCommentsController implements Initializable {
                 sroll.setVvalue(0);
             }
         });
-        ConectedAccount = 5;
+        ConectedAccount = UserController.getInstance().getCurrentUser().getId();
         BlogService blogService = new BlogService();
-        Account account = blogService.getComte(ConectedAccount);
-        Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        Image img1 = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getImagePath() );
         ProfileImg.setImage(img1);
         comments = new ArrayList<>(getComments());
         for (Comment comment : comments) {

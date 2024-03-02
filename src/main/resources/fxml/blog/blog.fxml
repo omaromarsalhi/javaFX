@@ -63,7 +63,7 @@
                                  <children>
                                     <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/ic_filtre.png" />
+                                          <Image url="@../../icons/blogIcons/ic_filtre.png" />
                                        </image>
                                     </ImageView>
                                     <MenuButton fx:id="menuButtonFiltrer" maxHeight="1.7976931348623157E308" minHeight="20.0" mnemonicParsing="false" prefHeight="8.0" prefWidth="95.0" text="Tous">
@@ -87,7 +87,7 @@
                                        </font></TextField>
                                     <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/ic_chercher.png" />
+                                          <Image url="@../../icons/blogIcons/ic_chercher.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -118,13 +118,13 @@
                                        <children>
                                           <ImageView fx:id="leftArrow" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#leftArrowClicked" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
                                              <image>
-                                                <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/left-arrow.png" />
+                                                <Image url="@../../icons/blogIcons/left-arrow.png" />
                                              </image>
                                           </ImageView>
                                           <ImageView fx:id="postPreviewImg" fitHeight="150.0" fitWidth="356.0" pickOnBounds="true" preserveRatio="true" />
                                           <ImageView fx:id="rightArrow" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#rightArrowClicked" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
                                              <image>
-                                                <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/right-arrow.png" />
+                                                <Image url="@../../icons/blogIcons/right-arrow.png" />
                                              </image>
                                           </ImageView>
                                        </children>
@@ -142,7 +142,7 @@
                                        <graphic>
                                           <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/addImg.png" />
+                                                <Image url="@../../icons/blogIcons/addImg.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>

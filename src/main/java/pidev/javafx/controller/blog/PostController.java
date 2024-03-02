@@ -310,10 +310,10 @@ public class PostController extends VBox implements Initializable {
         //lezem nbadalha
         //img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
         //imgProfile.setImage(img);
-        img = new Image("file:/src/resources"+UserController.getInstance().getCurrentUser().getPhotos());
-        imgProfile.setImage(img);
+        //img = new Image("file:/src/resources"+UserController.getInstance().getCurrentUser().getPhotos());
+        //imgProfile.setImage(img);
 
-        username.setText(UserController.getInstance().getCurrentUser().getFirstname());
+        //username.setText(UserController.getInstance().getCurrentUser().getFirstname());
         /*if (account.isVerified()) {
             imgVerified.setVisible(true);
         } else {

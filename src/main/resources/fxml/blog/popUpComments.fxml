@@ -29,7 +29,7 @@
                   </Label>
                   <ImageView fx:id="closeBtn" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" styleClass="nextImg">
                      <image>
-                        <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/closePopUp.png" />
+                        <Image url="@../../icons/blogIcons/closePopUp.png" />
                      </image>
                      <HBox.margin>
                         <Insets />
@@ -102,7 +102,7 @@
                                  <children>
                                     <ImageView fx:id="leftArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="nextImg">
                                        <image>
-                                          <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/left-arrow-W.png" />
+                                          <Image url="@../../icons/blogIcons/left-arrow-W.png" />
                                        </image>
                                     </ImageView>
                                     <ImageView fx:id="imgPost" fitHeight="259.0" fitWidth="528.0" pickOnBounds="true" preserveRatio="true">
@@ -112,7 +112,7 @@
                                     </ImageView>
                                     <ImageView fx:id="rightArrow" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true" styleClass="nextImg">
                                        <image>
-                                          <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/right-arrow-W.png" />
+                                          <Image url="@../../icons/blogIcons/right-arrow-W.png" />
                                        </image>
                                     </ImageView>
                                  </children>
@@ -162,7 +162,7 @@
                   <TextArea fx:id="CommentText" maxHeight="50.0" maxWidth="692.0" prefHeight="50.0" prefWidth="614.0" promptText="Exprimer Vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" />
                   <ImageView fx:id="sendBtn" fitHeight="25.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true" styleClass="nextImg">
                      <image>
-                        <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/blogIcons/send.png" />
+                        <Image url="@../../icons/blogIcons/send.png" />
                      </image>
                   </ImageView>
                </children>
