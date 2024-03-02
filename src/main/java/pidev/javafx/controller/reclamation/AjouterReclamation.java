@@ -209,7 +209,7 @@ public class AjouterReclamation {
            // analyzeImage(imagePath);
         }
     }
-    private static final String API_KEY = "AIzaSyAz4SgAFn-YwdN8CHQNLOIEnEb5iSqUq7k";
+    private static final String API_KEY = "";
 
     public void analyzeImage(String imagePath) {
         try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
