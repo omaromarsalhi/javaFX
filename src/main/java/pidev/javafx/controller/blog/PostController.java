@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.model.blog.Account;
 import pidev.javafx.model.blog.Post;
 import pidev.javafx.model.blog.Reactions;
@@ -306,15 +307,18 @@ public class PostController extends VBox implements Initializable {
         Image img;
         BlogService bs = new BlogService();
         Account account = bs.getComte(idCompte);
-
-        img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        //lezem nbadalha
+        //img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
+        //imgProfile.setImage(img);
+        img = new Image("file:/src/resources"+UserController.getInstance().getCurrentUser().getPhotos());
         imgProfile.setImage(img);
-        username.setText(account.getName());
-        if (account.isVerified()) {
+
+        username.setText(UserController.getInstance().getCurrentUser().getFirstname());
+        /*if (account.isVerified()) {
             imgVerified.setVisible(true);
         } else {
             imgVerified.setVisible(false);
-        }
+        }*/
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());

@@ -37,6 +37,7 @@ import java.util.UUID;
 
 import javafx.stage.Stage;
 import pidev.javafx.crud.user.ServiceUser;
+import pidev.javafx.tools.marketPlace.MyTools;
 import pidev.javafx.tools.user.windowController;
 import java.io.File;
 import java.nio.file.Files;
@@ -254,31 +255,31 @@ public class AccountController implements Initializable {
         fileChooser.setTitle("Choose a File");
         var selectedFile = fileChooser.showOpenDialog(primaryStage);
         if (selectedFile != null) {
-            String randomFileName = UUID.randomUUID().toString() + ".png";
-         //   System.out.println(randomFileName);
-
-            String destinationFolderPath = "C:/Users/Latifa/Desktop/latifa/src/main/resources/image/";
-            String destinationPath = destinationFolderPath + randomFileName;
-            System.out.println(destinationPath);
-            File destinationFolder = new File(destinationFolderPath);
-            System.out.println(destinationFolder);
-            File destinationFile = new File(destinationPath);
-            System.out.println(destinationFile);
-            if (!destinationFolder.exists()) {
-                destinationFolder.mkdirs();
-
-
-            }
-
-
-            try {
-                Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            imagePath = destinationPath;
-       Image image = new Image(destinationPath);
+//            String randomFileName = UUID.randomUUID().toString() + ".png";
+//         //   System.out.println(randomFileName);
+//
+//            String destinationFolderPath = "file:/src/main/resources/image/";
+//            String destinationPath = destinationFolderPath + randomFileName;
+//            System.out.println(destinationPath);
+//            File destinationFolder = new File(destinationFolderPath);
+//            System.out.println(destinationFolder);
+//            File destinationFile = new File(destinationPath);
+//            System.out.println(destinationFile);
+//            if (!destinationFolder.exists()) {
+//                destinationFolder.mkdirs();
+//
+//
+//            }
+//
+//
+//            try {
+//                Files.copy(selectedFile.toPath(), destinationFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            imagePath = destinationPath;
+       Image image = new Image("file:/src/main/resources"+ MyTools.getInstance().getPathAndSaveIMGUser( selectedFile.getAbsolutePath() ) );
        myImageView.setImage(image);
         }
     }

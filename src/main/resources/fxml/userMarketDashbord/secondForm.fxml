@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane alignment="TOP_LEFT" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
+<StackPane alignment="TOP_LEFT" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.FormController">
    <children>
-      <HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/formLayout.css">
+      <HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
          <children>
             <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
                <children>
@@ -119,11 +119,11 @@
                               <Font name="System Italic" size="20.0" />
                            </font>
                         </Label>
-                        <Button fx:id="imageBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/formLayout.css">
+                        <Button fx:id="imageBtn" mnemonicParsing="false" style="-fx-background-color: transparent;" stylesheets="@../../style/marketPlace/formLayout.css">
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/image.png" />
+                                    <Image url="@../../icons/marketPlace/image.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -141,9 +141,9 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </VBox>
-            <VBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="380.0" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/scrollBarStlyle.css">
+            <VBox alignment="CENTER_LEFT" prefHeight="142.0" prefWidth="380.0" stylesheets="@../../style/marketPlace/scrollBarStlyle.css">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/Buttons.css">
+                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
                         <Label prefHeight="36.0" prefWidth="160.0" text="Descreption :">
                            <font>
@@ -157,7 +157,7 @@
                            <graphic>
                               <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/ai-file.png" />
+                                    <Image url="@../../icons/marketPlace/ai-file.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -185,7 +185,7 @@
                <graphic>
                   <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/cross.png" />
+                        <Image url="@../../icons/marketPlace/cross.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -199,7 +199,7 @@
                   </Label>
                   <ImageView fx:id="relativeImageVieur" fitHeight="354.0" fitWidth="301.0" onDragDropped="#handelDrag" onDragOver="#handelDragOver" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../javaFX - Copy/src/main/resources/img/mySelf.jpg" />
+                        <Image url="@../../img/marketPlace/mySelf.jpg" />
                      </image>
                   </ImageView>
                </children>
@@ -210,7 +210,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/left-arrow.png" />
+                              <Image url="@../../icons/marketPlace/left-arrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -219,7 +219,7 @@
                      <graphic>
                         <ImageView fitHeight="30.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/trash.png" />
+                              <Image url="@../../icons/marketPlace/trash.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -228,7 +228,7 @@
                      <graphic>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/right-arrow.png" />
+                              <Image url="@../../icons/marketPlace/right-arrow.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -241,7 +241,7 @@
          <children>
             <ImageView fitHeight="85.0" fitWidth="90.0" layoutX="343.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="212.60000000000002" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="212.0">
                <image>
-                  <Image url="@../../../../../../javaFX - Copy/src/main/resources/img/grey-9026_256.gif" />
+                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
                </image>
             </ImageView>
          </children>

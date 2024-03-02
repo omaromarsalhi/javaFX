@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1300.0" styleClass="borderPane" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.mainWindow.MainWindowController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="710.0" prefWidth="1300.0" styleClass="borderPane" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.mainWindow.MainWindowController">
     <left>
         <VBox fx:id="sideBar" prefHeight="890.0" prefWidth="235.0" BorderPane.alignment="CENTER">
             <children>
-                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="230.0">
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="235.0">
                     <children>
                         <ImageView fitHeight="52.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
                             <image>
@@ -32,7 +32,7 @@
                 </HBox>
                 <VBox alignment="CENTER" prefHeight="286.0" prefWidth="235.0" spacing="15.0">
                     <children>
-                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" minWidth="165.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="194.0" text="  Blog" textFill="WHITE">
+                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  Blogs" textFill="WHITE">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
@@ -47,7 +47,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="transportBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="194.0" text="  Transport" textFill="WHITE">
+                        <Button fx:id="transportBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  Transparent" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -59,7 +59,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="stationsBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="194.0" text="  Stations" textFill="WHITE">
+                        <Button fx:id="stationBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  Stations" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -71,7 +71,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="newsBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="194.0" text="  News" textFill="WHITE">
+                        <Button fx:id="newsBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  News" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -83,7 +83,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="marketplaceBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="30.0" prefWidth="194.0" text=" Market Place" textFill="WHITE">
+                        <Button fx:id="marketplacebtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketPlaceBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Market Place" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -95,7 +95,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="marketdashbordBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketplaceDashbordBtnClicked" prefHeight="38.0" prefWidth="194.0" text=" Market Dashbord" textFill="WHITE">
+                        <Button fx:id="dashbordBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketplaceDashbordBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Market Dashbord" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -117,7 +117,7 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="59.0" prefWidth="235.0">
                     <children>
-                        <Button fx:id="accountBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onAccountBtnClicked" prefHeight="52.0" prefWidth="194.0" text="  Compte" textFill="WHITE">
+                        <Button fx:id="accountBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onAccountBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Compte" textFill="WHITE">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
@@ -189,9 +189,9 @@
         </HBox>
     </top>
    <center>
-      <AnchorPane fx:id="centerContainer" prefHeight="670.0" prefWidth="1040.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="centerContainer" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 20; -fx-border-radius: 20;" BorderPane.alignment="CENTER">
          <BorderPane.margin>
-            <Insets bottom="12.0" left="6.0" right="6.0" top="6.0" />
+            <Insets bottom="10.0" left="15.0" right="15.0" />
          </BorderPane.margin>
       </AnchorPane>
    </center>

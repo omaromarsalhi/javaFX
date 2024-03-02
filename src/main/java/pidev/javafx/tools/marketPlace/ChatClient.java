@@ -3,7 +3,7 @@ package pidev.javafx.tools.marketPlace;
 import javafx.application.Platform;
 import javafx.scene.layout.VBox;
 import pidev.javafx.controller.chat.ChatController;
-import pidev.javafx.controller.user.UserController;
+import pidev.javafx.tools.UserController;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

@@ -21,6 +21,33 @@ public class User {
     private String photos;
     private String gender;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", age=" + age +
+                ", num=" + num +
+                ", droit_acces=" + droit_acces +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", email='" + email + '\'' +
+                ", cin='" + cin + '\'' +
+                ", adresse='" + adresse + '\'' +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                ", date='" + date + '\'' +
+                ", dob='" + dob + '\'' +
+                ", status='" + status + '\'' +
+                ", verificationCode='" + verificationCode + '\'' +
+                ", photos='" + photos + '\'' +
+                ", gender='" + gender + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", verified=" + verified +
+                ", IsConnected=" + IsConnected +
+                ", idMunicipalite=" + idMunicipalite +
+                '}';
+    }
+
     public String getImagePath() {
         return imagePath;
     }

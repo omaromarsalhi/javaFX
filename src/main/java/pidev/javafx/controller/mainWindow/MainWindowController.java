@@ -30,11 +30,11 @@ public class MainWindowController implements Initializable {
     @FXML
     private Button closeBtn;
     @FXML
+    private Button dashbordBtn;
+    @FXML
     private HBox header;
     @FXML
-    private Button marketdashbordBtn;
-    @FXML
-    private Button marketplaceBtn;
+    private Button marketplacebtn;
     @FXML
     private Button newsBtn;
     @FXML
@@ -42,7 +42,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private VBox sideBar;
     @FXML
-    private Button stationsBtn;
+    private Button stationBtn;
     @FXML
     private Button transportBtn;
     @FXML
@@ -89,28 +89,36 @@ public class MainWindowController implements Initializable {
 
 
     @FXML
-    public void onMarketPlaceBtnClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPane.setCenter(showEmpAnchorPane);
+    public void onMarketPlaceBtnClicked(ActionEvent event) {
+        centerContainer.getChildren().clear();
+        StackPane marketplace;
+        try {
+            marketplace = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(marketplace);
     }
 
 
     @FXML
     public void onMarketplaceDashbordBtnClicked(ActionEvent event) {
+        centerContainer.getChildren().clear();
         StackPane dashbord = null;
         try {
             dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainBorderPane.setCenter(dashbord);
+        centerContainer.getChildren().add(dashbord);
     }
 
     @FXML
     public void onAccountBtnClicked(ActionEvent event) {
+        centerContainer.getChildren().clear();
         StackPane account = null;
         try {
-            account = FXMLLoader.load(getClass().getResource( "/fxml/user/Account.fxml" ) );
+            account = FXMLLoader.load(getClass().getResource( "/fxml/user/newAccountOmar.fxml" ) );
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

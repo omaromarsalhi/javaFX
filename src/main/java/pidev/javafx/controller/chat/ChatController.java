@@ -16,7 +16,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import pidev.javafx.controller.user.UserController;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.crud.marketplace.CrudChat;
 import pidev.javafx.model.chat.Chat;
 import pidev.javafx.model.user.User;

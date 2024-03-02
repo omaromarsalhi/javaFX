@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import pidev.javafx.controller.chat.ChatController;
-import pidev.javafx.controller.user.UserController;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.crud.marketplace.CrudLocalWrapper;
@@ -214,12 +214,8 @@ public class MainDashbordController implements Initializable {
 
         menuBar.getMenus().get( 0 ).getItems().addAll(addProduct ,showAllProduct,showForPushasedProduct,showForSelledProduct);
 
-        var addService=new MenuItem("Add Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
-        var showService=new MenuItem("Show Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        menuBar.getMenus().get( 1 ).getItems().addAll(addService ,showService);
-
         var add2Favorite=new MenuItem("Manage",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        menuBar.getMenus().get( 2 ).getItems().add(add2Favorite);
+        menuBar.getMenus().get( 1 ).getItems().add(add2Favorite);
 
         add2Favorite.setOnAction( event -> {
             loadFavoriteForm();
@@ -228,7 +224,7 @@ public class MainDashbordController implements Initializable {
         });
 
         var openChat=new MenuItem("open chat ",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        menuBar.getMenus().get( 3 ).getItems().add(openChat);
+        menuBar.getMenus().get( 2 ).getItems().add(openChat);
         openChat.setOnAction( event -> openChatWindow() );
     }
 

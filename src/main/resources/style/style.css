@@ -46,15 +46,15 @@
 
 #header .button {
     -fx-background-color: transparent;
-    -fx-min-width: 27px;
-    -fx-min-height: 27px;
-    -fx-max-width: 27px;
-    -fx-max-height: 27px;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
 }
 
 #header .button:hover {
     -fx-background-color: rgba(61, 61, 61, 0.18);
-    -fx-border-radius: 5px;
+-fx-border-color: #fdc847;
 }
 
 #header .button-close:hover {

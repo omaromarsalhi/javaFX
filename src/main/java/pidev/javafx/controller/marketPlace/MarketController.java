@@ -71,9 +71,8 @@ public class MarketController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
         try {
             chatBox = fxmlLoader.load();
-            hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
             itemInfo = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ));
-            mainHbox.getChildren().add(hepfullBar);
+
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
@@ -93,7 +92,6 @@ public class MarketController implements Initializable {
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
         EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
-        EventBus.getInstance().subscribe( "showHelfullBar",this::showHelfullBar);
         EventBus.getInstance().subscribe( "exitItemInfo",this::exitItemInfo);
 
         loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
@@ -121,26 +119,20 @@ public class MarketController implements Initializable {
         todayProducts.setOnAction( event -> {
             loadingAllProductsThread(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" )).start();
         } );
-
-
         menuBar.getMenus().get( 0 ).getItems().addAll(allProducts,todayProducts);
 
 
-        var allServices=new MenuItem("All Services",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        var todayServices=new MenuItem("Today's Services",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        menuBar.getMenus().get( 1 ).getItems().addAll(allServices ,todayServices);
 
 
         var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        menuBar.getMenus().get( 2 ).getItems().addAll(filterProd ,filterService);
+        menuBar.getMenus().get( 1 ).getItems().addAll(filterProd ,filterService);
 
 
         filterProd.setOnAction( event -> {
-            if(whoIsActiveNow.equals( "chatBox" ))
-                animateChanges( chatBox, hepfullBar );
-            else if (whoIsActiveNow.equals( "itemInfo" ))
-                animateChanges( itemInfo, hepfullBar );
+
+            mainHbox.getChildren().add(hepfullBar);
+            animateChanges( itemInfo, hepfullBar );
 
             EventBus.getInstance().publish( "filter",event );
             whoIsActiveNow="hepfullBar";
@@ -233,13 +225,6 @@ public class MarketController implements Initializable {
     }
 
 
-    public void showHelfullBar(MouseEvent event){
-        if(whoIsActiveNow.equals( "itemInfo" ))
-            animateChanges(itemInfo, hepfullBar );
-        else if (whoIsActiveNow.equals( "chatBox" ))
-            animateChanges( chatBox, hepfullBar );
-        whoIsActiveNow = "hepfullBar";
-    }
 
 
 //    public void showGridPane(ObservableList<Bien> biens){
@@ -284,7 +269,7 @@ public class MarketController implements Initializable {
         int row = 1;
         var executer= Executors.newFixedThreadPool(6);
         for (int i = 0; i < biens.size() ; i++) {
-            if (column == 3) {
+            if (column == 4) {
                 column = 0;
                 row++;
             }

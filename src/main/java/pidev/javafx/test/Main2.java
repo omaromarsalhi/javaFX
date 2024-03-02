@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import pidev.javafx.controller.user.UserController;
+import pidev.javafx.tools.UserController;
 
 import java.io.IOException;
 
@@ -13,7 +13,7 @@ public class Main2 extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/mainWindow/mainWindow.fxml" ));
         Scene scene = new Scene(fxmlLoader.load());
-        UserController.setUser( 2 );
+//        UserController.setUser( 2 );
         stage.setTitle("Hello!");
         stage.setResizable( true );
 

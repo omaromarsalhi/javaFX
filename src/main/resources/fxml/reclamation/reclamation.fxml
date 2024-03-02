@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="106.0" prefWidth="335.0" spacing="15.0" style="-fx-background-color: #171718;" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="64.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/userImg/6324913.jpg" />
+         </image>
+         <HBox.margin>
+            <Insets left="15.0" top="25.0" />
+         </HBox.margin>
+      </ImageView>
+      <VBox prefHeight="116.0" prefWidth="166.0">
+         <children>
+            <Label prefHeight="57.0" prefWidth="167.0" text="How to grow your Facebook Page" textFill="#d1d1d1" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="4.0" />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="34.0" prefWidth="160.0" text="Follow these easy " textFill="#d1d1d1" wrapText="true">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <VBox alignment="CENTER">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <children>
+            <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/userImg/clock.png" />
+               </image>
+            </ImageView>
+            <Label text="See more" textFill="#aeaeae" wrapText="true">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</HBox>

@@ -6,8 +6,8 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import pidev.javafx.controller.user.UserController;
-//import pidev.javafx.controller.user.UserController;
+import pidev.javafx.tools.UserController;
+//import pidev.javafx.tools.UserController;
 import java.io.IOException;
 
 
@@ -15,10 +15,11 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/mainWindow/mainWindow.fxml" ));
+//        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/mainWindow/mainWindow.fxml" ));
+        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/user/LoginSignup.fxml" ));
 
         Scene scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
-        UserController.setUser(1);
+        scene.getStylesheets().add( String.valueOf( getClass().getResource("/style/user/styleLogin.css") ) );
         stage.initStyle( StageStyle.TRANSPARENT);
         stage.setTitle("Hello!");
         stage.setResizable( true );

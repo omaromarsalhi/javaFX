@@ -131,6 +131,21 @@ public class MyTools {
 
         return path;
     }
+    public String getPathAndSaveIMGUser(String chosenFilePath) {
+
+        String path = "/image/" + UUID.randomUUID() + ".png";
+
+        Path src = Paths.get( chosenFilePath );
+        Path dest = Paths.get( "src/main/resources" + path );
+
+        try {
+            Files.copy( src, dest );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+
+        return path;
+    }
 
 
     public void notifyUser4NewAddedProduct(Product product) {
@@ -152,8 +167,8 @@ public class MyTools {
                         checkIfProductIsValid = false;
                 } else
                     checkIfProductIsValid = false;
-                if (checkIfProductIsValid)
-                    PhoneSMS.getInstance().sendSMS( "+21629624921", "A New Product Was Added" );
+//                if (checkIfProductIsValid)
+//                    PhoneSMS.getInstance().sendSMS( "+21629624921", "A New Product Was Added" );
                 checkIfProductIsValid = true;
             }
         }
@@ -195,7 +210,7 @@ public class MyTools {
         scaleTransition.play();
         scaleTransition.setOnFinished( event -> {
             child.setVisible( true );
-            scaleTransition.setDuration( Duration.seconds( 0.8 ) );
+            scaleTransition.setDuration( Duration.seconds( 0.6 ) );
             scaleTransition.setToX( 1 );
             scaleTransition.setToY( 1 );
             scaleTransition.play();

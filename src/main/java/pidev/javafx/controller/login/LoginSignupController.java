@@ -21,6 +21,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import javafx.scene.input.MouseEvent;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.user.PasswordHasher;
 import pidev.javafx.controller.user.AccountController;
 import pidev.javafx.controller.user.ReglageController;
@@ -287,7 +288,6 @@ public class LoginSignupController implements Initializable {
 
         google.setOnAction(event -> {
 
-
             GoogleApi googleApi=new GoogleApi();
             WebView webView = googleApi.AccessTokenFetcher();
             AnchorPane anchorPane = new AnchorPane(webView);
@@ -300,8 +300,6 @@ public class LoginSignupController implements Initializable {
             stage.setScene(scene);
             stage.close();
             stage.show();
-
-
 
         });
 
@@ -342,13 +340,6 @@ public class LoginSignupController implements Initializable {
         alerteemail.setVisible(false);
         password2.setVisible(true);
         verifierpassword2.setVisible(false);
-
-        slide.setOnFinished((e->{
-
-
-        }));
-
-
     }
 
 
@@ -425,19 +416,19 @@ public class LoginSignupController implements Initializable {
           signup2.setVisible(false);
           signin.setVisible(false);
           verifierpassword2.setVisible(false);
-          String filePath = "C:\\Users\\Latifa\\Desktop\\test\\index.html";
-          try {
-              String htmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
+     //     String filePath = "C:\\Users\\Latifa\\Desktop\\test\\index.html";
+//          try {
+            //  String htmlContent = new String(Files.readAllBytes(Paths.get(filePath)));
               user.generateVerificationCode();
               System.out.println(user.generateVerificationCode());
               System.out.println(user.getVerificationCode());
               String dynamicText=user.getVerificationCode();
-              String body=EmailController.addDynamicText(htmlContent,dynamicText);
-              EmailController.sendEmail("latifa.benzaied@esprit.tn", "Subject", body);
+             // String body=EmailController.addDynamicText(htmlContent,dynamicText);
+              EmailController.sendEmail("latifa.benzaied@esprit.tn", "Subject",user.getVerificationCode() );
 
-          } catch (IOException e) {
-             e.printStackTrace();
-          }
+//          } catch (IOException e) {
+//             e.printStackTrace();
+//          }
                    // EmailController.sendEmail("latifa.benzaied@esprit.tn","verifier",user.getVerificationCode());
            Timer timer = new Timer();
 
@@ -460,30 +451,32 @@ public class LoginSignupController implements Initializable {
                         user.setIsConnected(1);
                         ServiceUser serviceUser = new ServiceUser();
                         serviceUser.ajouter(user);
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/User/Account.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/mainWindow/mainWindow.fxml"));
                         Scene scene = null;
                         try {
                             scene = new Scene(fxmlLoader.load());
                         } catch (IOException e) {
                         throw new RuntimeException(e);
                         }
-                        if(lastname!=null)
+                        if(lastname!=null) {
                             user.setLastname(lastname);
-                            System.out.println(lastname);
-                            System.out.println(user.getLastname());
-                            AccountController account = fxmlLoader.getController();
-                            account.display(user);
-                            scene.getStylesheets().add(String.valueOf(getClass().getResource("/style/styleAccount.css")));
+                        }
+
+                        UserController.setUser(user);
+//                            AccountController account = fxmlLoader.getController();
+//                            account.display(user);
+                          //  scene.getStylesheets().add(String.valueOf(getClass().getResource("/style/styleAccount.css")));
                             Stage stage;
                             stage = (Stage) signup2.getScene().getWindow();
+                            stage.initStyle( StageStyle.TRANSPARENT);
                             stage.setScene(scene);
                             stage.close();
                             stage.show();
-                            windowController.addWindow(stage);
+                            //windowController.addWindow(stage);
 
                     }
                     else {
-                                        System.out.println("mouch shih");
+                        System.out.println("mouch shih");
                     }
                     });
 
@@ -529,36 +522,21 @@ public class LoginSignupController implements Initializable {
                         alerteemail.setVisible(false);
                         alertepassword.setVisible(false);
                         alertepassword2.setVisible(false);
-
-
-
                     })
-                    );
-
-
-                                        // Start the PauseTransition
+                    );// Start the PauseTransition
                       timeline.play();
                       cancel();
-
                                 });
                            }
 
                         };
                     };
-
                     timer.schedule(task, 0,1000);
-
-
-
-               }
-
-
+                }
               }
 
             else{
                 probleme.setVisible(true);
-
-
                 if(!name.getText().matches(nameRegex)){
                     alertename.setVisible(true);
                     probleme.setVisible(true);
@@ -576,7 +554,7 @@ public class LoginSignupController implements Initializable {
                     probleme.setVisible(true);
                       alerteemail.setOnMouseClicked(event -> {
                           showAlerteButton(alerteemail,"sss",emaill);
- });
+                        });
 
                 }
 
@@ -648,12 +626,13 @@ public class LoginSignupController implements Initializable {
 
                 user.setIsConnected(1);
 
-                service.isconnected(user);
+//                service.isconnected(user);
 
+                UserController.setUser(user);
 
-                    if(user.getRole()==Role.Citoyen) {
+                if(user.getRole()==Role.Citoyen) {
 
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/User/Account.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/mainWindow/mainWindow.fxml"));
 
                         Scene scene = null;
                         try {
@@ -662,9 +641,9 @@ public class LoginSignupController implements Initializable {
                             throw new RuntimeException(e);
                         }
 
-                        AccountController account = fxmlLoader.getController();
+                     //   AccountController account = fxmlLoader.getController();
 
-                        account.display(user);
+//                  account.display(user);
 
                         scene.getStylesheets().add(String.valueOf(getClass().getResource("/style/styleAccount.css")));
 
@@ -765,10 +744,10 @@ public class LoginSignupController implements Initializable {
         alert.setContentText(message);
         alert.getDialogPane().setPrefWidth(350);
         alert.getDialogPane().setPrefHeight(150);
-        alert.getDialogPane().getStylesheets().add(getClass().getResource("/style/styleSignup.css").toExternalForm());
+        alert.getDialogPane().getStylesheets().add(getClass().getResource("/style/user/styleSignup.css").toExternalForm());
         Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
         //stage.getIcons().add(new Image("/resources/img/gmail.png")); // Remplacez le chemin par votre propre chemin
-        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/img/logo.png"),60,32,true,true));
+        ImageView icon = new ImageView(new Image(getClass().getResourceAsStream("/img/userImg/logo.png"),60,32,true,true));
         alert.setGraphic(icon);
         return alert;
     }
@@ -805,7 +784,7 @@ public class LoginSignupController implements Initializable {
                 Stage popupStage = new Stage();
 
                 Scene scene = new Scene(fxmlLoader.load());
-                scene.getStylesheets().add(String.valueOf(getClass().getResource("/style/StyleReglage.css")));
+                scene.getStylesheets().add(String.valueOf(getClass().getResource("/style/user/StyleReglage.css")));
 
                 scene.setFill(Color.TRANSPARENT);
 
@@ -837,8 +816,8 @@ public class LoginSignupController implements Initializable {
                 //reglageController.getValider().setImage(image);
                 reglageController.getValider().setVisible(true);
                 user.generateVerificationCode();
-                reglageController.setData(username.getText(),user.getVerificationCode());
-                EmailController.sendEmail("latifa.benzaied@esprit.tn", "verifier", user.getVerificationCode());
+//                reglageController.setData(username.getText(),user.getVerificationCode());
+//                EmailController.sendEmail("latifa.benzaied@esprit.tn", "verifier", user.getVerificationCode());
                 popupStage.setScene(scene);
                 windowController.addWindow(popupStage);
                 popupStage.initOwner(primaryStage);

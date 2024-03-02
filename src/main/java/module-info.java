@@ -22,9 +22,12 @@ module pidev.javafx{
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
     opens pidev.javafx.controller.user to javafx.fxml;
+    opens pidev.javafx.controller.login to javafx.fxml;
     exports pidev.javafx.model.MarketPlace;
     opens pidev.javafx.model.MarketPlace to javafx.fxml;
     exports pidev.javafx.controller.marketPlace;
+    exports pidev.javafx.controller.blog;
+    opens pidev.javafx.controller.blog;
     opens pidev.javafx.controller.userMarketDashbord to javafx.fxml;
     exports pidev.javafx.crud;
     opens pidev.javafx.crud to javafx.fxml;
@@ -44,5 +47,7 @@ module pidev.javafx{
     exports pidev.javafx.controller.user;
     exports pidev.javafx.model.chat;
     opens pidev.javafx.tools.marketPlace to javafx.fxml;
+    opens pidev.javafx.tools to javafx.fxml;
+    exports pidev.javafx.tools;
 }
 

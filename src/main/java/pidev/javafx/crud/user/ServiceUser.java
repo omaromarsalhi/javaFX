@@ -262,6 +262,7 @@ public class ServiceUser implements IserviceUser<User> {
                 String photos = rs.getString("photos");
                 String gender = rs.getString("gender");
                 user = new User(firstname, email, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
+                System.out.println(user);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
