@@ -54,7 +54,7 @@ public class MainWindowController implements Initializable {
 //    btns that changes the scenes
     @FXML
     public void onShowEmpClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/reclmation/intrface.fxml" ) ) );
+        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/reclmation/interfacemodifer.fxml" ) ) );
         mainBorderPain.setCenter(showEmpAnchorPane);
     }
 

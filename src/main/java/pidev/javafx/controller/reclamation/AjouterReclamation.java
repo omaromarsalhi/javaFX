@@ -1,5 +1,7 @@
 package pidev.javafx.controller.reclamation;
 
+import com.google.cloud.vision.v1.*;
+import com.google.protobuf.ByteString;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,15 +12,13 @@ import javafx.stage.FileChooser;
 import pidev.javafx.crud.reclamation.DataSource;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
-import java.io.File;
-import java.io.IOException;
+
+import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -29,8 +29,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
 
 public class AjouterReclamation {
 
@@ -203,7 +201,49 @@ public class AjouterReclamation {
             Image.setFitHeight(114);
             Image.setFitWidth(114);
             Image.setImage(image);
+            analyzeImage(imagePath);
         }
     }
+    private static final String API_KEY = "AIzaSyAz4SgAFn-YwdN8CHQNLOIEnEb5iSqUq7k";
+
+    public void analyzeImage(String imagePath) {
+        try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
+            ByteString imgBytes = ByteString.readFrom(new FileInputStream(imagePath));
+            com.google.cloud.vision.v1.Image img = com.google.cloud.vision.v1.Image.newBuilder().setContent(imgBytes).build();
+
+            List<Feature> featureList = new ArrayList<>();
+            featureList.add(Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build());
+            featureList.add(Feature.newBuilder().setType(Feature.Type.FACE_DETECTION).build());
+            featureList.add(Feature.newBuilder().setType(Feature.Type.WEB_DETECTION).build());
+
+            AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
+                    .setImage(img)
+                    .addAllFeatures(featureList)
+                    .build();
+
+            List<AnnotateImageRequest> requestList = new ArrayList<>();
+            requestList.add(request);
+
+            BatchAnnotateImagesRequest batchRequest = BatchAnnotateImagesRequest.newBuilder()
+                    .addAllRequests(requestList)
+                    .build();
+
+            BatchAnnotateImagesResponse batchResponse = vision.batchAnnotateImages(batchRequest);
+
+            for (AnnotateImageResponse response : batchResponse.getResponsesList()) {
+                for (EntityAnnotation textAnnotation : response.getTextAnnotationsList()) {
+                    System.out.println("Texte détecté : " + textAnnotation.getDescription());
+                }
+
+                for (FaceAnnotation locationInfo : response.getFaceAnnotationsList()) {
+                    System.out.println("Visage détecté à la position : " + locationInfo.getBoundingPoly());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

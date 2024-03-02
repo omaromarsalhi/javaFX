@@ -20,6 +20,7 @@
       <Label layoutX="322.0" layoutY="314.0" text="Description" />
       <TextField fx:id="subject" disable="true" layoutX="322.0" layoutY="280.0" prefHeight="25.0" prefWidth="478.0" promptText="subject" styleClass="recc" stylesheets="@../../styles/style.css" />
       <MediaView fx:id="video" fitHeight="200.0" fitWidth="200.0" layoutX="59.0" layoutY="131.0" />
+      <Button fx:id="video" layoutX="127.0" layoutY="364.0" mnemonicParsing="false" text="load vieo" />
    </children>
 
 

@@ -12,6 +12,10 @@ module pidev.javafx{
     requires aspose.imaging;
     requires javafx.swing;
     requires org.apache.pdfbox;
+   // requires com.google.protobuf;
+    requires google.cloud.vision;
+    requires proto.google.cloud.vision.v1;
+    //requires proto.google.cloud.vision.v1;
     opens pidev.javafx.model.reclamation to javafx.base;
 
     opens pidev.javafx.controller.ticket ;

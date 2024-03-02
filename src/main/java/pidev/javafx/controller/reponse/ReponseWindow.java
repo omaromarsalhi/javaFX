@@ -67,7 +67,7 @@ public class ReponseWindow {
     @FXML
     void showPopup(ActionEvent event) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/intrface.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/interfacemodifer.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Popupupdate controller = fxmlLoader.getController();
             controller.setData(reclamation);
