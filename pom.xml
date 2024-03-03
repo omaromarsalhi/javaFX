@@ -91,6 +91,11 @@
       <artifactId>okhttp</artifactId>
       <version>${okhttp.version}</version>
     </dependency>
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-web</artifactId>
+          <version>21.0.1</version>
+      </dependency>
   </dependencies>
 
   <build>

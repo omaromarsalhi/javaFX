@@ -72,7 +72,7 @@
                               <Font name="Souliyo Unicode" size="20.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="Depart" onShown="#Load_Depart" prefHeight="39.0" prefWidth="400.0" promptText="Choisir la station de depart" styleClass="SearchBar" />
+                        <ComboBox fx:id="Depart" onShown="#Load_Depart" prefHeight="39.0" prefWidth="400.0" promptText="Choisir la station de depart" style="-fx-background-color: transparent;" styleClass="SearchBar" stylesheets="@../../../style/TransportSelects.css" />
                      </children>
                   </VBox>
                   <VBox layoutX="553.0" layoutY="258.0">
@@ -109,7 +109,7 @@
                               <Font name="Souliyo Unicode" size="20.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="Arrive" onShown="#Load_Arrivee" prefHeight="39.0" prefWidth="400.0" promptText="Choisir la station d'arrive" styleClass="SearchBar" />
+                        <ComboBox fx:id="Arrive" onShown="#Load_Arrivee" prefHeight="39.0" prefWidth="400.0" promptText="Choisir la station d'arrive" styleClass="SearchBar" stylesheets="@../../../style/TransportSelects.css" />
                      </children>
                   </VBox>
                   <VBox layoutX="75.0" layoutY="408.0" prefHeight="86.0" prefWidth="886.0">

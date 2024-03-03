@@ -16,26 +16,7 @@ import java.util.ResourceBundle;
 
 public class transportDetailsContoller implements Initializable {
 
-    @FXML
-    private Label Arrive_Status;
 
-    @FXML
-    private Label InfoLabel2;
-
-    @FXML
-    private Label InfoLabel21;
-
-    @FXML
-    private Label InfoLabel3;
-
-    @FXML
-    private Label InfoLabel32;
-
-    @FXML
-    private Label InfoLabel321;
-
-    @FXML
-    private Label InfoLabel33;
     @FXML
     private ImageView imageLabel;
 
@@ -59,20 +40,7 @@ public class transportDetailsContoller implements Initializable {
     @FXML
     private Label typeLabel;
 
-    @FXML
-    private Label InfoLabel331;
 
-    @FXML
-    private Label InfoLabel3311;
-
-    @FXML
-    private Label InfoLabel332;
-
-    @FXML
-    private Label InfoLabel34;
-
-    @FXML
-    private VBox TransportBox;
 
     @FXML
     private Pane detailsTransport;
@@ -113,7 +81,7 @@ public class transportDetailsContoller implements Initializable {
     @FXML
     void onDropdownClick(ActionEvent event) {
         if (dropToggle.isSelected()) {
-            detailsTransport.setMinSize(0, 0); // Set minimum size to zero
+            detailsTransport.setMinSize(0, 0);
             detailsTransport.setMaxSize(0, 0);
             detailsTransport.setPrefSize(0,0);
             detailsTransport.setVisible(false);

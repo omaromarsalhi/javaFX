@@ -1,14 +1,10 @@
 package pidev.javafx.crud.transport;
 
-
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.Transport.Station;
-
-
 import pidev.javafx.crud.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,11 +15,12 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 
 public class ServicesStation implements CrudInterface<Station> {
-    Connection cnx = DataSource.GetInstance().getCnx();;
+
     private PreparedStatement prepare;
 
     @Override
     public boolean addItem(Station S) {
+        Connection cnx = DataSource.GetInstance().getCnx();
         String sql = "INSERT INTO station (NomStation,AddressStation,Type_Vehicule,Image_Station) VALUES (?,?,?,?) ";
         try {
             prepare = cnx.prepareStatement(sql);
@@ -47,6 +44,7 @@ public class ServicesStation implements CrudInterface<Station> {
     }
     @Override
     public void updateItem(Station o) {
+        Connection cnx = DataSource.GetInstance().getCnx();
         String sql = "UPDATE `station` " +
                 "SET  `NomStation`=?,`AddressStation`=?" +
                 ",`Type_Vehicule`=?,`Image_Station`=? " +
@@ -86,6 +84,7 @@ public class ServicesStation implements CrudInterface<Station> {
 
     @Override
     public void deleteItem(int id) {
+        Connection cnx = DataSource.GetInstance().getCnx();
         String deleteQuery = "DELETE FROM station WHERE idStation = ?";
         try {
             prepare = cnx.prepareStatement(deleteQuery);
@@ -109,14 +108,13 @@ return new Station();
 
     @Override
     public Set<Station> getAll() {
+        Connection cnx = DataSource.GetInstance().getCnx();
         Set <Station> abonnementList = new HashSet<>();
         String req = "Select * from station";
-
-
         try (PreparedStatement preparedStatement = cnx.prepareStatement(req);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            while (resultSet.next()) {
+                while (resultSet.next()) {
                 Station abs = new Station();
                 abs.setAddressStation(resultSet.getString("AddressStation"));
                 abs.setNomStation(resultSet.getString("NomStation"));
@@ -124,8 +122,7 @@ return new Station();
                 abs.setImage_station(resultSet.getString("Image_Station"));
                 abs.setIdStation(resultSet.getInt("idStation"));
                 abonnementList.add(abs);
-
-            }
+                                         }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

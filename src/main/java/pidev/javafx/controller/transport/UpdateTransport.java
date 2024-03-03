@@ -11,7 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pidev.javafx.crud.DataSource;
-import pidev.javafx.crud.marketplace.ConnectionDB;
+
 import pidev.javafx.crud.transport.ServicesTransport;
 import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Transport;
@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Time;
 import java.time.LocalTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -32,8 +33,6 @@ public class UpdateTransport implements Initializable {
     static  private   Transport loadedTransport;
 
 
-    @FXML
-    private Button Ajouter_imageBtn;
 
     @FXML
     private ComboBox Arrive;
@@ -46,8 +45,8 @@ public class UpdateTransport implements Initializable {
 
     @FXML
     private ImageView Image;
-
     private Stage primaryStage;
+
 
 
     @FXML
@@ -99,9 +98,7 @@ public class UpdateTransport implements Initializable {
         Image.setFitWidth(114);
         Image.setImage(image);
         intialiase_timer();
-//        Load_types();
-//        Load_Arrivee();
-//        Load_Depart();
+
     }
 
 
@@ -137,36 +134,65 @@ public class UpdateTransport implements Initializable {
     }
 
 
-    public Set<String> Load_Locations(){
+    public Set<Station> Load_Locations(){
 
         String sql = "SELECT * FROM station";
+
+        Set<Station> s=new HashSet<>();
 
         try (
                 PreparedStatement preparedStatement = cnx.prepareStatement(sql);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
 
-                String name = resultSet.getString("NomStation");
-                resultSetItems.add(name);
+                String nomStation=resultSet.getString("NomStation");
+                int id=resultSet.getInt("idStation");
+                Station sn=new Station();
+                sn.setIdStation(id);
+                sn.setNomStation(nomStation);
+                s.add(sn);
+
 
             }
-            System.out.println(resultSetItems);
-            return resultSetItems;
+            return s;
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
-        }}
+        }
+    }
 
     @FXML
     protected  void     Load_Depart(){
         if(Depart.getValue()!=null)
             Depart.getItems().addAll(Load_Locations());
+        Depart.setCellFactory(param -> new ListCell<Station>() {
+            @Override
+            protected void updateItem(Station item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNomStation());
+                }
+            }
+        });
     }
     @FXML
     protected  void Load_Arrivee(){
         if(Arrive.getValue()!=null)
             Arrive.getItems().addAll(Load_Locations());
+            Arrive.setCellFactory(param -> new ListCell<Station>() {
+            @Override
+            protected void updateItem(Station item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNomStation());
+                }
+            }
+        });
     }
     @FXML
     protected  void Load_types() {
@@ -191,7 +217,6 @@ public class UpdateTransport implements Initializable {
         }
 
     }
-
 
 
     public void Return(ActionEvent event) throws IOException {

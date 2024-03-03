@@ -84,10 +84,7 @@ Transport t;
      public void initialize(URL url, ResourceBundle resourceBundle) {
          afficher();
 
-//         OneSignal.startInit(this)
-//                 .inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification)
-//                 .unsubscribeWhenNotificationsAreDisabled(true)
-//                 .init();
+
          btn.setStyle("-fx-background-color: #bb2020; " +
                  "-fx-text-fill: white; -fx-font-size: 14px;" + "-fx-border-radius: 15px;" + "-fx-background-color: transparent");
 
@@ -164,12 +161,7 @@ Transport t;
      public void afficher() {
 
 
-        // dataList=st.getAll();
-
-
-
-
-Set<Transport> dataList=new HashSet<>();
+             Set<Transport> dataList=new HashSet<>();
 
              ReferenceCol.setCellValueFactory(new PropertyValueFactory<>("Reference"));
              HeureCol.setCellValueFactory(new PropertyValueFactory<>("Heure"));
@@ -215,7 +207,7 @@ Set<Transport> dataList=new HashSet<>();
       }
 
         @FXML
-        public Boolean Supprimer(int id) {       // Delete from the database
+        public Boolean Supprimer(int id) {
         st.deleteItem(id);
         return true;
         };
@@ -223,17 +215,7 @@ Set<Transport> dataList=new HashSet<>();
 
         @FXML
         public void onInsertClicked(ActionEvent event) throws IOException {
-
-//            System.out.println(1);
-//            ScrollPane scrollPane = FXMLLoader.load(  getClass().getResource("/fxml/Transport/AddTransport.fxml"));
-//            scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
-//            scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
-//            System.out.println(mainBorderPain.getChildren().size());
-//            mainBorderPain.getChildren().remove(mainBorderPain.getChildren().get(0));
-//            mainBorderPain.getChildren().add(scrollPane);
-
             ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/Gui_Transport/AddTransport.fxml")));
-           // ScrollPane scrollPane = FXMLLoader.load(Objects.requireNonNull( getClass().getResource("/fxml/Transport/AddTransport.fxml")));
             scrollPane.setPrefHeight(mainBorderPain.getPrefHeight()  );
             scrollPane.setPrefWidth( mainBorderPain.getPrefWidth() );
               mainBorderPain.setContent(scrollPane);

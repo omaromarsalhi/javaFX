@@ -7,15 +7,15 @@ public class Station {
     String image_station;
     String addressStation;
     String type_Vehicule;
-    int idStation;
+    int    idStation;
 
 
     public Station(String nomStation, String image_station, String addressStation, String type_Vehicule, int idStation) {
-        this.nomStation = nomStation;
-        this.image_station = image_station;
+        this.nomStation     = nomStation;
+        this.image_station  = image_station;
         this.addressStation = addressStation;
-        this.type_Vehicule = type_Vehicule;
-        this.idStation = idStation;
+        this.type_Vehicule  = type_Vehicule;
+        this.idStation      = idStation;
     }
 
 
@@ -34,20 +34,6 @@ public class Station {
         this.image_station = image_station;
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Station station = (Station) o;
-        return idStation == station.idStation && Objects.equals(nomStation, station.nomStation) && Objects.equals(addressStation, station.addressStation) && Objects.equals(type_Vehicule, station.type_Vehicule);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(nomStation, addressStation, type_Vehicule, idStation);
-    }
 
     @Override
     public String toString() {
@@ -92,6 +78,19 @@ public Station(){}
 
     public int getIdStation() {
         return idStation;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Station station = (Station) o;
+        return idStation == station.idStation;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idStation);
     }
 
     public void setIdStation(int idStation) {

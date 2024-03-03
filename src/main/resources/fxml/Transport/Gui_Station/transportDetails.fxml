@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<Pane prefWidth="359.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.transport.transportDetailsContoller">
+<Pane prefWidth="359.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.transport.transportDetailsContoller">
    <children>
       <Pane layoutY="4.0" prefHeight="60.0" prefWidth="352.0" style="-fx-background-color: f1f1f1;">
          <children>
@@ -44,27 +46,18 @@
                   <Image url="@../../../img/circul_button.png" />
                </image>
             </ImageView>
-            <Pane layoutX="275.0" layoutY="8.0" prefHeight="18.0" prefWidth="27.0" style="-fx-border-radius: 10;" styleClass="body_pane">
+            <Pane layoutX="256.0" layoutY="30.0" prefHeight="21.0" prefWidth="55.0" style="-fx-border-radius: 10; -fx-background-color: d6e5f0;" styleClass="body_pane">
                <children>
-                  <Label layoutX="6.0" layoutY="-1.0" text="SEF">
+                  <Label fx:id="stationLabel" layoutX="10.0" layoutY="1.0" text="A123" textFill="#3c6680">
                      <font>
-                        <Font name="Souliyo Unicode" size="10.0" />
+                        <Font name="Souliyo Unicode" size="12.0" />
                      </font>
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="254.0" layoutY="32.0" prefHeight="18.0" prefWidth="49.0" style="-fx-border-radius: 10; -fx-background-color: d6e5f0;" styleClass="body_pane">
-               <children>
-                  <Label fx:id="stationLabel" layoutX="11.0" layoutY="1.0" text="A123" textFill="#3c6680">
-                     <font>
-                        <Font name="Arial Bold" size="12.0" />
-                     </font>
-                  </Label>
-               </children>
-            </Pane>
-            <ToggleButton id="Dropdownbtn" fx:id="dropToggle" layoutX="307.0" layoutY="4.0" mnemonicParsing="false" onAction="#onDropdownClick" prefHeight="42.0" prefWidth="49.0" style="-fx-background-color: transparent;">
+            <ToggleButton id="Dropdownbtn" fx:id="dropToggle" layoutX="307.0" layoutY="-2.0" mnemonicParsing="false" onAction="#onDropdownClick" prefHeight="42.0" prefWidth="49.0" style="-fx-background-color: transparent;">
                <graphic>
-                  <ImageView id="btnImageview" fitHeight="23.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView id="btnImageview" fitHeight="13.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../img_transport/DOWN.png" />
                      </image>

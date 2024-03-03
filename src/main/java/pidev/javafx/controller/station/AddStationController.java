@@ -1,6 +1,9 @@
 package pidev.javafx.controller.station;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,7 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,12 +27,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -43,34 +45,21 @@ import java.util.Scanner;
 public class AddStationController implements Initializable {
     @FXML
     private ComboBox BoxTypeVehicule;
-
     @FXML
     private TextField NomStationText;
-
     @FXML
     private TextField AdressText;
-
-    @FXML
-    private Pane Pane;
-
     @FXML
     private ScrollPane mainBorderPain;
-    private Connection connect;
-
-    private PreparedStatement prepare;
-
-
     ServicesStation ss=new ServicesStation();
     String  Address;
-
     private static final String OPENCAGE_API_KEY = "53ee85fa919942ebb5df4021833590b4";
     private Stage primaryStage;
-
     public void load_adress(){
-
    geocodeAddress(NomStationText.getText());
-
 }
+
+
     @FXML
     private ImageView Image;
 
@@ -81,7 +70,6 @@ String imagePath;
         var selectedFile = fileChooser.showOpenDialog(primaryStage);
         if (selectedFile != null) {
             imagePath=selectedFile.getAbsolutePath() ;
-
             Image image = new Image(imagePath);
             Image.setFitHeight(114);
             Image.setFitWidth(114);
@@ -126,7 +114,6 @@ String imagePath;
     }
 
     private static String[] extractCoordinates(String jsonResponse) throws JSONException {
-        // Parse the JSON response and extract latitude and longitude using org.json library
         JSONObject json = new JSONObject(jsonResponse);
         JSONObject firstResult = json.getJSONArray("results").optJSONObject(0);
 
@@ -139,8 +126,6 @@ String imagePath;
                 coordinates[1] = geometry.optString("lng", "N/A");
             }
         }
-
-        // Remove \u00b0 (degree symbol)
         coordinates[0] = coordinates[0].replace("\u00b0", "");
         coordinates[1] = coordinates[1].replace("\u00b0", "");
 
@@ -153,7 +138,6 @@ String imagePath;
         String[] text = new String[10];
 
         text[1] = NomStationText.getText();
-       // text[2]= PrixText.getText();
 
         if (text[1].matches("[a-zA-Z ]*"))
             NomStationText.setStyle("-fx-text-fill: #25c12c;");
@@ -177,7 +161,7 @@ String imagePath;
     @FXML
     protected void insertStation() throws IOException {
         String nomStation = NomStationText.getText();
-        String address = AdressText.getText();  // Replace with the actual address or get it from a control
+        String address = AdressText.getText();
 
         Station st = new Station(nomStation,imagePath,address,  BoxTypeVehicule.getValue().toString());
         ss.addItem(st);
@@ -204,7 +188,6 @@ String imagePath;
 
 
     void mapView(){
-
 
     }
 

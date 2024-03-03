@@ -237,9 +237,6 @@
 
 package pidev.javafx.controller.station;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -252,22 +249,18 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Type_Vehicule;
 
 import java.io.IOException;
-import java.io.PipedReader;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -290,20 +283,18 @@ public class StationController implements Initializable {
     private Statement statement;
     private PreparedStatement prepare;
     private Stage primaryStage;
-
     @FXML
     private ListView<Station> StationListView;
-
     @FXML
     private AnchorPane mainBorderPain;
-
     private ServicesStation ss = new ServicesStation();
     @FXML
     private Pane UpdatePane;
     @FXML
-    private Pane UpdateBox;
+    private TextField SearchText;
 
-
+    @FXML
+    private Pane stationpane;
     @FXML
     protected void onTextChanged() {
         String[] name = new String[10];
@@ -339,16 +330,29 @@ public class StationController implements Initializable {
 
 
     @FXML
-    public void unexpand() {
+    public void close_update() {
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+        stationpane.toFront();
+        stationpane.setEffect(null);
+        UpdatePane.toBack();
+        stationpane.setOpacity(1);
+    }
+
+    @FXML
+    public void close_insert() {
+
 
         BoxBlur blur = new BoxBlur();
         blur.setWidth(10);
         blur.setHeight(10);
         blur.setIterations(3);
-        displayTransport.toFront();
-        displayTransport.setEffect(null);
+        stationpane.toFront();
+        stationpane.setEffect(null);
         UpdatePane.toBack();
-        displayTransport.setOpacity(1);
+        stationpane.setOpacity(1);
 
     }
 
@@ -386,12 +390,25 @@ public class StationController implements Initializable {
         });
     }
 
+
+    public void filterStations(String searchText) {
+        if (searchText.isEmpty()) {
+            StationListView.setItems(data);
+        } else {
+            ObservableList<Station> filteredStations = FXCollections.observableArrayList();
+            for (Station station : data) {
+                if (station.getNomStation().toLowerCase().contains(searchText.toLowerCase())) {
+                    filteredStations.add(station);
+                }
+            }
+            StationListView.setItems(filteredStations);
+        }
+    }
     public void delete_Btn(){
         ss.deleteItem(StationListView.getSelectionModel().getSelectedItem().getIdStation());
         afficher();
     }
-@FXML
-    private Pane displayTransport;
+
 
     @FXML
     private TextField AdressText;
@@ -408,7 +425,7 @@ public class StationController implements Initializable {
         blur.setWidth(10);
         blur.setHeight(10);
         blur.setIterations(3);
-        displayTransport.setEffect(blur);
+        stationpane.setEffect(blur);
         UpdatePane.setVisible(true);
         UpdatePane.toFront();
         UpdatePane.setOpacity(0.85);
@@ -416,7 +433,22 @@ public class StationController implements Initializable {
         AdressText.setText(selectedItem.getAddressStation());
         BoxTypeVehicule.setValue(selectedItem.getType_Vehicule());
         image_path=selectedItem.getImage_station();
+      if(image_path!=null){
         Image.setImage(new Image(image_path));
+    }
+    }
+    @FXML
+    private Pane insertPane;
+    public void load_insert(){
+
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+      //  stationPane.setEffect(blur);
+        insertPane.setVisible(true);
+        insertPane.toFront();
+
     }
     public void insert_Image(){
         FileChooser fileChooser = new FileChooser();
@@ -443,7 +475,7 @@ public class StationController implements Initializable {
         System.out.println(updated_s);
         ss.updateItem(updated_s);
         afficher();
-        unexpand();
+        close_update();
     }
     Station selectedItem = new Station();
     Station selectedItem_1 = new Station();
@@ -460,18 +492,31 @@ public class StationController implements Initializable {
             }
         }
     }
+    public void searchStation(){
+        if (SearchText.getText().isEmpty()) {
+            StationListView.setItems(data);
+        } else {
+            ObservableList<Station> filteredStations = FXCollections.observableArrayList();
+            for (Station station : data) {
+                if (station.getNomStation().toLowerCase().contains(SearchText.getText().toLowerCase())) {
+                    filteredStations.add(station);
+                }
+            }
+            StationListView.setItems(filteredStations);
+        }
+    }
+
+
+    ObservableList<Station> data ;
+
     Map<String, Integer> stationMap = new HashMap<>();
     public void afficher() {
         Set<Station> dataList;
-
-        // Étape 1 : Effacer les éléments existants
         dataList = ss.getAll();
         dataList.clear();
         dataList = ss.getAll();
-        ObservableList<Station> data = FXCollections.observableArrayList(dataList);
+          data = FXCollections.observableArrayList(dataList);
         StationListView.setItems(data);
-
-        // Configurer la cellule de la TableView (si nécessaire)
         StationListView.setCellFactory(param -> new ListCell<Station>() {
             @Override
             protected void updateItem(Station item, boolean empty) {

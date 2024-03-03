@@ -14,15 +14,15 @@ import java.util.Set;
 
 public class ServicesAbonnement implements CrudInterface <Abonnement> {
 
-    Connection cnx = DataSource.GetInstance().getCnx();
+
     private PreparedStatement prepare;
-    private Set abonnementList;
 
 Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
 
     @Override
     public boolean addItem(Abonnement a) {
+        Connection cnx = DataSource.GetInstance().getCnx();
 
         LocalDate futureDate;
         LocalDate currentDate = LocalDate.now();
@@ -57,6 +57,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
     }
     @Override
     public Abonnement findById(int id) {
+        Connection cnx = DataSource.GetInstance().getCnx();
         String req = "SELECT * FROM abonnement WHERE idAbonnement = ?";
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(req)) {
@@ -74,7 +75,6 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
                 abs.setImage(resultSet.getString("image"));
                 return abs;
             } else {
-                // Handle case when no record is found
                 return null;
             }
         } catch (SQLException e) {
@@ -85,7 +85,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
     @Override
     public void updateItem(Abonnement T) {
-
+        Connection cnx = DataSource.GetInstance().getCnx();
         String sql = "UPDATE abonnement\n" +
                 "SET Type_Abonnement=?, Nom=?, Prenom=?, Image=? \n" +
                 "WHERE idAbonnement=?;\n ";
@@ -115,6 +115,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
     @Override
     public void deleteItem(int id) {
+        Connection cnx = DataSource.GetInstance().getCnx();
         String deleteQuery = "DELETE FROM abonnement WHERE idAbonnement = ?";
         try {
             prepare = cnx.prepareStatement(deleteQuery);
@@ -134,6 +135,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
 
     @Override
     public Set<Abonnement> getAll() {
+        Connection cnx = DataSource.GetInstance().getCnx();
         Set <Abonnement> abonnementList = new HashSet<>();
         String req = "Select * from abonnement";
 
@@ -142,6 +144,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
+
                 Abonnement abs = new Abonnement();
                 abs.setNom(resultSet.getString("Nom"));
                 abs.setPrenom(resultSet.getString("Prenom"));
@@ -150,10 +153,7 @@ Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
                 abs.setDateFin(resultSet.getDate("dateFin"));
                 abs.setIdAboonnement(resultSet.getInt("idAbonnement"));
                 abs.setImage(resultSet.getString("image"));
-                //System.out.println(abs);
-
                 abonnementList.add(abs);
-
             }
 
         } catch (SQLException e) {

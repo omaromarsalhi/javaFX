@@ -1,13 +1,14 @@
 package pidev.javafx.controller.abonnement;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.control.*;
 import javafx.scene.effect.BoxBlur;
@@ -15,10 +16,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import pidev.javafx.crud.transport.ServicesAbonnement;
 import pidev.javafx.model.Transport.Abonnement;
@@ -28,24 +33,16 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
+
 import okhttp3.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-public class AbonnementController implements Initializable {
-
-    private Connection connect;
+public class AbonnementClientController implements Initializable {
 
     ObservableList<Transport> dataList = FXCollections.observableArrayList();
     List<Abonnement> abonnementList = new ArrayList<>();
@@ -85,12 +82,10 @@ public class AbonnementController implements Initializable {
     private ImageView imageAbn;
     private static final String API_KEY = "acc_94dd4f1769c190a";
     private static final String API_SECRET = "5a56d117d922cf4da9488e1349dd7c09";
-
-
        int i;
        Set <Abonnement> abonnementSet;
-    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), paneToAnnimate);
-String imagePath;
+       TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), paneToAnnimate);
+       String imagePath;
 
 
 
@@ -98,13 +93,9 @@ String imagePath;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TypeAbonnementBox.getItems().addAll("Annuel", "mensuel");
-
-
-       // toolsBar.setVisible(false);
         afficher();
         if (abonnementList.size() > 0)
             remplir_abonnement();
-
         translateTransition.setNode(paneToAnnimate);
 
         VBox root = new VBox();
@@ -129,14 +120,36 @@ String imagePath;
         fileChooser.setTitle("Choose a File");
         var selectedFile = fileChooser.showOpenDialog(primaryStage);
         if (selectedFile != null) {
-           Map result= image_api(imagePath);
-            if(!result.isEmpty()&&result.containsKey("man")) {
-                System.out.println("yes");
-                imagePath = selectedFile.getAbsolutePath();
-                Image image = new Image(imagePath);
-                imageAbn.setImage(image);
-            }
-            else System.out.println("image should be of a humain being and in portrait mode");
+            Task<Map> task=new Task<Map>() {
+                @Override
+                protected Map call() throws Exception {
+                    Platform.runLater(()->{
+                        showCustomDialog();
+                    });
+                    return image_api(imagePath);
+                }
+            };
+
+            task.setOnSucceeded(workerStateEvent -> {
+                if(!task.getValue().isEmpty()&&task.getValue().containsKey("man")) {
+                    Platform.runLater(()->{
+
+                        close_dialog();
+                        imageAbn.setImage(new Image(imagePath));
+                    });
+                }
+                else System.out.println("image should be of a humain being and in portrait mode");
+            });
+
+
+            new Thread(task).start();
+
+
+
+            imagePath = selectedFile.getAbsolutePath();
+
+
+
         }
     }
     public void add_load(){
@@ -220,8 +233,6 @@ String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
         }
     }
 
-    // Set a custom cell factory to display name and photo
-
 
     @FXML
     public void previousAb() {
@@ -245,6 +256,32 @@ String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
     TypeAbonnementBox.setValue(abonnementList.get(i).getType());
     imagePath=abonnementList.get(i).getImage();
 
+    }
+    Stage dialogStage = new Stage();
+@FXML
+public void close_dialog(){
+
+        dialogStage.close();
+}
+    @FXML
+    private void showCustomDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/exceptions/scan_photo.fxml"));
+            AnchorPane dialogContent = loader.load();
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.initStyle(StageStyle.TRANSPARENT);
+            dialogStage.setTitle("Custom Dialog");
+
+            Scene dialogScene = new Scene(dialogContent);
+            dialogScene.setFill(Color.TRANSPARENT);
+            dialogStage.setScene(dialogScene);
+             dialogStage.show();
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     Button UpdateBtn;
@@ -379,7 +416,7 @@ public void unexpand() {
     }
 
 public Map<String, Double> image_api(String s){
-    String imagePath = s; // Replace with your local image path
+     imagePath = s; // Replace with your local image path
 
     OkHttpClient client = new OkHttpClient();
     Request request = buildRequest(imagePath);

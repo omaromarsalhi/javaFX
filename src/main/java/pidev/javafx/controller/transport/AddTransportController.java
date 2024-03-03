@@ -15,7 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pidev.javafx.crud.DataSource;
-import pidev.javafx.crud.marketplace.ConnectionDB;
+
 import pidev.javafx.crud.transport.ServicesTransport;
 import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Transport;
@@ -107,13 +107,12 @@ public  void intialiase_timer(){
                 PreparedStatement preparedStatement = cnx.prepareStatement(sql);
                 ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-                Station sn=new Station();
+
                 String nomStation=resultSet.getString("NomStation");
                 int id=resultSet.getInt("idStation");
-
-               sn.setNomStation(nomStation);
-               sn.setIdStation(id);
-
+                Station sn=new Station();
+                sn.setIdStation(id);
+                sn.setNomStation(nomStation);
                 s.add(sn);
 
 
@@ -126,21 +125,41 @@ public  void intialiase_timer(){
         }
 
 
-
-
-
-
     }
 
     @FXML
-    protected  void     Load_Depart(){
+    protected  void  Load_Depart(){
         if(Depart.getValue()==null)
         Depart.getItems().addAll(Load_Locations());
+
+        Depart.setCellFactory(param -> new ListCell<Station>() {
+            @Override
+            protected void updateItem(Station item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNomStation());
+                }
+            }
+        });
     }
     @FXML
      protected  void Load_Arrivee(){
     if(Arrive.getValue()==null)
         Arrive.getItems().addAll(Load_Locations());
+
+        Arrive.setCellFactory(param -> new ListCell<Station>() {
+            @Override
+            protected void updateItem(Station item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNomStation());
+                }
+            }
+        });
 }
     @FXML
     protected  void Load_types() {
@@ -234,10 +253,8 @@ public  void intialiase_timer(){
                         }
                     });
 
-                    // Start the PauseTransition
                     pause.play();
                 }
-              //  showDialog();
 
             return true;
         }

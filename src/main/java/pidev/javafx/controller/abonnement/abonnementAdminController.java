@@ -31,10 +31,15 @@ public class abonnementAdminController implements Initializable {
     @FXML
     private TextField PrenomText;
 
+
     @FXML
     private TextField SearchText;
     @FXML
     private ComboBox <String> TypeAbonnementBox;
+    @FXML
+    private ComboBox<Station> Depart;
+    @FXML
+    private ComboBox<Station> Arrive;
 
 
 
@@ -88,9 +93,12 @@ public class abonnementAdminController implements Initializable {
             }
 
     }
+
+
+    ObservableList<Abonnement> data;
     public void afficher() {
         Set<Abonnement> dataList = sa.getAll();
-        ObservableList<Abonnement> data = FXCollections.observableArrayList(dataList);
+          data = FXCollections.observableArrayList(dataList);
         abonnementListView.setItems(data);
 
         abonnementListView.setCellFactory(new Callback<>() {
@@ -116,7 +124,6 @@ public class abonnementAdminController implements Initializable {
             }
         });
 
-        // Set the cellValueFactory to properly extract data from the Abonnement object
         abonnementListView.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Abonnement item, boolean empty) {
@@ -135,7 +142,19 @@ public class abonnementAdminController implements Initializable {
             }
         });
     }
-
+    public void searchAbonnement(){
+        if (SearchText.getText().isEmpty()) {
+            abonnementListView.setItems(data);
+        } else {
+            ObservableList<Abonnement> filteredStations = FXCollections.observableArrayList();
+            for (Abonnement abonnement : data) {
+                if (abonnement.getPrenom().toLowerCase().contains(SearchText.getText().toLowerCase())) {
+                    filteredStations.add(abonnement);
+                }
+            }
+            abonnementListView.setItems(filteredStations);
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

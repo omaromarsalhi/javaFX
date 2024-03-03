@@ -1,20 +1,24 @@
 package pidev.javafx.controller.transport;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 import pidev.javafx.crud.transport.ServicesTransport;
 import pidev.javafx.model.Transport.Transport;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ListTransportController implements Initializable {
@@ -102,19 +106,16 @@ public class ListTransportController implements Initializable {
 
         if (toggleButton1.isSelected()) {
             System.out.println(metePane);
-           // Pane meteo = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture1.fxml"));
             Pane tempreture1 = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture1.fxml"));
             metePane.getChildren().setAll(tempreture1);
         }
         else if (toggleButton2.isSelected()) {
             System.out.println(metePane);
-            // Pane meteo = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture1.fxml"));
             Pane tempreture2 = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture2.fxml"));
             metePane.getChildren().setAll(tempreture2);
         }
         else if (toggleButton3.isSelected()) {
             System.out.println(metePane);
-            // Pane meteo = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture1.fxml"));
             Pane tempreture3 = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture3.fxml"));
             metePane.getChildren().setAll(tempreture3);
         }
@@ -139,7 +140,6 @@ public class ListTransportController implements Initializable {
             }
 
         } else {
-            // If the clicked button was already selected, unselect it
             clickedButton.setSelected(false);
         }
     }
@@ -179,10 +179,11 @@ public class ListTransportController implements Initializable {
         }
     }
 
-
+@FXML
+private  Label timeLabel;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        create_timeline();
         loadList(0);
         toggleButton1.setSelected(true);
         try {
@@ -198,14 +199,10 @@ public class ListTransportController implements Initializable {
     }
 
     public void expand_column(int i){
-     //   showItems.setPrefHeight(showItems.getPrefHeight()*5);
-        //showItems.setPrefHeight(showItems.getPrefHeight()+113);
         showItems.setPrefHeight(showItems.getPrefHeight()+113);
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setMinHeight(177);
         showItems.getRowConstraints().set(i, rowConstraints);
-
-      //  showItems.getRowConstraints().add(rowConstraints);
     }
     public void unexpand_column(int i){
         RowConstraints rowConstraints = new RowConstraints();
@@ -213,14 +210,7 @@ public class ListTransportController implements Initializable {
         showItems.getRowConstraints().set(i, rowConstraints);
         showItems.setPrefHeight(showItems.getPrefHeight()-113);
     }
-//@FXML
-//    private void handleCellClick(MouseEvent event) {
-//        Label clickedLabel = (Label) event.getSource();
-//        int rowIndex = showItems.getRowIndex(clickedLabel);
-//        int colIndex = showItems.getColumnIndex(clickedLabel);
-//
-//        System.out.println("Clicked on cell at row " + rowIndex + ", column " + colIndex);
-//    }
+
 boolean cellSelected =false;
     int selected_cell =0;
     private void handleCellClick(Pane label, int row, int col) {
@@ -267,6 +257,20 @@ public void openDetails() throws IOException {
     TransportPane.getChildren().setAll(loadedPane.getChildren());
 }
 
+    public void create_timeline(){
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateCurrentTime()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+
+
+    }
+    // Create a Timeline to update the time every second
+
+    private void updateCurrentTime() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        String formattedTime = currentTime.format(DateTimeFormatter.ofPattern("HH:mm"));
+        timeLabel.setText(formattedTime+" CET (UTC +01:00) | ");
+    }
 
 @FXML
     public void loadList(int pos) {
@@ -293,14 +297,12 @@ T=st.getAll();
         transportDetailsContoller transportItem = fxmlLoader.getController();
         transportItem.setData(data);
 
-        // Explicitly call the initialize method
-        transportItem.initialize(null, null);
-        transportItem.onDropdownClick(new ActionEvent()); // Replace with the actual function name
+                transportItem.initialize(null, null);
+                transportItem.onDropdownClick(new ActionEvent());
                 int finalI = i;
-                // Set up a button click event
-                ToggleButton yourButton = transportItem.getDropToggle(); // Replace with the actual method to get your button
+                ToggleButton yourButton = transportItem.getDropToggle();
                 yourButton.setOnAction(event -> transportItem.onDropdownClick(event));
-                yourButton.setOnMouseClicked(event -> handleCellClick(vBox, finalI, 0)); // Replace with the actual button function
+                yourButton.setOnMouseClicked(event -> handleCellClick(vBox, finalI, 0));
 
                 vBox.setMinHeight(60);
 

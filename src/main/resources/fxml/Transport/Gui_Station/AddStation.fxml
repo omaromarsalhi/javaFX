@@ -56,7 +56,7 @@
                                 <Font name="Souliyo Unicode" size="20.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="BoxTypeVehicule" layoutX="81.0" layoutY="429.0" prefHeight="39.0" prefWidth="886.0" promptText="Choisir le type de la vehicule" styleClass="SearchBar" />
+                        <ComboBox fx:id="BoxTypeVehicule" layoutX="81.0" layoutY="429.0" prefHeight="39.0" prefWidth="886.0" promptText="Choisir le type de la vehicule" style="-fx-background-color: transparent;" styleClass="SearchBar" stylesheets="@../../../style/TransportSelects.css" />
                         <Button layoutX="699.0" layoutY="538.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#insertStation" prefHeight="65.0" prefWidth="217.0" styleClass="Button_ajouter" text="Ajouter" textFill="WHITE">
                             <font>
                                 <Font name="Souliyo Unicode" size="20.0" />

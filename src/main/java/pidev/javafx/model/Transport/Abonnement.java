@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Abonnement {
     private int idAboonnement;
+    private  String prenom;
     private String type;
     private Timestamp dateDebut;
     private Date dateFin;
@@ -16,18 +17,21 @@ public class Abonnement {
 
         this.nom = nom;
         this.image = image;
-        Prenom = prenom;
+        this.prenom = prenom;
         this.type =type;
     }
 
-    public String getImage() {
-
-        return image;
+    public Abonnement(int idAboonnement, String type, Timestamp  dateDebut, Date dateFin) {
+        this.idAboonnement = idAboonnement;
+        this.type = type;
+        this.dateDebut = dateDebut;
+        this.dateFin = dateFin;
     }
 
-    public void setImage(String image) {
-
-        this.image = image;
+    public Abonnement(Date dateFin, String nom, String prenom) {
+        this.dateFin = dateFin;
+        this.nom = nom;
+        this.prenom = prenom;
     }
 
     public Abonnement() {
@@ -42,7 +46,7 @@ public class Abonnement {
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", Nom='" + nom + '\'' +
-                ", Prenom='" + Prenom + '\'' +
+                ", Prenom='" + prenom + '\'' +
                 '}';
     }
 
@@ -55,27 +59,24 @@ public class Abonnement {
     }
 
     public String getPrenom() {
-        return Prenom;
+        return prenom;
     }
 
     public void setPrenom(String prenom) {
-        Prenom = prenom;
+        this.prenom = prenom;
     }
 
-    private  String Prenom;
+    public String getImage() {
 
-    public Abonnement(int idAboonnement, String type, Timestamp  dateDebut, Date dateFin) {
-        this.idAboonnement = idAboonnement;
-        this.type = type;
-        this.dateDebut = dateDebut;
-        this.dateFin = dateFin;
+        return image;
     }
 
-    public Abonnement(Date dateFin, String nom, String prenom) {
-        this.dateFin = dateFin;
-        this.nom = nom;
-        Prenom = prenom;
+    public void setImage(String image) {
+
+        this.image = image;
     }
+
+
 
     public int getIdAboonnement() {
         return idAboonnement;

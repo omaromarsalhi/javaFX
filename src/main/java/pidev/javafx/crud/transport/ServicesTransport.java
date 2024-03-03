@@ -16,12 +16,13 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 public class ServicesTransport implements CrudInterface<Transport> {
 
-    Connection cnx = DataSource.GetInstance().getCnx();
     private PreparedStatement prepare;
     private Set abonnementList;
 
 
     public boolean addItem(Transport transport) {
+        Connection cnx = DataSource.GetInstance().getCnx();
+
 
         String sql = "INSERT INTO transport(Type_Vehicule,Station_depart,Station_arrive,Reference,Vehicule_Image,Prix,Heure) VALUES (?,?,?,?,?,?,?) ";
 
@@ -53,7 +54,7 @@ return false;
     }
 
     public void updateItem(Transport T) {
-
+        Connection cnx = DataSource.GetInstance().getCnx();
         String sql = "UPDATE transport\n" +
                 "SET Type_Vehicule=?, Depart=?, Arivee=?, Reference=?, Vehicule_Image=?, Prix=?, Heure=?\n" +
                 "WHERE idTransport=?;\n ";
@@ -93,56 +94,50 @@ return false;
         return null;
     }
 
-    public void deleteItem(int id) {
+        public void deleteItem(int id) {
+            Connection cnx = DataSource.GetInstance().getCnx();
         String deleteQuery = "DELETE FROM transport WHERE idTransport = ?";
         try {
-                prepare = cnx.prepareStatement(deleteQuery);
-                prepare.setInt(1, id);
+            prepare = cnx.prepareStatement(deleteQuery);
+            prepare.setInt(1, id);
             prepare.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }}
 
-    }
-
-    public Transport findById(int id) {
+       public Transport findById(int id) {
 return new Transport();
     }
-
-    @Override
-    public Transport selectFirstItem() {
+        @Override
+        public Transport selectFirstItem() {
         return null;
     }
-
-    @Override
-    public Set<Transport> getAll() {
-Set<Transport> dataList =new HashSet<>();
-        String sql = "SELECT transport.*, station.nom_station\n" +
+        @Override
+        public Set<Transport> getAll() {
+            Connection cnx = DataSource.GetInstance().getCnx();
+        Set<Transport> dataList =new HashSet<>();
+        String sql = "SELECT transport.*, station1.NomStation AS NomStation1, station2.NomStation AS NomStation2\n" +
                 "FROM transport\n" +
-                "LEFT JOIN station " +
-                "ON transport.Station_depart = station.id_station\n" +
-                "WHERE votre_condition;\n ";
+                "LEFT JOIN station AS station1 ON transport.Station_depart = station1.idStation\n" +
+                "LEFT JOIN station AS station2 ON transport.Station_arrive = station2.idStation;\n";
+            ;
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(sql);
+
              ResultSet resultSet = preparedStatement.executeQuery()) {
-
-
-
-
             while (resultSet.next()) {
                 Transport data = new Transport();
-
                 data.setIdTransport(Integer.parseInt(resultSet.getString("idTransport")));
                 data.setType_vehicule(resultSet.getString("Type_Vehicule"));
                 data.setReference(resultSet.getString("Reference"));
-             //  data.setDepart(resultSet.getInt("Station_depart"));
-//                data.setArivee(resultSet.getInt("Station_arrive"));
+                data.setDepart(resultSet.getString("NomStation1"));
+                data.setArivee(resultSet.getString("NomStation2"));
                 data.setPrix((resultSet.getFloat("Prix")));
                 data.setHeure(resultSet.getTime("Heure"));
                 data.setVehicule_Image((resultSet.getString("Vehicule_Image")));
 
                 dataList.add(data);
+                System.out.println(dataList);
 
             }
 

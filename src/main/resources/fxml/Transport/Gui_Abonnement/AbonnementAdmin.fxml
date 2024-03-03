@@ -174,7 +174,7 @@
             </Label>
             <Pane layoutX="227.0" layoutY="131.0">
                <children>
-                  <TextField fx:id="SearchText" prefHeight="20.0" prefWidth="306.0" promptText="Search...." styleClass="SearchBar">
+                  <TextField fx:id="SearchText" onKeyPressed="#searchAbonnement" prefHeight="20.0" prefWidth="306.0" promptText="Search...." styleClass="SearchBar">
                      <font>
                         <Font name="Souliyo Unicode" size="13.0" />
                      </font>
@@ -201,7 +201,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <ListView fx:id="abonnementListView" layoutX="45.0" layoutY="203.0" onMouseClicked="#onListViewClicked" prefHeight="452.0" prefWidth="313.0" style="-fx-background-color: C8transparentC8C8; -fx-border-radius: 10px; -fx-background-radius: 10px;" stylesheets="@../../../style/Station.css" />
+            <ListView fx:id="abonnementListView" layoutX="45.0" layoutY="203.0" onKeyPressed="#searchAbonnement" onKeyReleased="#searchAbonnement" onMouseClicked="#onListViewClicked" prefHeight="452.0" prefWidth="313.0" style="-fx-background-color: C8transparentC8C8; -fx-border-radius: 10px; -fx-background-radius: 10px;" stylesheets="@../../../style/Station.css" />
          </children>
       </Pane>
       <Pane layoutX="379.0" layoutY="204.0" prefHeight="452.0" prefWidth="634.0" style="-fx-background-color: C8C8C8; -fx-border-color: 000000; -fx-border-radius: 10px; -fx-background-radius: 10px;">

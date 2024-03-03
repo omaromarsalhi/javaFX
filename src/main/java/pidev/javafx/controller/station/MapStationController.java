@@ -1,26 +1,53 @@
 package pidev.javafx.controller.station;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
+import netscape.javascript.JSObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 import pidev.javafx.controller.transport.transportDetailsContoller;
+import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.crud.transport.ServicesTransport;
+import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Transport;
-
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class MapStationController implements Initializable {
@@ -53,31 +80,66 @@ public class MapStationController implements Initializable {
     @FXML
     private  VBox mainVbox;
     List<Transport> Transports;
+    @FXML
+    private AnchorPane mapAnchorPane;
+    private static final String GOOGLE_MAPS_URL = "https://www.google.com/maps";
+    ServicesStation ss=new ServicesStation();
 
 
-@FXML
+    ObservableList<Station> data ;
+
+
+
+    @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+       // load_map();
 
 
-
-
+        data = FXCollections.observableArrayList(ss.getAll());
 }
+@FXML
+private TextArea SearchText;
+    @FXML
+    private AnchorPane mainanchor;
+    @FXML
+    private Label stationName;
+    public void searchStation(){
+    if (SearchText.getText().isEmpty()) {
+    } else {
+        ObservableList<Station> filteredStations = FXCollections.observableArrayList();
+        for (Station station : data) {
+            if (station.getNomStation().toLowerCase().contains(SearchText.getText().toLowerCase())) {
+                mainanchor.setVisible(true);
+                filteredStations.add(station);
+                String[] splitStrings = filteredStations.get(0).getAddressStation().split(",");
+                String string1 = splitStrings[0];
+                String string2 = splitStrings[1];
+                System.out.println(string1);
+                System.out.println(string2);
+                stationName.setText(filteredStations.get(0).getNomStation());
+
+            }
+        }
+    }
+    }
+    public void updateMap(String lon,String lat){
+
+    }
+
+    public void allStationsMap(){
 
 
+    }
 
-    public void Onclick(){
+        public void Onclick(){
         load("/fxml/Transport/Gui_Station/ListeTransport.fxml");
 
     }
     private void load(String fxmlPath) {
         try {
-            // Load the content  the specified FXML file
             Node content = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
             ListeClient.getChildren().setAll(content);
-
-            // Set the content of the ScrollPane to the loaded FXML content
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -88,40 +150,6 @@ public class MapStationController implements Initializable {
 
 
 
-
-
-//  private  void retrieve(){
-//        Set <Transport> T=new HashSet<>();
-//        T=st.getAll();
-//      for (Transport paneModel : T) {
-//
-//      }
-//  }
-    public void showDetailsPane(Set<Transport> transportSet) throws IOException {
- Set<Transport> T = new HashSet<>();
-        T = st.getAll();
-
-        for (Transport transport : transportSet) {
-
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/transportDetails.fxml"));
-                AnchorPane anchorPane = loader.load();
-
-                transportDetailsContoller itemController = loader.getController();
-                itemController.setData(transport);
-
-                mainVbox.getChildren().add(anchorPane);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/transportDetails.fxml"));
-            AnchorPane anchorPane = loader.load();
-            transportDetailsContoller itemController = fxmlLoader.getController();
-            itemController.setData(transport);
-            mainVbox.getChildren().add(anchorPane);
-        }
-    }
 
 }
 

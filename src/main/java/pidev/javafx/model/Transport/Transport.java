@@ -1,7 +1,7 @@
 package pidev.javafx.model.Transport;
 
-import pidev.javafx.crud.marketplace.ConnectionDB;
 
+import pidev.javafx.crud.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -80,21 +80,7 @@ public class Transport {
         Heure = heure;
     }
 
-    public Boolean Supprimer(int id){
-        String deleteQuery = "DELETE FROM transport WHERE idTransport = ?";
-        try (Connection connection  = ConnectionDB.connectDb();
 
-             PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {
-
-            preparedStatement.setInt(1, id);
-            preparedStatement.executeUpdate();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return true;
-
-    };
 
     public int getIdTransport() {
         return idTransport;
