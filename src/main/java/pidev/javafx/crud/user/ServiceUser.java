@@ -249,6 +249,7 @@ public class ServiceUser implements IserviceUser<User> {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                int idUser = rs.getInt("idUser");
                 String firstname = rs.getString("firstName");
                 String lastName = rs.getString("lastname");
                 int age = rs.getInt("age");
@@ -262,7 +263,7 @@ public class ServiceUser implements IserviceUser<User> {
                 String photos = rs.getString("photos");
                 String gender = rs.getString("gender");
                 String password = rs.getString("password");
-                user = new User(firstname,email, password, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
+                user = new User(idUser,firstname,email, password, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());

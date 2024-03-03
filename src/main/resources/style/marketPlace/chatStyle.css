@@ -11,10 +11,10 @@
 }
 
 #chat ,#userBox {
-    -fx-background-color: #f2f2f2;
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
-    -fx-border-color: #f2f2f2;
+    /*-fx-background-color: #f2f2f2;*/
+    /*-fx-background-radius: 15;*/
+    /*-fx-border-radius: 15;*/
+    /*-fx-border-color: #f2f2f2;*/
 }
 
 #ancherPaneOfgridPane {

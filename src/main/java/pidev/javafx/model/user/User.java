@@ -21,7 +21,9 @@ public class User {
     private String photos;
     private String gender;
 
-    public User(String firstname, String email, String password, String cin, int age, int num, String adresse, String dob, String lastName, String status, String date, Role role, String photos, String gender) {
+
+    public User(int idUser, String firstname, String email, String password, String cin, int age, int num, String adresse, String dob, String lastName, String status, String date, Role role, String photos, String gender) {
+        this.id = idUser;
         this.firstname = firstname;
         this.email = email;
         this.cin = cin;

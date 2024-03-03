@@ -26,6 +26,7 @@ import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Product;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.ChatGPTAPIDescriber;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.tools.marketPlace.MyListener;
@@ -376,7 +377,7 @@ public class FormController implements Initializable {
     public void onAddOrUpdateBienClicked(MouseEvent event) {
         if(isAllInpulValid[0]&&isAllInpulValid[1]&&isAllInpulValid[2]) {
             Bien bien = new Bien( (product == null) ? 0 : product.getId(),
-                    1,
+                    UserController.getInstance().getCurrentUser().getId(),
                     Pname.getText(),
                     Pdescretion.getText(),
                     (isImageUpdated) ?"":"DO_NOT_UPDATE_OR_ADD_IMAGE",

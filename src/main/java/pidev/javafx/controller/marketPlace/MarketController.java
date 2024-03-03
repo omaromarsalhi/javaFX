@@ -72,7 +72,6 @@ public class MarketController implements Initializable {
         try {
             chatBox = fxmlLoader.load();
             itemInfo = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ));
-
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

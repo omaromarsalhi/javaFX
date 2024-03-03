@@ -93,13 +93,12 @@ public class ChatController implements Initializable {
     @FXML
     private ImageView connState;
     @FXML
-    private VBox container;
+    private HBox container;
 
 
 
     private  boolean amIAReciver;
     private List<File>  chosenFiles;
-    private String searchBarState;
     private Timer animTimer;
     private User reciver;
     private ResultHolder resultHolder=new ResultHolder();
@@ -112,16 +111,18 @@ public class ChatController implements Initializable {
         ancherPaneOfgridPaneMain.setVisible( false );
         amIAReciver=false;
         resultHolder.setResult( "false" );
+
+        searchBtn.setStyle( "-fx-border-radius: 0 10 10 0;" +
+                "-fx-border-color: transparent ;");
+
+        searchTextField.setStyle( "-fx-border-radius: 10 0 0 10;" +
+                "-fx-border-color: transparent ;");
     }
 
     public void initliazeData(){
         ChatClient.getInstance().establishConnection();
         animTimer = new Timer();
-        searchBarState="closed";
-        searchTextField.setVisible( false );
-        searchBtn.setStyle( "-fx-border-radius: 20;" +
-                "-fx-background-radius:20;" );
-        searchBtn.setOnMouseClicked(event -> animateSearchBar());
+
         ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer,resultHolder);
     }
 
@@ -145,7 +146,6 @@ public class ChatController implements Initializable {
         }
         else {
             for (int i = 0; i < chosenFiles.size(); i++) {
-                ChatClient.getInstance().sendImage(reciver.getId(),chosenFiles.get( i ));
                 chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(), amIAReciver ) );
             }
             chosenFiles=null;
@@ -177,17 +177,20 @@ public class ChatController implements Initializable {
         deleteBtn.setGraphic(new ImageView(new Image( "file:src/main/resources/namedIcons/delete2.png",16,16,true,true ))  );         ;
         deleteBtn.setStyle("-fx-background-color: tarnsparent");
         deleteBtn.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
+        hBox.setStyle( "-fx-background-color:  #ced4da;"+
+                "-fx-background-radius : 10;"  );
         hBox.setAlignment( Pos.CENTER_LEFT );
         hBox.setSpacing(6);
-        hBox.setPadding( new Insets( 0,0,0,20 ) );
+        hBox.setPadding( new Insets( 0,0,0,10 ) );
         hBox.getChildren().addAll(notif,userImage,userName,deleteBtn );
 
         hBox.hoverProperty().addListener((observable, oldValue, newValue) -> {
             if(newValue)
-                hBox.setStyle( "-fx-background-color: #fdc847;" +
-                        "-fx-background-radius: 10;"  );
+                hBox.setStyle( "-fx-background-color: #fdc847;"+
+                        "-fx-background-radius : 10;"  );
             else
-                hBox.setStyle( "-fx-background-color: transparent" );
+                hBox.setStyle( "-fx-background-color: #ced4da;" +
+                        "-fx-background-radius : 10;");
         });
 
         hBox.setOnMouseClicked( event -> setSelectedUserData(user));
@@ -210,43 +213,6 @@ public class ChatController implements Initializable {
     }
 
 
-    public void animateSearchBar(){
-        if(searchBarState.equals( "closed" )){
-            searchBarState="opened";
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    if(searchTextField.getWidth()==16){
-                        searchBtn.setStyle( "-fx-border-radius: 0 20 20 0;" +
-                                "-fx-border-color: black  black black transparent ;");
-                        searchTextField.setVisible( true );
-                    }
-                    if (searchTextField.getWidth()<(searchHbox.getWidth()-searchBtn.getWidth()-40)) {
-                        searchTextField.setPrefWidth(searchTextField.getWidth()+10);
-                    } else
-                        this.cancel();
-                }
-
-            }, 0, 15);
-        }
-        else if(searchBarState.equals( "opened" )&&searchTextField.getText().isEmpty()){
-            searchBarState="closed";
-            animTimer.scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
-                    if (searchTextField.getWidth() <=16) {
-                        searchBtn.setStyle( "-fx-border-radius: 20;" +
-                                "-fx-background-radius:20;");
-                        searchTextField.setVisible( false );
-                    }
-                    if (searchTextField.getWidth() > 16) {
-                        searchTextField.setPrefWidth( searchTextField.getWidth() - 10 );
-                    } else
-                        this.cancel();
-                }
-            }, 0, 15);
-        }
-    }
 
 
     public static HBox createTextChatBox(String text,boolean changeOrder){
@@ -457,7 +423,7 @@ public class ChatController implements Initializable {
     }
 
 
-    public VBox getContainer() {
+    public HBox getContainer() {
         return container;
     }
 

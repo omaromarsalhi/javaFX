@@ -1,5 +1,10 @@
 package pidev.javafx.tools.marketPlace;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.concurrent.Task;
+import javafx.util.Duration;
+
 import java.io.*;
 import java.net.*;
 import java.util.HashMap;
@@ -10,12 +15,7 @@ import java.util.concurrent.Executors;
 public class ChatServer {
     private static ExecutorService threadPool = Executors.newFixedThreadPool(3);
     private static Map<Integer, ClientHandler> users = new HashMap<>();
-    private static Map<Integer, String> userCredentials = new HashMap<>();
 
-    static {
-        userCredentials.put(1, "salhi");
-        userCredentials.put(2, "benzaied");
-    }
 
     public static void main(String[] args) {
         try {
@@ -42,17 +42,6 @@ public class ChatServer {
         }
     }
 
-    public static void sendImage(Integer userId,byte[] bytes) {
-        ClientHandler client = users.get(userId);
-        if (client != null) {
-            System.out.println(userId);
-            client.sendImageBytes(bytes);
-        }
-    }
-
-    public static boolean authenticateClient(int userID,String pwd) {
-        return userCredentials.containsKey(userID) && userCredentials.get(userID).equals(pwd);
-    }
 
     public static Map<Integer, ClientHandler> getClients() {
         return users;

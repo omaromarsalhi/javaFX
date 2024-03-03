@@ -231,7 +231,7 @@ public class MainDashbordController implements Initializable {
 
     private void openChatWindow() {
         Stage newStage = new Stage();
-        VBox vBox=null;
+        HBox vBox=null;
         FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "/fxml/chat/seperatedChat.fxml" ));
         Scene scene = null;
         try {
@@ -243,7 +243,6 @@ public class MainDashbordController implements Initializable {
         ChatController controller=fxmlLoader.getController();
         controller.initliazeData();
         controller.getExitBtn().setOnMouseClicked( event ->{
-            ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
             newStage.close();
         }  );
         controller.getContainer().setOnMousePressed(event -> {

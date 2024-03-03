@@ -12,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.UserController;
+import pidev.javafx.tools.marketPlace.ChatClient;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 //import pidev.javafx.tools.marketPlace.DetectProperties;
 import pidev.javafx.tools.marketPlace.EventBus;
@@ -63,6 +64,7 @@ public class MainWindowController implements Initializable {
 //        mainBorderPane.getCenter())
         accountImg.setImage(new Image( "file:src/main/resources"+UserController.getInstance().getCurrentUser().getPhotos(),25,25,true,true)  );
         accountBtn.setText( UserController.getInstance().getCurrentUser().getFirstname()+" "+UserController.getInstance().getCurrentUser().getLastname() );
+        ChatClient.getInstance().establishConnection();
     }
 
 
@@ -183,9 +185,8 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void onCloseBtnClicked() {
-        closeBtn.setOnMouseClicked(event -> {
-            System.exit(0);
-        });
+        ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
+        System.exit(0);
     }
 
 //    @FXML

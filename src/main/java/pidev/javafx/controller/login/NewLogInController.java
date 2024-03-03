@@ -56,6 +56,7 @@ public class NewLogInController implements Initializable {
 
 
     private boolean btnState;
+    private int nbr;
 
 
     @Override
@@ -105,14 +106,28 @@ public class NewLogInController implements Initializable {
         } );
     }
 
+    public void setUser(int n){
+        nbr=n;
+    }
+
 
     public void logIn(ActionEvent actionEvent) {
 
 
         ServiceUser service=new ServiceUser();
 //        User user=service.findParEmail(email.getText());
+        User user=new User();
+        if(nbr==1)
+            user=service.findParEmail("salhiomar362@gmail.com");
+        else if(nbr==2)
+            user=service.findParEmail("latifa.benzaied@gmail.com");
+        else if(nbr==3)
+            user=service.findParEmail("omar.marrakchi@gmail.com");
+        else if(nbr==4)
+            user=service.findParEmail("aziz.gmaty@gmail.com");
+        else if(nbr==5)
+            user=service.findParEmail("khalil rmila@gmail.com");
 
-        User user=service.findParEmail("salhiomar362@gmail.com");
 
         if(user.getPassword()==null){
 //            Alert alert=showAlert("utlisateur n'existe pas ","il faut s'inscrire");
