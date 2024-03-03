@@ -1,0 +1,20 @@
+
+
+.btnmodifier{
+-fx-background-color:  #20749C;
+
+}
+.btn-transaprent{
+    -fx-background-color: transparent;
+
+}
+
+.btn_deconnecter{
+    -fx-background-color: transparent;
+}
+
+.btn_deconnecter:hover{
+    -fx-border-color:  transparent transparent #f83232  transparent ;
+    -fx-border-width: 0 0 2px 0;
+    -fx-text-fill: #f83232 ;
+}

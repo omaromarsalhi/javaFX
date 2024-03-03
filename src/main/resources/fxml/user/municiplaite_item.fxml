@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="282.0" styleClass="box" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.Municipalite.municipaliteitemController">
+   <children>
+      <ImageView fx:id="image" fitHeight="100.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true" styleClass="imageview">
+         <HBox.margin>
+            <Insets left="5.0" top="10.0" />
+         </HBox.margin>
+         <image>
+            <Image url="@../../img/userImg/municipalite.jpg" />
+         </image>
+      </ImageView>
+      <VBox fx:id="vbox" prefHeight="102.0" prefWidth="206.0">
+         <children>
+            <Label fx:id="label1" prefHeight="35.0" prefWidth="206.0" text="Municipalite de Tunis">
+               <VBox.margin>
+                  <Insets left="10.0" top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="Berlin Sans FB" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="label2" prefHeight="17.0" prefWidth="103.0" text="Kasabah">
+               <font>
+                  <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="15.0" />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</HBox>

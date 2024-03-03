@@ -1,0 +1,19 @@
+
+
+#container{
+    -fx-background-color: #e0e2db;
+}
+
+#container:hover{
+     -fx-scale-x: 1.026;
+     /*-fx-scale-y: 1.01;*/
+     -fx-background-color: #b8bdb5;
+     -fx-border-color: #0c1821;
+ }
+
+#container:focused{
+    -fx-scale-x: 1.026;
+    -fx-scale-y: 1.01;
+    -fx-background-color: #b8bdb5;
+    -fx-border-color: #0c1821;
+}
