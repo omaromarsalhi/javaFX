@@ -168,7 +168,7 @@ public class ChatController implements Initializable {
                 "-fx-border-radius: 50;" +
                 "-fx-background-radius: 50");
 
-        ImageView userImage=new ImageView(new Image( "file:src/main/resources/"+user.getImagePath() ,32,32,true,true));
+        ImageView userImage=new ImageView(new Image( "file:src/main/resources/"+user.getPhotos() ,32,32,true,true));
         Label userName=new Label(user.getFirstname()+" "+user.getLastname());
         userName.setFont(Font.font( "System", FontWeight.LIGHT, FontPosture.ITALIC,14 ));
         userName.setMinWidth( 80 );
@@ -203,7 +203,7 @@ public class ChatController implements Initializable {
 
     public void setSelectedUserData(User user){
         this.reciver=user;
-        userImage.setImage(new Image( "file:src/main/resources/"+user.getImagePath() ,46,46,true,true)) ;
+        userImage.setImage(new Image( "file:src/main/resources/"+user.getPhotos() ,46,46,true,true)) ;
         userName.setText( user.getFirstname().toUpperCase()+" "+user.getLastname().toUpperCase() );
         userName.setMinHeight( Region.USE_PREF_SIZE);
         connState.setImage(new Image( "file:src/main/resources/namedIcons/button.png" ,12,12,true,true));

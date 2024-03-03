@@ -153,10 +153,6 @@
             <URL value="@../../style/marketPlace/scrollBarStlyle.css" />
          </stylesheets>
       </VBox>
-      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
-         <children>
-            <VBox fx:id="formContainer" layoutX="317.0" layoutY="96.0" prefHeight="552.0" prefWidth="406.0" />
-         </children>
-      </AnchorPane>
+      <VBox fx:id="secondInterface" alignment="CENTER" fillWidth="false" prefHeight="552.0" prefWidth="406.0" />
    </children>
 </StackPane>

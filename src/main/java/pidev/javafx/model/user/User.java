@@ -21,6 +21,23 @@ public class User {
     private String photos;
     private String gender;
 
+    public User(String firstname, String email, String password, String cin, int age, int num, String adresse, String dob, String lastName, String status, String date, Role role, String photos, String gender) {
+        this.firstname = firstname;
+        this.email = email;
+        this.cin = cin;
+        this.age = age;
+        this.num = num;
+        this.adresse = adresse;
+        this.dob = dob;
+        this.lastname = lastName;
+        this.role=role;
+        this.status =status;
+        this.date=date;
+        this.photos=photos;
+        this.gender=gender;
+        this.password=password;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -41,22 +58,11 @@ public class User {
                 ", verificationCode='" + verificationCode + '\'' +
                 ", photos='" + photos + '\'' +
                 ", gender='" + gender + '\'' +
-                ", imagePath='" + imagePath + '\'' +
                 ", verified=" + verified +
                 ", IsConnected=" + IsConnected +
                 ", idMunicipalite=" + idMunicipalite +
                 '}';
     }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    private String imagePath;
 
 
 
@@ -118,7 +124,7 @@ public class User {
     }
 
 
-    public User(int id, String firstname, String lastname, String email, String cin, int age, int num, String adresse, Role role,String password,String imagePath) {
+    public User(int id, String firstname, String lastname, String email, String cin, int age, int num, String adresse, Role role,String password,String photos) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -129,7 +135,8 @@ public class User {
         this.adresse = adresse;
         this.role = role;
         this.password = password;
-        this.imagePath=imagePath;
+        this.photos=photos;
+
     }
 
     public User(String firstname, String email, String cin, int age, int num, String adresse, String dob, String lastName, String status, String date, Role role,String Photos,String gender) {

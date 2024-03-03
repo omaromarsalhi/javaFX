@@ -117,12 +117,12 @@
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="59.0" prefWidth="235.0">
                     <children>
-                        <Button fx:id="accountBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onAccountBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Compte" textFill="WHITE">
+                        <Button fx:id="accountBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onAccountBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Compte" textFill="WHITE">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
                             <graphic>
-                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="accountImg" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
                                         <Image url="@../../icons/blogIcons/compte.png" />
                                     </image>

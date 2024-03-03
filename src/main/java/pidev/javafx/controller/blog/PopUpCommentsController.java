@@ -109,7 +109,7 @@ public class PopUpCommentsController implements Initializable {
         });
         ConectedAccount = UserController.getInstance().getCurrentUser().getId();
         BlogService blogService = new BlogService();
-        Image img1 = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getImagePath() );
+        Image img1 = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getPhotos() );
         ProfileImg.setImage(img1);
         comments = new ArrayList<>(getComments());
         for (Comment comment : comments) {

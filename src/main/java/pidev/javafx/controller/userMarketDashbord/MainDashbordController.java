@@ -117,7 +117,7 @@ public class MainDashbordController implements Initializable {
         scroll.setFitToWidth(true);
         secondInterface.setVisible( false );
 
-        userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getImagePath() ) );
+        userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getPhotos() ) );
         username.setText(  UserController.getInstance().getCurrentUser().getFirstname() );
         userlasteName.setText(UserController.getInstance().getCurrentUser().getLastname()  );
         userEmail.setText(UserController.getInstance().getCurrentUser().getEmail() );

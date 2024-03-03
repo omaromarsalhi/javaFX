@@ -105,7 +105,7 @@ public class BlogController implements Initializable {
         leftArrow.setVisible(false);
         leftArrow.setManaged(false);
         BlogService blogService = new BlogService();
-        Image img = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getImagePath() );
+        Image img = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getPhotos() );
         ProfileImg.setImage(img);
         posts = new ArrayList<>(getPost());
         for (Post post : posts) {

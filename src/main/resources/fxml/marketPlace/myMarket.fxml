@@ -88,7 +88,7 @@
       </HBox>
       <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
          <children>
-            <HBox alignment="CENTER" layoutX="51.2" layoutY="108.8" prefHeight="407.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="155.0" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.0" AnchorPane.topAnchor="109.0" />
+            <HBox alignment="CENTER" layoutX="51.0" layoutY="141.0" prefHeight="421.0" prefWidth="934.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="108.60000000000002" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" AnchorPane.topAnchor="141.0" />
          </children>
       </AnchorPane>
    </children>

@@ -26,6 +26,7 @@ module pidev.javafx{
     requires protobuf.java;
     requires com.google.auth.oauth2;
     requires com.google.auth;
+    requires com.fasterxml.jackson.databind;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

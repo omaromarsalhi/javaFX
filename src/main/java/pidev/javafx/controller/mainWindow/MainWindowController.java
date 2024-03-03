@@ -6,9 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import pidev.javafx.controller.contrat.CheckOutController;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 //import pidev.javafx.tools.marketPlace.DetectProperties;
 import pidev.javafx.tools.marketPlace.EventBus;
@@ -50,13 +53,16 @@ public class MainWindowController implements Initializable {
     private BorderPane mainBorderPane;
     @FXML
     private AnchorPane centerContainer;
-
+    @FXML
+    private ImageView accountImg;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
 //        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
 //        mainBorderPane.getCenter())
+        accountImg.setImage(new Image( "file:src/main/resources"+UserController.getInstance().getCurrentUser().getPhotos(),25,25,true,true)  );
+        accountBtn.setText( UserController.getInstance().getCurrentUser().getFirstname()+" "+UserController.getInstance().getCurrentUser().getLastname() );
     }
 
 

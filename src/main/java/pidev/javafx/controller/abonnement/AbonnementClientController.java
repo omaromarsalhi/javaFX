@@ -119,41 +119,41 @@ public class AbonnementClientController implements Initializable {
 
     }
     public void insert_Image(){
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Choose a File");
-        var selectedFile = fileChooser.showOpenDialog(primaryStage);
-        if (selectedFile != null) {
-            Task<Map> task=new Task<Map>() {
-                @Override
-                protected Map call() throws Exception {
-                    Platform.runLater(()->{
-                        showCustomDialog();
-                    });
-                    return image_api(imagePath);
-                }
-            };
-
-            task.setOnSucceeded(workerStateEvent -> {
-                if(!task.getValue().isEmpty()&&task.getValue().containsKey("man")) {
-                    Platform.runLater(()->{
-
-                        close_dialog();
-                        imageAbn.setImage(new Image(imagePath));
-                    });
-                }
-                else System.out.println("image should be of a humain being and in portrait mode");
-            });
-
-
-            new Thread(task).start();
-
-
-
-            imagePath = selectedFile.getAbsolutePath();
-
-
-
-        }
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setTitle("Choose a File");
+//        var selectedFile = fileChooser.showOpenDialog(primaryStage);
+//        if (selectedFile != null) {
+//            Task<Map> task=new Task<Map>() {
+//                @Override
+//                protected Map call() throws Exception {
+//                    Platform.runLater(()->{
+//                        showCustomDialog();
+//                    });
+//                    return image_api(imagePath);
+//                }
+//            };
+//
+//            task.setOnSucceeded(workerStateEvent -> {
+//                if(!task.getValue().isEmpty()&&task.getValue().containsKey("man")) {
+//                    Platform.runLater(()->{
+//
+//                        close_dialog();
+//                        imageAbn.setImage(new Image(imagePath));
+//                    });
+//                }
+//                else System.out.println("image should be of a humain being and in portrait mode");
+//            });
+//
+//
+//            new Thread(task).start();
+//
+//
+//
+//            imagePath = selectedFile.getAbsolutePath();
+//
+//
+//
+//        }
     }
     public void add_load(){
         expand();
@@ -303,8 +303,7 @@ public void close_dialog(){
         remplir_abonnement();
         unexpand();
     }
-@FXML
-    VBox statsPannel;
+
     @FXML
     Pane statsPane;
     @FXML
@@ -373,10 +372,10 @@ public void unexpand() {
     blur.setWidth(10);
     blur.setHeight(10);
     blur.setIterations(3);
-    displayAbonnement.toFront();
-    displayAbonnement.setEffect(null);
+//    displayAbonnement.toFront();
+//    displayAbonnement.setEffect(null);
     form.toBack();
-    displayAbonnement.setOpacity(1);
+//    displayAbonnement.setOpacity(1);
 
 
 
@@ -404,17 +403,17 @@ public void unexpand() {
 
         statsPane.setVisible(true);
         expandBtn.setVisible(true);
-        displayAbonnement.toBack();
+//        displayAbonnement.toBack();
         BoxBlur blur = new BoxBlur();
         blur.setWidth(10);
         blur.setHeight(10);
         blur.setIterations(3);
-        displayAbonnement.toBack();
-        displayAbonnement.setEffect(blur);
+//        displayAbonnement.toBack();
+//        displayAbonnement.setEffect(blur);
 
         form.toFront();
         form.setOpacity(0.85);
-        displayAbonnement.setOpacity(0.85);
+//        displayAbonnement.setOpacity(0.85);
 
     }
 
