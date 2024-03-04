@@ -27,10 +27,7 @@ import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Product;
 import pidev.javafx.tools.UserController;
-import pidev.javafx.tools.marketPlace.ChatGPTAPIDescriber;
-import pidev.javafx.tools.marketPlace.EventBus;
-import pidev.javafx.tools.marketPlace.MyListener;
-import pidev.javafx.tools.marketPlace.MyTools;
+import pidev.javafx.tools.marketPlace.*;
 
 import java.io.File;
 import java.net.URL;
@@ -90,7 +87,7 @@ public class FormController implements Initializable {
     private static String usageOfThisForm;
     private HBox buttonsBox;
     private boolean isImageUpdated;
-    private Product product;
+    private Bien product;
     private boolean[] isAllInpulValid;
     String formLayoutBeforRegexCheck;
     String formLayoutAfterRegexCheck;
@@ -225,7 +222,7 @@ public class FormController implements Initializable {
         Task<String> myTask = new Task<>() {
             @Override
             protected String call() throws Exception {
-                return ChatGPTAPIDescriber.chatGPT( Pname.getText() );
+                return ChatGPTAPIDescriber.chatGPT( "describe"+Pname.getText()+" for sale specifying its benefits");
             }
         };
 
@@ -346,7 +343,6 @@ public class FormController implements Initializable {
             }
         } );
         Pname.setOnMouseExited( event -> {
-//            if(isAllInpulValid[3])
                 popup4Regex.hide();
         } );
         Pprice.setOnMouseEntered( event -> {
@@ -404,9 +400,11 @@ public class FormController implements Initializable {
                 CrudBien.getInstance().updateItem( bien );
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             }
+            product=bien;
             Thread thread = sleepThread(event);
             loadinPage.setVisible( true );
             thread.start();
+            aiVerifyThread().start();
         }
         else{
             Alert confirmationAlert = new Alert( Alert.AlertType.ERROR );
@@ -431,9 +429,31 @@ public class FormController implements Initializable {
         };
 
         myTask.setOnSucceeded(e -> {
-            EventBus.getInstance().publish( "refreshProdContainer", event );
+            if (usageOfThisForm.equals( "add_prod" ))
+                EventBus.getInstance().publish( "updateTabProds", new CustomMouseEvent<>( product ) );
+            else
+                EventBus.getInstance().publish( "refreshProdContainer", event );
             EventBus.getInstance().publish( "onExitForm", event );
             loadinPage.setVisible( false );
+        });
+        return new Thread(myTask);
+    }
+
+    private Thread aiVerifyThread() {
+        Task<String> myTask = new Task<>() {
+            @Override
+            protected String call() throws Exception {
+                System.out.println(product.getImageSourceByIndex(0));
+                String imageDescreption=CallPythonFromJava.run( "src/main/resources"+product.getImageSourceByIndex(0));
+                System.out.println(imageDescreption);
+                System.out.println("does this paragraph '"+imageDescreption+"' speaks about "+product.getName());
+                return ChatGPTAPIDescriber.chatGPT( "does this paragraph '"+imageDescreption+"'speaks about "+product.getName());
+            }
+        };
+
+        myTask.setOnSucceeded(e -> {
+            System.out.println("hi");
+            System.out.println(myTask.getValue());
         });
         return new Thread(myTask);
     }
@@ -496,7 +516,7 @@ public class FormController implements Initializable {
     public void setInformaton(Product product) {
         if(product!=null) {
             product=(Bien)product;
-            this.product = product;
+            this.product =(Bien) product;
             Pname.setText( product.getName() );
             Pdescretion.setText( product.getDescreption() );
             Pprice.setText( Float.toString( product.getPrice() ) );
@@ -515,54 +535,3 @@ public class FormController implements Initializable {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//        int nameLenght=chosenFile.getName().length();
-//        String fileName=Double.toString(chosenFile.getPath().length()* randomVal.nextInt(chosenFile.getPath().length())*nameLenght/2)+chosenFile.getName().substring(0,nameLenght-4);
-//        String path ="usersImg/"+fileName+".png";
-//
-//
-//        String sql = "INSERT INTO bien "
-//                + "(idUser,name,imgSource,price,quantity,state,timestamp,category) "
-//                + "VALUES(?,?,?,?,?,?,?,?)";
-//
-//        connect = ConnectionDB.connectDb();
-//
-//        try {
-//            prepare = connect.prepareStatement(sql);
-//            prepare.setString(1, "1");
-//            prepare.setString(2, Pname.getText());
-//            prepare.setString(3, path );
-////                prepare.setString(4, String.valueOf(dob.getValue()));
-//            prepare.setString(4, Pprice.getText());
-//            prepare.setString(5, Pquantity.getText());
-//            prepare.setString(6, "1");
-//            prepare.setString(7, Timestamp.valueOf(LocalDateTime.now()).toString());
-//            prepare.setString(8, Pcategory.getValue().toString());
-//            prepare.executeUpdate();
-//
-//            try {
-//                ImageIO.write(bi, "png", new File( "src/main/resources/"+path ));
-//            } catch (IOException e) {
-//                throw new RuntimeException( e );
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }

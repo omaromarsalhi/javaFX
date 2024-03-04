@@ -62,9 +62,10 @@ public class MainWindowController implements Initializable {
 //        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
 //        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
 //        mainBorderPane.getCenter())
+        System.out.println(UserController.getInstance().getCurrentUser());
         accountImg.setImage(new Image( "file:src/main/resources"+UserController.getInstance().getCurrentUser().getPhotos(),25,25,true,true)  );
         accountBtn.setText( UserController.getInstance().getCurrentUser().getFirstname()+" "+UserController.getInstance().getCurrentUser().getLastname() );
-        ChatClient.getInstance().establishConnection();
+//        ChatClient.getInstance().establishConnection();
     }
 
 
@@ -185,7 +186,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void onCloseBtnClicked() {
-        ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
+//        ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
         System.exit(0);
     }
 

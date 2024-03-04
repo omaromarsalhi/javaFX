@@ -116,10 +116,9 @@ public class MainDashbordController implements Initializable {
 
         scroll.setFitToWidth(true);
         secondInterface.setVisible( false );
-
         userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getPhotos() ) );
-        username.setText(  UserController.getInstance().getCurrentUser().getFirstname() );
-        userlasteName.setText(UserController.getInstance().getCurrentUser().getLastname()  );
+        username.setText(  UserController.getInstance().getCurrentUser().getFirstname().toUpperCase() );
+        userlasteName.setText(UserController.getInstance().getCurrentUser().getLastname().toUpperCase()  );
         userEmail.setText(UserController.getInstance().getCurrentUser().getEmail() );
 
 
@@ -157,14 +156,18 @@ public class MainDashbordController implements Initializable {
 
         EventBus.getInstance().subscribe( "onExitForm",this::onExitForm );
         EventBus.getInstance().subscribe( "add2Grid",this::add2Grid );
+        EventBus.getInstance().subscribe( "updateTabProds",this::updateTabProds );
 
         loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
+    }
+
+    public void updateTabProds(CustomMouseEvent<Bien> customMouseEvent){
+        loadingAllProductsThread(FXCollections.observableArrayList(customMouseEvent.getEventData())).start();
     }
 
 
     public Thread loadingAllProductsThread(ObservableList<Bien> prods){
         showOrHideTabHead(true,"");
-        showAllProdsInfo.getChildren().clear();
         Task<Void> myTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -183,12 +186,14 @@ public class MainDashbordController implements Initializable {
                 return;
             else {
                 scroll.removeEventFilter( MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane );
+                showAllProdsInfo.getChildren().clear();
                 loadingAllProductsThread( CrudBien.getInstance().searchItems( parts[0], parts[1] ) ).start();
             }
         }
         else if(!data.isEmpty()){
             System.out.println(data);
             scroll.removeEventFilter( MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane );
+            showAllProdsInfo.getChildren().clear();
             loadingAllProductsThread( CrudBien.getInstance().searchItems("name", data ) ).start();
         }
     }
@@ -573,7 +578,6 @@ public class MainDashbordController implements Initializable {
 
 
     public void loadListOfProducts(ObservableList<Bien> biens){
-
         var executer= Executors.newFixedThreadPool(6);
         for (int i = 0; i < biens.size() ; i++)
             executer.submit(loadingItemsThread(biens.get( i )));

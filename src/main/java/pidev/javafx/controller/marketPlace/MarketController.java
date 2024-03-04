@@ -67,10 +67,10 @@ public class MarketController implements Initializable {
         secondInterface.setVisible( false );
 
         itemInfo=null;
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
+//        FXMLLoader fxmlLoader = new FXMLLoader();
+//        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
         try {
-            chatBox = fxmlLoader.load();
+//            chatBox = fxmlLoader.load();
             itemInfo = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );

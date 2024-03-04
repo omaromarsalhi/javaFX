@@ -1,6 +1,5 @@
 module pidev.javafx{
     requires javafx.controls;
-    requires google.cloud.vision;
     requires java.sql;
     requires transitive javafx.base;
     requires transitive javafx.graphics;
@@ -21,12 +20,9 @@ module pidev.javafx{
     requires java.net.http;
     requires com.google.gson;
     requires okhttp3;
-    requires gax;
     requires javafx.fxml;
-    requires protobuf.java;
-    requires com.google.auth.oauth2;
-    requires com.google.auth;
     requires com.fasterxml.jackson.databind;
+    requires kernel;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

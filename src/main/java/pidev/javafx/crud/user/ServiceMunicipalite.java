@@ -5,10 +5,7 @@ import pidev.javafx.crud.user.IserviceUser;
 import pidev.javafx.model.user.Municipalite;
 
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +66,27 @@ public class ServiceMunicipalite implements IserviceUser<Municipalite> {
             }
             return munis;
         }
+    public int getOneByNomMunicipalite(String nomMunicipalite) {
+
+        Connection cnx = ConnectionDB.getInstance().getCnx();
+        String req = "SELECT * FROM `municipalite` where name=?";
+
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, nomMunicipalite);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {//au moins 1
+
+                return rs.getInt("idMunicipalite") ;
+            }
+        } catch (SQLException e) {
+
+            System.out.println(e.getMessage());
+        }
+
+        return -1;
+
+
+    }
 }
 

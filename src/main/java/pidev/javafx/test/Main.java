@@ -22,14 +22,11 @@ public class Main extends Application {
         fxmlLoader.setLocation(getClass().getResource( "/fxml/user/LoginSignup.fxml" ));
 //        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/mainWindow/mainWindow.fxml" ));
 //        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( "/fxml/user/LoginSignup.fxml" ));
-
         Scene scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
-        NewLogInController newLogInController=fxmlLoader.getController();
-        newLogInController.setUser( 1 );
         scene.getStylesheets().add( String.valueOf( getClass().getResource("/style/user/styleLogin.css") ) );
+
         stage.initStyle( StageStyle.TRANSPARENT);
         stage.setTitle("Hello!");
-        UserController.setUser( null );
         stage.setResizable( true );
         stage.setScene(scene);
         stage.show();
