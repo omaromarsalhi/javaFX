@@ -91,6 +91,7 @@ public class FormController implements Initializable {
     private boolean[] isAllInpulValid;
     String formLayoutBeforRegexCheck;
     String formLayoutAfterRegexCheck;
+    private String  checkIfImageCompatableWithName;
 
 
 
@@ -222,7 +223,7 @@ public class FormController implements Initializable {
         Task<String> myTask = new Task<>() {
             @Override
             protected String call() throws Exception {
-                return ChatGPTAPIDescriber.chatGPT( "describe"+Pname.getText()+" for sale specifying its benefits");
+                return ChatGPTAPIDescriber.chatGPT( "describe "+Pname.getText()+" for sale specifying its benefits");
             }
         };
 
@@ -379,7 +380,7 @@ public class FormController implements Initializable {
                     (isImageUpdated) ?"":"DO_NOT_UPDATE_OR_ADD_IMAGE",
                     Float.parseFloat( Pprice.getText() ),
                     Float.parseFloat( Pquantity.getText() ),
-                    Boolean.TRUE,
+                    "unverified",
                     Timestamp.valueOf( LocalDateTime.now() ),
                     Pcategory.getValue() );
 //            if(isImageUpdated)
@@ -395,16 +396,18 @@ public class FormController implements Initializable {
             }
             if (usageOfThisForm.equals( "add_prod" )) {
                 CrudBien.getInstance().addItem( bien );
+                bien=CrudBien.getInstance().selectLastItem();
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             } else if (usageOfThisForm.equals( "update_prod" )) {
+                bien.setState( product.getState() );
                 CrudBien.getInstance().updateItem( bien );
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             }
             product=bien;
+            aiVerifyThread().start();
             Thread thread = sleepThread(event);
             loadinPage.setVisible( true );
             thread.start();
-            aiVerifyThread().start();
         }
         else{
             Alert confirmationAlert = new Alert( Alert.AlertType.ERROR );
@@ -443,18 +446,24 @@ public class FormController implements Initializable {
         Task<String> myTask = new Task<>() {
             @Override
             protected String call() throws Exception {
-                System.out.println(product.getImageSourceByIndex(0));
-                String imageDescreption=CallPythonFromJava.run( "src/main/resources"+product.getImageSourceByIndex(0));
-                System.out.println(imageDescreption);
-                System.out.println("does this paragraph '"+imageDescreption+"' speaks about "+product.getName());
-                return ChatGPTAPIDescriber.chatGPT( "does this paragraph '"+imageDescreption+"'speaks about "+product.getName());
+                String descreption=CallPythonFromJava.run( "src/main/resources"+product.getImageSourceByIndex(0));
+                return "does this paragraph "+descreption.substring( 0,descreption.indexOf( "." ) )+" speaks about "+product.getName() +" and please answer me with yes or no?";
             }
         };
 
-        myTask.setOnSucceeded(e -> {
-            System.out.println("hi");
-            System.out.println(myTask.getValue());
-        });
+        myTask.setOnSucceeded( event -> {
+            String respose=ChatGPTAPIDescriber.chatGPT(myTask.getValue());
+            if(respose.toLowerCase().contains( "yes" )){
+                product.setState( "verified" );
+                CrudBien.getInstance().updateItem( product );
+            }
+            else {
+                CrudBien.getInstance().deleteItem( product.getId() );
+            }
+            EventBus.getInstance().publish( "doUpdateTabprodAfterAIverif",new CustomMouseEvent<>(product) );
+            System.out.println("done");
+        } );
+
         return new Thread(myTask);
     }
 

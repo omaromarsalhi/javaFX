@@ -84,6 +84,23 @@
     -fx-border-color: #fdc847;
 }
 
+
+
+#dob .text-field {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    /*-fx-border-width: 0.01em;*/
+
+}
+
+#dob ,#dob .arrow-button {
+    -fx-background-color:  transparent;
+    -fx-border-width: 0.08em;
+    /*-fx-border-width: 1;*/
+    -fx-border-color: transparent transparent black transparent;
+}
+
+
 /*#dob .text-field,#sDate .text-field {*/
 /*    -fx-border-width: 1px;*/
 /*    -fx-border-color: transparent;*/

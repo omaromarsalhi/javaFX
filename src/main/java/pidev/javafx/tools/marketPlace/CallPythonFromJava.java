@@ -38,8 +38,6 @@ public class CallPythonFromJava {
         } catch (InterruptedException e) {
             throw new RuntimeException( e );
         }
-        System.out.println("Exit code1: " + exitCode);
-        System.out.println("Python script output:\n" + output.toString());
         return output.toString();
     }
 }

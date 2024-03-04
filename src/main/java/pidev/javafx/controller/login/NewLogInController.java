@@ -46,8 +46,10 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class NewLogInController implements Initializable {
+
     @FXML
     private StackPane blackSide;
     @FXML
@@ -96,6 +98,7 @@ public class NewLogInController implements Initializable {
     private boolean[] isAllInpulValid;
     Popup popup4Regex = MyTools.getInstance().createPopUp();
     private  String styleInitiale="";
+    private int elapsedTime = 0;
     private int nbr;
 
 
@@ -149,6 +152,34 @@ public class NewLogInController implements Initializable {
         } );
     }
 
+//
+//    public void logIn(ActionEvent actionEvent) {
+//
+//        ServiceUser service=new ServiceUser();
+////      User user=service.findParEmail(email.getText());
+//
+//        User user=service.findParEmail("salhiomar362@gmail.com");
+//
+//        if(user.getPassword()==null){
+//
+//            System.out.println("wrong");
+//        }
+//
+////        else if(PasswordHasher.verifyPassword(password.getText(),user.getPassword())){
+//        else if(PasswordHasher.verifyPassword("Latifa123@",user.getPassword())){
+//
+//            user.setIsConnected(1);
+//            UserController.setUser(user);
+//            System.out.println(UserController.getInstance().getCurrentUser().getFirstname());
+//            ((Stage)Stage.getWindows().get(0)).close();
+//            if(user.getRole()==Role.Citoyen)
+//                loadManWindow("/fxml/mainWindow/mainWindow.fxml" );
+//            else
+//                loadManWindow("/fxml/mainWindow/mainWindow.fxml" );
+//
+//        }
+//    }
+
     public void setUser(int n){
         nbr=n;
     }
@@ -156,12 +187,11 @@ public class NewLogInController implements Initializable {
 
     public void logIn(ActionEvent actionEvent) {
 
-
         ServiceUser service=new ServiceUser();
 //        User user=service.findParEmail(email.getText());
         User user=new User();
         if(email.getText().equals( "1" ))
-            user=service.findParEmail("salhiomar362@gmail.com");
+            user=service.findParEmail("salhiomar3622@gmail.com");
         else if(email.getText().equals( "2" ))
             user=service.findParEmail("latifa.benzaied@gmail.com");
         else if(email.getText().equals( "3" ))
@@ -187,84 +217,96 @@ public class NewLogInController implements Initializable {
                 loadManWindow("/fxml/mainWindow/mainWindow.fxml" );
             else
                 loadManWindow("/fxml/mainWindow/mainWindow.fxml" );
-
         }
     }
 
-    public void loadManWindow(String fileName) {
-        Stage stage = new Stage();
-        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource( fileName ) );
-        Scene scene = null;
-        try {
-            scene = new Scene( fxmlLoader.load(), Color.TRANSPARENT );
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-        stage.initStyle( StageStyle.TRANSPARENT );
-        stage.setTitle( "CitizenHub" );
-        stage.setResizable( true );
-        stage = (Stage) signinBtn.getScene().getWindow();
-        stage.close();
-        stage.setScene( scene );
-        stage.show();
-    }
-
-        @FXML
+    @FXML
     public void signUp(ActionEvent actionEvent) {
 
         ServiceUser service = new ServiceUser();
         ServiceMunicipalite serviceMunicipalite=new ServiceMunicipalite();
-        User usexist =usexist = service.findParEmail(emailSignUp.getText());
-        System.out.println(adresse.getText());
-        System.out.println(firstname.getText());
+        User usexist = service.findParEmail(emailSignUp.getText());
         String municipalie= GeocodingAi.getAddressInformation(adresse.getText());
         int idMunicipalite=serviceMunicipalite.getOneByNomMunicipalite(municipalie);
-        System.out.println(idMunicipalite);
+      //  System.out.println(idMunicipalite);
         if( isAllInpulValid[0] && isAllInpulValid[1]&&isAllInpulValid[2] && usexist == null && idMunicipalite!=-1){
-            User user=new User();
-            user.setIdMunicipalite(idMunicipalite);
-            firstname.setStyle(String.valueOf(getClass().getResource("/style/user/newLogIn.css")));
-            emailSignUp.setStyle(String.valueOf(getClass().getResource("/style/user/newLogIn.css")));
-            passwordSignUp.setStyle(String.valueOf(getClass().getResource("/style/user/newLogIn.css")));
-            layoutCode.setVisible(true);
-            firstLayout.setOpacity(0.4);
-            MyTools.getInstance().showAnimation( layoutCode );
-            System.out.println(user.generateVerificationCode());
-            verifier.setOnAction(event -> {
-                if (isVerificationCodeValid(user.getVerificationCode()))
-                {
-                    System.out.println(user.getVerificationCode());
-                    setDataUser(user);
-                    ServiceUser serviceUser = new ServiceUser();
-                    serviceUser.ajouter(user);
-                    loadManWindow("/fxml/mainWindow/mainWindow.fxml");
-                }
-                else{
-                    System.out.println("hjjjj");
+          User user=new User();
+          user.setIdMunicipalite(idMunicipalite);
+          layoutSignup.setStyle(String.valueOf(getClass().getResource("/style/user/newLogIn.css")));
+          firstLayout.setVisible(false);
+          layoutCode.setVisible(true);
+          MyTools.getInstance().showAnimation( layoutCode );
+          System.out.println(user.generateVerificationCode());
+          Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
 
-                }
-                layoutCode.setVisible(false);
-                firstLayout.setOpacity(1);
-                clean();
+                  public void run() {
 
-            });
+                      if (elapsedTime < 20) {
+                          System.out.println(elapsedTime);
+                          verifier.setOnAction(event -> {
+                              if (code.getText().equals(user.getVerificationCode()))
+                              {
+                                  timer.cancel();
+                                  ServiceUser serviceUser = new ServiceUser();
+                                  setDataUser(user);
+                                  serviceUser.ajouter(user);
+                                  UserController.setUser(user);
+                                  loadManWindow("/fxml/mainWindow/mainWindow.fxml");
+                                  layoutCode.setVisible(false);
+//                                  firstLayout.setOpacity(1);
+                                  clean();
+                              }
+                              else {
+                                  System.out.println("ghlalet ");
+                              }
 
+                          });
+                          //System.out.println(elapsedTime);
+                          elapsedTime++;
 
+                      }
+                      else {
+                          timer.cancel();
+                          ((Stage)Stage.getWindows().get( 0 )).close();
+                          clean();
+                      }
+                  }
+
+              };
+            timer.schedule(task, 0, 1000);
         }
-
         else {
-            System.out.println("ya ajax ya mawjoud ");
+            System.out.println("ya ajax ,ya mawjoud ");
         }
     }
 
 
 
+
+
+    public void loadManWindow(String fileName){
+        Stage stage=new Stage();
+        FXMLLoader fxmlLoader = new FXMLLoader( Main.class.getResource(fileName));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        stage.initStyle( StageStyle.TRANSPARENT);
+        stage.setTitle("CitizenHub");
+        stage.setResizable( true );
+        stage=(Stage)signinBtn.getScene().getWindow();
+        stage.close();
+        stage.setScene(scene);
+        stage.show();
+    }
     public void setRegEx() {
 
         String firstnameRegex = "[a-zA-Z\\s]{3,}+";
         String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
         String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
         String emaill="Doit être au format standard, par exemple \"utilisateur@example.com";
         String firstName = "Accepte uniquement les chaines composés d'au moins 3 caractères alphabétiques.";
         String passwordd=" Doit contenir au moins 8 caractères, avec au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial. Pas d'espaces autorisés";
@@ -275,7 +317,7 @@ public class NewLogInController implements Initializable {
             isAllInpulValid[0]=firstname.getText().matches(firstnameRegex);
             if(firstname.getText().isEmpty()){
                 firstname.setStyle("");
-                isAllInpulValid[0]=true;
+                isAllInpulValid[0]=false;
 
             }
             else {
@@ -286,12 +328,13 @@ public class NewLogInController implements Initializable {
             }
 
         });
+
         emailSignUp.setOnKeyTyped( event -> {
             String color=(isAllInpulValid[1])?"green":"#ff4343";
             isAllInpulValid[1]=emailSignUp.getText().matches(emailRegex);
             if(emailSignUp.getText().isEmpty()){
                 emailSignUp.setStyle("");
-                isAllInpulValid[1]=true;
+                isAllInpulValid[1]=false;
 
             }
             else {
@@ -310,13 +353,14 @@ public class NewLogInController implements Initializable {
             isAllInpulValid[2]=passwordSignUp.getText().matches(passwordRegex);
             if(passwordSignUp.getText().isEmpty()){
                 passwordSignUp.setStyle("");
-                isAllInpulValid[2]=true;
+                isAllInpulValid[2]=false;
 
             }
             else {
                 passwordSignUp.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
                         "-fx-border-width:0 0 2 0;" +
                         "-fx-border-radius: 0" );
+
             }
 
         });
@@ -354,23 +398,29 @@ public class NewLogInController implements Initializable {
             popup4Regex.hide();
         } );
 
+        adresse.setOnMouseEntered( event -> {
+                ((Label)popup4Regex.getContent().get( 0 )).setText("dddddddddd");
+                popup4Regex.getContent().get( 0 ).setStyle(popup4Regex.getContent().get( 0 ).getStyle()+"-fx-background-color: white; -fx-text-fill: black;"  );
+                popup4Regex.show(Stage.getWindows().get(0),event.getScreenX()+40,event.getScreenY()-40);
+
+        } );
+        adresse.setOnMouseExited( event -> {
+            popup4Regex.hide();
+        } );
+
 
     }
-    public boolean isVerificationCodeValid(String codeVerification){
-        return code.getText().equals(codeVerification);
-    }
 
 
-    public void clean(){
+     public void clean() {
         firstname.clear();
         adresse.clear();
         emailSignUp.clear();
         passwordSignUp.clear();
         code.clear();
-    }
-    public  void setDataUser(User user)
-    {
+     }
 
+     public void setDataUser(User user) {
         user.setFirstname(firstname.getText());
         user.setEmail(emailSignUp.getText());
         user.setAdresse(adresse.getText());
@@ -379,32 +429,62 @@ public class NewLogInController implements Initializable {
         user.setIsConnected(1);
         UserController.setUser(user);
 
-    }
+     }
 
 
-    public void signupWithGoogle(ActionEvent actionEvent) {
-        GoogleApi googleApi=new GoogleApi();
-        WebView webView = googleApi.AccessTokenFetcher();
+     public void signupWithGoogle(ActionEvent actionEvent) {
+               GoogleApi googleApi = new GoogleApi();
+               WebView webView = googleApi.AccessTokenFetcher();
 //        Button button=new Button();
-        AnchorPane anchorPane = new AnchorPane(webView);
-        anchorPane.setPrefWidth(450);
-        anchorPane.setPrefHeight(650);
-        WebEngine webEngine = webView.getEngine();
-        Scene scene=new Scene(anchorPane);
-        Stage stage;
-        stage = (Stage) google.getScene().getWindow();
-        stage.setScene(scene);
-        stage.close();
-        stage.show();
-    }
+               AnchorPane anchorPane = new AnchorPane(webView);
+               anchorPane.setPrefWidth(450);
+               anchorPane.setPrefHeight(650);
+               WebEngine webEngine = webView.getEngine();
+               Scene scene = new Scene(anchorPane);
+               Stage stage;
+               stage = (Stage) google.getScene().getWindow();
+               stage.setScene(scene);
+               stage.close();
+               stage.show();
+     }
 
-    public void signInWithGoogle(ActionEvent actionEvent) {
-    }
-    public  void display(String email,String name,String lastname) {
-        this.emailSignUp.setText(email);
-        this.firstname.setText(name);
-        //this.lastname=lastname;
+     public void signInWithGoogle(ActionEvent actionEvent) {
+         GoogleApi googleApi = new GoogleApi();
+         WebView webView = googleApi.AccessTokenFetcher();
+         AnchorPane anchorPane = new AnchorPane(webView);
+         anchorPane.setPrefWidth(450);
+         anchorPane.setPrefHeight(650);
+         WebEngine webEngine = webView.getEngine();
+         Scene scene = new Scene(anchorPane);
+         Stage stage;
+         stage = (Stage) google.getScene().getWindow();
+         stage.setScene(scene);
+         stage.close();
+         stage.show();
+
+     }
+
+           public void display(String email, String name, String lastname) {
+               this.emailSignUp.setText(email);
+               this.firstname.setText(name);
+               //this.lastname=lastname;
 
 
-    }
-}
+           }
+
+//    void resetPassword(MouseEvent event) {
+//
+//
+//        ServiceUser service=new ServiceUser();//bech nverifiw est ce que il e-mail mawjoud w le kbal mnbaath il code
+//        if(service.chercherParEmail(email.getText()))//true
+//        {
+//            User user = new User();
+//        }
+//        else {
+//
+//            System.out.println("email n'exsite pas");
+//        }
+//    }
+//
+   }
+

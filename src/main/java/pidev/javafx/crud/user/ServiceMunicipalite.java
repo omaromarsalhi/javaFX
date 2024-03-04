@@ -44,20 +44,17 @@ public class ServiceMunicipalite implements IserviceUser<Municipalite> {
         Connection cnx = ConnectionDB.getInstance().getCnx();
             List<Municipalite> munis = new ArrayList<>();
 
-            String req = "SELECT * FROM `municipalite`";
+            String req = "SELECT * FROM `municipaliter`";
 
             try {
                 Statement stmt = cnx.createStatement();
                 ResultSet rs = stmt.executeQuery(req);
-
 
                 while (((ResultSet) rs).next()) {
                     Municipalite muni = new Municipalite();
                     muni.setId(rs.getInt("idMunicipalite"));
                     muni.setName(rs.getString("name"));
                     muni.setAdresse(rs.getString("Adresse"));
-
-
                     munis.add(muni);
                 }
 
@@ -69,7 +66,7 @@ public class ServiceMunicipalite implements IserviceUser<Municipalite> {
     public int getOneByNomMunicipalite(String nomMunicipalite) {
 
         Connection cnx = ConnectionDB.getInstance().getCnx();
-        String req = "SELECT * FROM `municipalite` where name=?";
+        String req = "SELECT * FROM `municipaliter` where name=?";
 
         try {
             PreparedStatement ps = cnx.prepareStatement(req);

@@ -8,11 +8,11 @@ import org.json.JSONObject;
 public class ChatGPTAPIDescriber {
     public static String chatGPT(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
-        String apiKey = "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";
+        String apiKey = "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";
         String model = "gpt-3.5-turbo";
+//        String model = "gpt-3.5-turbo-instruct-0914";
 
-        System.out.println("prompt");
-
+        System.out.println(prompt);
         try {
             URL obj = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
@@ -21,8 +21,9 @@ public class ChatGPTAPIDescriber {
             connection.setRequestProperty("Content-Type", "application/json");
 
             // Create the request body
-            String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \"" +prompt+"\"}]}";
+            String body = "{\"model\": \"" + model + "\", \"messages\": [{\"role\": \"user\", \"content\": \""+prompt+" \"}]}";
             connection.setDoOutput(true);
+
 
             OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
             writer.write(body);

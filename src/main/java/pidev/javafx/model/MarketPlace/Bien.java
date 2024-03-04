@@ -8,7 +8,7 @@ public class Bien extends Product{
     public Bien() {
     }
 
-    public Bien(int id, int idUser, String name, String descreption, String imgSource, Float price, Float quantity, Boolean state, Timestamp timestamp, Categorie categorie) {
+    public Bien(int id, int idUser, String name, String descreption, String imgSource, Float price, Float quantity, String state, Timestamp timestamp, Categorie categorie) {
         super( id, idUser, name, descreption, imgSource, price, quantity, state, timestamp, "BIEN" );
         this.categorie = categorie;
     }

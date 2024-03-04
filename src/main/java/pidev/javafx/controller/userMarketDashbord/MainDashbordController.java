@@ -101,6 +101,7 @@ public class MainDashbordController implements Initializable {
     private GridPane gridPane4Favorite;
     private double xOffset = 0;
     private double yOffset = 0;
+    private EventHandler<MouseEvent> universalEventHandler;
 
 
 
@@ -157,8 +158,10 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "onExitForm",this::onExitForm );
         EventBus.getInstance().subscribe( "add2Grid",this::add2Grid );
         EventBus.getInstance().subscribe( "updateTabProds",this::updateTabProds );
+        EventBus.getInstance().subscribe( "doUpdateTabprodAfterAIverif",this::doUpdateTabprodAfterAIverif);
 
         loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
+
     }
 
     public void updateTabProds(CustomMouseEvent<Bien> customMouseEvent){
@@ -560,14 +563,9 @@ public class MainDashbordController implements Initializable {
         for (Node node : gridPane.getChildren()){
             Integer rowIndex = GridPane.getRowIndex(node);
             Integer columnIndex = GridPane.getColumnIndex(node);
-            System.out.println(rowIndex+" "+columnIndex);
             if (rowIndex != null && ((rowIndex ==row && columnIndex>column)||rowIndex>row) ){
-                System.out.println("before rowIndex: "+rowIndex);
-                System.out.println("before columnIndex: "+columnIndex);
                 rowIndex+=(columnIndex==0&&rowIndex!=0)?-1:0;
                 columnIndex+=(columnIndex==0)?nbrColumns:-1;
-                System.out.println("after rowIndex: "+rowIndex);
-                System.out.println("after columnIndex: "+columnIndex);
                 GridPane.setColumnIndex( node,columnIndex);
                 GridPane.setRowIndex(node, rowIndex );
             }
@@ -602,25 +600,40 @@ public class MainDashbordController implements Initializable {
             }
         };
 
-        myTask.setOnSucceeded(e ->
-                Platform.runLater( () -> {
-                    myTask.getValue().getSecond().setData((Bien) prod);
-                    myTask.getValue().getFirst().lookup( "#deleteBtn" ).setOnMouseClicked( event -> {
-                        MyTools.getInstance().deleteAnimation(myTask.getValue().getFirst(),showAllProdsInfo);
-                        CrudBien.getInstance().deleteItem( prod.getId());
-                    } );
+        myTask.setOnSucceeded(e -> {
+            Platform.runLater( () -> {
+                myTask.getValue().getSecond().setData( (Bien) prod );
+                myTask.getValue().getFirst().lookup( "#deleteBtn" ).setOnMouseClicked( event -> {
+                    MyTools.getInstance().deleteAnimation( myTask.getValue().getFirst(), showAllProdsInfo );
+                    CrudBien.getInstance().deleteItem( prod.getId() );
+                } );
 
-                    myTask.getValue().getFirst().lookup( "#updateBtn" ).setOnMouseClicked( event -> {
-                        doUpdate(prod);
-                        EventBus.getInstance().subscribe( "refreshProdContainer",event1 ->
-                            myTask.getValue().getSecond().setData(CrudBien.getInstance().selectItemById( prod.getId() ))
-                        );
-                    } );
-                    myTask.getValue().getFirst().setOnMouseClicked( event -> loadInfoItem(prod) );
-                    showAllProdsInfo.getChildren().add(  myTask.getValue().getFirst() );
-                } )
-        );
+                myTask.getValue().getFirst().lookup( "#updateBtn" ).setOnMouseClicked( event -> {
+                    doUpdate( prod );
+                    EventBus.getInstance().subscribe( "refreshProdContainer", event1 ->
+                            myTask.getValue().getSecond().setData( CrudBien.getInstance().selectItemById( prod.getId() ) )
+                    );
+                } );
+                myTask.getValue().getFirst().setOnMouseClicked( event -> loadInfoItem( prod ) );
+                showAllProdsInfo.getChildren().add(0, myTask.getValue().getFirst() );
+            } );
+        });
         return myTask;
+    }
+
+    public void doUpdateTabprodAfterAIverif(CustomMouseEvent<Bien> bienCustomMouseEvent){
+        for(Node node:showAllProdsInfo.getChildren()){
+            if(Integer.parseInt(((Label)((HBox)node).getChildren().get( 0 )).getText())==bienCustomMouseEvent.getEventData().getId()){
+                if(bienCustomMouseEvent.getEventData().getState().equals( "verified" )){
+                    ((ImageView)((HBox)node).getChildren().get( 6 ).lookup( "#stateImage" )).setImage(new Image( "file:src/main/resources/img/marketPlace/approve24C.png",24,24,true,true ) );
+                    ((Label)((HBox)node).getChildren().get( 6 )).setText("verified");
+                }
+                else {
+                    MyTools.getInstance().deleteAnimation(node, showAllProdsInfo );
+                    CrudBien.getInstance().deleteItem( bienCustomMouseEvent.getEventData().getId() );
+                }
+            }
+        }
     }
 
     public void showOrHideTabHead(boolean state,String text){
@@ -628,7 +641,6 @@ public class MainDashbordController implements Initializable {
         transactionsHead.setVisible( !state );
         if(transactionsHead.isVisible())
             ((Label)transactionsHead.getChildren().get( 0 )).setText(text );
-
     }
 
 

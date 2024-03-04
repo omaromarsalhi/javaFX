@@ -40,7 +40,10 @@ public class ProductsHboxController implements Initializable {
     private Label quantity;
     @FXML
     private Label state;
-
+    @FXML
+    private Label id;
+    @FXML
+    private ImageView stateImage;
 
     private Bien bien;
     private  Popup popup = new Popup();
@@ -54,6 +57,8 @@ public class ProductsHboxController implements Initializable {
     public void setData(Product product){
         if( product instanceof Bien bien) {
             this.bien=bien;
+            id.setText( Integer.toString(bien.getId()) );
+            id.setVisible( false );
             image.setImage( new Image( "file:src/main/resources/" + bien.getImageSourceByIndex( 0 ),40,40,false,false ) );
             name.setText( bien.getName() );
             descreption.setText( bien.getDescreption() );
@@ -62,6 +67,8 @@ public class ProductsHboxController implements Initializable {
             state.setText( bien.getState().toString() );
             creationDate.setText( bien.getTimestamp().toString() );
             category.setText( bien.getCategorie().toString() );
+            if(product.getState().equals( "verified" ))
+                stateImage.setImage(new Image( "file:src/main/resources/img/marketPlace/approve24C.png",24,24,true,true ) );
         }
     }
 

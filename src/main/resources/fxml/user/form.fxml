@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane alignment="TOP_LEFT" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.UserFormController">
+<StackPane alignment="TOP_LEFT" prefHeight="511.0" prefWidth="592.0" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.UserFormController">
    <children>
-      <AnchorPane fx:id="loadinPage">
+      <AnchorPane fx:id="loadinPage" prefHeight="511.0" prefWidth="613.0">
          <children>
             <ImageView fitHeight="85.0" fitWidth="90.0" layoutX="343.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="212.60000000000002" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="212.0">
                <image>
@@ -23,11 +23,11 @@
             </ImageView>
          </children>
       </AnchorPane>
-      <HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
+      <HBox fx:id="formBox" alignment="CENTER" fillHeight="false" prefHeight="511.0" prefWidth="642.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
          <children>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="506.0" prefWidth="334.0" spacing="10.0">
+            <VBox alignment="BOTTOM_CENTER" prefHeight="506.0" prefWidth="280.0" spacing="10.0">
                <children>
-                  <ImageView fx:id="img" fitHeight="124.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="img" fitHeight="150.0" fitWidth="134.0" onDragDropped="#imageDragDropped" onDragOver="#imageDragOver" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../icons/userIcons/image128B.png" />
                      </image>
@@ -35,34 +35,7 @@
                         <Insets bottom="15.0" />
                      </VBox.margin>
                   </ImageView>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
-                     <children>
-                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="First Name :">
-                           <font>
-                              <Font name="System Italic" size="18.0" />
-                           </font>
-                        </Label>
-                        <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
-                           <children>
-                              <TextField fx:id="name" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets left="10.0" />
-                                 </HBox.margin>
-                              </TextField>
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets left="10.0" right="10.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets top="4.0" />
-                     </VBox.margin>
-                  </VBox>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="0.0" prefWidth="200.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Age :">
                            <font>
@@ -71,7 +44,7 @@
                         </Label>
                         <HBox fx:id="formBox2" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="age" prefHeight="42.0" prefWidth="270.0" promptText="Your age" styleClass="text-field">
+                              <TextField fx:id="age" minWidth="239.0" prefHeight="42.0" prefWidth="270.0" promptText="Your age" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -86,7 +59,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="68.0" prefWidth="270.0">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="200.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Gender :">
                            <font>
@@ -95,7 +68,7 @@
                         </Label>
                         <HBox fx:id="formBox3" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="gender" prefHeight="38.0" prefWidth="270.0" promptText="The Price here !!!" styleClass="text-field">
+                              <TextField fx:id="gender" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="The Price here !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -110,7 +83,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="25.0" layoutY="354.0" minHeight="68.0" minWidth="300.0" prefHeight="68.0" prefWidth="270.0">
+                  <VBox layoutX="25.0" layoutY="354.0" minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="200.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Phone :">
                            <font>
@@ -119,7 +92,7 @@
                         </Label>
                         <HBox fx:id="formBox32" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="phone" prefHeight="38.0" prefWidth="270.0" promptText="Your phone number" styleClass="text-field">
+                              <TextField fx:id="phone" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your phone number" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -134,7 +107,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="48.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Status :">
                            <font>
@@ -163,18 +136,18 @@
                   <Insets bottom="15.0" left="15.0" right="15.0" top="8.0" />
                </padding>
             </VBox>
-            <VBox alignment="BOTTOM_CENTER" layoutX="12.0" layoutY="12.0" prefHeight="506.0" prefWidth="326.0" spacing="10.0">
+            <VBox alignment="BOTTOM_CENTER" layoutX="12.0" layoutY="12.0" prefHeight="506.0" prefWidth="280.0" spacing="10.0">
                <children>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="48.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
                      <children>
-                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Last Name :">
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="First Name :">
                            <font>
                               <Font name="System Italic" size="18.0" />
                            </font>
                         </Label>
-                        <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                        <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
                            <children>
-                              <TextField fx:id="lastName" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
+                              <TextField fx:id="name" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -192,7 +165,34 @@
                         <Insets top="4.0" />
                      </VBox.margin>
                   </VBox>
-                  <VBox layoutX="25.0" layoutY="348.0" minHeight="68.0" minWidth="300.0" prefHeight="68.0" prefWidth="270.0">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="254.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Last Name :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="lastName" minWidth="239.0" prefHeight="38.0" prefWidth="239.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="4.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox layoutX="25.0" layoutY="348.0" minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="239.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="E-mail :">
                            <font>
@@ -201,7 +201,7 @@
                         </Label>
                         <HBox fx:id="formBox311" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="email" prefHeight="38.0" prefWidth="270.0" promptText="The Price here !!!" styleClass="text-field">
+                              <TextField fx:id="email" minWidth="239.0" prefHeight="38.0" prefWidth="239.0" promptText="The Price here !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -216,7 +216,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="0.0" prefWidth="239.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Cin :">
                            <font>
@@ -225,7 +225,7 @@
                         </Label>
                         <HBox fx:id="formBox21" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="cin" prefHeight="42.0" prefWidth="270.0" promptText="Your Price here !!!" styleClass="text-field">
+                              <TextField fx:id="cin" minWidth="239.0" prefHeight="42.0" prefWidth="239.0" promptText="Your Price here !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -240,7 +240,7 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="68.0" prefWidth="270.0">
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="239.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Adresse :">
                            <font>
@@ -249,7 +249,7 @@
                         </Label>
                         <HBox fx:id="formBox31" prefHeight="30.0">
                            <children>
-                              <TextField fx:id="adresse" prefHeight="38.0" prefWidth="270.0" promptText="Your Adresse" styleClass="text-field">
+                              <TextField fx:id="adresse" minWidth="239.0" prefHeight="38.0" prefWidth="239.0" promptText="Your Adresse" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -264,14 +264,17 @@
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </VBox>
-                  <VBox layoutX="25.0" layoutY="430.0" minHeight="68.0" minWidth="300.0">
+                  <VBox layoutX="25.0" layoutY="430.0" minHeight="68.0" minWidth="200.0" prefWidth="239.0">
                      <children>
                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Date Of Birth :">
                            <font>
                               <Font name="System Italic" size="18.0" />
                            </font>
                         </Label>
-                        <DatePicker prefHeight="38.0" prefWidth="238.0" />
+                        <DatePicker fx:id="dob" minWidth="239.0" prefHeight="38.0" prefWidth="239.0">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin></DatePicker>
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
@@ -279,10 +282,10 @@
                   </VBox>
                </children>
                <padding>
-                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="24.0" />
                </padding>
             </VBox>
-            <VBox fx:id="itemInfo" prefHeight="506.0" prefWidth="56.0" />
+            <VBox fx:id="itemInfo" alignment="CENTER_RIGHT" prefHeight="506.0" prefWidth="87.0" />
          </children>
       </HBox>
    </children>

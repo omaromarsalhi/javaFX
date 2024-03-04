@@ -88,7 +88,7 @@ public class CheckOutController implements Initializable {
         Pprice.setText( Float.toString( bien.getPrice() ) );
         Pquantity.setText( Float.toString( bien.getQuantity() ) );
         requestedQuantity.setText( Float.toString( bien.getQuantity() ) );
-        Pstate.setText( (bien.getState()) ? "In Stock" : "Out Of Stock" );
+//        Pstate.setText( (bien.getState()) ? "In Stock" : "Out Of Stock" );
         ProlesAndTerms.setText( "1/iurf airfgyu &irfuh airfu azirhf arf_ azr ifarifu\n" +
                 "2/kjhfv aeirugyh aeriguh zeriuuv zaeiurh gvaeur gh ufv\n" +
                 "3/aiyuzr aizuyryfg aoiuyrf \n"+

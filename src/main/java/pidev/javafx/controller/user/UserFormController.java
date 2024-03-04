@@ -22,6 +22,7 @@ import pidev.javafx.crud.user.ServiceUser;
 import pidev.javafx.model.MarketPlace.Product;
 import pidev.javafx.model.user.User;
 import pidev.javafx.test.Main;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.tools.marketPlace.MyListener;
 import pidev.javafx.tools.marketPlace.MyTools;
@@ -32,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -89,21 +91,19 @@ public class UserFormController implements Initializable {
     private boolean modifier = false;
 
 
-    private File chosenFile;
-    private List<File> chosenFiles;
-    private MyListener listener;
     private static String usageOfThisForm;
-    private HBox buttonsBox;
     private boolean isImageUpdated;
     private Product product;
     private String formLayoutBeforRegexCheck;
     private String formLayoutAfterRegexCheck;
     Popup popup4Regex = MyTools.getInstance().createPopUp();
+    private User user;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadinPage.setVisible(false);
+        isImageUpdated=false;
 
         formLayoutBeforRegexCheck="-fx-border-color:black;"+"-fx-border-width: 2;" +
                 "-fx-border-radius: 10;" +
@@ -140,6 +140,7 @@ public class UserFormController implements Initializable {
         Button updateUser = new Button();
         Button clearProd = new Button();
         Button cancel = new Button();
+        Button dele = new Button();
 
 
         if (usageOfThisForm.equals("editDetails")) {
@@ -168,7 +169,6 @@ public class UserFormController implements Initializable {
 
             updateUser.setOnMouseClicked(event -> {
                 modifierData();
-
                 Task<Void> task = new Task() {
                     @Override
                     protected Object call() throws Exception {
@@ -210,14 +210,13 @@ public class UserFormController implements Initializable {
             itemInfo.getChildren().addAll(cancel);
 
         itemInfo.setSpacing(30);
-        itemInfo.setAlignment(Pos.CENTER);
+        itemInfo.setAlignment(Pos.CENTER_RIGHT);
         itemInfo.getStylesheets().add(String.valueOf(getClass().getResource("/style/marketPlace/Buttons.css")));
         itemInfo.setPadding(new Insets(0, 10, 0, 0));
     }
 
 
     public void setDataUser(User user) {
-        System.out.println(user);
         name.setText(user.getFirstname());
         lastName.setText(user.getLastname());
         age.setText(String.valueOf(user.getAge()));
@@ -227,35 +226,34 @@ public class UserFormController implements Initializable {
         adresse.setText(user.getAdresse());
         status.setText(user.getStatus());
         phone.setText(String.valueOf(user.getNum()));
-       // dob.setValue(LocalDate.parse(user.getDob()));
-        img.setImage(new Image("file:src/main/resources/" + user.getPhotos()));
+        if(user.getDob()!=null)
+            dob.setValue( LocalDate.parse( user.getDob().formatted( DateTimeFormatter.ofPattern( "yyy/MM/DD" )) ) );
+        img.setImage(new Image( "file:src/main/resources"+user.getPhotos()));
+        UserController.setUser(user);
 
     }
 
     public void modifierData() {
-        User user=new User();
-        user.setPhotos(img.getImage().getUrl());
-//        System.out.println(user.getPhotos());
-
-        System.out.println(user.getPhotos());
-
-            user.setFirstname(name.getText());
-            user.setEmail(email.getText());
-            user.setLastname(lastName.getText());
-            user.setAge(Integer.parseInt(age.getText()));
-            user.setCin(cin.getText());
+        User user= new User();
+        user.setFirstname(name.getText());
+        user.setEmail(email.getText());
+        user.setLastname(lastName.getText());
+        user.setAge(Integer.parseInt(age.getText()));
+        user.setCin(cin.getText());
+        if(dob!=null)
             user.setDob(String.valueOf(dob.getValue()));
-            user.setNum(Integer.parseInt(phone.getText()));
-            user.setStatus(status.getText());
-            user.setPhotos(MyTools.getInstance().getPathAndSaveIMGUser(img.getImage().getUrl()));
-            user.setGender(gender.getText());
-            ServiceUser service = new ServiceUser();
-            service.modifier(user);
+        user.setNum(Integer.parseInt(phone.getText()));
+        user.setStatus(status.getText());
+        user.setPhotos(UserController.getInstance().getCurrentUser().getPhotos());
+        user.setGender(gender.getText());
+        ServiceUser service = new ServiceUser();
+        service.modifier(user);
+        UserController.setUser(user);
 
     }
 
     public void setRegEx() {
-       // String agereel;
+        // String agereel;
         String regexAge = "^(?:1[8-9]|[2-9][0-9])$";
         String regexLastName = "[a-zA-Z\\s]{3,}+";
         String regexTelephone = "^[0-9]{8,8}$";
@@ -268,32 +266,29 @@ public class UserFormController implements Initializable {
         String cinn = "Valide un numéro de carte d'identité nationale composé exactement de 8 chiffres.";
         name.setOnKeyTyped(event -> {
             if(name.getText().isEmpty()){
-                System.out.println(name.getText());
                 formBox.setStyle(formLayoutBeforRegexCheck);
             }
 
+            else
+            {
+                if(name.getText().matches(regexLastName))
+                {
+
+                    formBox.setStyle(formLayoutAfterRegexCheck);
+                    name.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
+                            "-fx-border-width:0 0 2 0;" +
+                            "-fx-border-radius: 0" );
+                    modifier=false;
+
+                }
                 else
                 {
-                    if(name.getText().matches(regexLastName))
-                    {
-
-                        formBox.setStyle(formLayoutAfterRegexCheck);
-                        name.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                                "-fx-border-width:0 0 2 0;" +
-                                "-fx-border-radius: 0" );
-                        modifier=false;
-
-
-                    }
-                    else
-                    {
-
-                        formBox.setStyle(formLayoutAfterRegexCheck);
-                        name.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                                "-fx-border-width:0 0 2 0;" +
-                                "-fx-border-radius: 0" );
-                    }
+                    formBox.setStyle(formLayoutAfterRegexCheck);
+                    name.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
+                            "-fx-border-width:0 0 2 0;" +
+                            "-fx-border-radius: 0" );
                 }
+            }
 
 
         });
@@ -587,38 +582,23 @@ public class UserFormController implements Initializable {
         } );
 
     }
+
+
     @FXML
     public void imageDragDropped(DragEvent dragEvent) {
-
-//        Dragboard dragboard=dragEvent.getDragboard();
-//        if(dragboard.hasImage()||dragboard.hasFiles()) {
-//            try {
-//                img.setImage(new Image(new FileInputStream(dragboard.getFiles().get(0))));
-//            } catch (FileNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
         for (File file : dragEvent.getDragboard().getFiles()){
             img.setImage( new Image( file.getAbsolutePath() ) );
-            System.out.println(img.getImage().getUrl());
-
+            UserController.getInstance().getCurrentUser().setPhotos( MyTools.getInstance().getPathAndSaveIMGUser(file.getAbsolutePath() ) );
         }
     }
 
-@FXML
+    @FXML
     public void imageDragOver(DragEvent dragEvent) {
-        System.out.println("heloo");
-        Dragboard dragboard=dragEvent.getDragboard();
-
-
-        if(dragboard.hasImage() ||dragboard.hasFiles() ){
+        if(dragEvent.getDragboard().hasImage() ||dragEvent.getDragboard().hasFiles() )
             dragEvent.acceptTransferModes(TransferMode.COPY);
-        }
         dragEvent.consume();
-
     }
 }
-
 
 
 

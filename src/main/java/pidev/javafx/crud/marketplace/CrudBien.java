@@ -55,7 +55,7 @@ public class CrudBien implements CrudInterface<Bien> {
                         "",
                         result.getFloat("price"),
                         result.getFloat("quantity"),
-                        result.getBoolean("state"),
+                        result.getString("state"),
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );
@@ -87,7 +87,7 @@ public class CrudBien implements CrudInterface<Bien> {
             prepare.setBoolean(4,false);
             prepare.setFloat(5, bien.getPrice());
             prepare.setFloat(6, bien.getQuantity());
-            prepare.setString(7, (bien.getState()) ? "1" : "0");
+            prepare.setString(7, bien.getState());
             prepare.setString(8, "BIEN");
             prepare.setString(9, bien.getCategorie().toString());
             prepare.executeUpdate();
@@ -167,7 +167,7 @@ public class CrudBien implements CrudInterface<Bien> {
             prepare.setString(2, bien.getDescreption());
             prepare.setFloat(++i, bien.getPrice());
             prepare.setFloat(++i, bien.getQuantity());
-            prepare.setString(++i, (bien.getState()) ? "1" : "0");
+            prepare.setString(++i, bien.getState());
             prepare.setString(++i, bien.getCategorie().toString());
             prepare.setInt(++i, bien.getId());
             prepare.executeUpdate();
@@ -198,7 +198,7 @@ public class CrudBien implements CrudInterface<Bien> {
                         "",
                         result.getFloat("price"),
                         result.getFloat("quantity"),
-                        result.getBoolean("state"),
+                        result.getString("state"),
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );
@@ -257,7 +257,7 @@ public class CrudBien implements CrudInterface<Bien> {
                         "",
                         result.getFloat("price"),
                         result.getFloat("quantity"),
-                        result.getBoolean("state"),
+                        result.getString("state"),
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );
@@ -311,16 +311,22 @@ public class CrudBien implements CrudInterface<Bien> {
             result = prepare.executeQuery();
 
             if (result.next()) {
-                return new Bien(result.getInt("idProd"),
+                Bien bien= new Bien(result.getInt("idProd"),
                         result.getInt("idUser"),
                         result.getString("name"),
                         result.getString("descreption"),
                         "",
                         result.getFloat("price"),
                         result.getFloat("quantity"),
-                        result.getBoolean("state"),
+                        result.getString("state"),
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
+                bien.setAllImagesSources( selectImagesById(bien.getId()) );
+                if(bien.getAllImagesSources().size()!=0) {
+                    bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 35, 35, false, false ) ) );
+                }
+                return bien;
             }
 
         } catch (SQLException e) {
@@ -346,7 +352,7 @@ public class CrudBien implements CrudInterface<Bien> {
                         "",
                         result.getFloat("price"),
                         result.getFloat("quantity"),
-                        result.getBoolean("state"),
+                        result.getString("state"),
                         result.getTimestamp("timestamp"),
                         Categorie.valueOf(result.getString("category")));
                 bien.setAllImagesSources( selectImagesById(bien.getId()) );

@@ -8,12 +8,14 @@ def imageDetection(path):
       messages=[
         {
           'role': 'user',
-          'content': 'describe this image and give me details as much as you can',
+          'content': 'describe this image and do not exeed 30 words',
           'images': [file.read()],
         },
       ],
     )
   return response['message']['content']
+
+
 
 
 

@@ -84,7 +84,7 @@ public class ItemInfoController implements Initializable {
         itemDesc.setText( product.getDescreption() );
         priceLable.setText( Float.toString(product.getPrice()) );
         quantityLable.setText(Float.toString(product.getQuantity())   );
-        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
+//        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
         scroollImages();
     }
 
@@ -118,8 +118,9 @@ public class ItemInfoController implements Initializable {
         itemDesc.setText( product.getDescreption() );
         priceLable.setText( Float.toString(product.getPrice()) );
         quantityLable.setText(Float.toString(product.getQuantity())   );
-        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
+//        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
         scroollImages();
+
         createUpdateAndDeleteBtns();
         exitImageBtn.setOnMouseClicked( event ->  {
             EventBus.getInstance().publish( "onExitForm",event );

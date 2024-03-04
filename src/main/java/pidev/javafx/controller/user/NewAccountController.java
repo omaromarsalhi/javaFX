@@ -99,10 +99,27 @@ public class NewAccountController implements Initializable {
         var showDetails=new MenuItem("Show My Details",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
 
 
+        Menu advancedSettings = new Menu("Advanced Settings",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+
+        // Create submenu for "File" menu
+        Menu updateCredentials= new Menu("Update Credentials");
+        Menu account = new Menu("Account");
+
+        MenuItem updatePassword = new MenuItem("Update Password");
+        MenuItem updateEmail = new MenuItem("Update Email");
+        updateCredentials.getItems().addAll(updatePassword, updateEmail);
+
+        MenuItem disconnect = new MenuItem("Disconnect");
+        MenuItem deleteAccount = new MenuItem("Delete Account");
+        account.getItems().addAll(disconnect, deleteAccount);
+
+        // Add submenus to "File" menu
+        advancedSettings.getItems().addAll(updateCredentials,account);
+
         editDetails.setOnAction( event -> showFormUser("editDetails") );
         showDetails.setOnAction( event -> showFormUser("showDetails") );
 
-        menuBar.getMenus().get( 3 ).getItems().addAll(editDetails,showDetails);
+        menuBar.getMenus().get( 3 ).getItems().addAll(editDetails,showDetails,advancedSettings);
 
 
         var addReclamation=new MenuItem("Add Reclamation",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
@@ -110,6 +127,8 @@ public class NewAccountController implements Initializable {
         addReclamation.setOnAction( event -> showFormReclamation() );
 
         menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
+
+        editDetails.fire();
 
 
     }

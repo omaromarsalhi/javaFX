@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane style="-fx-background-radius: 10; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.login.NewLogInController">
+<StackPane style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.login.NewLogInController">
    <children>
       <AnchorPane fx:id="firstLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: #171718; -fx-background-radius: 10; -fx-border-color: 10;" stylesheets="@../../style/newLogIn.css">
          <children>
@@ -83,7 +83,7 @@
                         </ImageView>
                         <VBox alignment="CENTER" prefHeight="252.0" prefWidth="215.0" spacing="10.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="99.0">
                            <children>
-                              <TextField id="textField1" fx:id="emailSignup" prefHeight="40.0" prefWidth="182.0" promptText="E-MAIL">
+                              <TextField id="textField1" fx:id="email" prefHeight="40.0" prefWidth="182.0" promptText="E-MAIL">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

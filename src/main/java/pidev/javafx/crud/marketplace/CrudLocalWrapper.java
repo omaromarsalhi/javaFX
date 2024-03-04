@@ -51,7 +51,7 @@ public class CrudLocalWrapper{
                             "",
                             result.getFloat("price"),
                             result.getFloat("quantity"),
-                            result.getBoolean("state"),
+                            result.getString("state"),
                             result.getTimestamp("timestamp"),
                             Categorie.valueOf(result.getString("category")));
                     product.setAllImagesSources(CrudBien.getInstance().selectImagesById( product.getId() ) );

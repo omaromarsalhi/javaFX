@@ -61,7 +61,7 @@ public class ItemController implements Initializable {
         this.bien = bien;
         nameLabel.setText(bien.getName());
         priceLable.setText( "$"+bien.getPrice());
-        stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
+//        stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
         categoryLable.setText(bien.getCategorie().name());
         Image image = new Image("file:src/main/resources"+bien.getImgSource());
         img.setImage(image);
