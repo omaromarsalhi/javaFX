@@ -8,9 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.WebView?>
 
 <AnchorPane fx:id="mapAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.MapStationController">
    <children>
+      <WebView fx:id="webView" prefHeight="670.0" prefWidth="1040.0" />
       <AnchorPane fx:id="ListeClient" layoutX="39.0" layoutY="14.0" prefHeight="631.0" prefWidth="387.0">
          <children>
             <AnchorPane fx:id="mainanchor" prefHeight="86.0" prefWidth="388.0" styleClass="ListeTrnsports" stylesheets="@../../../style/Transport.css" visible="false">
@@ -63,7 +65,7 @@
       <HBox layoutX="635.0" layoutY="31.0" prefHeight="11.0" prefWidth="389.0">
          <children>
             <TextArea fx:id="SearchText" prefHeight="51.0" prefWidth="337.0" styleClass="SearchBar" stylesheets="@../../../style/transport/Transport.css" />
-            <Button mnemonicParsing="false" onAction="#searchStation" prefHeight="51.0" prefWidth="52.0">
+            <Button mnemonicParsing="false" onAction="#handleSendStationButtonClick" prefHeight="51.0" prefWidth="52.0">
                <graphic>
                   <ImageView fitHeight="35.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                      <image>

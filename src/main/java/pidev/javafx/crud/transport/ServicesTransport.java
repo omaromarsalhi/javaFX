@@ -27,7 +27,7 @@ public class ServicesTransport implements CrudInterface<Transport> {
         String sql = "INSERT INTO transport(Type_Vehicule,Station_depart,Station_arrive,Reference,Vehicule_Image,Prix,Heure) VALUES (?,?,?,?,?,?,?) ";
 
         try {
-             prepare = cnx.prepareStatement(sql);
+            prepare = cnx.prepareStatement(sql);
             prepare.setString(1, transport.getType_vehicule());
             prepare.setInt(2, transport.getStation_depart().getIdStation());
             prepare.setInt(3, transport.getStation_arrive().getIdStation());
@@ -39,15 +39,13 @@ public class ServicesTransport implements CrudInterface<Transport> {
             System.out.println("Personne added !");
 
             return true;
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
-            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+        } catch (SQLIntegrityConstraintViolationException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Reference duplicated");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
-return false;
-        }
-        catch (SQLException e) {
+            return false;
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             return false;
         }
@@ -72,16 +70,14 @@ return false;
             prepare.executeUpdate();
 
 
-        }
-        catch (SQLIntegrityConstraintViolationException e) {
+        } catch (SQLIntegrityConstraintViolationException e) {
 
-            Alert alert =new Alert(Alert.AlertType.INFORMATION);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Reference duplicated");
             alert.setContentText(e.getMessage());
             alert.showAndWait();
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println(e.getMessage());
             System.out.println("Error inserting data.");
 
@@ -94,8 +90,8 @@ return false;
         return null;
     }
 
-        public void deleteItem(int id) {
-            Connection cnx = DataSource.GetInstance().getCnx();
+    public void deleteItem(int id) {
+        Connection cnx = DataSource.GetInstance().getCnx();
         String deleteQuery = "DELETE FROM transport WHERE idTransport = ?";
         try {
             prepare = cnx.prepareStatement(deleteQuery);
@@ -103,28 +99,32 @@ return false;
             prepare.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }}
-
-       public Transport findById(int id) {
-return new Transport();
+        }
     }
-        @Override
-        public Transport selectFirstItem() {
+
+    public Transport findById(int id) {
+        return new Transport();
+    }
+
+    @Override
+    public Transport selectFirstItem() {
         return null;
     }
-        @Override
-        public Set<Transport> getAll() {
-            Connection cnx = DataSource.GetInstance().getCnx();
-        Set<Transport> dataList =new HashSet<>();
+
+    @Override
+    public Set<Transport> getAll() {
+        Connection cnx = DataSource.GetInstance().getCnx();
+        Set<Transport> dataList = new HashSet<>();
         String sql = "SELECT transport.*, station1.NomStation AS NomStation1, station2.NomStation AS NomStation2\n" +
                 "FROM transport\n" +
                 "LEFT JOIN station AS station1 ON transport.Station_depart = station1.idStation\n" +
                 "LEFT JOIN station AS station2 ON transport.Station_arrive = station2.idStation;\n";
-            ;
+        ;
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(sql);
 
              ResultSet resultSet = preparedStatement.executeQuery()) {
+
             while (resultSet.next()) {
                 Transport data = new Transport();
                 data.setIdTransport(Integer.parseInt(resultSet.getString("idTransport")));
@@ -141,8 +141,49 @@ return new Transport();
 
             }
 
-     return  dataList;
-    } catch (SQLException e) {
+            return dataList;
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }}
+    }
+
+
+
+    public Set<Transport> getByid(int id) {
+        Connection cnx = DataSource.GetInstance().getCnx();
+        Set<Transport> dataList = new HashSet<>();
+        String sql = "SELECT transport.*, station1.NomStation AS NomStation1, station2.NomStation AS NomStation2\n" +
+                "FROM transport\n" +
+                "LEFT JOIN station AS station1 ON transport.Station_depart = station1.idStation \n" +
+                "LEFT JOIN station AS station2 ON transport.Station_arrive = station2.idStation\n" +
+                "WHERE transport.Station_depart = "+id+" AND transport.Station_arrive="+id+"\n" ;
+
+
+        try (PreparedStatement preparedStatement = cnx.prepareStatement(sql);
+
+             ResultSet resultSet = preparedStatement.executeQuery())  {
+
+
+            while (resultSet.next()) {
+                Transport data = new Transport();
+                data.setIdTransport(Integer.parseInt(resultSet.getString("idTransport")));
+                data.setType_vehicule(resultSet.getString("Type_Vehicule"));
+                data.setReference(resultSet.getString("Reference"));
+                data.setDepart(resultSet.getString("NomStation1"));
+                data.setArivee(resultSet.getString("NomStation2"));
+                data.setPrix((resultSet.getFloat("Prix")));
+                data.setHeure(resultSet.getTime("Heure"));
+                data.setVehicule_Image((resultSet.getString("Vehicule_Image")));
+
+                dataList.add(data);
+                System.out.println(dataList);
+
+            }
+
+            return dataList;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    }

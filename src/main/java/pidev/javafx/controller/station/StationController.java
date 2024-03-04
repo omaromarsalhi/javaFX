@@ -237,6 +237,7 @@
 
 package pidev.javafx.controller.station;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -256,12 +257,22 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+import org.json.JSONException;
+import org.json.JSONObject;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Type_Vehicule;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -295,18 +306,21 @@ public class StationController implements Initializable {
 
     @FXML
     private Pane stationpane;
+
     @FXML
     protected void onTextChanged() {
         String[] name = new String[10];
         StationListView.setVisible(false);
-        name[1] = NomStationText.getText();
-        if (name[1].matches("[a-zA-Z]+"))
-            NomStationText.setStyle("-fx-control-inner-background: #25c12c;");
-        else
-            NomStationText.setStyle("-fx-control-inner-background: #bb2020;");
+        name[1] = NomStationText1.getText();
+        if (name[1].matches("[a-zA-Z]+")) {
+            NomStationText1.setStyle("-fx-control-inner-background: #25c12c;");
+        } else
+            NomStationText1.setStyle("-fx-control-inner-background: #bb2020;");
     }
+
     @FXML
     private BarChart<String, Number> series1;
+
     public void stats() {
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -326,7 +340,6 @@ public class StationController implements Initializable {
             series1.getData().remove(0);
         }
     }
-
 
 
     @FXML
@@ -351,11 +364,10 @@ public class StationController implements Initializable {
         blur.setIterations(3);
         stationpane.toFront();
         stationpane.setEffect(null);
-        UpdatePane.toBack();
+        insertPane.toBack();
         stationpane.setOpacity(1);
 
     }
-
 
 
     private void addHoverEffect(XYChart.Series<String, Number> series) {
@@ -373,6 +385,7 @@ public class StationController implements Initializable {
             }
         }
     }
+
     String[] name = new String[10];
 
     private void stats_() {
@@ -404,7 +417,8 @@ public class StationController implements Initializable {
             StationListView.setItems(filteredStations);
         }
     }
-    public void delete_Btn(){
+
+    public void delete_Btn() {
         ss.deleteItem(StationListView.getSelectionModel().getSelectedItem().getIdStation());
         afficher();
     }
@@ -413,13 +427,116 @@ public class StationController implements Initializable {
     @FXML
     private TextField AdressText;
     @FXML
-    private  TextField NomStationText;
+    private TextField AdressText1;
+    @FXML
+    private TextField NomStationText;
+    @FXML
+    private TextField NomStationText1;
     @FXML
     private ComboBox BoxTypeVehicule;
     @FXML
+    private ComboBox BoxTypeVehicule1;
+
+    @FXML
     private ImageView Image;
+
     String image_path;
-    public void load_update(){
+
+    private static final String OPENCAGE_API_KEY = "53ee85fa919942ebb5df4021833590b4";
+
+    public void adressNow() {
+
+        geocodeAddress(NomStationText1.getText());
+    }
+
+    private void geocodeAddress(String address) {
+        try {
+            String encodedAddress = URLEncoder.encode(address, "UTF-8");
+            String apiUrl = "https://api.opencagedata.com/geocode/v1/json?q=" + encodedAddress + "&key=" + OPENCAGE_API_KEY;
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(new URI(apiUrl))
+                    .build();
+
+            HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+
+            try (InputStream responseBody = response.body();
+                 Scanner scanner = new Scanner(responseBody)) {
+
+                StringBuilder result = new StringBuilder();
+                while (scanner.hasNextLine()) {
+                    result.append(scanner.nextLine());
+                }
+
+                // Parse the JSON response and extract latitude and longitude
+                String[] coordinates = extractCoordinates(result.toString());
+                if (coordinates.length == 2) {
+                    AdressText1.setText(coordinates[0] + "," + coordinates[1]);
+                } else {
+                    AdressText1.setText(Arrays.toString(new String[]{"Invalid", "format"}));
+                }
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+        } catch (URISyntaxException | IOException | InterruptedException e) {
+            e.printStackTrace();
+            AdressText1.setText(Arrays.toString(new String[]{"Error", "occurred"}));
+        }
+    }
+
+    private static String[] extractCoordinates(String jsonResponse) throws JSONException {
+        JSONObject json = new JSONObject(jsonResponse);
+        JSONObject firstResult = json.getJSONArray("results").optJSONObject(0);
+
+        String[] coordinates = new String[2];
+
+        if (firstResult != null) {
+            JSONObject geometry = firstResult.optJSONObject("geometry");
+            if (geometry != null) {
+                coordinates[0] = geometry.optString("lat", "N/A");
+                coordinates[1] = geometry.optString("lng", "N/A");
+            }
+        }
+        coordinates[0] = coordinates[0].replace("\u00b0", "");
+        coordinates[1] = coordinates[1].replace("\u00b0", "");
+
+        return coordinates;
+    }
+
+
+    @FXML
+    protected void insertStation() throws IOException {
+        String nomStation = NomStationText1.getText();
+        String address = AdressText1.getText();
+
+        Station st = new Station(nomStation, image_path, address, BoxTypeVehicule1.getValue().toString());
+        ss.addItem(st);
+        afficher();
+        close_insert();
+
+//        Pane successPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Transport/added_succesfully.fxml")));
+//
+//        successPane.setPrefHeight(mainBorderPain.getPrefHeight());
+//        successPane.setPrefWidth(mainBorderPain.getPrefWidth());
+//        mainBorderPain.setContent(successPane);
+//
+//        PauseTransition pause = new PauseTransition(Duration.seconds(2.33));
+//        pause.setOnFinished(event -> {
+//            try {
+//                AnchorPane anotherPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/fxml/Transport/Gui_Station/Station.fxml")));
+//                anotherPane.setPrefHeight(mainBorderPain.getPrefHeight());
+//                anotherPane.setPrefWidth(mainBorderPain.getPrefWidth());
+//                mainBorderPain.setContent(anotherPane);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        });
+//        pause.play();
+    }
+
+    public void load_update() {
 
         BoxBlur blur = new BoxBlur();
         blur.setWidth(10);
@@ -432,51 +549,60 @@ public class StationController implements Initializable {
         NomStationText.setText(selectedItem.getNomStation());
         AdressText.setText(selectedItem.getAddressStation());
         BoxTypeVehicule.setValue(selectedItem.getType_Vehicule());
-        image_path=selectedItem.getImage_station();
-      if(image_path!=null){
-        Image.setImage(new Image(image_path));
+        image_path = selectedItem.getImage_station();
+        if (image_path != null) {
+            Image.setImage(new Image("file:///"+image_path));
+        }
     }
-    }
+
     @FXML
     private Pane insertPane;
-    public void load_insert(){
+
+    public void load_insert() {
 
         BoxBlur blur = new BoxBlur();
         blur.setWidth(10);
         blur.setHeight(10);
         blur.setIterations(3);
-      //  stationPane.setEffect(blur);
+        stationpane.setEffect(blur);
         insertPane.setVisible(true);
+        insertPane.setOpacity(0.85);
         insertPane.toFront();
 
     }
-    public void insert_Image(){
+
+    public void insert_Image() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Choose a File");
         var selectedFile = fileChooser.showOpenDialog(primaryStage);
         if (selectedFile != null) {
-            image_path=selectedFile.getAbsolutePath() ;
+            image_path = selectedFile.getAbsolutePath();
 
-            Image image = new Image(image_path);
+            javafx.scene.image.Image image = new Image("file:///"+image_path);
             Image.setFitHeight(114);
             Image.setFitWidth(114);
             Image.setImage(image);
         }
     }
+
     @FXML
-    protected  void Load_types() {
+    protected void Load_types() {
 
         String a;
-        if(BoxTypeVehicule.getValue()==null)
+        if (BoxTypeVehicule.getValue() == null) {
             BoxTypeVehicule.getItems().addAll(Type_Vehicule.values());
+            BoxTypeVehicule1.getItems().addAll(Type_Vehicule.values());
+        }
     }
-    public void update_action(){
-        Station updated_s=new Station(NomStationText.getText(),image_path,AdressText.getText(),BoxTypeVehicule.getValue().toString(),selectedItem.getIdStation());
+
+    public void update_action() {
+        Station updated_s = new Station(NomStationText.getText(), image_path, AdressText.getText(), BoxTypeVehicule.getValue().toString(), selectedItem.getIdStation());
         System.out.println(updated_s);
         ss.updateItem(updated_s);
         afficher();
         close_update();
     }
+
     Station selectedItem = new Station();
     Station selectedItem_1 = new Station();
 
@@ -492,7 +618,8 @@ public class StationController implements Initializable {
             }
         }
     }
-    public void searchStation(){
+
+    public void searchStation() {
         if (SearchText.getText().isEmpty()) {
             StationListView.setItems(data);
         } else {
@@ -507,15 +634,16 @@ public class StationController implements Initializable {
     }
 
 
-    ObservableList<Station> data ;
+    ObservableList<Station> data;
 
     Map<String, Integer> stationMap = new HashMap<>();
+
     public void afficher() {
         Set<Station> dataList;
         dataList = ss.getAll();
         dataList.clear();
         dataList = ss.getAll();
-          data = FXCollections.observableArrayList(dataList);
+        data = FXCollections.observableArrayList(dataList);
         StationListView.setItems(data);
         StationListView.setCellFactory(param -> new ListCell<Station>() {
             @Override

@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import pidev.javafx.model.Transport.Transport;
+import pidev.javafx.tools.CustomMouseEvent;
+import pidev.javafx.tools.transport.EventBus;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -73,9 +75,17 @@ public class transportDetailsContoller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         detailsTransport.setVisible(false);
         dropToggle.setSelected(true);
-        System.out.println(data);
         if(data!=null)
             fillDetails();
+    }
+
+
+    @FXML
+    private void sendData(ActionEvent event) {
+        // Get the data from the TextField
+
+        // Publish the custom event with the data
+        EventBus.getInstance().publish("sendTransport", new CustomMouseEvent<Transport>(data));
     }
 
     @FXML
@@ -87,12 +97,13 @@ public class transportDetailsContoller implements Initializable {
             detailsTransport.setVisible(false);
         }
         else if (!dropToggle.isSelected()) {
+            sendData(event);
             detailsTransport.setVisible(true);
         }
     }
 
     public void fillDetails(){
-        Image image = new Image(data.getVehicule_Image());
+        Image image = new Image("file:///"+data.getVehicule_Image());
         imageLabel.setImage(image);
         imageLabel.setFitWidth(94);
         imageLabel.setFitHeight(63);

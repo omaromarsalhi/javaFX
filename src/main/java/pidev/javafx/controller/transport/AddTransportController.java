@@ -81,7 +81,7 @@ public class AddTransportController implements Initializable {
 
 
 public  void intialiase_timer(){
-    SpinnerValueFactory<Integer> timeFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(7 * 60 , 19 * 60 , 0,30);
+    SpinnerValueFactory<Integer> timeFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(7 * 60 , 21 * 60 , 0,30);
     timeSpinner.setValueFactory(timeFactory);
 
      timeSpinner.valueProperty().addListener((obs, oldValue, newValue) -> {
@@ -194,7 +194,7 @@ public  void intialiase_timer(){
     if (selectedFile != null) {
         imagePath=selectedFile.getAbsolutePath() ;
 
-        Image image = new Image(imagePath);
+        Image image = new Image("file:///"+imagePath);
         Image.setFitHeight(114);
         Image.setFitWidth(114);
         Image.setImage(image);

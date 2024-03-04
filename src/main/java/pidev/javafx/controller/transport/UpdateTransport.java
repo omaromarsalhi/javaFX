@@ -93,7 +93,7 @@ public class UpdateTransport implements Initializable {
         Depart.setValue(loadedTransport.getDepart());
         Arrive.setValue(loadedTransport.getArivee());
         BoxTypeVehicule.setValue(loadedTransport.getType_vehicule());
-        javafx.scene.image.Image image = new Image(loadedTransport.getVehicule_Image());
+        javafx.scene.image.Image image = new Image("file:///"+loadedTransport.getVehicule_Image());
         Image.setFitHeight(114);
         Image.setFitWidth(114);
         Image.setImage(image);

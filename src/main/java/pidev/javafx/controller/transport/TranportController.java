@@ -187,8 +187,8 @@ Transport t;
                      if (empty || imagePath == null) {
                          setGraphic(null);
                      } else {
-                         // Set the image for the ImageView
-                         Image image = new Image(imagePath);
+//                          Set the image for the ImageView
+                         Image image = new Image("file:///"+imagePath);
                          imageView.setImage(image);
                          imageView.setStyle(    "-fx-background-radius: 50%;  "  );
                          imageView.getStyleClass().add("rounded-image");
