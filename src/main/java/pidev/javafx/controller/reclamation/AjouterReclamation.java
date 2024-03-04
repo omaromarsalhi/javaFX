@@ -1,7 +1,6 @@
 package pidev.javafx.controller.reclamation;
 
-import com.google.cloud.vision.v1.*;
-import com.google.protobuf.ByteString;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +20,8 @@ import pidev.javafx.crud.reclamation.DataSource;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.reclamation.Reclamation;
 
-import java.io.FileInputStream;
+import javax.sound.sampled.*;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -32,8 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
-
 
 public class AjouterReclamation {
 
@@ -206,46 +204,80 @@ public class AjouterReclamation {
             Image.setFitHeight(114);
             Image.setFitWidth(114);
             Image.setImage(image);
-           // analyzeImage(imagePath);
+           // analyzeImageWithOpenAIVision(selectedFile);
+
+            // analyzeImage(imagePath);
         }
     }
-    private static final String API_KEY = "";
+    private TargetDataLine line;
+    private File wavFile;
 
-    public void analyzeImage(String imagePath) {
-        try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
-            ByteString imgBytes = ByteString.readFrom(new FileInputStream(imagePath));
-            com.google.cloud.vision.v1.Image img = com.google.cloud.vision.v1.Image.newBuilder().setContent(imgBytes).build();
-            List<Feature> featureList = new ArrayList<>();
-            featureList.add(Feature.newBuilder().setType(Feature.Type.TEXT_DETECTION).build());
-            featureList.add(Feature.newBuilder().setType(Feature.Type.FACE_DETECTION).build());
-            featureList.add(Feature.newBuilder().setType(Feature.Type.WEB_DETECTION).build());
-            AnnotateImageRequest request = AnnotateImageRequest.newBuilder()
-                    .setImage(img)
-                    .addAllFeatures(featureList)
-                    .build();
-            List<AnnotateImageRequest> requestList = new ArrayList<>();
-            requestList.add(request);
+    public void VoiceRecorder(String filePath) {
+        this.wavFile = new File(filePath);
+    }
+    public void startRecording() {
+        try {
+            AudioFormat format = getAudioFormat();
+            DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 
-            BatchAnnotateImagesRequest batchRequest = BatchAnnotateImagesRequest.newBuilder()
-                    .addAllRequests(requestList)
-                    .build();
-
-            BatchAnnotateImagesResponse batchResponse = vision.batchAnnotateImages(batchRequest);
-
-            for (AnnotateImageResponse response : batchResponse.getResponsesList()) {
-                for (EntityAnnotation textAnnotation : response.getTextAnnotationsList()) {
-                    System.out.println("Texte détecté : " + textAnnotation.getDescription());
-                }
-
-                for (FaceAnnotation locationInfo : response.getFaceAnnotationsList()) {
-                    System.out.println("Visage détecté à la position : " + locationInfo.getBoundingPoly());
-                }
+            if (!AudioSystem.isLineSupported(info)) {
+                System.out.println("Error: Line not supported");
+                System.exit(0);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            line = (TargetDataLine) AudioSystem.getLine(info);
+            line.open(format);
+            line.start();
+
+            System.out.println("Recording started...");
+            AudioInputStream ais = new AudioInputStream(line);
+            AudioSystem.write(ais, AudioFileFormat.Type.WAVE, wavFile);
+        } catch (LineUnavailableException | IOException ex) {
+            ex.printStackTrace();
         }
     }
 
+    public void stopRecording() {
+        line.stop();
+        line.close();
+        System.out.println("Recording finished. Saved to: " + wavFile.getAbsolutePath());
+    }
+
+    private AudioFormat getAudioFormat() {
+        float sampleRate = 16000;
+        int sampleSizeInBits = 8;
+        int channels = 2;
+        boolean signed = true;
+        boolean bigEndian = true;
+        return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
+    }
+
+
+
+//    private static final String OPENAI_API_KEY = "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";
+//    private static final String OPENAI_API_URL = "https://api.openai.com/v1/engines/gpt-4-vision-preview/completions";
+//
+//    public void analyzeImageWithOpenAIVision(File file) {
+//        try {
+//            byte[] fileContent = Files.readAllBytes(file.toPath());
+//            String encodedString = Base64.getEncoder().encodeToString(fileContent);
+//
+//            HttpClient client = HttpClient.newHttpClient();
+//            HttpRequest request = HttpRequest.newBuilder()
+//                    .uri(URI.create(OPENAI_API_URL))
+//                    .header("Authorization", "Bearer " + OPENAI_API_KEY)
+//                    .header("Content-Type", "application/json")
+//                    .POST(HttpRequest.BodyPublishers.ofString("{\"image\": \"" + encodedString + "\"}"))
+//                    .build();
+//
+//            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+//
+//            System.out.println(response.body());
+//
+//        } catch (IOException | InterruptedException ex) {
+//            ex.printStackTrace();
+//        }
+//    }
 
 
 }

@@ -105,7 +105,7 @@
                <children>
                       <Label prefHeight="30.0" prefWidth="276.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Recent Reclamation" />
                   <Separator prefHeight="6.0" prefWidth="390.0" visible="false" />
-                      <Button style="-fx-background-color: #0078D7; -fx-text-fill: white; -fx-font-size: 14;" text="Video" />
+                   <Button fx:id="recordButton" text="Start Recording" onAction="#handleRecordButton" />
                </children>
             </HBox>
             </VBox>

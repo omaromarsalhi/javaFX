@@ -1,7 +1,17 @@
 package pidev.javafx.controller.reclamation;
+//import com.google.cloud.vision.v1.*;
+//import com.google.protobuf.ByteString;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.aspose.imaging.internal.Exceptions.IO.IOException;
+import com.aspose.imaging.memorymanagement.Configuration;
 import com.itextpdf.text.*;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,12 +22,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -31,7 +36,23 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Objects;
+//////////////////////////////////
+import com.assemblyai.api.RealtimeTranscriber;
+
+import com.assemblyai.api.AssemblyAI;
+import com.assemblyai.api.resources.transcripts.types.*;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.TargetDataLine;
+
+import static java.lang.Thread.interrupted;
 
 public class Menu {
     @FXML
@@ -257,12 +278,13 @@ public class Menu {
     }
     public void showReponse() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reponse/showuser_modife.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/reclamation/reponse.fxml"));
             Parent root = (Parent) fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Popup Window");
             stage.setScene(new Scene(root));
+
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -271,4 +293,122 @@ public class Menu {
         }
     }
 
+
+
+    public void handleRecordButton(ActionEvent actionEvent) throws Exception {
+        //streamingMicRecognize();
+//        try {
+////            SpeachToText speachToText = new SpeachToText();
+////            speachToText.streamingMicRecognize();
+////
+////            String res= speachToText.getResult();
+////
+////            System.out.println("final string: " +res);
+////            desciption.setText(res);
+//            try {
+//                // Replace this with the command to start your other Java application
+////                String javaApp = "C:/Users/Public/Documents/PiDevPersonal/test/target/test-1.0-SNAPSHOT.jar";
+////                ProcessBuilder processBuilder = new ProcessBuilder(javaApp.split(" "));
+////                processBuilder.start();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+//// this for translate speach to text
+//
+//    private void transcribe() throws Exception {
+//        Thread thread = new Thread(() -> {
+//            try {
+//                RealtimeTranscriber realtimeTranscriber = RealtimeTranscriber.builder()
+//                        .apiKey("412397bf46b04102b43016cfece06506" )
+//                        .sampleRate(16_000)
+//                        .onSessionBegins(sessionBegins -> System.out.println(
+//                                "Session opened with ID: " + sessionBegins.getSessionId()))
+//                        .onPartialTranscript(transcript -> {
+//                            if (!transcript.getText().isEmpty())
+//                                System.out.println("Partial: " + transcript.getText());
+//                        })
+//                        .onFinalTranscript(transcript -> System.out.println("Final: " + transcript.getText()))
+//                        .onError(err -> System.out.println("Error: " + err.getMessage()))
+//                        .build();
+//
+//                System.out.println("Connecting to real-time transcript service");
+//                realtimeTranscriber.connect();
+//
+//                System.out.println("Starting recording");
+//                AudioFormat format = new AudioFormat(3200, 16, 2, true, true);
+//                // `line` is your microphone
+//
+//                TargetDataLine line = AudioSystem.getTargetDataLine(format);
+//                line.open(format);
+//
+//                byte[] data = new byte[line.getBufferSize()];
+//                line.start();
+//                System.out.println("Setup complete");
+//
+//                while (!interrupted()) {
+//                    // Read the next chunk of data from the TargetDataLine.
+//                    System.out.println("Reading lines: " +data.toString());
+//                    line.read(data, 0, data.length);
+//                    realtimeTranscriber.sendAudio(data);
+//                }
+//
+//                System.out.println("Stopping recording");
+//                line.close();
+//
+//                System.out.println("Closing real-time transcript connection");
+//                realtimeTranscriber.close();
+//            } catch (LineUnavailableException e) {
+//                System.out.println("Error here happening");
+//                throw new RuntimeException(e);
+//            }
+//        });
+//        thread.start();
+//
+//        System.out.println("Press ENTER key to stop...");
+//        System.in.read();
+//        thread.interrupt();
+//
+//    }
+//public static void streamingMicRecognize() throws Exception {
+//
+//    try (ImageAnnotatorClient vision = ImageAnnotatorClient.create()) {
+//
+//        // The path to the image file to annotate
+//        String fileName = "C:/Users/khali/Downloads/chall.png";
+//
+//        // Reads the image file into memory
+//        Path path = Paths.get(fileName);
+//        byte[] data = Files.readAllBytes(path);
+//        ByteString imgBytes = ByteString.copyFrom(data);
+//
+//        // Builds the image annotation request
+//        List<AnnotateImageRequest> requests = new ArrayList<>();
+//        com.google.cloud.vision.v1.Image img = com.google.cloud.vision.v1.Image.newBuilder().setContent(imgBytes).build();
+//        Feature feat = Feature.newBuilder().setType(Feature.Type.LABEL_DETECTION).build();
+//        AnnotateImageRequest request =
+//                AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+//        requests.add(request);
+//
+//        // Performs label detection on the image file
+//        BatchAnnotateImagesResponse response = vision.batchAnnotateImages(requests);
+//        List<AnnotateImageResponse> responses = response.getResponsesList();
+//
+//        for (AnnotateImageResponse res : responses) {
+//            if (res.hasError()) {
+//                System.out.format("Error: %s%n", res.getError().getMessage());
+//                return;
+//            }
+//
+//            for (EntityAnnotation annotation : res.getLabelAnnotationsList()) {
+//                annotation
+//                        .getAllFields()
+//                        .forEach((k, v) -> System.out.format("%s : %s%n", k, v.toString()));
+//            }
+//        }
+//    }
 }
