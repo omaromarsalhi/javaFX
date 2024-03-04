@@ -27,6 +27,7 @@ public class BlogService  {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("ya tini asba ala sormi");
     }
 
 
@@ -144,26 +145,6 @@ public class BlogService  {
             System.out.println(e.getMessage());
         }
         return resultat;
-    }
-
-    public Account getComte (int id){
-        Connection cnx = ConnectionDB.getInstance().getCnx();
-        String req = "SELECT * FROM `compte` WHERE id=?";
-        try {
-            PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setInt(1, id);
-            ResultSet res = ps.executeQuery();
-            if (res.next()) {
-                int idc = res.getInt(1);
-                String nom = res.getString(2);
-                String img = res.getString(3);
-                boolean verified = res.getBoolean(4);
-                return new Account(idc, nom, img, verified);
-            }
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
     }
 
     public void modifierNombreReactions(int idPost, int nouveauNbReactions, Timestamp date) {

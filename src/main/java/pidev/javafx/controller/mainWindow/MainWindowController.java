@@ -73,29 +73,34 @@ public class MainWindowController implements Initializable {
 //    btns that changes the scenes
     @FXML
     public void onBlogBtnClicked(ActionEvent event) throws IOException {
-        AnchorPane stations = null;
+        centerContainer.getChildren().clear();
+        AnchorPane blog = null;
         try {
-            stations = FXMLLoader.load( getClass().getResource( "/fxml/blog/blog.fxml" ) );
+            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/blog.fxml" ) );
+            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/post.fxml" ) );
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainBorderPane.setCenter(stations);
+        centerContainer.getChildren().add(blog);
     }
 
     @FXML
     public void onTransportBtnClicked(ActionEvent event){
+        centerContainer.getChildren().clear();
         AnchorPane stations = null;
         try {
             stations = FXMLLoader.load( getClass().getResource( "/fxml/Transport/Gui_Station/TransportClient.fxml" ) );
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainBorderPane.setCenter(stations);
+//        mainBorderPane.setCenter(stations);
+        centerContainer.getChildren().add(stations);
     }
 
 
     @FXML
     public void onStationsBtnClicked(ActionEvent event){
+        centerContainer.getChildren().clear();
         AnchorPane stations = null;
         try {
             stations = FXMLLoader.load( getClass().getResource( "/fxml/Transport/Gui_Station/TransportClient.fxml" ) );

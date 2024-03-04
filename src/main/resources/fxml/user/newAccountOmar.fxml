@@ -21,7 +21,7 @@
    <children>
       <VBox fx:id="firstinterface" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: transparent;">
          <children>
-            <HBox fx:id="toolBar" alignment="CENTER" prefHeight="74.0" prefWidth="1040.0" spacing="170.0" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/toolBarStyle.css">
+            <HBox fx:id="toolBar" alignment="CENTER" prefHeight="74.0" prefWidth="1040.0" spacing="170.0">
                <children>
                   <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="534.0">
                      <menus>
@@ -149,14 +149,14 @@
                                           </AnchorPane>
                                        </children>
                                     </HBox>
-                                    <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="490.0" prefWidth="590.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent; -fx-background: #D9D9D9;" vbarPolicy="NEVER">
-                                       <content>
-                                          <AnchorPane fx:id="blogSection" prefHeight="470.0" prefWidth="590.0" style="-fx-background-color: #D9D9D9;" />
-                                       </content>
+                                    <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="488.0" prefWidth="590.0" style="-fx-background: transparent;" vbarPolicy="NEVER">
+                                      <content>
+                                          <VBox fx:id="blogSection" alignment="CENTER" prefHeight="486.0" prefWidth="585.0" style="-fx-background-color: transparent;" />
+                                      </content>
                                     </ScrollPane>
                                  </children>
                               </VBox>
-                              <ScrollPane hbarPolicy="NEVER" prefHeight="518.0" prefWidth="410.0" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" vbarPolicy="NEVER">
+                              <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" prefHeight="518.0" prefWidth="410.0" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" vbarPolicy="NEVER">
                                  <content>
                                     <VBox fx:id="reclamsSection" alignment="CENTER" prefHeight="564.0" prefWidth="394.0" spacing="10.0" style="-fx-background-radius: 15;" stylesheets="@../../style/reclamation/styleReclamation.css">
                                        <padding>
@@ -191,6 +191,6 @@
             <URL value="@../../style/marketPlace/scrollBarStlyle.css" />
          </stylesheets>
       </VBox>
-      <VBox fx:id="secondInterface" alignment="CENTER" fillWidth="false" prefHeight="552.0" prefWidth="406.0" />
+      <VBox fx:id="secondInterface" alignment="CENTER" prefHeight="552.0" prefWidth="406.0" />
    </children>
 </StackPane>

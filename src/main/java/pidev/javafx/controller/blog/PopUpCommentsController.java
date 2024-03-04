@@ -18,12 +18,15 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import pidev.javafx.crud.user.ServiceUser;
 import pidev.javafx.model.blog.Account;
 import pidev.javafx.model.blog.Comment;
 import pidev.javafx.model.blog.Post;
 import pidev.javafx.crud.blog.BlogService;
 import pidev.javafx.crud.blog.CommentService;
 import pidev.javafx.crud.blog.ReactionService;
+import pidev.javafx.model.user.Role;
+import pidev.javafx.model.user.User;
 import pidev.javafx.tools.UserController;
 
 import java.io.IOException;
@@ -109,7 +112,7 @@ public class PopUpCommentsController implements Initializable {
         });
         ConectedAccount = UserController.getInstance().getCurrentUser().getId();
         BlogService blogService = new BlogService();
-        Image img1 = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getPhotos() );
+        Image img1 = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getPhotos());
         ProfileImg.setImage(img1);
         comments = new ArrayList<>(getComments());
         for (Comment comment : comments) {
@@ -131,8 +134,11 @@ public class PopUpCommentsController implements Initializable {
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(comment.getDate());
         commentController.getDate().setText(formattedDate);
-        if (comments.contains(comment)) { commentContainer.getChildren().add(vBox); }
-        else { commentContainer.getChildren().add(5, vBox); }
+        if (comments.contains(comment)) {
+            commentContainer.getChildren().add(vBox);
+        } else {
+            commentContainer.getChildren().add(5, vBox);
+        }
 
         if (comment.getIdCompte() == ConectedAccount) {
             commentController.getSupprimerBtn().setVisible(true);
@@ -152,38 +158,6 @@ public class PopUpCommentsController implements Initializable {
             commentContainer.getChildren().remove(vBox);
         });
     }
-
-    /*private void loadCommentAbove(Comment comment) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/Comment.fxml"));
-        VBox vBox = fxmlLoader.load();
-        CommentController commentController = fxmlLoader.getController();
-        //postController.setIdPost(post.getId());
-        commentController.setData(comment);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
-        String formattedDate = dateFormat.format(comment.getDate());
-        commentController.getDate().setText(formattedDate);
-        commentContainer.getChildren().add(5, vBox);
-
-        if (comment.getIdCompte() == ConectedAccount) {
-            commentController.getSupprimerBtn().setVisible(true);
-            commentController.getModifierBtn().setVisible(true);
-        } else {
-            commentController.getSupprimerBtn().setVisible(false);
-            commentController.getModifierBtn().setVisible(false);
-        }
-
-        commentController.getSupprimerBtn().setOnMouseClicked(mouseEvent -> {
-            commentController.supprimerComment(comment.getId());
-            commentContainer.getChildren().remove(vBox);
-        });
-
-        commentController.getSendBtn().setOnMouseClicked(mouseEvent -> {
-            modiferComment(commentController, comment.getId());
-            commentContainer.getChildren().remove(vBox);
-        });
-    }*/
 
     public List<Comment> getComments() {
         CommentService cs = new CommentService();
@@ -192,17 +166,13 @@ public class PopUpCommentsController implements Initializable {
 
     public void getData(Post post) {
         BlogService bs = new BlogService();
-        Account account = bs.getComte(post.getIdCompte());
-        commentName.setText("Publication de " + account.getName());
+        ServiceUser serviceUser = new ServiceUser();
+        User user = serviceUser.getUserById(post.getIdCompte());
+        commentName.setText("Publication de " + user.getFirstname() + " " + user.getLastname());
         Image img;
-        Image img1 = new Image(getClass().getResourceAsStream(account.getProfileImg()));
-        CommentProp.setImage(img1);
-        username.setText(account.getName());
-        if (account.isVerified()) {
-            imgVerified.setVisible(true);
-        } else {
-            imgVerified.setVisible(false);
-        }
+        CommentProp.setImage(new Image("file:src/main/resources/" + user.getPhotos() ));
+        username.setText(user.getFirstname() + " " + user.getLastname());
+        imgVerified.setVisible(user.getRole() != Role.Citoyen);
 
         id = post.getId();
         if (post.getCaption() != null && !post.getCaption().isEmpty()) {
@@ -230,7 +200,7 @@ public class PopUpCommentsController implements Initializable {
             imgPost.setImage(img);
 
             rightArrow.setOnMouseClicked(mouseEvent -> {
-                currentImgToShow ++;
+                currentImgToShow++;
                 if (currentImgToShow > 0) {
                     leftArrow.setVisible(true);
                     leftArrow.setManaged(true);
@@ -243,7 +213,7 @@ public class PopUpCommentsController implements Initializable {
                 }
             });
             leftArrow.setOnMouseClicked(mouseEvent -> {
-                currentImgToShow --;
+                currentImgToShow--;
                 if (currentImgToShow == 0) {
                     leftArrow.setVisible(false);
                 }
@@ -281,8 +251,11 @@ public class PopUpCommentsController implements Initializable {
 
             cs.ajouterComment(comment);
             comment.setId(cs.getLastId());
-            try { loadComment(comment); }
-            catch (IOException e) { throw new RuntimeException(e); }
+            try {
+                loadComment(comment);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             comments.add(0, comment);
             CommentText.setText("");
         }
@@ -298,8 +271,11 @@ public class PopUpCommentsController implements Initializable {
             Comment oldComment = optionalPost.get();
             comments.remove(oldComment);
             Comment commentUpdeted = cs.getOneById(id);
-            try { loadComment(commentUpdeted); }
-            catch (IOException e) { throw new RuntimeException(e); }
+            try {
+                loadComment(commentUpdeted);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             comments.add(0, commentUpdeted);
         } else {
             System.out.println("Aucun comment trouvé avec l'ID : " + id);

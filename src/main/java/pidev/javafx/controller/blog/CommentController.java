@@ -6,10 +6,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import pidev.javafx.crud.user.ServiceUser;
 import pidev.javafx.model.blog.Account;
 import pidev.javafx.model.blog.Comment;
 import pidev.javafx.crud.blog.BlogService;
 import pidev.javafx.crud.blog.CommentService;
+import pidev.javafx.model.user.User;
+import pidev.javafx.tools.UserController;
 
 import java.sql.Timestamp;
 
@@ -27,6 +30,8 @@ public class CommentController {
     private ImageView AccImg;
     @FXML
     private Label ModifierBtn;
+    @FXML
+    private Label userName;
 
     public Label getDate() {
         return date;
@@ -43,12 +48,17 @@ public class CommentController {
 
     public void setData(Comment comment) {
         BlogService blogService = new BlogService();
-        Account compte = blogService.getComte(comment.getIdCompte());
+        ServiceUser serviceUser = new ServiceUser();
+        User user = serviceUser.getUserById(comment.getIdCompte());
         caption.setText(comment.getCaption());
         caption.setEditable(false);
         sendBtn.setVisible(false);
-        Image img = new Image(getClass().getResourceAsStream(compte.getProfileImg()));
+
+        userName.setText(user.getFirstname() + " " + user.getLastname());
+
+        Image img = new Image("file:src/main/resources/" + user.getPhotos() );
         AccImg.setImage(img);
+
     }
 
     public void supprimerComment(int id) {

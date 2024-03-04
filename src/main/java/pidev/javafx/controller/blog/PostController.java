@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
+import pidev.javafx.crud.user.ServiceUser;
+import pidev.javafx.model.user.Role;
+import pidev.javafx.model.user.User;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.model.blog.Account;
 import pidev.javafx.model.blog.Post;
@@ -22,6 +25,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import pidev.javafx.crud.blog.BlogService;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.lang.reflect.Field;
 import java.net.URL;
@@ -200,11 +204,14 @@ public class PostController extends VBox implements Initializable {
     public boolean onLikeContainerMouseReleased() {
         if (System.currentTimeMillis() - startTime > 250) {
             if (!reactionsContainer.isVisible()) {
-                reactionsContainer.setVisible(true);
+//                reactionsContainer.setVisible(true);
                 iconLikeContainer.setVisible(false);
+                MyTools.getInstance().showAnimationOmar(reactionsContainer,1 );
             } else {
-                reactionsContainer.setVisible(false);
+//                reactionsContainer.setVisible(false);
                 iconLikeContainer.setVisible(true);
+                MyTools.getInstance().showAnimationOmar(reactionsContainer,0 );
+                System.out.println("salem");
             }
             return false;
         } else {
@@ -306,19 +313,15 @@ public class PostController extends VBox implements Initializable {
         this.post = post;
         Image img;
         BlogService bs = new BlogService();
-        Account account = bs.getComte(idCompte);
-        //lezem nbadalha
-        //img = new Image(getClass().getResourceAsStream(account.getProfileImg()));
-        //imgProfile.setImage(img);
-        //img = new Image("file:/src/resources"+UserController.getInstance().getCurrentUser().getPhotos());
-        //imgProfile.setImage(img);
+        ServiceUser serviceUser = new ServiceUser();
+        User user = serviceUser.getUserById(idCompte);
 
-        //username.setText(UserController.getInstance().getCurrentUser().getFirstname());
-        /*if (account.isVerified()) {
-            imgVerified.setVisible(true);
-        } else {
-            imgVerified.setVisible(false);
-        }*/
+        //path mtaa latifa lezm tetbadel
+
+        imgProfile.setImage(new Image("file:src/main/resources/" + user.getPhotos() ));
+
+        username.setText(user.getFirstname() + " " + user.getLastname());
+        imgVerified.setVisible(user.getRole() != Role.Citoyen);
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("EE dd MMM yyyy HH:mm");
         String formattedDate = dateFormat.format(post.getDate());

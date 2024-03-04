@@ -201,12 +201,12 @@ public class MyTools {
     }
 
     public void showAnimation(Node child) {
-        child.setVisible( false );
+        child.setVisible(false );
         ScaleTransition scaleTransition = new ScaleTransition( Duration.seconds( 0.1), child );
-        scaleTransition.setToX( 0 );
+        scaleTransition.setToX( 0);
         scaleTransition.setToY( 0 );
         scaleTransition.setCycleCount( 1 );
-        scaleTransition.setAutoReverse( false );
+        scaleTransition.setAutoReverse(false);
         scaleTransition.play();
         scaleTransition.setOnFinished( event -> {
             child.setVisible( true );
@@ -215,6 +215,21 @@ public class MyTools {
             scaleTransition.setToY( 1 );
             scaleTransition.play();
         } );
+    }
+
+    public void showAnimationOmar(Node child,int ttoWhat) {
+
+        ScaleTransition scaleTransition = new ScaleTransition( Duration.seconds( 0.6), child );
+        scaleTransition.setToX( ttoWhat );
+        scaleTransition.setToY( ttoWhat );
+        scaleTransition.setCycleCount( 1 );
+        scaleTransition.setAutoReverse(false);
+        if(ttoWhat==1)
+            child.setVisible(true);
+        else{
+            scaleTransition.setOnFinished( event ->  child.setVisible(false) );
+        }
+        scaleTransition.play();
     }
 
 

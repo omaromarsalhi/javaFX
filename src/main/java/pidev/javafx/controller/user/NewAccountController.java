@@ -3,6 +3,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.blog.Post;
 import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.tools.UserController;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.tools.marketPlace.MyTools;
 
@@ -33,7 +35,7 @@ public class NewAccountController implements Initializable {
     @FXML
     private AnchorPane accountSection;
     @FXML
-    private AnchorPane blogSection;
+    private VBox blogSection;
     @FXML
     private MenuBar menuBar;
     @FXML
@@ -65,16 +67,18 @@ public class NewAccountController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         secondInterface.setVisible( false );
-        AnchorPane blog = null;
+        VBox blog = null;
 //        AnchorPane account = null;
         HBox reclamations = null;
-//        try {
-//            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/blog.fxml" )  );
-////            account = FXMLLoader.load( getClass().getResource( "/fxml/blog/blog.fxml" )  );
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-//        blogSection.getChildren().add(blog);
+        try {
+            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/resizedBlog.fxml" )  );
+            scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);
+            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/resizedPost.fxml" ) );
+
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        blogSection.getChildren().add(blog);
         for (Reclamation reclamationData: ServiceReclamation.getInstance().getAll()){
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
@@ -128,9 +132,7 @@ public class NewAccountController implements Initializable {
 
         menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
 
-        editDetails.fire();
-
-
+//        editDetails.fire();
     }
 
 

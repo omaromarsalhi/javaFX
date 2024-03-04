@@ -10,6 +10,11 @@
 
 <VBox style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.blog.CommentController">
    <children>
+      <Label fx:id="userName" text="Label" textFill="#868b91">
+         <VBox.margin>
+            <Insets left="40.0" />
+         </VBox.margin>
+      </Label>
       <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="444.0" spacing="8.0" style="-fx-background-color: transparent;" stylesheets="@../../Style/blog/comment.css">
          <children>
             <ImageView fx:id="AccImg" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />

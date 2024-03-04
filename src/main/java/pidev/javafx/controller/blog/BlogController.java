@@ -43,6 +43,9 @@ import java.util.*;
 
 import org.json.JSONObject;
 import pidev.javafx.tools.UserController;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 
 public class BlogController implements Initializable {
@@ -87,6 +90,7 @@ public class BlogController implements Initializable {
     String SourceString;
     List<String> imagesToShow;
     int currentImgToShow = 0;
+    private String pathPosts;
     final String destinationString = "src/main/resources/blogImgPosts";
 
     public TextField getSearchBar() {
@@ -107,8 +111,15 @@ public class BlogController implements Initializable {
         BlogService blogService = new BlogService();
         Image img = new Image("file:src/main/resources/" + UserController.getInstance().getCurrentUser().getPhotos() );
         ProfileImg.setImage(img);
+        EventBus.getInstance().subscribe( "loadPosts",this::setPathPosts );
+    }
+
+    public void setPathPosts(CustomMouseEvent<String> customMouseEvent){
+        this.pathPosts=customMouseEvent.getEventData();
         posts = new ArrayList<>(getPost());
+
         for (Post post : posts) {
+            System.out.println(post);
             try {
                 loadPost(post);
             } catch (IOException e) {
@@ -119,7 +130,7 @@ public class BlogController implements Initializable {
 
     public void loadPost(Post post) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/blog/post.fxml"));
+        fxmlLoader.setLocation(getClass().getResource(pathPosts));
         VBox vBox = fxmlLoader.load();
         PostController postController = fxmlLoader.getController();
         postController.setIdPost(post.getId());
@@ -130,6 +141,7 @@ public class BlogController implements Initializable {
             postsContainer.getChildren().add(vBox);
         } else {
             postsContainer.getChildren().add(2, vBox);
+            MyTools.getInstance().showAnimation(vBox);
         }
 
 
@@ -197,81 +209,6 @@ public class BlogController implements Initializable {
             }
         });
     }
-
-    /*public void loadPostAbove(Post post) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
-        VBox vBox = fxmlLoader.load();
-        PostController postController = fxmlLoader.getController();
-        postController.setIdPost(post.getId());
-        postController.setData(post, post.getIdCompte());
-        postsContainer.getChildren().add(2, vBox);
-
-        if (post.getIdCompte() == ConnectedAccount) {
-            postController.getMenuBtnPost().setVisible(true);
-        } else {
-            postController.getMenuBtnPost().setVisible(false);
-        }
-
-        postController.getSupprimerPostBtn().setOnAction(actionEvent -> {
-            supprimerPost(post.getId(), postController, vBox);
-        });
-
-        postController.getModifierPost().setOnAction(actionEvent -> {
-            afficherPopupModifier(post, postsContainer, vBox);
-        });
-
-        postController.getImgAngry().setOnMouseClicked(mouseEvent -> {
-            postController.onAngryClicked();
-            addOrUpdateReaction("Angry", post, ConnectedAccount, postController);
-        });
-        postController.getImgHaha().setOnMouseClicked(mouseEvent -> {
-            postController.onHahaClicked();
-            addOrUpdateReaction("Haha", post, ConnectedAccount, postController);
-        });
-        postController.getImgLike().setOnMouseClicked(mouseEvent -> {
-            postController.onLikePressed();
-            addOrUpdateReaction("Like", post, ConnectedAccount, postController);
-        });
-        postController.getImgSad().setOnMouseClicked(mouseEvent -> {
-            postController.onSadClicked();
-            addOrUpdateReaction("Sad", post, ConnectedAccount, postController);
-        });
-        postController.getLikeContainer().setOnMouseReleased(mouseEvent -> {
-            boolean testTimer = postController.onLikeContainerMouseReleased();
-            if (testTimer) {
-                addOrDeleteLike(post, postController, ConnectedAccount);
-            }
-        });
-        setReaction(postController, post, ConnectedAccount);
-
-        postController.getCommentContainer().setOnMouseClicked(mouseEvent -> {
-            afficherPopUpComments(postController, post);
-        });
-        setNbComments(postController, post.getId());
-
-        postController.getTranslateBtn().setOnAction(actionEvent -> {
-            String originalText = postController.getCaption().getText();
-            if(!postController.isTranslated()) {
-                try {
-                    String translatedText = translateText(originalText, "fr", "ar");
-                    postController.getCaption().setText(translatedText);
-                    if (translatedText.equals(originalText)) {
-                        postController.getTranslateBtn().setText("Non disponible");
-                    }else {
-                        postController.getTranslateBtn().setText("Version Original");
-                    }
-                    postController.setTranslated(true);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }else {
-                postController.getCaption().setText(post.getCaption());
-                postController.getTranslateBtn().setText("Traduire");
-                postController.setTranslated(false);
-            }
-        });
-    }*/
 
     public List<Post> getPost() {
         BlogService bs = new BlogService();
@@ -394,7 +331,6 @@ public class BlogController implements Initializable {
             if (!images.isEmpty()) {
                 for (String image : images) {
                     System.out.println(image);
-                    System.out.println("asbaaaaaaaaa");
                     try {
                         Path sourcePath = Paths.get(image);
                         if (image.endsWith(".png")) {
@@ -448,7 +384,8 @@ public class BlogController implements Initializable {
                 if (optionalPost.isPresent()) {
                     Post p = optionalPost.get();
                     posts.remove(p);
-                    postsContainer.getChildren().remove(vBox);
+//                    postsContainer.getChildren().remove(vBox);
+                    MyTools.getInstance().deleteAnimation( vBox,postsContainer );
                 } else {
                     System.out.println("Aucun objet trouvé avec l'ID : " + idPost);
                 }

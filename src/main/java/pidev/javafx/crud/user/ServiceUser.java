@@ -36,6 +36,37 @@ public class ServiceUser implements IserviceUser<User> {
         }
     }
 
+    public User getUserById (int idUser) {
+        Connection cnx = ConnectionDB.getInstance().getCnx();
+        String req = "SELECT * FROM user WHERE idUser=?";
+        User user = null;
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, idUser);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String firstname = rs.getString("firstName");
+                String lastName = rs.getString("lastname");
+                int age = rs.getInt("age");
+                int num = rs.getInt("num");
+                String adresse = rs.getString("adresse");
+                String dob = rs.getString("dob");
+                String cin = rs.getString("cin");
+                String role = rs.getString("role");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                String photos = rs.getString("photos");
+                String gender = rs.getString("gender");
+                String  email = rs.getString("email");
+                user = new User(firstname, email, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
+                System.out.println(user);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return user;
+    }
+
 
 
     public void ajouteremploye(User user) {

@@ -19,6 +19,7 @@ import pidev.javafx.model.blog.Account;
 import pidev.javafx.model.blog.Post;
 import pidev.javafx.crud.blog.BlogService;
 import pidev.javafx.model.user.User;
+import pidev.javafx.tools.UserController;
 
 import java.io.File;
 import java.io.IOException;
@@ -173,12 +174,12 @@ public class PopUpModifierPostController implements Initializable {
     public void getData(Post post) {
         BlogService bs = new BlogService();
         ServiceUser serviceUser = new ServiceUser();
-        String pathImg = serviceUser.getImgUser( idCompteUpdate );
+        User user = serviceUser.getUserById(post.getIdCompte());
+
+
+        AccountImg.setImage(new Image("file:src/main/resources/" + user.getPhotos() ));
+
         Image img;
-
-//        Image img1 = new Image("fole:"+account.getProfileImg()));
-//        AccountImg.setImage(img1);
-
         idPostUpadte = post.getId();
         idCompteUpdate = post.getIdCompte();
         caption.setText(post.getCaption());
