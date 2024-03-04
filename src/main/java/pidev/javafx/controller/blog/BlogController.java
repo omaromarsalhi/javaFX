@@ -18,6 +18,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.json.JSONException;
 import pidev.javafx.Models.Account;
+import pidev.javafx.Models.News;
 import pidev.javafx.Models.Post;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +43,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import org.json.JSONObject;
+import pidev.javafx.Utils.NewsDataApi;
 
 
 public class BlogController implements Initializable {
@@ -94,6 +96,7 @@ public class BlogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadNews();
         ConnectedAccount = 5;
         postPreviewImg.setVisible(false);
         postPreviewImg.setManaged(false);
@@ -807,5 +810,11 @@ public class BlogController implements Initializable {
             // Gérer les erreurs de parsing JSON
             return "Erreur lors de l'analyse de la réponse JSON : " + e.getMessage();
         }
+    }
+
+    public void loadNews () {
+        NewsDataApi newsDataApi = new NewsDataApi();
+        List<News> newsSex = newsDataApi.getNews();
+        System.out.println(newsSex);
     }
 }

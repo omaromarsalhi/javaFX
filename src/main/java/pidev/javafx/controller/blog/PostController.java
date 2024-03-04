@@ -95,6 +95,8 @@ public class PostController extends VBox implements Initializable {
     private ImageView leftArrow;
     @FXML
     private HBox imageContainer;
+    @FXML
+    private ImageView imgMenuButton;
 
     private Post post;
     private int idPost;
@@ -399,5 +401,17 @@ public class PostController extends VBox implements Initializable {
 
             fadeInTransition.play();
         });
+    }
+
+    public void resizePost () {
+        postContainer.setPrefHeight(560);
+        postContainer.setPrefHeight(450);
+        imgPost.setFitHeight(396);
+        imgPost.setFitWidth(208);
+        menuBtnPost.setMinHeight(30);
+        menuBtnPost.setMinHeight(30);
+        imgMenuButton.setFitWidth(20);
+        imgMenuButton.setFitHeight(20);
+
     }
 }
