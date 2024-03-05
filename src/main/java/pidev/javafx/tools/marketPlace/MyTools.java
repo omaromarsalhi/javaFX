@@ -4,7 +4,10 @@ import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -41,6 +44,16 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 public class MyTools {
 
     private static MyTools instance;
+
+    private Label textNotif;
+    private HBox notifHbox;
+    private Label imageNotif;
+
+    public Label getTextNotif() {
+        return textNotif;
+    }
+
+
 
     private MyTools() {
     }
@@ -210,26 +223,58 @@ public class MyTools {
         scaleTransition.play();
         scaleTransition.setOnFinished( event -> {
             child.setVisible( true );
-            scaleTransition.setDuration( Duration.seconds( 0.6 ) );
+            scaleTransition.setDuration( Duration.seconds( 0.4 ) );
             scaleTransition.setToX( 1 );
             scaleTransition.setToY( 1 );
             scaleTransition.play();
         } );
     }
 
-    public void showAnimationOmar(Node child,int ttoWhat) {
+    public void showAndHideAnimation(Node child,int ttoWhat,double delay ) {
 
-        ScaleTransition scaleTransition = new ScaleTransition( Duration.seconds( 0.6), child );
+        ScaleTransition scaleTransition = new ScaleTransition( Duration.seconds( 0.4), child );
         scaleTransition.setToX( ttoWhat );
         scaleTransition.setToY( ttoWhat );
         scaleTransition.setCycleCount( 1 );
         scaleTransition.setAutoReverse(false);
+        scaleTransition.setDelay( Duration.millis( delay ) );
         if(ttoWhat==1)
             child.setVisible(true);
         else{
             scaleTransition.setOnFinished( event ->  child.setVisible(false) );
         }
         scaleTransition.play();
+    }
+
+
+
+    public void setTextNotif(Label textNotif) {
+        this.textNotif = textNotif;
+    }
+
+    public HBox getNotifHbox() {
+        return notifHbox;
+    }
+
+    public void setNotifHbox(HBox notifHbox) {
+        this.notifHbox = notifHbox;
+    }
+
+    public Label getImageNotif() {
+        return imageNotif;
+    }
+
+    public void setImageNotif(Label imageNotif) {
+        this.imageNotif = imageNotif;
+    }
+
+    public void showNotif(){
+        showAndHideAnimation( notifHbox,1,1500 );
+        Timeline timeline = new Timeline(new KeyFrame(Duration.minutes(0.3), event1 -> {
+            showAndHideAnimation( notifHbox,0,0 );
+        }) );
+        timeline.setCycleCount( Animation.INDEFINITE);
+        timeline.play();
     }
 
 

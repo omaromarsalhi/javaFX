@@ -68,7 +68,7 @@ public class ProductsHboxController implements Initializable {
             creationDate.setText( bien.getTimestamp().toString() );
             category.setText( bien.getCategorie().toString() );
             if(product.getState().equals( "verified" ))
-                stateImage.setImage(new Image( "file:src/main/resources/img/marketPlace/approve24C.png",24,24,true,true ) );
+                stateImage.setImage(new Image( "file:src/main/resources/icons/marketPlace/approve24C.png",24,24,true,true ) );
         }
     }
 
@@ -108,6 +108,29 @@ public class ProductsHboxController implements Initializable {
     @FXML
     private void onMouseExited(MouseEvent event) {
         fiveSecondsWonder.stop();
+        popup.hide();
+    }
+
+
+
+    @FXML
+    private void onStateMouseEntered(MouseEvent event) {
+        Label mainContainer=new Label("WE ARE VERIFYING THIS PRODUCT SO THAT IF IT IS COMPATIBLE OTHERWISE IT WILL BE DELETED");
+        mainContainer.setMaxWidth( 200);
+        mainContainer.setWrapText( true );
+        mainContainer.setAlignment( Pos.CENTER );
+        mainContainer.setStyle("-fx-background-color: #5f7470; -fx-border-color: #5f7470; -fx-border-width: 1px; -fx-padding: 5px; -fx-text-fill: white;" +
+                "-fx-border-radius: 10;" +
+                "-fx-background-radius: 10;");
+
+        popup.getContent().clear();
+        popup.getContent().add(mainContainer);
+        popup.show( Stage.getWindows().get(0), event.getScreenX() + 20, event.getScreenY()-30);
+    }
+
+
+    @FXML
+    private void onStateMouseExited(MouseEvent event) {
         popup.hide();
     }
 

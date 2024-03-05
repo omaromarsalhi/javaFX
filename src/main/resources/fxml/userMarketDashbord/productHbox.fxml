@@ -35,14 +35,14 @@
             <Font name="Cambria Math" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="state" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Label" wrapText="true">
+      <Label fx:id="state" alignment="CENTER" onMouseEntered="#onStateMouseEntered" onMouseExited="#onStateMouseExited" prefHeight="38.0" prefWidth="100.0" text="Label" wrapText="true">
          <font>
             <Font name="Cambria Math" size="14.0" />
          </font>
          <graphic>
             <ImageView fx:id="stateImage" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
+                  <Image url="@../../img/marketPlace/Dual%20Ball-1s-398px.gif" />
                </image>
             </ImageView>
          </graphic>

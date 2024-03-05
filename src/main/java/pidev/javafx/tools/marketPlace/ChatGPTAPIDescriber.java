@@ -8,7 +8,7 @@ import org.json.JSONObject;
 public class ChatGPTAPIDescriber {
     public static String chatGPT(String prompt) {
         String url = "https://api.openai.com/v1/chat/completions";
-        String apiKey = "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";
+        String apiKey = "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";
         String model = "gpt-3.5-turbo";
 //        String model = "gpt-3.5-turbo-instruct-0914";
 

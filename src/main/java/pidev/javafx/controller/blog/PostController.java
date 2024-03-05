@@ -206,11 +206,11 @@ public class PostController extends VBox implements Initializable {
             if (!reactionsContainer.isVisible()) {
 //                reactionsContainer.setVisible(true);
                 iconLikeContainer.setVisible(false);
-                MyTools.getInstance().showAnimationOmar(reactionsContainer,1 );
+                MyTools.getInstance().showAndHideAnimation(reactionsContainer,1 ,0);
             } else {
 //                reactionsContainer.setVisible(false);
                 iconLikeContainer.setVisible(true);
-                MyTools.getInstance().showAnimationOmar(reactionsContainer,0 );
+                MyTools.getInstance().showAndHideAnimation(reactionsContainer,0 ,0);
                 System.out.println("salem");
             }
             return false;

@@ -1,6 +1,9 @@
 package pidev.javafx.controller.userMarketDashbord;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -17,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Popup;
@@ -404,7 +408,7 @@ public class FormController implements Initializable {
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             }
             product=bien;
-            aiVerifyThread().start();
+//            aiVerifyThread().start();
             Thread thread = sleepThread(event);
             loadinPage.setVisible( true );
             thread.start();
@@ -426,7 +430,7 @@ public class FormController implements Initializable {
         Task<Void> myTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
-                Thread.sleep(2000);
+                Thread.sleep(1000);
                 return null;
             }
         };
@@ -438,6 +442,11 @@ public class FormController implements Initializable {
                 EventBus.getInstance().publish( "refreshProdContainer", event );
             EventBus.getInstance().publish( "onExitForm", event );
             loadinPage.setVisible( false );
+
+            MyTools.getInstance().getTextNotif().setText( "Prod Has Been Aded Successfuly" );
+            MyTools.getInstance().getTextNotif().setMinWidth( Region.USE_PREF_SIZE );
+            MyTools.getInstance().showNotif();
+
         });
         return new Thread(myTask);
     }
@@ -452,15 +461,15 @@ public class FormController implements Initializable {
         };
 
         myTask.setOnSucceeded( event -> {
-            String respose=ChatGPTAPIDescriber.chatGPT(myTask.getValue());
-            if(respose.toLowerCase().contains( "yes" )){
-                product.setState( "verified" );
-                CrudBien.getInstance().updateItem( product );
-            }
-            else {
-                CrudBien.getInstance().deleteItem( product.getId() );
-            }
-            EventBus.getInstance().publish( "doUpdateTabprodAfterAIverif",new CustomMouseEvent<>(product) );
+//            String respose=ChatGPTAPIDescriber.chatGPT(myTask.getValue());
+//            if(respose.toLowerCase().contains( "yes" )){
+//                product.setState( "verified" );
+//                CrudBien.getInstance().updateItem( product );
+//            }
+//            else {
+//                CrudBien.getInstance().deleteItem( product.getId() );
+//            }
+//            EventBus.getInstance().publish( "doUpdateTabprodAfterAIverif",new CustomMouseEvent<>(product) );
             System.out.println("done");
         } );
 

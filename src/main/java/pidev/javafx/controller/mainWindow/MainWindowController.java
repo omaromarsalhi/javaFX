@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 //import pidev.javafx.tools.marketPlace.DetectProperties;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 
 import java.io.IOException;
@@ -56,6 +58,13 @@ public class MainWindowController implements Initializable {
     private AnchorPane centerContainer;
     @FXML
     private ImageView accountImg;
+    @FXML
+    private HBox notifHbox;
+    @FXML
+    private Label imageNotif;
+    @FXML
+    private Label textNotif;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -66,6 +75,13 @@ public class MainWindowController implements Initializable {
         accountImg.setImage(new Image( "file:src/main/resources"+UserController.getInstance().getCurrentUser().getPhotos(),25,25,true,true)  );
         accountBtn.setText( UserController.getInstance().getCurrentUser().getFirstname()+" "+UserController.getInstance().getCurrentUser().getLastname() );
 //        ChatClient.getInstance().establishConnection();
+        notifHbox.setVisible( false );
+        MyTools.getInstance().setImageNotif(imageNotif);
+        MyTools.getInstance().setNotifHbox(notifHbox);
+        MyTools.getInstance().setTextNotif(textNotif);
+        MyTools.getInstance().showAndHideAnimation( MyTools.getInstance().getNotifHbox(),0,0 );
+        notifHbox.setVisible( true );
+
     }
 
 
