@@ -1,43 +1,29 @@
 package pidev.javafx.controller.station;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Worker;
+
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-
 import pidev.javafx.tools.CustomMouseEvent;
 import pidev.javafx.tools.transport.EventBus;
 import pidev.javafx.crud.transport.ServicesStation;
 import pidev.javafx.crud.transport.ServicesTransport;
 import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Transport;
-
-import javafx.application.Application;
-import javafx.concurrent.Worker;
-import javafx.scene.Scene;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-import netscape.javascript.JSObject;
-
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.util.*;
 
@@ -66,16 +52,10 @@ public class MapStationController implements Initializable {
     @FXML
     private ToggleButton dropToggle;
     ServicesTransport st = new ServicesTransport();
-    @FXML
-    private VBox showItems;
-    VBox vBox;
-    @FXML
-    private VBox mainVbox;
+
     @FXML
     private WebView webView;
-    List<Transport> Transports;
-    @FXML
-    private AnchorPane mapAnchorPane;
+
 
     @FXML
     private TextArea SearchText;
@@ -83,6 +63,9 @@ public class MapStationController implements Initializable {
     private AnchorPane mainanchor;
     @FXML
     private Label stationName;
+
+    @FXML
+    private Label stationName1;
     private static final String[] texts = {"Avaible ", "8:00PM"};
 
 
@@ -92,21 +75,30 @@ public class MapStationController implements Initializable {
     private static final String API_KEY = "AIzaSyBoLdBioCMA2UebZB2XWKpKROlj51H1MHc";
 
     ObservableList<Station> data;
+    @FXML
     private Station receivedStation;
+    @FXML
+    private Station receivedStation1;
     private WebEngine webEngine;
+    @FXML
+    private AnchorPane mainanchor1;
 
+public void openTitle(CustomMouseEvent event){
+    System.out.println("opened ");
+    mainanchor1.toFront();
 
+}
 
     @FXML
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        EventBus.getInstance().subscribe("close_List", this::openTitle);
+
         data = FXCollections.observableArrayList(ss.getAll());
         EventBus.getInstance().subscribe("sendTransport", this::handleCustomEvent);
         yourFunction();
     }
     private void handleCustomEvent(CustomMouseEvent event) {
-        // Handle the received event data
-
         Transport eventData = (Transport) event.getEventData();
         showPathbetweenStations();
 
@@ -236,24 +228,23 @@ public void showPathbetweenStations(){
 
     @FXML
     private void handleSendStationButtonClick(ActionEvent event) {
-        System.out.println(1);
-        System.out.println(1);
 
         if (SearchText.getText().isEmpty()) {
         } else {
             ObservableList<Station> filteredStations = FXCollections.observableArrayList();
             for (Station station : data) {
                 if (station.getNomStation().toLowerCase().contains(SearchText.getText().toLowerCase())) {
-                    mainanchor.setVisible(true);
+                    mainanchor1.setVisible(true);
+                    mainanchor1.toFront();
                     filteredStations.add(station);
                     String[] splitStrings = filteredStations.get(0).getAddressStation().split(",");
                     String string1 = splitStrings[0];
                     String string2 = splitStrings[1];
-                    stationName.setText(filteredStations.get(0).getNomStation());
+                    stationName1.setText(filteredStations.get(0).getNomStation());
                     receivedStation = filteredStations.get(0);
                     double lat = Double.parseDouble(string1);
                     double lon = Double.parseDouble(string2);
-                   showStation(lat, lon);
+                  // showStation(lat, lon);
                 }
             }
         }
@@ -289,16 +280,20 @@ public void showPathbetweenStations(){
         webEngine.loadContent(htmlContent);
     }
 
-
+private AnchorPane save_pane;
     public void Onclick() {
+        save_pane=ListeClient;
         load("/fxml/Transport/Gui_Station/ListeTransport.fxml");
         EventBus.getInstance().publish("StationEvent", new CustomMouseEvent<Station>(receivedStation));
     }
-
+@FXML
+private AnchorPane listAnchor;
     private void load(String fxmlPath) {
         try {
             Node content = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
-            ListeClient.getChildren().setAll(content);
+
+            listAnchor.toFront();
+            listAnchor.getChildren().setAll(content);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
