@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane style="-fx-background-color: trasparent; -fx-background-radius: 20; -fx-border-radius: 20;" stylesheets="@../../style/newLogIn.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.AdvancedSettingsController">
+   <children>
+      <VBox fx:id="layoutUpadatePassword" alignment="CENTER" prefHeight="368.0" prefWidth="378.0" spacing="20.0" style="-fx-background-color: #212529; -fx-background-radius: 20; -fx-border-radius: 20;">
+         <children>
+            <ImageView fitHeight="133.0" fitWidth="109.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/userImg/SansTitre-4.png" />
+               </image>
+            </ImageView>
+            <TextField id="textField1" fx:id="ancienPassword" alignment="TOP_LEFT" prefHeight="43.0" prefWidth="390.0" promptText="CURRENT PASSWORD" />
+            <TextField id="textField1" fx:id="nouveauPassword1" prefHeight="40.0" prefWidth="220.0" promptText="NEW PASSWORD" />
+            <TextField id="textField1" fx:id="nouveauPassword2" prefHeight="40.0" prefWidth="220.0" promptText="REPEAT NEW PASSWORD" />
+            <Button id="btn" fx:id="submit" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="38.0" prefWidth="110.0" text="SUBMIT" textFill="#e4e2e2" />
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="layoutUpdateEmail" alignment="CENTER" fillWidth="false" prefHeight="374.0" prefWidth="332.0" spacing="30.0" style="-fx-background-color: #212529; -fx-background-radius: 20; -fx-border-radius: 20;">
+         <children>
+            <ImageView fitHeight="91.0" fitWidth="113.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../citizenHub/Sans%20titre-5.png" />
+               </image>
+            </ImageView>
+            <TextField id="textField1" fx:id="ancienEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="337.0" promptText="ANCIEN EMAIL" />
+            <TextField id="textField1" fx:id="newEmail" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="337.0" promptText="NEW EMAIL" />
+            <Button id="btn" fx:id="submitEmail" alignment="CENTER" contentDisplay="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="38.0" prefWidth="110.0" text="SUBMIT" textFill="#cfc5c5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+         <StackPane.margin>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </StackPane.margin>
+      </VBox>
+      <AnchorPane fx:id="loadingPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <ImageView fitHeight="77.0" fitWidth="66.0" layoutX="156.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

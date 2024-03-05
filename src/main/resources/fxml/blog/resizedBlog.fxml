@@ -60,7 +60,7 @@
                     </VBox>
                     <HBox alignment="CENTER" prefHeight="40.0" prefWidth="740.0" spacing="80.0">
                         <children>
-                            <Button fx:id="addImgBtn" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="52.0" prefWidth="167.0" styleClass="addImgBtn" text="Ajouter une Photo">
+                            <Button fx:id="addImgBtn" minWidth="138.0" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="40.0" prefWidth="138.0" styleClass="addImgBtn" text="Ajouter une Photo">
                                 <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                         <image>
@@ -69,7 +69,7 @@
                                     </ImageView>
                                 </graphic>
                             </Button>
-                            <Button fx:id="publierBtn" mnemonicParsing="false" onMouseClicked="#onPublierClicked" prefHeight="34.0" prefWidth="109.0" styleClass="publierBtn" text="Publier" textFill="#fafafa" />
+                            <Button fx:id="publierBtn" mnemonicParsing="false" onMouseClicked="#onPublierClicked" prefHeight="34.0" prefWidth="101.0" styleClass="publierBtn" text="Publier" textFill="#fafafa" />
                         </children>
                         <padding>
                             <Insets right="35.0" />

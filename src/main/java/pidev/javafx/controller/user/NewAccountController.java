@@ -123,6 +123,9 @@ public class NewAccountController implements Initializable {
         editDetails.setOnAction( event -> showFormUser("editDetails") );
         showDetails.setOnAction( event -> showFormUser("showDetails") );
 
+        updatePassword.setOnAction( event -> showFormadvancedSettings("updatePassword") );
+        updateEmail.setOnAction( event -> showFormadvancedSettings("updateEmail") );
+
         menuBar.getMenus().get( 3 ).getItems().addAll(editDetails,showDetails,advancedSettings);
 
 
@@ -173,6 +176,25 @@ public class NewAccountController implements Initializable {
         firstinterface.setOpacity( 0.4 );
         secondInterface.setVisible( true );
         secondInterface.getChildren().add(form);
+        MyTools.getInstance().showAnimation( form );
+    }
+
+
+    public void showFormadvancedSettings(String usage)
+    {
+        StackPane form=null;
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/user/advancedSettings.fxml" ));
+        try {
+            form = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        AdvancedSettingsController advancedSettingsController=fxmlLoader.getController();
+        advancedSettingsController.setUsageOfThisForm(usage);
+        advancedSettingsController.setData( UserController.getInstance().getCurrentUser() );
+        blogSection.getChildren().clear();
+        blogSection.getChildren().add(form);
         MyTools.getInstance().showAnimation( form );
     }
 

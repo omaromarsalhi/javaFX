@@ -21,7 +21,7 @@
 
     -fx-border-width: 1px;
     -fx-border-color: #20749C  ;
-    -fx-text-fill: #000000;
+    /*-fx-text-fill: #000000;*/
     -fx-background-color:#20749C;
     -fx-font-size: 15px;
     /*-fx-padding: 5px 5px;*/
@@ -33,7 +33,7 @@
 #btn2{
     -fx-border-width: 1px;
     -fx-border-color: #20749C  ;
-    -fx-text-fill: #050505;
+    /*-fx-text-fill: #050505;*/
     -fx-background-color: transparent;
     -fx-font-size: 15px;
     /*-fx-padding: 5px 5px;*/
@@ -43,11 +43,17 @@
 #btn2:hover{
 
     -fx-border-width: 1px;
-    -fx-text-fill: #050505;
+    /*-fx-text-fill: #050505;*/
     -fx-background-color: #20749C;
     -fx-font-size: 15px;
     -fx-border-radius: 10px;
     -fx-background-radius: 10px;
     -fx-effect: dropshadow( gaussian , rgba(30, 30, 30, 0.6), 10, 0.5 , 0 , 2 );
+}
+
+#layoutUpdateEmail{
+    -fx-background-image: url('../citizenHub/Sans titre-5.png');
+    /*-fx-background-size: cover;*/
+    /*-fx-background-repeat: no-repeat;*/
 }
 

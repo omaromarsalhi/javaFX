@@ -151,7 +151,7 @@
                                     </HBox>
                                     <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="488.0" prefWidth="590.0" style="-fx-background: transparent;" vbarPolicy="NEVER">
                                       <content>
-                                          <VBox fx:id="blogSection" alignment="CENTER" prefHeight="486.0" prefWidth="585.0" style="-fx-background-color: transparent;" />
+                                          <VBox fx:id="blogSection" alignment="CENTER" fillWidth="false" prefHeight="486.0" prefWidth="585.0" style="-fx-background-color: transparent;" />
                                       </content>
                                     </ScrollPane>
                                  </children>
