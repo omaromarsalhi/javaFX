@@ -14,7 +14,7 @@ import java.util.Set;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 
-public class ServicesStation  {
+public class ServicesStation    {
 
     private PreparedStatement prepare;
 
@@ -29,7 +29,7 @@ public class ServicesStation  {
             prepare.setString(4,S.getImage_station());
 
             prepare.executeUpdate();
-    }
+        }
         catch (SQLIntegrityConstraintViolationException e) {
             Alert alert =new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Erreur d'insertion");
@@ -92,10 +92,10 @@ public class ServicesStation  {
         }
     }
 
-
     public Station findById(int id) {
-return new Station();
+        return new Station();
     }
+
 
     public Station selectFirstItem() {
         return null;
@@ -108,7 +108,7 @@ return new Station();
         try (PreparedStatement preparedStatement = cnx.prepareStatement(req);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
-                while (resultSet.next()) {
+            while (resultSet.next()) {
                 Station abs = new Station();
                 abs.setAddressStation(resultSet.getString("AddressStation"));
                 abs.setNomStation(resultSet.getString("NomStation"));
@@ -116,7 +116,7 @@ return new Station();
                 abs.setImage_station(resultSet.getString("Image_Station"));
                 abs.setIdStation(resultSet.getInt("idStation"));
                 abonnementList.add(abs);
-                                         }
+            }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

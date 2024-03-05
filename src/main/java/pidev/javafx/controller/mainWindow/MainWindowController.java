@@ -81,7 +81,6 @@ public class MainWindowController implements Initializable {
         MyTools.getInstance().setTextNotif(textNotif);
         MyTools.getInstance().showAndHideAnimation( MyTools.getInstance().getNotifHbox(),0,0 );
         notifHbox.setVisible( true );
-
     }
 
 
@@ -101,11 +100,11 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    public void onTransportBtnClicked(ActionEvent event){
+    public void onAbonnementBtnClicked(ActionEvent event){
         centerContainer.getChildren().clear();
-        AnchorPane stations = null;
+        StackPane stations = null;
         try {
-            stations = FXMLLoader.load( getClass().getResource( "/fxml/Transport/Gui_Station/TransportClient.fxml" ) );
+            stations = FXMLLoader.load( getClass().getResource( "/fxml/Transport/Gui_Abonnement/AbonnementClient.fxml" ) );
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

@@ -18,6 +18,7 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -35,6 +36,9 @@ import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 import okhttp3.*;
@@ -46,55 +50,61 @@ public class AbonnementClientController implements Initializable {
 
     ObservableList<Transport> dataList = FXCollections.observableArrayList();
     List<Abonnement> abonnementList = new ArrayList<>();
-    ServicesAbonnement sa =new ServicesAbonnement();
+    ServicesAbonnement sa = new ServicesAbonnement();
+    @FXML
+    Pane paneToAnnimate;
 
+    private Stage primaryStage;
 
     @FXML
     private Label DebutLabel;
+
     @FXML
     private Label FinLabel;
+
     @FXML
     private Label IdLabel;
+
     @FXML
     private Label NomLabel;
-    @FXML
-    private TextField NomText;
+
     @FXML
     private Label PrenomLabel;
+    @FXML
+    private Button nextBtn;
+    @FXML
+    private Button previousBtn;
+    @FXML
+    private TextField NomText;
     @FXML
     private TextField PrenomText;
     @FXML
     private ComboBox<String> TypeAbonnementBox;
     @FXML
-    private Pane form;
+    private ImageView imageAbonne;
     @FXML
     private ImageView imageAbn;
     @FXML
-    private ImageView imageAbonne;
+    private AnchorPane loadinPage;
     @FXML
-    private VBox mainContainer;
-    @FXML
-    private Button nextBtn;
-    @FXML
-    private Pane paneToAnnimate;
-    @FXML
-    private Button previousBtn;
-    @FXML
-    private VBox statsPannel;
+    private Pane form;
 
 
-    Map<String, Double> tagMap = new HashMap<>();
+
+
+
+
 
 
 
     private static final String API_KEY = "acc_94dd4f1769c190a";
     private static final String API_SECRET = "5a56d117d922cf4da9488e1349dd7c09";
-       int i;
-       Set <Abonnement> abonnementSet;
-       TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), paneToAnnimate);
-       String imagePath;
+    int i;
+    Set<Abonnement> abonnementSet;
+    TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), paneToAnnimate);
+    String imagePath;
 
-
+    final String destinationString = "src/main/resources/abonnementImg";
 
 
     @Override
@@ -106,90 +116,112 @@ public class AbonnementClientController implements Initializable {
         translateTransition.setNode(paneToAnnimate);
 
         VBox root = new VBox();
-
+        loadinPage.setVisible( false );
     }
 
+    @FXML
+    private Pane displayAbonnement;
+
+    Map<String, Double> tagMap = new HashMap<>();
 
     @FXML
     public void afficher() {
 
-      abonnementSet=sa.getAll();
-      abonnementList = List.copyOf(abonnementSet);
-      System.out.println(abonnementList.toString());
+        abonnementSet = sa.getAll();
+        abonnementList = List.copyOf(abonnementSet);
+        System.out.println(abonnementList.toString());
 
     }
-    public void insert_Image(){
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setTitle("Choose a File");
-//        var selectedFile = fileChooser.showOpenDialog(primaryStage);
-//        if (selectedFile != null) {
-//            Task<Map> task=new Task<Map>() {
-//                @Override
-//                protected Map call() throws Exception {
-//                    Platform.runLater(()->{
-//                        showCustomDialog();
-//                    });
-//                    return image_api(imagePath);
-//                }
-//            };
-//
-//            task.setOnSucceeded(workerStateEvent -> {
-//                if(!task.getValue().isEmpty()&&task.getValue().containsKey("man")) {
-//                    Platform.runLater(()->{
-//
-//                        close_dialog();
-//                        imageAbn.setImage(new Image(imagePath));
-//                    });
-//                }
-//                else System.out.println("image should be of a humain being and in portrait mode");
-//            });
-//
-//
-//            new Thread(task).start();
-//
-//
-//
-//            imagePath = selectedFile.getAbsolutePath();
-//
-//
-//
-//        }
+
+    public void insert_Image() {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Choose a File");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Images", "*.jpg", "*.png")
+        );
+        var selectedFile = fileChooser.showOpenDialog(primaryStage);
+
+
+        if (selectedFile != null) {
+            Task<Map> task = new Task<Map>() {
+                @Override
+                protected Map call() throws Exception {
+                    Platform.runLater(() -> {
+                        showCustomDialog();
+                    });
+                    return image_api(imagePath);
+                }
+            };
+
+            task.setOnSucceeded(workerStateEvent -> {
+                if (!task.getValue().isEmpty() && task.getValue().containsKey("man")) {
+                    Platform.runLater(() -> {
+
+                        close_dialog();
+                        imageAbn.setImage(new Image("file:///"+imagePath));
+                    });
+                } else System.out.println("image should be of a humain being and in portrait mode");
+            });
+
+
+            new Thread(task).start();
+
+
+            imagePath = selectedFile.getAbsolutePath();
+        }
     }
-    public void add_load(){
+
+    public void add_load() {
         expand();
         UpdateBtn.setVisible(false);
     }
 
-    public void ajouter(){
+    public void ajouter() {
+        String randomFileName = null;
+        Path sourcePath = Paths.get(imagePath);
+        if (imagePath.endsWith(".png")) {
+            randomFileName = UUID.randomUUID().toString() + ".png";
+        } else {
+            randomFileName = UUID.randomUUID().toString() + ".jpg";
+        }
+        Path destinationPath = Paths.get(destinationString, randomFileName);
+        try {
+            Files.copy(sourcePath, destinationPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        imagePath = "/abonnementImg" + "/" + randomFileName;
 
+        Abonnement p = new Abonnement(NomText.getText(), PrenomText.getText(), TypeAbonnementBox.getValue().toString(), imagePath);
 
-
-      Abonnement p=new Abonnement(NomText.getText(),PrenomText.getText(),TypeAbonnementBox.getValue().toString(),imagePath);
-
-      sa.addItem(p);
+        sa.addItem(p);
         afficher();
         remplir_abonnement();
         unexpand();
-    };
+    }
 
-public void DeleteAbonnement(){
+    ;
+
+    public void DeleteAbonnement() {
 
         int id = abonnementList.get(i).getIdAboonnement();
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setContentText("Vous voules vraiment effacer ce fichier ?");
         alert.showAndWait();
         sa.deleteItem(id);
         afficher();
         remplir_abonnement();
-};
+    }
+
+    ;
 
     @FXML
     protected void onTextChanged() {
         String[] text = new String[10];
 
         text[1] = NomText.getText();
-        text[2]= PrenomText.getText();
+        text[2] = PrenomText.getText();
 
         if (text[1].matches("[a-zA-Z ]*"))
             NomText.setStyle("-fx-text-fill: #25c12c;");
@@ -202,25 +234,26 @@ public void DeleteAbonnement(){
             PrenomText.setStyle("-fx-text-fill: #bb2020 ");
     }
 
-    public  void remplir_abonnement(){
-        if (i==0)
+    public void remplir_abonnement() {
+        if (i == 0)
             previousBtn.setVisible(false);
-        else if (i==abonnementList.size()-1) {
+        else if (i == abonnementList.size() - 1) {
             nextBtn.setVisible(false);
         }
-String [] time=abonnementList.get(i).getDateDebut().toLocalDateTime().toString().split("T");
-String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
-         DebutLabel.setText(time[0]);
+        String[] time = abonnementList.get(i).getDateDebut().toLocalDateTime().toString().split("T");
+        String id = Integer.toString(abonnementList.get(i).getIdAboonnement());
+        DebutLabel.setText(time[0]);
         FinLabel.setText(abonnementList.get(i).getDateFin().toString());
         NomLabel.setText(abonnementList.get(i).getNom());
         PrenomLabel.setText(abonnementList.get(i).getPrenom());
-        IdLabel.setText("000"+id);
-        imagePath=abonnementList.get(i).getImage() ;
+        IdLabel.setText("000" + id);
+        imagePath = abonnementList.get(i).getImage();
         System.out.println(imagePath);
-        Image image = new Image(imagePath);
+        Image image = new Image("file:src/main/resources" + imagePath);
         imageAbonne.setImage(image);
 
     }
+
     @FXML
     public void nextAb() {
 
@@ -251,21 +284,25 @@ String id=Integer.toString(abonnementList.get(i).getIdAboonnement());
             nextBtn.setVisible(true);
         }
     }
-    public void LoadUpdate(){
+
+    public void LoadUpdate() {
         expand();
         UpdateBtn.setVisible(true);
-    NomText.setText(abonnementList.get(i).getNom());
-    PrenomText.setText(abonnementList.get(i).getPrenom());
-    TypeAbonnementBox.setValue(abonnementList.get(i).getType());
-    imagePath=abonnementList.get(i).getImage();
+        NomText.setText(abonnementList.get(i).getNom());
+        PrenomText.setText(abonnementList.get(i).getPrenom());
+        TypeAbonnementBox.setValue(abonnementList.get(i).getType());
+        imagePath = abonnementList.get(i).getImage();
 
     }
+
     Stage dialogStage = new Stage();
-@FXML
-public void close_dialog(){
+
+    @FXML
+    public void close_dialog() {
 
         dialogStage.close();
-}
+    }
+
     @FXML
     private void showCustomDialog() {
         try {
@@ -278,23 +315,24 @@ public void close_dialog(){
             Scene dialogScene = new Scene(dialogContent);
             dialogScene.setFill(Color.TRANSPARENT);
             dialogStage.setScene(dialogScene);
-             dialogStage.show();
-
+            dialogStage.show();
 
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
     @FXML
     Button UpdateBtn;
-    public void Update(){
 
-        Abonnement A = new Abonnement(NomText.getText(),PrenomText.getText(),TypeAbonnementBox.getValue(),imagePath);
+    public void Update() {
+
+        Abonnement A = new Abonnement(NomText.getText(), PrenomText.getText(), TypeAbonnementBox.getValue(), imagePath);
         System.out.println(NomText.getText());
-          A.setIdAboonnement(abonnementList.get(i).getIdAboonnement());
+        A.setIdAboonnement(abonnementList.get(i).getIdAboonnement());
         sa.updateItem(A);
-        Alert alert =new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setContentText("Vous voules vraiment effacer ce fichier ?");
         alert.showAndWait();
@@ -305,12 +343,13 @@ public void close_dialog(){
     }
 
     @FXML
+    VBox statsPannel;
+    @FXML
     Pane statsPane;
     @FXML
     Button expandBtn;
-@FXML
-Button openBtn;
-
+    @FXML
+    Button openBtn;
 
 
     public void exportPaneToImage() {
@@ -342,116 +381,95 @@ Button openBtn;
         }
     }
 
-@FXML
-public void unexpand() {
-    Timeline timeline = new Timeline();
-    timeline.setCycleCount(1);
-    timeline.setAutoReverse(false);
-
-    double panelWidth = statsPannel.getWidth();
-
-    KeyValue initTranslateX = new KeyValue(statsPannel.translateXProperty(), 0);
-    KeyValue finalTranslateX = new KeyValue(statsPannel.translateXProperty(), panelWidth-50);
-    KeyValue initWidth = new KeyValue(statsPannel.prefWidthProperty(), 404);
-    KeyValue finalWidth = new KeyValue(statsPannel.prefWidthProperty(), 50);
-
-    KeyFrame initFrame = new KeyFrame(Duration.ZERO, initWidth, initTranslateX);
-    KeyFrame finalFrame = new KeyFrame(Duration.seconds(0.3), finalWidth, finalTranslateX);
-
-    timeline.getKeyFrames().addAll(finalFrame, initFrame);
-
-    statsPane.setVisible(false);
-    expandBtn.setVisible(true);
-
-    timeline.play();
-
-
-
-
-    BoxBlur blur = new BoxBlur();
-    blur.setWidth(10);
-    blur.setHeight(10);
-    blur.setIterations(3);
-//    displayAbonnement.toFront();
-//    displayAbonnement.setEffect(null);
-    form.toBack();
-//    displayAbonnement.setOpacity(1);
-
-
-
-}
-
-
-
     @FXML
-    public void expand() {
-        Timeline timeline2 = new Timeline();
-        timeline2.setCycleCount(1);
-        timeline2.setAutoReverse(false);
+    public void unexpand() {
+        Timeline timeline = new Timeline();
+        timeline.setCycleCount(1);
+        timeline.setAutoReverse(false);
 
         double panelWidth = statsPannel.getWidth();
 
-        KeyValue initTranslateX2 = new KeyValue(statsPannel.translateXProperty(), panelWidth);
-        KeyValue finalTranslateX2 = new KeyValue(statsPannel.translateXProperty(), 0);
-        KeyValue initWidth2 = new KeyValue(statsPannel.prefWidthProperty(), 50);
-        KeyValue finalWidth2 = new KeyValue(statsPannel.prefWidthProperty(), 404);
-        KeyFrame initFrame2 = new KeyFrame(Duration.ZERO, initWidth2, initTranslateX2);
-        KeyFrame finalFrame2 = new KeyFrame(Duration.seconds(0.3), finalWidth2, finalTranslateX2);
-        timeline2.getKeyFrames().addAll(initFrame2, finalFrame2);
+        KeyValue initTranslateX = new KeyValue(statsPannel.translateXProperty(), 0);
+        KeyValue finalTranslateX = new KeyValue(statsPannel.translateXProperty(), panelWidth - 50);
+        KeyValue initWidth = new KeyValue(statsPannel.prefWidthProperty(), 404);
+        KeyValue finalWidth = new KeyValue(statsPannel.prefWidthProperty(), 50);
 
-        timeline2.play();
+        KeyFrame initFrame = new KeyFrame(Duration.ZERO, initWidth, initTranslateX);
+        KeyFrame finalFrame = new KeyFrame(Duration.seconds(0.3), finalWidth, finalTranslateX);
 
-        statsPane.setVisible(true);
+        timeline.getKeyFrames().addAll(finalFrame, initFrame);
+
+        statsPane.setVisible(false);
         expandBtn.setVisible(true);
-//        displayAbonnement.toBack();
+
+        timeline.play();
+
+
         BoxBlur blur = new BoxBlur();
         blur.setWidth(10);
         blur.setHeight(10);
         blur.setIterations(3);
-//        displayAbonnement.toBack();
-//        displayAbonnement.setEffect(blur);
+        displayAbonnement.toFront();
+        displayAbonnement.setEffect(null);
+        form.toBack();
+        displayAbonnement.setOpacity(1);
 
+
+    }
+
+
+    @FXML
+    public void expand() {
+        statsPane.setVisible(true);
+        expandBtn.setVisible(true);
+        displayAbonnement.toBack();
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+        displayAbonnement.toBack();
+        displayAbonnement.setEffect(blur);
         form.toFront();
         form.setOpacity(0.85);
-//        displayAbonnement.setOpacity(0.85);
+        displayAbonnement.setOpacity(0.85);
 
     }
 
-public Map<String, Double> image_api(String s){
-     imagePath = s; // Replace with your local image path
+    public Map<String, Double> image_api(String s) {
+        imagePath = s; // Replace with your local image path
 
-    OkHttpClient client = new OkHttpClient();
-    Request request = buildRequest(imagePath);
+        OkHttpClient client = new OkHttpClient();
+        Request request = buildRequest(imagePath);
 
-    try (Response response = client.newCall(request).execute()) {
-        String responseBody = response.body().string();
-        JsonObject json = JsonParser.parseString(responseBody).getAsJsonObject();
+        try (Response response = client.newCall(request).execute()) {
+            String responseBody = response.body().string();
+            JsonObject json = JsonParser.parseString(responseBody).getAsJsonObject();
 
 
-        // Extract tags and confidence from the JSON response
-        JsonArray tagsArray = json.getAsJsonObject("result").getAsJsonArray("tags");
+            // Extract tags and confidence from the JSON response
+            JsonArray tagsArray = json.getAsJsonObject("result").getAsJsonArray("tags");
 
-        // Create Map to store the first 5 tags and their confidence
+            // Create Map to store the first 5 tags and their confidence
 
-        tagMap.clear();
-        for (int i = 0; i < Math.min(tagsArray.size(), 5); i++) {
-            JsonObject tagObject = tagsArray.get(i).getAsJsonObject();
-            String tag = tagObject.getAsJsonObject("tag").get("en").getAsString();
-            double confidence = tagObject.get("confidence").getAsDouble();
-            tagMap.put(tag, confidence);
+            tagMap.clear();
+            for (int i = 0; i < Math.min(tagsArray.size(), 5); i++) {
+                JsonObject tagObject = tagsArray.get(i).getAsJsonObject();
+                String tag = tagObject.getAsJsonObject("tag").get("en").getAsString();
+                double confidence = tagObject.get("confidence").getAsDouble();
+                tagMap.put(tag, confidence);
+            }
+
+            // Print the contents of the map
+            tagMap.forEach((tag, confidence) -> System.out.println("Tag: " + tag + ", Confidence: " + confidence));
+            System.out.println(tagMap.toString());
+            return tagMap;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
 
-        // Print the contents of the map
-        tagMap.forEach((tag, confidence) -> System.out.println("Tag: " + tag + ", Confidence: " + confidence));
-        System.out.println(tagMap.toString());
-        return tagMap;
-
-    } catch (IOException e) {
-        e.printStackTrace();
-        return null;
     }
-
-}
 
     private static Request buildRequest(String imagePath) {
         File imageFile = new File(imagePath);

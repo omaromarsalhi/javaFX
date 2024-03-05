@@ -625,7 +625,7 @@ public class MainDashbordController implements Initializable {
         for(Node node:showAllProdsInfo.getChildren()){
             if(Integer.parseInt(((Label)((HBox)node).getChildren().get( 0 )).getText())==bienCustomMouseEvent.getEventData().getId()){
                 if(bienCustomMouseEvent.getEventData().getState().equals( "verified" )){
-                    ((ImageView)((HBox)node).getChildren().get( 6 ).lookup( "#stateImage" )).setImage(new Image( "file:src/main/resources/img/marketPlace/approve24C.png",24,24,true,true ) );
+                    ((ImageView)((HBox)node).getChildren().get( 6 ).lookup( "#stateImage" )).setImage(new Image( "file:src/main/resources/icons/marketPlace/approve24C.png",24,24,true,true ) );
                     ((Label)((HBox)node).getChildren().get( 6 )).setText("verified");
                 }
                 else {

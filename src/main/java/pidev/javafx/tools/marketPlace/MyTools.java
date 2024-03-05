@@ -270,7 +270,7 @@ public class MyTools {
 
     public void showNotif(){
         showAndHideAnimation( notifHbox,1,1500 );
-        Timeline timeline = new Timeline(new KeyFrame(Duration.minutes(0.3), event1 -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15000), event1 -> {
             showAndHideAnimation( notifHbox,0,0 );
         }) );
         timeline.setCycleCount( Animation.INDEFINITE);

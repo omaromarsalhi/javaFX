@@ -8,8 +8,10 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import pidev.javafx.model.Transport.Transport;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -73,9 +75,14 @@ public class transportDetailsContoller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         detailsTransport.setVisible(false);
         dropToggle.setSelected(true);
-        System.out.println(data);
         if(data!=null)
             fillDetails();
+    }
+
+
+    @FXML
+    private void sendData(ActionEvent event) {
+        EventBus.getInstance().publish("sendTransport", new CustomMouseEvent<Transport>(data));
     }
 
     @FXML
@@ -87,23 +94,24 @@ public class transportDetailsContoller implements Initializable {
             detailsTransport.setVisible(false);
         }
         else if (!dropToggle.isSelected()) {
+            sendData(event);
             detailsTransport.setVisible(true);
         }
     }
 
     public void fillDetails(){
-        Image image = new Image("file:src/main/resources"+data.getVehicule_Image());
+        Image image = new Image("file:///"+data.getVehicule_Image());
         imageLabel.setImage(image);
         imageLabel.setFitWidth(94);
         imageLabel.setFitHeight(63);
-         ArriveLabel.setText(data.getArivee());
-         HeureDepart.setText(data.getHeure().toString().substring(0,5));
-         DepartLabel.setText(data.getDepart());
+        ArriveLabel.setText(data.getArivee());
+        HeureDepart.setText(data.getHeure().toString().substring(0,5));
+        DepartLabel.setText(data.getDepart());
         ArriveLabel2.setText(data.getArivee());
         prixLabel.setText(data.getPrix().toString());
         typeLabel.setText(data.getType_vehicule());
         referenceLabel.setText(data.getReference());
         stationLabel.setText("2AAAA");
-}
+    }
 
 }

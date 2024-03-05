@@ -408,7 +408,7 @@ public class FormController implements Initializable {
                 MyTools.getInstance().notifyUser4NewAddedProduct( bien );
             }
             product=bien;
-//            aiVerifyThread().start();
+            aiVerifyThread().start();
             Thread thread = sleepThread(event);
             loadinPage.setVisible( true );
             thread.start();
@@ -442,11 +442,8 @@ public class FormController implements Initializable {
                 EventBus.getInstance().publish( "refreshProdContainer", event );
             EventBus.getInstance().publish( "onExitForm", event );
             loadinPage.setVisible( false );
-
-            MyTools.getInstance().getTextNotif().setText( "Prod Has Been Aded Successfuly" );
-            MyTools.getInstance().getTextNotif().setMinWidth( Region.USE_PREF_SIZE );
+            MyTools.getInstance().getTextNotif().setText( "Prod Has Been Added And Under Verification" );
             MyTools.getInstance().showNotif();
-
         });
         return new Thread(myTask);
     }
@@ -461,15 +458,19 @@ public class FormController implements Initializable {
         };
 
         myTask.setOnSucceeded( event -> {
-//            String respose=ChatGPTAPIDescriber.chatGPT(myTask.getValue());
-//            if(respose.toLowerCase().contains( "yes" )){
-//                product.setState( "verified" );
-//                CrudBien.getInstance().updateItem( product );
-//            }
-//            else {
-//                CrudBien.getInstance().deleteItem( product.getId() );
-//            }
-//            EventBus.getInstance().publish( "doUpdateTabprodAfterAIverif",new CustomMouseEvent<>(product) );
+            String respose=ChatGPTAPIDescriber.chatGPT(myTask.getValue());
+            if(respose.toLowerCase().contains( "yes" )){
+                product.setState( "verified" );
+                CrudBien.getInstance().updateItem( product );
+                MyTools.getInstance().getTextNotif().setText( "Prod Has Been Verified" );
+                MyTools.getInstance().showNotif();
+            }
+            else {
+                CrudBien.getInstance().deleteItem( product.getId() );
+                MyTools.getInstance().getTextNotif().setText( "Prod Has Been Disqualified" );
+                MyTools.getInstance().showNotif();
+            }
+            EventBus.getInstance().publish( "doUpdateTabprodAfterAIverif",new CustomMouseEvent<>(product) );
             System.out.println("done");
         } );
 
