@@ -61,11 +61,11 @@ public class ServiceReclamation  {
     }
 
 
-    public void supprimer(String idReclamation) {
+    public void supprimer(int idReclamation) {
         String req = "DELETE FROM `reclamation` WHERE `idReclamtion`=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setString(1, idReclamation);
+            ps.setInt(1, idReclamation);
             ps.executeUpdate();
             System.out.println("Reclamation deleted !");
         } catch (SQLException e) {

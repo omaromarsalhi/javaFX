@@ -23,6 +23,8 @@ module pidev.javafx{
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
     requires kernel;
+    requires xmlworker;
+    requires client;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

@@ -93,7 +93,7 @@ public class NewAccountController implements Initializable {
         }
         setMenueBar();
 
-
+        EventBus.getInstance().subscribe( "showReclamation",this::showDetailsReclamation );
         EventBus.getInstance().subscribe( "exitFormUser",this::onExitFormBtnClicked );
     }
 
@@ -195,6 +195,22 @@ public class NewAccountController implements Initializable {
         advancedSettingsController.setData( UserController.getInstance().getCurrentUser() );
         blogSection.getChildren().clear();
         blogSection.getChildren().add(form);
+        MyTools.getInstance().showAnimation( form );
+    }
+
+
+    public void showDetailsReclamation(MouseEvent event){
+        StackPane form=null;
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationFormShow.fxml" ));
+        try {
+            form = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        firstinterface.setOpacity( 0.4 );
+        secondInterface.setVisible( true );
+        secondInterface.getChildren().add(form);
         MyTools.getInstance().showAnimation( form );
     }
 

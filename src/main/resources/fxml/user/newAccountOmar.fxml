@@ -191,6 +191,6 @@
             <URL value="@../../style/marketPlace/scrollBarStlyle.css" />
          </stylesheets>
       </VBox>
-      <VBox fx:id="secondInterface" alignment="CENTER" prefHeight="552.0" prefWidth="406.0" />
+      <VBox fx:id="secondInterface" alignment="CENTER" fillWidth="false" prefHeight="552.0" prefWidth="406.0" />
    </children>
 </StackPane>

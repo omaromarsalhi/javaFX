@@ -223,7 +223,7 @@ public class MyTools {
         scaleTransition.play();
         scaleTransition.setOnFinished( event -> {
             child.setVisible( true );
-            scaleTransition.setDuration( Duration.seconds( 0.4 ) );
+            scaleTransition.setDuration( Duration.seconds( 0.5 ) );
             scaleTransition.setToX( 1 );
             scaleTransition.setToY( 1 );
             scaleTransition.play();
@@ -232,7 +232,7 @@ public class MyTools {
 
     public void showAndHideAnimation(Node child,int ttoWhat,double delay ) {
 
-        ScaleTransition scaleTransition = new ScaleTransition( Duration.seconds( 0.4), child );
+        ScaleTransition scaleTransition = new ScaleTransition( Duration.seconds( 0.5), child );
         scaleTransition.setToX( ttoWhat );
         scaleTransition.setToY( ttoWhat );
         scaleTransition.setCycleCount( 1 );

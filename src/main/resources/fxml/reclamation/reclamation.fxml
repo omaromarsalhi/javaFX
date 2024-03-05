@@ -49,7 +49,7 @@
                   <Image url="@../../img/userImg/clock.png" />
                </image>
             </ImageView>
-            <Button alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="See More" textFill="#fff8f8" />
+            <Button fx:id="Popup" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#showDetailsReclamation" prefHeight="26.0" prefWidth="78.0" style="-fx-background-color: transparent;" text="See More" textFill="#fff8f8" />
          </children>
       </VBox>
    </children>
