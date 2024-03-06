@@ -1,10 +1,16 @@
 package pidev.javafx.controller.reclamation;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,30 +19,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
-import pidev.javafx.model.MarketPlace.Product;
 import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
-import pidev.javafx.tools.marketPlace.MyListener;
-import pidev.javafx.tools.marketPlace.MyTools;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileOutputStream;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.net.URISyntaxException;
-
-
-public class ReclamationFormShowController implements Initializable {
+public class ReponseFormShowController implements Initializable {
 
 
     @FXML
@@ -136,9 +133,9 @@ public class ReclamationFormShowController implements Initializable {
     void first_fonction( CustomMouseEvent<Reclamation> event ) {
         rec =event.getEventData();
         img.setImage( new Image( "file:src/main/resources"+rec.getImagePath(),70,70,true,true) );
-        privatekey1.setText(rec.getPrivateKey());
+        //privatekey1.setText(rec.getPrivateKey());
         date1.setText(rec.getDate());
-        Pname1.setText(rec.getDescription());
+        Pname1.setText(rec.getSubject());
         Pdescretion1.setText(rec.getDescription());
 //        generatePdf(rec);
     }

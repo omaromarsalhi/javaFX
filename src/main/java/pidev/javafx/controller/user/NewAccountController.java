@@ -79,7 +79,7 @@ public class NewAccountController implements Initializable {
             throw new RuntimeException( e );
         }
         blogSection.getChildren().add(blog);
-        for (Reclamation reclamationData: ServiceReclamation.getInstance().getAll()){
+        for (Reclamation reclamationData: ServiceReclamation.getInstance().getAllbyid(UserController.getInstance().getCurrentUser().getId())){
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
             try {
@@ -92,7 +92,7 @@ public class NewAccountController implements Initializable {
             reclamsSection.getChildren().add(reclamations);
         }
         setMenueBar();
-
+        EventBus.getInstance().subscribe( "showReponse",this:: showFormReclamationReponse );
         EventBus.getInstance().subscribe( "showReclamation",this::showDetailsReclamation );
         EventBus.getInstance().subscribe( "exitFormUser",this::onExitFormBtnClicked );
     }
@@ -167,6 +167,22 @@ public class NewAccountController implements Initializable {
         StackPane form=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationForm.fxml" ));
+        try {
+            form = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+
+        firstinterface.setOpacity( 0.4 );
+        secondInterface.setVisible( true );
+        secondInterface.getChildren().add(form);
+        MyTools.getInstance().showAnimation( form );
+    }
+    public void showFormReclamationReponse(MouseEvent event){
+        StackPane form=null;
+        secondInterface.getChildren().clear();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationReponse.fxml" ));
         try {
             form = fxmlLoader.load();
         } catch (IOException e) {

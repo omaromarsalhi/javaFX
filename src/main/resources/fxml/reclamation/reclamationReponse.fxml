@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane alignment="TOP_LEFT" prefHeight="510.0" prefWidth="399.0" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="TOP_LEFT" prefHeight="510.0" prefWidth="399.0" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.ReponseFormShowController">
     <children>
         <HBox fx:id="formBox" prefHeight="510.0" prefWidth="566.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
             <children>
@@ -22,7 +22,7 @@
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                     </padding>
                 </VBox>
-            <VBox fx:id="Box11" alignment="TOP_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+            <VBox fx:id="Box11" alignment="TOP_RIGHT" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
                <children>
                   <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
                      <children>
@@ -33,7 +33,7 @@
                         </Label>
                         <HBox fx:id="formBox111" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
                            <children>
-                              <TextField fx:id="date1" disable="true" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                              <TextField fx:id="date1" disable="true" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -57,7 +57,7 @@
                         </Label>
                         <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
                            <children>
-                              <TextField fx:id="Pname1" disable="true" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                              <TextField fx:id="Pname1" disable="true" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -84,7 +84,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <TextArea fx:id="Pdescretion1" disable="true" minWidth="300.0" prefHeight="136.0" prefWidth="300.0" wrapText="true">
+                  <TextArea fx:id="Pdescretion1" disable="true" editable="false" minWidth="300.0" prefHeight="226.0" prefWidth="300.0" wrapText="true">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -92,6 +92,13 @@
                         <Font size="16.0" />
                      </font>
                   </TextArea>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            <VBox fx:id="Box12" alignment="TOP_CENTER" prefHeight="506.0" prefWidth="298.0" spacing="10.0">
+               <children>
                   <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
                         <Label prefHeight="36.0" prefWidth="160.0" text="Reponse :">
@@ -101,7 +108,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <TextArea fx:id="Reponse" minWidth="300.0" prefHeight="136.0" prefWidth="300.0" wrapText="true">
+                  <TextArea fx:id="Reponse" minWidth="300.0" prefHeight="386.0" prefWidth="300.0" wrapText="true">
                      <font>
                         <Font size="16.0" />
                      </font>

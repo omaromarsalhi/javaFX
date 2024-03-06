@@ -158,7 +158,7 @@
                               </VBox>
                               <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" prefHeight="518.0" prefWidth="410.0" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" vbarPolicy="NEVER">
                                  <content>
-                                    <VBox fx:id="reclamsSection" alignment="CENTER" prefHeight="564.0" prefWidth="394.0" spacing="10.0" style="-fx-background-radius: 15;" stylesheets="@../../style/reclamation/styleReclamation.css">
+                                    <VBox fx:id="reclamsSection" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="394.0" spacing="10.0" style="-fx-background-radius: 15;" stylesheets="@../../style/reclamation/styleReclamation.css">
                                        <padding>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                        </padding>
