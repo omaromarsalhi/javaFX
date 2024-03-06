@@ -3,11 +3,9 @@
   <br>
   <a href='https://postimg.cc/rz46fVNJ' target='_blank'><img src='https://i.postimg.cc/rz46fVNJ/image-2024-03-06-185249833.png' border='0' alt='image-2024-03-06-185249833'/></a>
   <br>
-  Markdownify
+  CtizenHub
   <br>
 </h1>
-
-<h4 align="center">A minimal Markdown Editor desktop app built on top of <a href="http://electron.atom.io" target="_blank">Electron</a>.</h4>
 
 <p align="center">
   <a href="https://badge.fury.io/js/electron-markdownify">
