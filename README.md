@@ -48,7 +48,14 @@
 
 ## Reponse Using Streaming speach to text
 
-![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/579c3bc2-cb9d-468f-809a-3357393af85b)
+![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/579c3bc2-cb9d-468f-809a-3357393af85b) 
+
+
+## Email Personailise and pdf Aussi
+
+
+![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/c4710af8-117a-46ea-ab01-ce946203b62c)
+
 
 
 
