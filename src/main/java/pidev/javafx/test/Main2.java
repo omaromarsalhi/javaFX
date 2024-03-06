@@ -22,7 +22,6 @@ public class Main2 extends Application {
 
         Scene scene = new Scene(fxmlLoader.load(), Color.TRANSPARENT);
         NewLogInController newLogInController=fxmlLoader.getController();
-        newLogInController.setUser( 2 );
         scene.getStylesheets().add( String.valueOf( getClass().getResource("/style/user/styleLogin.css") ) );
         stage.initStyle( StageStyle.TRANSPARENT);
         stage.setTitle("Hello!");

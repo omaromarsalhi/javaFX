@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.MarketController">
+<StackPane fx:id="marketStackPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.MarketController">
    <children>
       <HBox fx:id="mainHbox" alignment="CENTER_LEFT" prefHeight="670.0" prefWidth="1020.0" spacing="10.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: transparent;">
          <children>
@@ -66,29 +66,36 @@
                         <Insets right="22.0" top="4.0" />
                      </padding>
                   </HBox>
-                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1036.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" stylesheets="@../../style/marketPlace/scrollBarStlyle.css" vbarPolicy="ALWAYS">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <content>
-                        <GridPane fx:id="grid" alignment="CENTER" prefHeight="592.0" prefWidth="1010.0" style="-fx-border-radius: 20; -fx-background-radius: 20;">
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                           </rowConstraints>
-                           <columnConstraints>
-                              <ColumnConstraints />
-                              <ColumnConstraints />
-                           </columnConstraints>
-                        </GridPane>
-                     </content>
-                  </ScrollPane>
+                  <HBox fx:id="bigContainer" alignment="CENTER" maxHeight="-Infinity" prefHeight="620.0">
+                     <children>
+                        <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="620.0" prefWidth="1025.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" stylesheets="@../../style/marketPlace/scrollBarStlyle.css" vbarPolicy="ALWAYS">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                           <content>
+                              <GridPane fx:id="grid" alignment="CENTER" prefHeight="604.0" prefWidth="1004.0" style="-fx-border-radius: 20; -fx-background-radius: 20;">
+                                 <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                 </rowConstraints>
+                                 <columnConstraints>
+                                    <ColumnConstraints />
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <padding>
+                                    <Insets bottom="40.0" />
+                                 </padding>
+                              </GridPane>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
          </children>
       </HBox>
       <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
          <children>
-            <HBox alignment="CENTER" layoutX="51.0" layoutY="141.0" prefHeight="421.0" prefWidth="934.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="108.60000000000002" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" AnchorPane.topAnchor="141.0" />
+            <HBox alignment="CENTER" fillHeight="false" layoutX="14.0" layoutY="141.0" prefHeight="421.0" prefWidth="990.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="109.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="141.0" />
          </children>
       </AnchorPane>
    </children>

@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.model.MarketPlace.Favorite;
+import pidev.javafx.tools.UserController;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,12 +30,13 @@ public class CrudFavorite {
 
     public ObservableList<Favorite> selectItems() {
         Favorite favorite = null;
-        String sql = "SELECT * FROM favorite ";
+        String sql = "SELECT * FROM favorite where idUser= ? ";
 
         connect = ConnectionDB.getInstance().getCnx();
         ObservableList<Favorite> favoriteList = FXCollections.observableArrayList();
         try {
             prepare = connect.prepareStatement(sql);
+            prepare.setInt( 1, UserController.getInstance().getCurrentUser().getId() );
             result = prepare.executeQuery();
             while (result.next()) {
                 favorite=new Favorite(result.getInt("idFavorite"),

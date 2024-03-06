@@ -6,6 +6,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import pidev.javafx.controller.chat.ChatController;
+import pidev.javafx.crud.user.ServiceUser;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.crud.marketplace.CrudBien;
 import pidev.javafx.crud.marketplace.CrudFavorite;
@@ -159,6 +161,7 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "add2Grid",this::add2Grid );
         EventBus.getInstance().subscribe( "updateTabProds",this::updateTabProds );
         EventBus.getInstance().subscribe( "doUpdateTabprodAfterAIverif",this::doUpdateTabprodAfterAIverif);
+        EventBus.getInstance().subscribe( "showChat",this::openChatWindow);
 
         loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
 
@@ -233,11 +236,11 @@ public class MainDashbordController implements Initializable {
 
         var openChat=new MenuItem("open chat ",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         menuBar.getMenus().get( 2 ).getItems().add(openChat);
-        openChat.setOnAction( event -> openChatWindow() );
+        openChat.setOnAction( event -> openChatWindow(new CustomMouseEvent<>( UserController.getInstance().getCurrentUser() )) );
     }
 
 
-    private void openChatWindow() {
+    private void openChatWindow(CustomMouseEvent<User> customMouseEvent) {
         Stage newStage = new Stage();
         HBox vBox=null;
         FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "/fxml/chat/seperatedChat.fxml" ));
@@ -261,28 +264,9 @@ public class MainDashbordController implements Initializable {
             newStage.setX(event.getScreenX() - xOffset);
             newStage.setY(event.getScreenY() - yOffset);
         });
-        controller.loadUsers( FXCollections.observableArrayList( new User( 1,
-                "omar",
-                "salhi",
-                "salhiomar362@gmail.com",
-                "12710434",
-                22,
-                29624921,
-                "beb saadoun",
-                Role.Citoyen,
-                "salhi",
-                        "img/marketPlace/me.png" ) ,
-                new User( 2,
-                "latifa",
-                "benzaied",
-                "latifa@gmail.com",
-                "25251400",
-                22,
-                50421001,
-                "menzah 1",
-                Role.Citoyen,
-                "benzaied",
-                        "img/marketPlace/latifa.png" ) ) );
+        var userService= new ServiceUser();
+        controller.loadUsers(FXCollections.observableArrayList(userService.getAll()));
+        controller.setUserToChatWith(customMouseEvent.getEventData() );
         newStage.setResizable( false );
         newStage.setOnCloseRequest(event -> System.exit(0));
         newStage.initStyle( StageStyle.TRANSPARENT);
@@ -290,9 +274,6 @@ public class MainDashbordController implements Initializable {
         MyTools.getInstance().showAnimation( vBox );
         newStage.show();
     }
-
-
-
 
 
     public void loadFavoriteForm(){
@@ -314,7 +295,8 @@ public class MainDashbordController implements Initializable {
 
     public void deleteFavorite(){
         if(ultraBigContainer.getChildren().size()>1){
-            ultraBigContainer.getChildren().remove(0);
+            MyTools.getInstance().deleteAnimation( ultraBigContainer.getChildren().get( 0 ),ultraBigContainer );
+            showAllProdsInfo.getChildren().clear();
         }
     }
 
@@ -385,9 +367,9 @@ public class MainDashbordController implements Initializable {
 
     public void loadSelledOrPurchsedProducts(String trasactionType){
         deleteFavorite();
-        showOrHideTabHead(false,"Purchased Products And Contracts Details");
+        showOrHideTabHead(false,trasactionType+" Products And Contracts Details");
         showAllProdsInfo.getChildren().clear();
-        ObservableList<LocalWrapper> localWrapperList= CrudLocalWrapper.getInstance().selectItemsByIdSeller(1,trasactionType);
+        ObservableList<LocalWrapper> localWrapperList= CrudLocalWrapper.getInstance().selectItemsByIdSeller(UserController.getInstance().getCurrentUser().getId(),trasactionType);
         GridPane gridPane=new GridPane();
         gridPane.setPrefWidth(showAllProdsInfo.getPrefWidth()  );
         gridPane.setAlignment( Pos.CENTER );
@@ -395,7 +377,6 @@ public class MainDashbordController implements Initializable {
         int column = 0;
         int row = 1;
         for(int i=0;i< localWrapperList.size();i++){
-
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource( "/fxml/userMarketDashbord/tarnsactionDetails.fxml" ));
             HBox hboxOfStackPane = null;
@@ -433,6 +414,7 @@ public class MainDashbordController implements Initializable {
                     val.set( true );
                 }
             } );
+
 
             int finalI = i;
             transactionDetailsController.getDownloadBtn().setOnMouseClicked( event -> MyTools.getInstance().generatePDF(localWrapperList.get( finalI ).getContract()));
@@ -545,7 +527,6 @@ public class MainDashbordController implements Initializable {
             int finalColumn = column;
             int finalI = i;
             favoriteController.getDeleteBtn().setOnMouseClicked( event -> {
-                System.out.println("one");
                 CrudFavorite.getInstance().deleteItem( customMouseEvent.getEventData().get( finalI ).getIdFavorite() );
                 refreshGridPane(gridPane4Favorite,finalFavoriteAnchorPanes,finalRow,finalColumn,2);
             });
@@ -554,7 +535,6 @@ public class MainDashbordController implements Initializable {
                 row++;
             }
             gridPane4Favorite.add(favoriteAnchorPanes, column++, row);
-
         }
     }
 
@@ -615,7 +595,7 @@ public class MainDashbordController implements Initializable {
                     );
                 } );
                 myTask.getValue().getFirst().setOnMouseClicked( event -> loadInfoItem( prod ) );
-                showAllProdsInfo.getChildren().add(0, myTask.getValue().getFirst() );
+                showAllProdsInfo.getChildren().add(myTask.getValue().getFirst() );
             } );
         });
         return myTask;

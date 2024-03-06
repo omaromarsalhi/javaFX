@@ -40,6 +40,10 @@ public class User {
         this.password=password;
     }
 
+    public User(int idUser) {
+        this.id = idUser;
+    }
+
     @Override
     public String toString() {
         return "User{" +

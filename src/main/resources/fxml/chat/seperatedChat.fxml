@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <HBox fx:id="container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.chat.ChatController">
    <children>
       <StackPane fx:id="chatStackPane" prefHeight="372.0" prefWidth="269.0" style="-fx-background-color: #ced4da;">
@@ -45,11 +44,11 @@
                         <Insets top="4.0" />
                      </VBox.margin>
                   </HBox>
-                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="314.0" prefWidth="268.0" style="-fx-background-color: #ced4da;" vbarPolicy="NEVER">
+                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="314.0" prefWidth="268.0" style="-fx-background: #ced4da;" vbarPolicy="NEVER">
                      <content>
-                        <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" prefHeight="286.0" prefWidth="257.0" spacing="6.0" style="-fx-background-color: #ced4da;">
+                        <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" prefHeight="286.0" prefWidth="243.0" spacing="6.0" style="-fx-background-color: #ced4da;">
                            <padding>
-                              <Insets bottom="20.0" right="2.0" top="10.0" />
+                              <Insets bottom="10.0" />
                            </padding>
                         </VBox>
                      </content>

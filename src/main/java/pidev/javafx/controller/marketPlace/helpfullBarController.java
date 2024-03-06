@@ -21,6 +21,7 @@ import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Favorite;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 
@@ -94,18 +95,21 @@ public class helpfullBarController implements Initializable {
     }
 
     public void showFilter(ActionEvent event){
+        String result=CrudBien.getInstance().selectMaxValues4Filter();
+        System.out.println(result);
+        String[] parts=result.split( "_" );
         filterAnchorPane.setVisible( true );
         minPriceSlider.setMin( 0 );
-        minPriceSlider.setMax(2000 );
-        minPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> minPriceL.setText(Integer.toString(observable.getValue().intValue() )+" Dt" ));
+        minPriceSlider.setMax( Float.parseFloat( parts[0]  ) );
+        minPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> minPriceL.setText(Float.toString(observable.getValue().intValue() )+" Dt" ));
 
         maxPriceSlider.setMin( 0 );
-        maxPriceSlider.setMax(2000 );
-        maxPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> maxPriceL.setText(Integer.toString(observable.getValue().intValue() )+" Dt" ));
+        maxPriceSlider.setMax(Float.parseFloat( parts[0]  ) );
+        maxPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> maxPriceL.setText(Float.toString(observable.getValue().intValue() )+" Dt" ));
 
 
         quantitySlider.setMin( 0 );
-        quantitySlider.setMax(20 );
+        quantitySlider.setMax(Float.parseFloat( parts[1]  ) );
         quantitySlider.valueProperty().addListener( (observable, oldValue, newValue) -> quantityL.setText(Integer.toString(observable.getValue().intValue() )));
 
         categoryChoice.getItems().add("ALL");
@@ -145,7 +149,7 @@ public class helpfullBarController implements Initializable {
             specifications+="__";
             specifications+=categoryChoiceResult;
 
-            Favorite favorite=new Favorite(0,1,specifications);
+            Favorite favorite=new Favorite(0, UserController.getInstance().getCurrentUser().getId(),specifications);
             CrudFavorite.getInstance().addItem(favorite);
             favorite.setIdFavorite( CrudFavorite.getInstance().selectIdLastItem());
             EventBus.getInstance().publish( "add2Grid",new CustomMouseEvent<>( FXCollections.observableArrayList(favorite)));
@@ -169,7 +173,7 @@ public class helpfullBarController implements Initializable {
             categoryChoice.setValue("ALL");
         }
         else
-            filterAnchorPane.setVisible( false );
+            EventBus.getInstance().publish( "exitFilter",event );
     }
 
 

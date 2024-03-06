@@ -105,15 +105,15 @@ public class NewLogInController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         layoutCode.setVisible(false);
-        signupBtn.setVisible(false);
-        layoutSignin.setVisible(false);
+        signinBtn.setVisible(false);
+        layoutSignup.setVisible(false);
         btnState=true;
         signinBtn.setOnMouseClicked( event -> {
-            translate(400,-300);
+            translate(-400,300);
             btnState=!btnState;
         } );
         signupBtn.setOnMouseClicked( event -> {
-            translate(400,-300);
+            translate(-400,300);
             btnState=!btnState;
         } );
         setRegEx();
@@ -137,15 +137,19 @@ public class NewLogInController implements Initializable {
         translateTransitionBlackPart.play();
 
         if(btnState)
-            yellowSide.setStyle( "-fx-background-radius: 0 10 10 0;" +
-                    "  -fx-border-radius: 0 10 10 0;" );
+            yellowSide.setStyle( "-fx-background-radius: 10 0 0 10;" +
+                    "  -fx-border-radius: 10 0 0 10;" );
         else
             yellowSide.setStyle("");
 
         translateTransitionBlackPart.setOnFinished( event -> {
 
-            layoutSignin.setVisible(!btnState);
-            layoutSignup.setVisible(btnState);
+            layoutSignin.setVisible(btnState);
+            layoutSignup.setVisible(!btnState);
+
+            signinBtn.setVisible(!btnState);
+            signupBtn.setVisible(btnState);
+
 
             fadeTransition.setToValue( 1 );
             fadeTransition.play();

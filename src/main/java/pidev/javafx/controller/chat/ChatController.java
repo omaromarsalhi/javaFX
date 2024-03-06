@@ -1,6 +1,8 @@
 package pidev.javafx.controller.chat;
 
 import javafx.animation.FadeTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,10 +23,14 @@ import pidev.javafx.crud.marketplace.CrudChat;
 import pidev.javafx.model.chat.Chat;
 import pidev.javafx.model.user.User;
 import pidev.javafx.tools.marketPlace.ChatClient;
+import pidev.javafx.tools.marketPlace.MyTools;
 import pidev.javafx.tools.marketPlace.ResultHolder;
 
 import java.io.*;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -117,36 +123,47 @@ public class ChatController implements Initializable {
 
         searchTextField.setStyle( "-fx-border-radius: 10 0 0 10;" +
                 "-fx-border-color: transparent ;");
+
+
+
+        chatContainer.heightProperty().addListener( new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                scroll.setVvalue( (Double)newValue );
+            }
+        } );
     }
 
     public void initliazeData(){
         ChatClient.getInstance().establishConnection();
         animTimer = new Timer();
-
         ChatClient.getInstance().reciveMessagesFromOtherUser(chatContainer,resultHolder);
     }
 
 
     @FXML
     public void onSendMsgBtnClicked(){
+        ChatClient.getInstance().isUserConnected(reciver.getId());
+        try {
+            isConnected=Boolean.parseBoolean(resultHolder.getResult());
+        } catch (InterruptedException e) {
+            throw new RuntimeException( e );
+        }
+
         if(chosenFiles==null) {
-            amIAReciver=false;
-            ChatClient.getInstance().isUserConnected(reciver.getId());
-            try {
-                isConnected=Boolean.parseBoolean(resultHolder.getResult());
-            } catch (InterruptedException e) {
-                throw new RuntimeException( e );
-            }
-            System.out.println(isConnected);
             if(isConnected)
                 ChatClient.getInstance().sendMessages( "@" + reciver.getId() + "_" + messageTextField.getText() );
-            chatContainer.getChildren().add( createTextChatBox( messageTextField.getText(), false ) );
-            CrudChat.getInstance().addItem( new Chat( 0, UserController.getInstance().getCurrentUser(), reciver, messageTextField.getText(),isConnected) );
+            chatContainer.getChildren().add( createTextChatBox( messageTextField.getText(), false,"" ) );
+            CrudChat.getInstance().addItem( new Chat( 0, UserController.getInstance().getCurrentUser(), reciver, messageTextField.getText(),isConnected,null) );
             resultHolder.setResult( null );
         }
         else {
             for (int i = 0; i < chosenFiles.size(); i++) {
-                chatContainer.getChildren().add( createImageChatBox( chosenFiles.get( i ).getAbsolutePath(), amIAReciver ) );
+                String imgPath= MyTools.getInstance().getPathAndSaveIMG(chosenFiles.get( i ).getAbsolutePath());
+                if(isConnected)
+                    ChatClient.getInstance().sendMessages( "@" + reciver.getId() + "_" + imgPath );
+                chatContainer.getChildren().add( createImageChatBox(imgPath , false, "") );
+                CrudChat.getInstance().addItem( new Chat( 0, UserController.getInstance().getCurrentUser(), reciver, imgPath,isConnected,null) );
             }
             chosenFiles=null;
         }
@@ -200,7 +217,14 @@ public class ChatController implements Initializable {
 
     public void loadUsers(ObservableList<User> users){
         for(int i=0;i<users.size();i++)
-            usersBox.getChildren().add( createUserForAdd(users.get( i )));
+            if(users.get( i ).getId()!=UserController.getInstance().getCurrentUser().getId())
+                usersBox.getChildren().add(createUserForAdd(users.get( i )));
+        setSelectedUserData(users.get( 0 ));
+    }
+
+    public void setUserToChatWith(User user){
+        if(user.getId()!=UserController.getInstance().getCurrentUser().getId())
+            setSelectedUserData(user);
     }
 
 
@@ -210,16 +234,32 @@ public class ChatController implements Initializable {
         userName.setText( user.getFirstname().toUpperCase()+" "+user.getLastname().toUpperCase() );
         userName.setMinHeight( Region.USE_PREF_SIZE);
         connState.setImage(new Image( "file:src/main/resources/namedIcons/button.png" ,12,12,true,true));
+        rettriveConversation();
+    }
+
+
+    public void rettriveConversation(){
+        LocalDate date=LocalDate.of(0, 1, 1);
+        for(Chat chat:CrudChat.getInstance().selectItems(reciver.getId())){
+            if(chat.getMessage().startsWith( "/usersImg/" ))
+                chatContainer.getChildren().add( createImageChatBox(chat.getMessage(),UserController.getInstance().getCurrentUser().getId()!=chat.getUserSender().getId(),chat.getTimestamp().toLocalDateTime().format( DateTimeFormatter.ofPattern("hh:mm"))) );
+            else
+                chatContainer.getChildren().add( createTextChatBox(chat.getMessage(),UserController.getInstance().getCurrentUser().getId()!=chat.getUserSender().getId(),chat.getTimestamp().toLocalDateTime().format( DateTimeFormatter.ofPattern("hh:mm"))) );
+            LocalDate firstDate = LocalDate.parse( chat.getTimestamp().toLocalDateTime().format( DateTimeFormatter.ofPattern("yyyy-MM-dd")) ); // Your first timestamp
+            if(firstDate.isBefore( LocalDate.now() )&&firstDate.isAfter( date )) {
+                Label label=new Label(firstDate.toString());
+                label.setMinHeight(20);
+                chatContainer.getChildren().add(label);
+                date=firstDate;
+            }
+        }
     }
 
 
 
-
-    public static HBox createTextChatBox(String text,boolean changeOrder){
+    public static HBox createTextChatBox(String text,boolean changeOrder,String time){
         HBox msgBox=new HBox();
-//        msgBox.setPrefWidth( chatContainer.getPrefWidth());
 
-//        msgBox.setPadding( new Insets( 0,0,0,10 ) );
         msgBox.setSpacing( 6 );
 
 
@@ -237,7 +277,7 @@ public class ChatController implements Initializable {
         timeLabel.setStyle( "-fx-font-size: 10;");
         timeLabel.setMinSize( 25,15 );
 
-        timeLabel.setText( LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")) );
+        timeLabel.setText( (time.isEmpty())?LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")):time );
 
         ImageView usernIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,false,false) );
 //        ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/namedIcons/miniTrash.png",16,16,true,true) );
@@ -255,54 +295,16 @@ public class ChatController implements Initializable {
     }
 
 
-    public HBox createImageChatBox(String path,boolean changeOrder){
+    public static HBox createImageChatBox(String path,boolean changeOrder,String time){
         HBox msgBox=new HBox();
-        msgBox.setPrefWidth( chatContainer.getPrefWidth());
-//        msgBox.setStyle( "-fx-background-color: red" );
-        msgBox.setAlignment( Pos.BOTTOM_RIGHT );
-        msgBox.setPadding( new Insets( 0,0,0,10 ) );
-        msgBox.setSpacing( 4 );
-
-
-        ImageView image=new ImageView( new Image(path,80,100,true,true) );
-//        msgLabel.setStyle( "-fx-background-color: blue" );
-        image.setStyle( "-fx-background-radius: 10;" +
-                "-fx-border-radius: 10;");
-
-        Label timeLabel=new Label();
-        timeLabel.setStyle( "-fx-font-size: 10;");
-        timeLabel.setMinSize( 25,15 );
-
-        timeLabel.setText( LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")) );
-
-        ImageView usernIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,false,false) );
-        ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,true,true) );
-        setMargin(usernIcon,new Insets( 0,0,4,10 ));
-        setMargin(deleteIcon,new Insets( 0,0,4,10 ));
-
-
-        if(!changeOrder) {
-            msgBox.setAlignment( Pos.BOTTOM_RIGHT );
-            msgBox.getChildren().addAll(deleteIcon, image, timeLabel, usernIcon );
-        }
-        else {
-            msgBox.setAlignment( Pos.BOTTOM_LEFT );
-            msgBox.getChildren().addAll(deleteIcon, usernIcon, timeLabel, image );
-        }
-        return msgBox;
-    }
-
-
-    public static HBox createImageChatBoxFromBytes(byte[] bytes, boolean changeOrder){
-        HBox msgBox=new HBox();
+        msgBox.setMaxHeight( 100 );
 //        msgBox.setPrefWidth( chatContainer.getPrefWidth());
 //        msgBox.setStyle( "-fx-background-color: red" );
         msgBox.setAlignment( Pos.BOTTOM_RIGHT );
-        msgBox.setPadding( new Insets( 0,0,0,10 ) );
+//        msgBox.setPadding( new Insets( 0,0,0,10 ) );
         msgBox.setSpacing( 4 );
 
-
-        ImageView image=new ImageView( new Image(new ByteArrayInputStream(bytes),80,100,true,true) );
+        ImageView image=new ImageView( new Image("file:src/main/resources"+path,80,100,true,true) );
 //        msgLabel.setStyle( "-fx-background-color: blue" );
         image.setStyle( "-fx-background-radius: 10;" +
                 "-fx-border-radius: 10;");
@@ -311,12 +313,12 @@ public class ChatController implements Initializable {
         timeLabel.setStyle( "-fx-font-size: 10;");
         timeLabel.setMinSize( 25,15 );
 
-        timeLabel.setText( LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")) );
+        timeLabel.setText( (time.isEmpty())?LocalTime.now().format( DateTimeFormatter.ofPattern("hh:mm")):time );
 
         ImageView usernIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,false,false) );
         ImageView deleteIcon=new ImageView( new Image("file:src/main/resources/img/me.png",16,16,true,true) );
-        setMargin(usernIcon,new Insets( 0,0,4,10 ));
-        setMargin(deleteIcon,new Insets( 0,0,4,10 ));
+        setMargin(usernIcon,new Insets( 0,0,4,2 ));
+//        setMargin(deleteIcon,new Insets( 0,0,4,10 ));
 
 
         if(!changeOrder) {
@@ -329,6 +331,8 @@ public class ChatController implements Initializable {
         }
         return msgBox;
     }
+
+
 
 
     @FXML
@@ -376,42 +380,42 @@ public class ChatController implements Initializable {
             ancherPaneOfgridPaneMain.setVisible( true );
             fadeTransition.setFromValue(0);
             fadeTransition.setToValue(1);
-            emojie00.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png" ,amIAReciver));
-                scroll.setVvalue( 1 );
-            });
-            emojie01.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/in-love.png",amIAReciver ));
-                scroll.setVvalue( 1 );
-            } );
-            emojie10.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png"  ,amIAReciver));
-                scroll.setVvalue( 1 );
-            });
-            emojie02.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/party.png"  ,amIAReciver));
-                scroll.setVvalue( 1 );
-            });
-            emojie20.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/smiling.png" ,amIAReciver ));
-                scroll.setVvalue( 1 );
-            });
-            emojie21.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/nerd.png"  ,amIAReciver));
-                scroll.setVvalue( 1 );
-            });
-            emojie22.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/surprised.png" ,amIAReciver ));
-                scroll.setVvalue( 1 );
-            });
-            emojie12.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/sad.png" ,amIAReciver ));
-                scroll.setVvalue( 1 );
-            });
-            emojie11.setOnMouseClicked( event -> {
-                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/laugh.png" ,amIAReciver ));
-                scroll.setVvalue( 1 );
-            });
+//            emojie00.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png" ,amIAReciver));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie01.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/in-love.png",amIAReciver ));
+//                scroll.setVvalue( 1 );
+//            } );
+//            emojie10.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/angry.png"  ,amIAReciver));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie02.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/party.png"  ,amIAReciver));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie20.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/smiling.png" ,amIAReciver ));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie21.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/nerd.png"  ,amIAReciver));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie22.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/surprised.png" ,amIAReciver ));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie12.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/sad.png" ,amIAReciver ));
+//                scroll.setVvalue( 1 );
+//            });
+//            emojie11.setOnMouseClicked( event -> {
+//                chatContainer.getChildren().add(createImageChatBox( "file:src/main/resources/emojies/laugh.png" ,amIAReciver ));
+//                scroll.setVvalue( 1 );
+//            });
             fadeTransition.play();
         }
 

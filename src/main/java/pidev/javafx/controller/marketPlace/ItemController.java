@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
+import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
@@ -116,45 +117,41 @@ public class ItemController implements Initializable {
 
     public HBox createItemsBtns(){
         Button add2Card= new Button();
-        Button trade = new Button();
         Button info= new Button();
 
         HBox hbox=new HBox();
 
-        trade.setPrefWidth( 42 );
         info.setPrefWidth( 42 );
-        add2Card.setPrefWidth( 42 );
-
-        trade.setMinHeight( 32 );
         info.setMinHeight( 32 );
-        add2Card.setMinHeight( 32 );
 
-
-        Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/newBuy.png" )),24,24,true,true );
-        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/lending.png" )),24,24,true,true );
         Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/information.png" )),24,24,true,true );
-
-        add2Card.setGraphic( new ImageView( img1 ));
-        trade.setGraphic( new ImageView( img2 ));
         info.setGraphic( new ImageView( img3 ));
 
-
-        add2Card.setOnMouseClicked( event -> {
-            CustomMouseEvent<Product> customEvent = new CustomMouseEvent<>(bien);
-            EventBus.getInstance().publish( "laodCheckOut",customEvent);
-        });
         info.setOnMouseClicked( event -> {
             CustomMouseEvent<Product> customMouseEvent=new CustomMouseEvent<>( bien );
             EventBus.getInstance().publish( "showAndSetItemInfo",customMouseEvent );
         } );
 
-        hbox.getChildren().addAll( add2Card,trade,info );
-        hbox.setSpacing( 10 );
+        if(UserController.getInstance().getCurrentUser().getId()!=bien.getIdUser()){
+            add2Card.setMinHeight( 32 );
+            add2Card.setPrefWidth( 42 );
+            Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/newBuy.png" )),24,24,true,true );
+            add2Card.setGraphic( new ImageView( img1 ));
+            add2Card.setOnMouseClicked( event -> {
+                CustomMouseEvent<Product> customEvent = new CustomMouseEvent<>(bien);
+                EventBus.getInstance().publish( "loadCheckout",customEvent);
+            });
+            hbox.getChildren().addAll( add2Card,info );
+        }
+        else
+            hbox.getChildren().add( info );
+
+
+        hbox.setSpacing( 25 );
         hbox.setAlignment(Pos.CENTER);
         hbox.setId( "itemInfo" );
         hbox.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         return hbox;
     }
-
 
 }

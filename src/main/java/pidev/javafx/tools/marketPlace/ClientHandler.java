@@ -32,17 +32,11 @@ class ClientHandler extends Thread {
                     String[] parts = clientMessage.split( "_", 2 );
                     String recipient = parts[0].substring( 1 );
                     String message = parts[1];
-                    if(message.equals("uploadImage")) {
-
-                    }
-                    else
-                        ChatServer.sendMessageToUser( Integer.parseInt( recipient ), message );
+                    ChatServer.sendMessageToUser( Integer.parseInt( recipient ), message );
                 } else {
                     String[] parts = clientMessage.split( "__", 2 );
                     if (parts[0].equals( "[o^^{[|{|>" )) {
                         writer.println( ChatServer.isUserConnected( Integer.parseInt( parts[1] ) ) );
-                        System.out.println("chat server");
-                        System.out.println(parts[1]);
                     }
                     else if (parts[0].equals( "[|@><{" ))
                         ChatServer.closeConnection(Integer.parseInt(parts[1]));

@@ -16,12 +16,13 @@ public class Chat {
     public Chat() {
     }
 
-    public Chat(int idChat, User userSender, User userReciver, String message, boolean msgState) {
+    public Chat(int idChat, User userSender, User userReciver, String message, boolean msgState, Timestamp timestamp) {
         this.idChat = idChat;
         this.userSender = userSender;
         this.userReciver = userReciver;
         this.message = message;
         this.msgState = msgState;
+        this.timestamp = timestamp;
     }
 
     public int getIdChat() {

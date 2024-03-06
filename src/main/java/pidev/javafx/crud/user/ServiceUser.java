@@ -45,6 +45,7 @@ public class ServiceUser implements IserviceUser<User> {
             ps.setInt(1, idUser);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                int id = rs.getInt("idUser");
                 String firstname = rs.getString("firstName");
                 String lastName = rs.getString("lastname");
                 int age = rs.getInt("age");
@@ -58,8 +59,7 @@ public class ServiceUser implements IserviceUser<User> {
                 String photos = rs.getString("photos");
                 String gender = rs.getString("gender");
                 String  email = rs.getString("email");
-                user = new User(firstname, email, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
-                System.out.println(user);
+                user = new User(id,firstname, email,"", cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -213,6 +213,7 @@ public class ServiceUser implements IserviceUser<User> {
             ResultSet rs = stmt.executeQuery(req);
             while (((ResultSet) rs).next()) {
                 User user = new User();
+                user.setId(rs.getInt("idUser"));
                 user.setFirstname(rs.getString("firstName"));
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));

@@ -135,6 +135,11 @@ public class NewAccountController implements Initializable {
 
         menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
 
+        var openChat=new MenuItem("Open Chat",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+
+        menuBar.getMenus().get( 4 ).getItems().addAll(openChat);
+        openChat.setOnAction( event -> EventBus.getInstance().publish( "showChat",event ) );
+
 //        editDetails.fire();
     }
 

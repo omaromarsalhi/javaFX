@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.ChatClient;
@@ -81,6 +82,16 @@ public class MainWindowController implements Initializable {
         MyTools.getInstance().setTextNotif(textNotif);
         MyTools.getInstance().showAndHideAnimation( MyTools.getInstance().getNotifHbox(),0,0 );
         notifHbox.setVisible( true );
+
+
+
+        StackPane dashbord = null;
+        try {
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(dashbord);
     }
 
 
@@ -210,18 +221,18 @@ public class MainWindowController implements Initializable {
         System.exit(0);
     }
 
-//    @FXML
-//    void onReduireBtnClicked(ActionEvent event) {
-//        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
-//        currentStage.setIconified(true);
-//    }
+    @FXML
+    void onReduireBtnClicked(ActionEvent event) {
+        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
+        currentStage.setIconified(true);
+    }
 
-//    @FXML
-//    void onAgrendirBtnClicked(ActionEvent event) {
-//        Stage currentStage = (Stage) agrendirBtn.getScene().getWindow();
-//        boolean etatFenetre = currentStage.isMaximized();
-//        currentStage.setMaximized(!etatFenetre);
-//    }
+    @FXML
+    void onAgrendirBtnClicked(ActionEvent event) {
+        Stage currentStage = (Stage) agrendirBtn.getScene().getWindow();
+        boolean etatFenetre = currentStage.isMaximized();
+        currentStage.setMaximized(!etatFenetre);
+    }
 
 //    @FXML
 //    void onBlogClicked(MouseEvent event) throws IOException {

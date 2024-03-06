@@ -29,6 +29,7 @@ public class ChatClient {
     }
 
     public void isUserConnected(int userID){
+        System.out.println(" chat client "+userID);
         writer.println("[o^^{[|{|>__"+userID);
     }
 
@@ -61,12 +62,12 @@ public class ChatClient {
                         System.out.println("chat server result "+parts[1]);
                         resultHolder.setResult(parts[1]);
                     }
-                    else if(recivedMessage.equals( "uploadImage" )){
-                        chatContainer.getChildren().add( ChatController.createImageChatBoxFromBytes(bos.toByteArray(), true ) );
-                    }
                     else {
                         Platform.runLater( () -> {
-                            chatContainer.getChildren().add( ChatController.createTextChatBox( recivedMessage, true ) );
+                            if(recivedMessage.startsWith( "/usersImg/" )&&recivedMessage.contains( ".png" ))
+                                chatContainer.getChildren().add( ChatController.createImageChatBox( recivedMessage, true, "" ) );
+                            else
+                                chatContainer.getChildren().add( ChatController.createTextChatBox( recivedMessage, true,"" ) );
                         } );
                     }
                 }
@@ -79,10 +80,6 @@ public class ChatClient {
     public void sendMessages(String msg) {
             writer.println(msg);
     }
-//
-//    public void sendImageBytes(Byte[] bytes) {
-//        writer.println(bytes);
-//    }
 
 
 

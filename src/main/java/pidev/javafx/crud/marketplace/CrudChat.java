@@ -5,6 +5,9 @@ import javafx.collections.ObservableList;
 import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.chat.Chat;
+import pidev.javafx.model.user.User;
+import pidev.javafx.tools.UserController;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -54,6 +57,11 @@ public class CrudChat implements CrudInterface<Chat> {
 
     }
 
+    @Override
+    public ObservableList<Chat> selectItems() {
+        return null;
+    }
+
 
     public void deleteItem(int id) {
 
@@ -71,30 +79,33 @@ public class CrudChat implements CrudInterface<Chat> {
     }
 
 
-    @Override
-    public ObservableList<Chat> selectItems() {
-//        Chat chat = null;
-//        String sql = "SELECT * FROM chat  where isDeleted=false order by idProd desc";
-//
-//        connect = ConnectionDB.getInstance().getCnx();
-//        ObservableList<Chat> chatList = FXCollections.observableArrayList();
-//        try {
-//            prepare = connect.prepareStatement(sql);
-//            result = prepare.executeQuery();
-//            while (result.next()) {
-//                chat=new Chat(result.getInt("idChat"),
-//                        result.getInt("idSender"),
-//                        result.getInt("idReciver"),
-//                        result.getString("messge"),
-//                        result.getBoolean("msgState"),
-//                        result.getTimestamp( "timestamp"));
-//                chatList.add(chat);
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Error selecting items: " + e.getMessage());
-//        }
-//        return chatList;
-        return null;
+
+    public ObservableList<Chat> selectItems(int id) {
+        Chat chat = null;
+        String sql = "SELECT * FROM chat   where (idSender= ? and idReciver= ?) or (idReciver= ? and idSender= ?)";
+
+        connect = ConnectionDB.getInstance().getCnx();
+        ObservableList<Chat> chatList = FXCollections.observableArrayList();
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setInt(1, UserController.getInstance().getCurrentUser().getId() );
+            prepare.setInt(2, id );
+            prepare.setInt(3, UserController.getInstance().getCurrentUser().getId() );
+            prepare.setInt(4, id );
+            result = prepare.executeQuery();
+            while (result.next()) {
+                chat=new Chat(result.getInt("idChat"),
+                        new User(result.getInt("idSender")),
+                        new User(result.getInt("idReciver")),
+                        result.getString("message"),
+                        result.getBoolean("msgState"),
+                        result.getTimestamp( "timestamp"));
+                chatList.add(chat);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error selecting items: " + e.getMessage());
+        }
+        return chatList;
     }
 
 
