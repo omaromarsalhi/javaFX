@@ -1,9 +1,6 @@
 package pidev.javafx.controller.reclamation;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -16,25 +13,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.crud.reclamation.ServiceReponse;
 import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.model.reclamation.Reponse;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
-import pidev.javafx.tools.reclamation.ReclamationController;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ResourceBundle;
-
 
 public class ReponseFormShowController implements Initializable {
 
@@ -69,7 +57,19 @@ public class ReponseFormShowController implements Initializable {
      Reclamation recR = new Reclamation();
 
 
+    //private Predictor<String, Classifications> predictor;
 
+
+//    public void analyzeText() {
+//        String text = Pdescretion1.getText();
+//        Classifications classifications;
+//        try {
+//            classifications = predictor.predict(text);
+//            System.out.println("The sentiment of the text is: " + classifications);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         formLayoutBeforRegexCheck="-fx-border-color:black;"+"-fx-border-width: 2;" +
@@ -154,5 +154,7 @@ public class ReponseFormShowController implements Initializable {
         date1.setText(recR.getDate());
         Pname1.setText(recR.getSubject());
         Pdescretion1.setText(recR.getDescription());
+
     }
+
 }

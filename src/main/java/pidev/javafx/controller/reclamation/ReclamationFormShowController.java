@@ -140,7 +140,7 @@ public class ReclamationFormShowController implements Initializable {
         date1.setText(rec.getDate());
         Pname1.setText(rec.getDescription());
         Pdescretion1.setText(rec.getDescription());
-//        generatePdf(rec);
+       generatePdf(rec);
     }
 
 
