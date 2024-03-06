@@ -125,6 +125,9 @@ public class ReponseFormShowController implements Initializable {
     }
 
     public void onAddClicked(MouseEvent event) {
+        String pythonOutput = CallPythonFromJava.run();
+        reponsetext.setText(pythonOutput);
+        System.out.println(pythonOutput);
         Reponse reponse =new Reponse(
                 0,
                 recR.getIdReclamation(),
