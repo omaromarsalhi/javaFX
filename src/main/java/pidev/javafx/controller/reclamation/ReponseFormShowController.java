@@ -93,30 +93,36 @@ public class ReponseFormShowController implements Initializable {
         Button addProd1= new Button();
         Button clearProd = new Button();
         Button cancel= new Button();
+        Button voice= new Button();
 
         buttonsBox =new HBox();
 
         addProd1.setPrefWidth( 50 );
         clearProd.setPrefWidth( 50 );
         cancel.setPrefWidth( 50 );
+        voice.setPrefWidth( 50 );
 
         addProd1.setPrefHeight( 32 );
         clearProd.setPrefHeight( 32 );
         cancel.setPrefHeight( 32 );
+        voice.setPrefHeight( 32 );
 
         Image  img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/tab2.png" ) ));
         Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/broom.png" )));
         Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/paper.png" )));
+        Image img4= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/update16C.png" )));
 
         addProd1.setGraphic( new ImageView( img1 ));
         clearProd.setGraphic( new ImageView( img2 ));
         cancel.setGraphic( new ImageView( img3 ));
+        voice.setGraphic( new ImageView( img4 ));
 
         addProd1.setOnMouseClicked( this::onAddClicked);
+        voice.setOnMouseClicked(this::voice);
 
         cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitFormUser",event ) );
 
-        buttonsBox.getChildren().addAll( addProd1,clearProd,cancel );
+        buttonsBox.getChildren().addAll( addProd1,clearProd,cancel,voice );
         buttonsBox.setSpacing( 20 );
         buttonsBox.setAlignment( Pos.CENTER);
         buttonsBox.setId( "itemInfo" );
@@ -125,9 +131,6 @@ public class ReponseFormShowController implements Initializable {
     }
 
     public void onAddClicked(MouseEvent event) {
-        String pythonOutput = CallPythonFromJava.run();
-        reponsetext.setText(pythonOutput);
-        System.out.println(pythonOutput);
         Reponse reponse =new Reponse(
                 0,
                 recR.getIdReclamation(),
@@ -135,6 +138,14 @@ public class ReponseFormShowController implements Initializable {
         );
             ServiceReponse.getInstance().ajouter(reponse);
     }
+    public void voice(MouseEvent event) {
+        String pythonOutput = CallPythonFromJava.run();
+        System.out.println(pythonOutput);
+        if (!"Sorry, I did not get that".equals(pythonOutput)) {
+            reponsetext.setText(pythonOutput);
+        }
+    }
+
     void first_fonction( CustomMouseEvent<Reclamation> event ) {
         recR =event.getEventData();
         System.out.println(recR.getIdReclamation());
