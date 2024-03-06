@@ -1,8 +1,7 @@
 
 <h1 align="center">
   <br>
-  <a href='https://postimg.cc/rz46fVNJ' target='_blank'><img src='https://i.postimg.cc/rz46fVNJ/image-2024-03-06-185249833.png' border='0' alt='image-2024-03-06-185249833'/><img 
-" alt="Markdownify" width="200"></a>
+  <a href='https://postimg.cc/rz46fVNJ' target='_blank'><img src='https://i.postimg.cc/rz46fVNJ/image-2024-03-06-185249833.png' border='0' alt='image-2024-03-06-185249833'/></a>
   <br>
   Markdownify
   <br>
