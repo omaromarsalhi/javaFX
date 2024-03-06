@@ -121,7 +121,6 @@ public class MainDashbordController implements Initializable {
         secondInterface.setVisible( false );
         userImage.setImage( new Image( "file:src/main/resources/"+ UserController.getInstance().getCurrentUser().getPhotos() ) );
         username.setText(  UserController.getInstance().getCurrentUser().getFirstname().toUpperCase() );
-        userlasteName.setText(UserController.getInstance().getCurrentUser().getLastname().toUpperCase()  );
         userEmail.setText(UserController.getInstance().getCurrentUser().getEmail() );
 
 

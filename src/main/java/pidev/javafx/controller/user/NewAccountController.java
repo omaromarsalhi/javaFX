@@ -1,4 +1,6 @@
 package pidev.javafx.controller.user;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +15,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 //import pidev.javafx.controller.blog.BlogController;
+import javafx.stage.Stage;
 import pidev.javafx.controller.reclamation.ReclamationBoxController;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
+import pidev.javafx.crud.user.ServiceUser;
 import pidev.javafx.model.blog.Post;
 import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.tools.UserController;
@@ -34,6 +38,8 @@ public class NewAccountController implements Initializable {
 
     @FXML
     private AnchorPane accountSection;
+    @FXML
+    private AnchorPane loadingPage;
     @FXML
     private VBox blogSection;
     @FXML
@@ -67,18 +73,10 @@ public class NewAccountController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         secondInterface.setVisible( false );
-        VBox blog = null;
-//        AnchorPane account = null;
+        loadingPage.setVisible( false );
         HBox reclamations = null;
-        try {
-            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/resizedBlog.fxml" )  );
-            scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);
-            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/resizedPost.fxml" ) );
 
-        } catch (IOException e) {
-            throw new RuntimeException( e );
-        }
-        blogSection.getChildren().add(blog);
+        loadBlog();
         for (Reclamation reclamationData: ServiceReclamation.getInstance().getAll()){
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
@@ -95,12 +93,39 @@ public class NewAccountController implements Initializable {
 
         EventBus.getInstance().subscribe( "showReclamation",this::showDetailsReclamation );
         EventBus.getInstance().subscribe( "exitFormUser",this::onExitFormBtnClicked );
+        EventBus.getInstance().subscribe( "loadBlog", event -> loadBlog() );
+
+
     }
 
 
+    public void loadBlog(){
+
+        blogSection.getChildren().clear();
+        VBox blog = null;
+        try {
+            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/resizedBlog.fxml" )  );
+            scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);
+            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/resizedPost.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        blogSection.getChildren().add(blog);
+    }
+
     public void setMenueBar(){
+
+        var addReclamation=new MenuItem("Add Reclamation",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+        addReclamation.setOnAction( event -> showFormReclamation() );
+        menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
+
+
         var editDetails=new MenuItem("Edit My Details",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
         var showDetails=new MenuItem("Show My Details",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+
+        var posts=new MenuItem("My Posts",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+        menuBar.getMenus().get( 2 ).getItems().addAll(posts);
+        posts.setOnAction( event -> loadBlog() );
 
 
         Menu advancedSettings = new Menu("Advanced Settings",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
@@ -123,24 +148,32 @@ public class NewAccountController implements Initializable {
         editDetails.setOnAction( event -> showFormUser("editDetails") );
         showDetails.setOnAction( event -> showFormUser("showDetails") );
 
+
+        disconnect.setOnAction( event ->disconnetcThread().start());
+        deleteAccount.setOnAction( event -> {
+            ServiceUser serviceUser = new ServiceUser();
+            serviceUser.supprimer(Integer.parseInt(UserController.getInstance().getCurrentUser().getCin()));
+            disconnetcThread().start();
+        });
+
+
+
         updatePassword.setOnAction( event -> showFormadvancedSettings("updatePassword") );
         updateEmail.setOnAction( event -> showFormadvancedSettings("updateEmail") );
 
         menuBar.getMenus().get( 3 ).getItems().addAll(editDetails,showDetails,advancedSettings);
 
 
-        var addReclamation=new MenuItem("Add Reclamation",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
 
-        addReclamation.setOnAction( event -> showFormReclamation() );
-
-        menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
 
         var openChat=new MenuItem("Open Chat",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
 
         menuBar.getMenus().get( 4 ).getItems().addAll(openChat);
         openChat.setOnAction( event -> EventBus.getInstance().publish( "showChat",event ) );
 
-//        editDetails.fire();
+
+        if(UserController.getInstance().getCurrentUser().getLastname()==null)
+            editDetails.fire();
     }
 
 
@@ -185,8 +218,7 @@ public class NewAccountController implements Initializable {
     }
 
 
-    public void showFormadvancedSettings(String usage)
-    {
+    public void showFormadvancedSettings(String usage) {
         StackPane form=null;
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("/fxml/user/advancedSettings.fxml" ));
@@ -219,5 +251,27 @@ public class NewAccountController implements Initializable {
         MyTools.getInstance().showAnimation( form );
     }
 
+
+
+    private Thread disconnetcThread() {
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                firstinterface.setOpacity( 0.6 );
+                loadingPage.setVisible( true );
+                Thread.sleep(3000);
+                return null;
+            }
+        };
+        myTask.setOnSucceeded(e -> {
+            Platform.runLater( ()->{
+//        ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
+                Stage stage=null;
+                stage=(Stage) blogSection.getScene().getWindow();
+                stage.close();
+            } );
+        });
+        return new Thread(myTask);
+    }
 
 }
