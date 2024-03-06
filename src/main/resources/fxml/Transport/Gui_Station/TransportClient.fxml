@@ -15,48 +15,9 @@
 <AnchorPane fx:id="mapAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.MapStationController">
    <children>
       <WebView fx:id="webView" prefHeight="670.0" prefWidth="1040.0" />
-      <AnchorPane fx:id="listAnchor" layoutX="39.0" layoutY="14.0" prefHeight="618.0" prefWidth="388.0">
+      <AnchorPane fx:id="container2" layoutX="39.0" layoutY="14.0" prefHeight="618.0" prefWidth="388.0">
          <children>
-            <AnchorPane fx:id="mainanchor" prefHeight="86.0" prefWidth="388.0" styleClass="ListeTrnsports" stylesheets="@../../../style/transport/Transport.css">
-               <children>
-                  <HBox alignment="CENTER" prefHeight="86.0" prefWidth="388.0" spacing="10.0">
-                     <children>
-                        <ImageView fitHeight="43.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../img_transport/tunisie.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER">
-                           <children>
-                              <Label prefHeight="42.0" prefWidth="226.0" text="Station Bab Alioua" textFill="#daab25">
-                                 <font>
-                                    <Font name="Souliyo Unicode" size="26.0" />
-                                 </font>
-                              </Label>
-                              <Label text="  Denden/Tunis" textFill="WHITE">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                        <Button mnemonicParsing="false" onAction="#Onclick" prefHeight="29.0" prefWidth="39.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../img_transport/down_white.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-               </children>
-            </AnchorPane>
-         </children></AnchorPane>
-      <AnchorPane fx:id="mainanchor1" layoutX="39.0" layoutY="14.0" prefHeight="618.0" prefWidth="388.0">
-         <children>
-            <AnchorPane fx:id="mainanchor1" prefHeight="86.0" prefWidth="388.0" styleClass="ListeTrnsports" stylesheets="@../../../style/transport/Transport.css">
+            <AnchorPane fx:id="listAnchor" prefHeight="618.0" prefWidth="388.0" styleClass="ListeTrnsports" stylesheets="@../../../style/transport/Transport.css" visible="false">
                <children>
                   <HBox alignment="CENTER" prefHeight="86.0" prefWidth="388.0" spacing="10.0">
                      <children>
@@ -94,7 +55,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <HBox fx:id="searchHbox" alignment="CENTER_RIGHT" layoutX="726.0" layoutY="14.0" prefHeight="32.0" prefWidth="279.0" style="-fx-background-color: transparent;" stylesheets="@../../../style/marketPlace/toolBarStyle.css">
+      <HBox fx:id="searchHbox" alignment="CENTER_RIGHT" layoutX="735.0" layoutY="14.0" prefHeight="32.0" prefWidth="279.0" style="-fx-background-color: transparent;" stylesheets="@../../../style/marketPlace/toolBarStyle.css" AnchorPane.topAnchor="17.0">
          <children>
             <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="38.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
             <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="34.0">
@@ -114,5 +75,44 @@
             <Insets right="10.0" />
          </padding>
       </HBox>
+      <AnchorPane fx:id="container1" layoutX="39.0" layoutY="14.0" prefHeight="86.0" prefWidth="388.0">
+         <children>
+            <AnchorPane fx:id="mainanchor" prefHeight="86.0" prefWidth="388.0" styleClass="ListeTrnsports" stylesheets="@../../../style/transport/Transport.css" visible="false">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="86.0" prefWidth="388.0" spacing="10.0">
+                     <children>
+                        <ImageView fitHeight="43.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../img_transport/tunisie.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <Label fx:id="stationName" prefHeight="42.0" prefWidth="226.0" text="Station Bab Alioua" textFill="#daab25">
+                                 <font>
+                                    <Font name="Souliyo Unicode" size="26.0" />
+                                 </font>
+                              </Label>
+                              <Label text="  Denden/Tunis" textFill="WHITE">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <Button mnemonicParsing="false" onAction="#Onclick" prefHeight="29.0" prefWidth="39.0" style="-fx-background-color: transparent;">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../img_transport/down_white.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </AnchorPane>
+         </children></AnchorPane>
    </children>
 </AnchorPane>

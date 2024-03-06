@@ -24,6 +24,8 @@ import pidev.javafx.model.Transport.Transport;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.transport.DataHolder;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -68,6 +70,12 @@ public class MapStationController implements Initializable {
     @FXML
     private Label stationName1;
 
+    @FXML
+    private AnchorPane container1;
+
+    @FXML
+    private AnchorPane container2;
+
 
     private static final String[] texts = {"Avaible ", "8:00PM"};
     ServicesTransport st = new ServicesTransport();
@@ -93,8 +101,12 @@ public class MapStationController implements Initializable {
     private AnchorPane mainanchor1;
 
     public void openTitle(CustomMouseEvent event){
-        System.out.println("opened ");
-        mainanchor1.toFront();
+
+        container2.toBack();
+        container1.toFront();
+        mainanchor.setVisible(true);
+//        listAnchor.toFront();
+//        listAnchor.setVisible(true);
     }
 
 
@@ -105,7 +117,7 @@ public class MapStationController implements Initializable {
         data = FXCollections.observableArrayList(ss.getAll());
         EventBus.getInstance().subscribe("sendTransport", this::handleCustomEvent);
 
-        yourFunction();
+        showAddresses();
 
         searchBarState="closed";
         animTimer = new Timer();
@@ -166,15 +178,14 @@ public class MapStationController implements Initializable {
 
     private void handleCustomEvent(CustomMouseEvent event) {
         Transport eventData = (Transport) event.getEventData();
+        System.out.println(eventData.getStation_arrive());
         showPathbetweenStations();
-        System.out.println(event.getEventData());
+
 //        return data.filtered(element -> element.getNomStation().equals(((Transport) event.getEventData()).getDepart())).stream().findFirst().orElse(null);
 
 
     }
-    public void yourFunction() {
-        showAddresses();
-    }
+
 
     public void showPathbetweenStations(){
 
@@ -252,7 +263,7 @@ public class MapStationController implements Initializable {
 
     public void showAddresses() {
         double[][] updatedStations = extractAndAddToStations(data);
-        System.out.println(updatedStations.length);
+
         WebEngine webEngine = webView.getEngine();
 
         // Load a simple HTML file that includes Google Maps with markers
@@ -294,25 +305,28 @@ public class MapStationController implements Initializable {
 
 
     private void handleSendStationButtonClick() {
+        if (!searchTextField.getText().isEmpty()) {
 
-        if (searchTextField.getText().isEmpty()) {
-        } else {
+            mainanchor.setVisible(true);
+            mainanchor.toFront();
             ObservableList<Station> filteredStations = FXCollections.observableArrayList();
             for (Station station : data) {
                 if (station.getNomStation().toLowerCase().contains(searchTextField.getText().toLowerCase())) {
-                    mainanchor1.setVisible(true);
-                    mainanchor1.toFront();
                     filteredStations.add(station);
                     String[] splitStrings = filteredStations.get(0).getAddressStation().split(",");
                     String string1 = splitStrings[0];
                     String string2 = splitStrings[1];
-                    stationName1.setText(filteredStations.get(0).getNomStation());
+                    stationName.setText(filteredStations.get(0).getNomStation());
                     receivedStation = filteredStations.get(0);
                     double lat = Double.parseDouble(string1);
                     double lon = Double.parseDouble(string2);
-                     showStation(lat, lon);
+                    showStation(lat,lon);
+
+                    DataHolder.setStation(receivedStation);
+
                 }
             }
+
         }
     }
 
@@ -348,18 +362,24 @@ public class MapStationController implements Initializable {
 
     private AnchorPane save_pane;
     public void Onclick() {
-        save_pane=ListeClient;
+
+        mainanchor.setVisible(false);
+        container1.toBack();
         load("/fxml/Transport/Gui_Station/ListeTransport.fxml");
-        EventBus.getInstance().publish("StationEvent", new CustomMouseEvent<Station>(receivedStation));
+//        EventBus.getInstance().publish("StationEvent", new CustomMouseEvent<Station>(receivedStation));
     }
+
     @FXML
     private AnchorPane listAnchor;
+
     private void load(String fxmlPath) {
         try {
             Node content = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlPath)));
-
-            listAnchor.toFront();
+            listAnchor.setVisible(true);
             listAnchor.getChildren().setAll(content);
+            container2.toFront();
+
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

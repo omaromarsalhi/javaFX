@@ -119,7 +119,6 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-//        mainBorderPane.setCenter(stations);
         centerContainer.getChildren().add(stations);
     }
 
@@ -133,7 +132,7 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainBorderPane.setCenter(stations);
+        centerContainer.getChildren().add(stations);
     }
 
 

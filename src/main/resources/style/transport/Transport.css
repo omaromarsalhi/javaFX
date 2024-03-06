@@ -210,19 +210,19 @@
 }
 
 #yourImageView {
-    -fx-image: url('../img/circul_button1.png');
+    -fx-image: url('../../img_transport/circul_button1.png');
 }
 
 #yourButton:selected #yourImageView {
-    -fx-image: url('../img/circul_button.png'); /* Provide the correct path for the pressed state image */
+    -fx-image: url('../../img_transport/circul_button.png'); /* Provide the correct path for the pressed state image */
 }
 
 #btnImageview {
-    -fx-image: url('../img_transport/DOWN.png');
+    -fx-image: url('../../img_transport/DOWN.png');
 }
 #Dropdownbtn:selected #btnImageview {
 
-    -fx-image: url('../img_transport/UP.png');
+    -fx-image: url('../../img_transport/UP.png');
 }
 #Dropdownbtn{
 

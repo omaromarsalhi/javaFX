@@ -5,6 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import org.json.JSONException;
 import org.json.JSONObject;
+import pidev.javafx.model.Transport.Station;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.transport.DataHolder;
 
 
 import java.io.BufferedReader;
@@ -23,15 +27,45 @@ public class StationInfosController implements Initializable {
     @FXML
     private Label humidityLabel;
 
+    private  String API_URL;
+     static String lon;
+     static String lat;
+    public  double[] extractLatLon(String coordinates) {
+        String[] parts = coordinates.split(",");
+        double[] result = new double[2];
+        if (parts.length == 2) {
+            try {
+                result[0] = Double.parseDouble(parts[0].trim()); // Latitude
+                result[1] = Double.parseDouble(parts[1].trim()); // Longitude
+              lon=  Double.toString(result[0]);
+               lat = Double.toString(result[1]);
+                API_URL = "https://api.open-meteo.com/v1/forecast?latitude="+lon+"&longitude="+lat+"&current=temperature_2m,wind_speed_10m,relative_humidity_2m";
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                // Handle the case where parsing fails, e.g., invalid format
+            }
+        } else {
+            // Handle the case where the input string is not in the expected format
+            System.err.println("Invalid coordinates format");
+        }
 
-    private static final String API_URL = "https://api.open-meteo.com/v1/forecast?latitude=24.656426&longitude=45.739876&current=temperature_2m,wind_speed_10m,relative_humidity_2m";
+        return result;
+    }
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        first_function();
         afficher_meteo();
     }
+    double[] S ;
 
+    public void first_function() {
+        String address= DataHolder.getStation().getAddressStation();
+        if(address!=null)
+            S = extractLatLon(address);
+    }
 
 
     private String fetchWeatherData(String apiUrl) throws IOException {

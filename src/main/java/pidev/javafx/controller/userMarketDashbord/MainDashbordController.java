@@ -123,13 +123,9 @@ public class MainDashbordController implements Initializable {
         username.setText(  UserController.getInstance().getCurrentUser().getFirstname().toUpperCase() );
         userEmail.setText(UserController.getInstance().getCurrentUser().getEmail() );
 
-
-
         fiveSecondsWonder=new Timeline();
 
-
         setMenueBar();
-
 
         searchBarState="closed";
         animTimer = new Timer();

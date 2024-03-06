@@ -81,22 +81,25 @@ public class transportDetailsContoller implements Initializable {
 
 
     @FXML
-    private void sendData(ActionEvent event) {
+    private void sendData(ActionEvent event)
+    {
         EventBus.getInstance().publish("sendTransport", new CustomMouseEvent<Transport>(data));
     }
 
     @FXML
-    void onDropdownClick(ActionEvent event) {
-        if (dropToggle.isSelected()) {
+    void onDropdownClick(ActionEvent event)
+    {
+        if (dropToggle.isSelected())
+          {
             detailsTransport.setMinSize(0, 0);
             detailsTransport.setMaxSize(0, 0);
             detailsTransport.setPrefSize(0,0);
             detailsTransport.setVisible(false);
-        }
-        else if (!dropToggle.isSelected()) {
-            sendData(event);
+          }
+        else if (!dropToggle.isSelected())
+          {
             detailsTransport.setVisible(true);
-        }
+          }
     }
 
     public void fillDetails(){
@@ -112,6 +115,8 @@ public class transportDetailsContoller implements Initializable {
         typeLabel.setText(data.getType_vehicule());
         referenceLabel.setText(data.getReference());
         stationLabel.setText("2AAAA");
+
+
     }
 
 }
