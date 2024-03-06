@@ -29,10 +29,23 @@
   <a href="#related">Related</a> •
   <a href="#license">License</a>
 </p>
-
+ ## Main Window
 ![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/eed25829-7448-4f56-b297-d7027cac472a)
+
+
+## Add Reclamation
+
+
 ![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/8ab83854-e6d4-4b2b-9917-a63ffb9b6810)
+
+
+
+## Show Reclamation
 ![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/679beb3c-90fc-4d24-8c92-5560be4e8f03)
+
+
+## Reponse Using Streaming speach to text
+
 ![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/579c3bc2-cb9d-468f-809a-3357393af85b)
 
 
