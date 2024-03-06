@@ -97,11 +97,11 @@ CitzenHub is an [emailware](https://en.wiktionary.org/wiki/Wiktionary:Main_Page)
 
 This software uses the following open source packages:
 
-- [Google vision]([http://electron.atom.io/](https://console.cloud.google.com/apis/library/vision.googleapis.com?project=citizenhub-416011))
-- [java fx]([https://nodejs.org/](https://openjfx.io))
-- [openai]([https://github.com/chjj/marked](https://platform.openai.com/docs/overview))
-- [google map]([http://showdownjs.github.io/showdown/](https://console.cloud.google.com/apis/library/maps-backend.googleapis.com?hl=en&project=citizenhub-416011))
-- [speach to text]([http://codemirror.net/](https://cloud.google.com/speech-to-text/?hl=en))
+- Google vision[Google vision]([http://electron.atom.io/](https://console.cloud.google.com/apis/library/vision.googleapis.com?project=citizenhub-416011))
+- java fx [java fx]([https://nodejs.org/](https://openjfx.io))
+- openai [openai]([https://github.com/chjj/marked](https://platform.openai.com/docs/overview))
+- google map [google map]([http://showdownjs.github.io/showdown/](https://console.cloud.google.com/apis/library/maps-backend.googleapis.com?hl=en&project=citizenhub-416011))
+- speach to text [speach to text]([http://codemirror.net/](https://cloud.google.com/speech-to-text/?hl=en))
 - Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
 
 ## Related
