@@ -30,6 +30,8 @@
   <a href="#license">License</a>
 </p>
  ## Main Window
+
+ 
 ![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/eed25829-7448-4f56-b297-d7027cac472a)
 
 
