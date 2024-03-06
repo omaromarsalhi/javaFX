@@ -13,11 +13,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class NewsDataApi {
-    public List<News> getNews ()
-
-    {
+    public List<News> getNews () {
         List<News> newsList = new ArrayList<>();
-        String apiKey = "pub_392294278cf250c575945041b139b558918a6"; // Remplacez par votre clé API
+        String apiKey = "pub_392294278cf250c575945041b139b558918a6";
         String apiUrl = "https://newsdata.io/api/1/news?apikey=" + apiKey + "&country=tn&language=fr";
 
         try {
@@ -34,25 +32,22 @@ public class NewsDataApi {
                 }
                 scanner.close();
 
-                // Convertir la réponse JSON en objet JSON
                 String jsonResponse = response.toString();
                 JSONObject jsonObject = new JSONObject(jsonResponse);
 
-                // Extraire la liste des articles
                 JSONArray articles = jsonObject.getJSONArray("results");
 
-                // Parcourir chaque article et imprimer le titre
                 for (int i = 0; i < articles.length(); i++) {
                     JSONObject article = articles.getJSONObject(i);
-//String sourceIcon = null;
+                    String sourceId = article.getString("source_id");
                     String date = article.getString("pubDate");
                     String title = article.getString("title");
                     String description = article.getString("description");
-                    String imageUrl = article.getString("image_url");
+                    String imageUrl = article.optString("image_url", null);
                     String linkUrl = article.getString("link");
-                    //if (!article.isNull("source_icon"))
-                    //String sourceIcon = article.getString("source_icon");
-                    newsList.add(new News (date, title, description, imageUrl, linkUrl));
+                    String sourceIcon = article.optString("source_icon", null);
+
+                    newsList.add(new News (sourceId ,date, title, description, imageUrl, linkUrl, sourceIcon));
                 }
 
             } else {

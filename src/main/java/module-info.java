@@ -5,6 +5,7 @@ module pidev.javafx{
     requires org.apache.httpcomponents.httpclient;
     requires org.apache.httpcomponents.httpcore;
     requires org.json;
+    requires java.desktop;
 
     opens pidev.javafx to javafx.fxml;
     exports pidev.javafx;

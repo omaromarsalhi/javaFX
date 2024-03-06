@@ -49,4 +49,11 @@ public class MainWindowController {
         AnchorPane blogPane = loader.load();
         mainBorderPain.getChildren().setAll(blogPane);
     }
+
+    @FXML
+    void onNewsClicked(MouseEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/newsPage.fxml"));
+        AnchorPane blogPane = loader.load();
+        mainBorderPain.getChildren().setAll(blogPane);
+    }
 }

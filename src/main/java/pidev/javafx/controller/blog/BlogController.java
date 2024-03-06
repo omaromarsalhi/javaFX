@@ -96,7 +96,6 @@ public class BlogController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadNews();
         ConnectedAccount = 5;
         postPreviewImg.setVisible(false);
         postPreviewImg.setManaged(false);
@@ -810,11 +809,5 @@ public class BlogController implements Initializable {
             // Gérer les erreurs de parsing JSON
             return "Erreur lors de l'analyse de la réponse JSON : " + e.getMessage();
         }
-    }
-
-    public void loadNews () {
-        NewsDataApi newsDataApi = new NewsDataApi();
-        List<News> newsSex = newsDataApi.getNews();
-        System.out.println(newsSex);
     }
 }
