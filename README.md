@@ -54,10 +54,11 @@
 
 ## How To Use
 
-To clone and run this application, you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+To clone and run this application, you'll need  From your command line:
 
 ```bash
 # Clone this repository
+
 $ git clone https://github.com/omaromarsalhi/javaFX.git
 
 # Go into the repository
@@ -69,7 +70,7 @@ $ git clone https://github.com/omaromarsalhi/javaFX.git
 ```
 
 > **Note**
-> If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
+Need google Cloud account 
 
 
 ## Download
