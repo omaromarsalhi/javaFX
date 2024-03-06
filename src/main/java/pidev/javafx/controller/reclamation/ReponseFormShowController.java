@@ -19,9 +19,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
+import pidev.javafx.crud.reclamation.ServiceReponse;
 import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.reclamation.Reponse;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.reclamation.ReclamationController;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -52,13 +55,18 @@ public class ReponseFormShowController implements Initializable {
     private ImageView img;
 
     @FXML
+    private TextArea reponsetext;
+
+    @FXML
     private TextField privatekey1;
+
 
     private HBox buttonsBox;
     private boolean isAllInpulValid;
     String formLayoutBeforRegexCheck;
     String formLayoutAfterRegexCheck;
-    Reclamation rec = new Reclamation();
+    Reponse rec = new Reponse();
+     Reclamation recR = new Reclamation();
 
 
 
@@ -82,17 +90,17 @@ public class ReponseFormShowController implements Initializable {
     }
 
     public void createFormBtns(){
-        Button addProd= new Button();
+        Button addProd1= new Button();
         Button clearProd = new Button();
         Button cancel= new Button();
 
         buttonsBox =new HBox();
 
-        addProd.setPrefWidth( 50 );
+        addProd1.setPrefWidth( 50 );
         clearProd.setPrefWidth( 50 );
         cancel.setPrefWidth( 50 );
 
-        addProd.setPrefHeight( 32 );
+        addProd1.setPrefHeight( 32 );
         clearProd.setPrefHeight( 32 );
         cancel.setPrefHeight( 32 );
 
@@ -100,15 +108,15 @@ public class ReponseFormShowController implements Initializable {
         Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/broom.png" )));
         Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/paper.png" )));
 
-        addProd.setGraphic( new ImageView( img1 ));
+        addProd1.setGraphic( new ImageView( img1 ));
         clearProd.setGraphic( new ImageView( img2 ));
         cancel.setGraphic( new ImageView( img3 ));
 
-        addProd.setOnMouseClicked( this::onAddClicked);
+        addProd1.setOnMouseClicked( this::onAddClicked);
 
         cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitFormUser",event ) );
 
-        buttonsBox.getChildren().addAll( addProd,clearProd,cancel );
+        buttonsBox.getChildren().addAll( addProd1,clearProd,cancel );
         buttonsBox.setSpacing( 20 );
         buttonsBox.setAlignment( Pos.CENTER);
         buttonsBox.setId( "itemInfo" );
@@ -116,60 +124,21 @@ public class ReponseFormShowController implements Initializable {
         buttonsBox.setPadding( new Insets( 0,0,10,0 ) );
     }
 
-
-
     public void onAddClicked(MouseEvent event) {
-            ServiceReclamation.getInstance().supprimer(rec.getIdReclamation());
+        Reponse reponse =new Reponse(
+                0,
+                recR.getIdReclamation(),
+                reponsetext.getText()
+        );
+            ServiceReponse.getInstance().ajouter(reponse);
     }
-    public void showFormReclamationReponse(MouseEvent event) {
-        EventBus.getInstance().publish("showReponse", event);
-        System.out.println(rec);
-        EventBus.getInstance().publish( "senddata", new CustomMouseEvent<Reclamation>(rec));
-
-    }
-
-
-
     void first_fonction( CustomMouseEvent<Reclamation> event ) {
-        rec =event.getEventData();
-        img.setImage( new Image( "file:src/main/resources"+rec.getImagePath(),70,70,true,true) );
-        //privatekey1.setText(rec.getPrivateKey());
-        date1.setText(rec.getDate());
-        Pname1.setText(rec.getSubject());
-        Pdescretion1.setText(rec.getDescription());
-//        generatePdf(rec);
-    }
-
-
-    public static void generatePdf(Reclamation rec) {
-        // Create a FileChooser
-        FileChooser fileChooser = new FileChooser();
-        // Set extension filter for PDF files
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
-        fileChooser.getExtensionFilters().add(extFilter);
-        // Show save file dialog
-        File file = fileChooser.showSaveDialog(new Stage());
-
-        if (file != null) {
-            Document document = new Document();
-            try {
-                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
-                document.open();
-// Read HTML file
-                String html = new String(Files.readAllBytes(Paths.get("src/main/java/pidev/javafx/controller/reclamation/new-email.html")));
-// Replace placeholders in HTML
-                html = html.replace("KEY_VALUE", rec.getPrivateKey());
-                html = html.replace("DATE_VALUE", rec.getDate());
-                html = html.replace("NAME_VALUE", rec.getDescription());
-                html = html.replace("DESCRIPTION_VALUE", rec.getDescription());
-
-// Convert HTML to PDF
-                XMLWorkerHelper.getInstance().parseXHtml(writer, document, new ByteArrayInputStream(html.getBytes()));
-
-                document.close();
-            } catch (DocumentException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        recR =event.getEventData();
+        System.out.println(recR.getIdReclamation());
+        img.setImage( new Image( "file:src/main/resources"+recR.getImagePath(),70,70,true,true) );
+        privatekey1.setText(recR.getPrivateKey());
+        date1.setText(recR.getDate());
+        Pname1.setText(recR.getSubject());
+        Pdescretion1.setText(recR.getDescription());
     }
 }

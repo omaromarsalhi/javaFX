@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class Reponse {
     private int id;
-    private Reclamation reclamation;
+    private int idReclamation;
     private String description;
 
-    public Reponse(int id, Reclamation reclamation, String description) {
+    public Reponse(int id, int idReclamation, String description) {
         this.id = id;
-        this.reclamation = reclamation;
+        this.idReclamation = idReclamation;
         this.description = description;
     }
 
@@ -30,12 +30,12 @@ public class Reponse {
         this.id = id;
     }
 
-    public Reclamation getReclamation() {
-        return reclamation;
+    public int getReclamation() {
+        return idReclamation;
     }
 
-    public void setReclamation(Reclamation reclamation) {
-        this.reclamation = reclamation;
+    public void setReclamation(int idReclamation) {
+        this.idReclamation = idReclamation;
     }
 
     public String getDescription() {
@@ -51,19 +51,19 @@ public class Reponse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Reponse response = (Reponse) o;
-        return id == response.id && Objects.equals(reclamation, response.reclamation);
+        return id == response.id && Objects.equals(idReclamation, response.idReclamation);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, reclamation, description);
+        return Objects.hash(id, idReclamation, description);
     }
 
     @Override
     public String toString() {
         return "Reponse{" +
                 "id=" + id +
-                ", reclamation=" + reclamation + '\'' +
+                ", reclamation=" + idReclamation + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
