@@ -34,24 +34,12 @@
 
 ## Key Features
 
-* LivePreview - Make changes, See changes
-  - Instantly see what your Markdown documents look like in HTML as you create them.
-* Sync Scrolling
-  - While you type, LivePreview will automatically scroll to the current location you're editing.
-* GitHub Flavored Markdown  
-* Syntax highlighting
-* [KaTeX](https://khan.github.io/KaTeX/) Support
-* Dark/Light mode
-* Toolbar for basic Markdown formatting
-* Supports multiple cursors
-* Save the Markdown preview as PDF
-* Emoji support in preview :tada:
-* App will keep alive in tray for quick usage
-* Full screen mode
-  - Write distraction free.
-* Cross platform
-  - Windows, macOS and Linux ready.
-
+*  JavaFx application
+*  smart city
+*  Reclamation
+*  Google vision
+*  api
+  
 ## How To Use
 
 To clone and run this application, you'll need  From your command line:
@@ -72,31 +60,25 @@ $ git clone https://github.com/omaromarsalhi/javaFX.git
 > **Note**
 Need google Cloud account 
 
-
-## Download
-
-You can [download](https://github.com/amitmerchant1990/electron-markdownify/releases/tag/v1.2.0) the latest installable version of Markdownify for Windows, macOS and Linux.
-
 ## Emailware
 
-Markdownify is an [emailware](https://en.wiktionary.org/wiki/emailware). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <bullredeyes@gmail.com> about anything you'd want to say about this software. I'd really appreciate it!
+CitzenHub is an [emailware](https://en.wiktionary.org/wiki/Wiktionary:Main_Page). Meaning, if you liked using this app or it has helped you in any way, I'd like you send me an email at <khalil.rmila@esprit.tn> about anything you'd want to say about this software. I'd really appreciate it!
 
 ## Credits
 
 This software uses the following open source packages:
 
-- [Electron](http://electron.atom.io/)
-- [Node.js](https://nodejs.org/)
-- [Marked - a markdown parser](https://github.com/chjj/marked)
-- [showdown](http://showdownjs.github.io/showdown/)
-- [CodeMirror](http://codemirror.net/)
+- [Google vision]([http://electron.atom.io/](https://console.cloud.google.com/apis/library/vision.googleapis.com?project=citizenhub-416011))
+- [java fx]([https://nodejs.org/](https://openjfx.io))
+- [openai]([https://github.com/chjj/marked](https://platform.openai.com/docs/overview))
+- [google map]([http://showdownjs.github.io/showdown/](https://console.cloud.google.com/apis/library/maps-backend.googleapis.com?hl=en&project=citizenhub-416011))
+- [speach to text]([http://codemirror.net/](https://cloud.google.com/speech-to-text/?hl=en))
 - Emojis are taken from [here](https://github.com/arvida/emoji-cheat-sheet.com)
-- [highlight.js](https://highlightjs.org/)
 
 ## Related
 
-[markdownify-web](https://github.com/amitmerchant1990/markdownify-web) - Web version of Markdownify
-
+application desktop
+web (comming soon)
 ## Support
 
 <a href="https://www.buymeacoffee.com/5Zn8Xh3l9" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
