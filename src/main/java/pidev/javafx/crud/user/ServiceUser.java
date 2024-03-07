@@ -219,12 +219,12 @@ public class ServiceUser implements IserviceUser<User> {
                 user.setEmail(rs.getString("email"));
                 user.setRole(Role.valueOf(rs.getString("role")));
                 user.setIdMunicipalite((rs.getInt("idMunicipalite")));
-                user.setAge(Integer.parseInt(rs.getString("age")));
+                user.setAge(rs.getInt("age"));
                 user.setCin(rs.getString("cin"));
                 user.setPhotos(rs.getString("photos"));
                 user.setAdresse(rs.getString("adresse"));
                 user.setStatus(rs.getString("status"));
-                user.setNum(Integer.parseInt(rs.getString("num")));
+                user.setNum(rs.getInt("num"));
                 user.setDate(rs.getString("date"));
                 user.setDob(rs.getString("dob"));
                 users.add(user);
@@ -232,6 +232,7 @@ public class ServiceUser implements IserviceUser<User> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(users);
         return users;
 
     }

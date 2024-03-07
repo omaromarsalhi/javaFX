@@ -72,7 +72,6 @@ public class MainWindowController implements Initializable {
 //        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
 //        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
 //        mainBorderPane.getCenter())
-        System.out.println(UserController.getInstance().getCurrentUser());
         accountImg.setImage(new Image( "file:src/main/resources"+UserController.getInstance().getCurrentUser().getPhotos(),25,25,true,true)  );
         accountBtn.setText( UserController.getInstance().getCurrentUser().getFirstname()+" "+UserController.getInstance().getCurrentUser().getLastname() );
 //        ChatClient.getInstance().establishConnection();
@@ -186,38 +185,6 @@ public class MainWindowController implements Initializable {
         centerContainer.getChildren().add(account);
     }
 
-//    @FXML
-//    public void onMPDClicked(ActionEvent event) throws IOException {
-//        StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-//        mainBorderPane.setCenter(stackPane);
-//    }
-
-//    @FXML
-//    public void onMarketPlaceBtnClicked(ActionEvent event){
-//        try {
-//            mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-////        mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight());
-////        mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
-//        mainBorderPane.setCenter(mainhBox2);
-//    }
-
-//    public void laodCheckOut(CustomMouseEvent<Bien> event) {
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader();
-//            fxmlLoader.setLocation(getClass().getResource( "/fxml/Contract/checkOut.fxml" ));
-//            mainhBox = fxmlLoader.load();
-//            CheckOutController checkOutController = fxmlLoader.getController();
-//            checkOutController.setData(event.getEventData());
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-////        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-////        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-//       mainBorderPane.setCenter(mainhBox);
-//    }
 
 
     @FXML
