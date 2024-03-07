@@ -1,8 +1,4 @@
-package pidev.javafx.model.reclamation;
-
-import pidev.javafx.model.user.User;
-
-import java.util.Date;
+package pidev.javafx.model.Reclamation;
 
 public class Reclamation {
 

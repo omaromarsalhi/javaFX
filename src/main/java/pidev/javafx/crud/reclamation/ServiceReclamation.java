@@ -3,8 +3,7 @@ package pidev.javafx.crud.reclamation;
 
 
 import pidev.javafx.crud.ConnectionDB;
-import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reclamation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -138,6 +137,24 @@ public class ServiceReclamation  {
             System.out.println(e.getMessage());
         }
         return privateKeys;
+    }
+    public  String getReponsebyid(int id )
+    {
+        String reponse=null;
+
+        String req = "SELECT `description` FROM `response` WHERE id_reclamation = ?";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                 reponse = rs.getString("description");
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return reponse;
+
     }
 
 }

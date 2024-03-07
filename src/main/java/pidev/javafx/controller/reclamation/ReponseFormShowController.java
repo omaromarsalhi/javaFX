@@ -14,13 +14,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.reclamation.ServiceReponse;
-import pidev.javafx.model.reclamation.Reclamation;
-import pidev.javafx.model.reclamation.Reponse;
+import pidev.javafx.model.Reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reponse;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 
-import javax.swing.*;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 

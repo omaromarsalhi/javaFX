@@ -1,7 +1,7 @@
 package pidev.javafx.tools.reclamation;
 
 
-import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reclamation;
 
 public class ReclamationController {
     private Reclamation rec;

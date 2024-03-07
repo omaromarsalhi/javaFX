@@ -1,9 +1,7 @@
 package pidev.javafx.controller.user;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,8 +13,7 @@ import javafx.scene.layout.VBox;
 //import pidev.javafx.controller.blog.BlogController;
 import pidev.javafx.controller.reclamation.ReclamationBoxController;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
-import pidev.javafx.model.blog.Post;
-import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reclamation;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
@@ -24,9 +21,6 @@ import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class NewAccountController implements Initializable {

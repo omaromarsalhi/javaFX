@@ -25,6 +25,9 @@ module pidev.javafx{
     requires kernel;
     requires xmlworker;
     requires client;
+    requires aspose.imaging;
+    requires javafx.swing;
+    requires itext.asian;
 
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;

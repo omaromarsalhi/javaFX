@@ -1,8 +1,7 @@
 package pidev.javafx.crud.reclamation;
 
 import pidev.javafx.crud.ConnectionDB;
-import pidev.javafx.model.reclamation.Reclamation;
-import pidev.javafx.model.reclamation.Reponse;
+import pidev.javafx.model.Reclamation.Reponse;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

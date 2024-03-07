@@ -48,6 +48,11 @@
       <name>Jzy3d Releases</name>
       <url>6</url>
     </repository>
+    <repository>
+      <id>AsposeJavaAPI</id>
+      <name>Aspose Java API</name>
+      <url>https://repository.aspose.com/repo/</url>
+    </repository>
   </repositories>
 
 <!--  <dependencyManagement>-->
@@ -64,14 +69,28 @@
 <!--  </dependencyManagement>-->
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>17.0.2</version>
+    </dependency>
     <!-- DJL Model Zoo -->
     <dependency>
       <groupId>ai.djl</groupId>
       <artifactId>model-zoo</artifactId>
       <version>0.26.0</version>
     </dependency>
-
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>17.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aspose</groupId>
+      <artifactId>aspose-imaging</artifactId>
+      <version>23.10</version>
+      <classifier>jdk16</classifier>
+    </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
