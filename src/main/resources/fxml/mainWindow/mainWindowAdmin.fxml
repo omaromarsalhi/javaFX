@@ -32,7 +32,7 @@
                 </HBox>
                 <VBox alignment="CENTER" prefHeight="286.0" prefWidth="235.0" spacing="15.0">
                     <children>
-                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onBlogBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Blogs" textFill="WHITE">
+                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  Blogs" textFill="WHITE">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
@@ -59,7 +59,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="stationBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  Stations" textFill="WHITE">
+                        <Button fx:id="stationBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onStationBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Stations" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

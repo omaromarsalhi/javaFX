@@ -94,9 +94,9 @@ public class MainWindowAdminController implements Initializable {
     @FXML
     void onAbonnementBtnClicked(ActionEvent event) {
         centerContainer.getChildren().clear();
-        StackPane dashbord = null;
+        AnchorPane dashbord = null;
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/Transport/Gui_Abonnement/AbonnementAdmin.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
@@ -107,11 +107,11 @@ public class MainWindowAdminController implements Initializable {
 
 
     @FXML
-    void onBlogBtnClicked(ActionEvent event) {
+    void onStationBtnClicked(ActionEvent event) {
         centerContainer.getChildren().clear();
-        StackPane dashbord = null;
+        AnchorPane dashbord = null;
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/Transport/Gui_Station/Station.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

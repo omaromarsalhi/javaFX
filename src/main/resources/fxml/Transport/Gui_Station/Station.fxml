@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
@@ -14,138 +15,315 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="mainBorderPain" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" styleClass="anchor-pane" stylesheets="@../../../style/transport/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.StationController">
    <children>
-      <Pane fx:id="UpdatePane" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: gray;" styleClass="pane">
+      <Pane fx:id="insertPane" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: gray;" styleClass="pane">
          <children>
-            <Pane fx:id="updateBox" layoutX="212.0" layoutY="110.0" prefHeight="452.0" prefWidth="634.0" style="-fx-background-color: C8C8C8; -fx-border-color: 000000; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+            <StackPane alignment="TOP_LEFT" layoutX="358.0" layoutY="79.0" prefHeight="510.0" prefWidth="300.0">
                <children>
-                  <TextField fx:id="NomStationText" editable="false" layoutX="46.0" layoutY="234.0" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" prefHeight="39.0" prefWidth="272.0" promptText="Entrer la reference" styleClass="SearchBar">
-                     <font>
-                        <Font name="Souliyo Unicode" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Button layoutX="390.0" layoutY="388.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#update_action" prefHeight="39.0" prefWidth="171.0" styleClass="Button_ajouter" text="Update" textFill="WHITE">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="117.0" layoutY="387.0" mnemonicParsing="false" onAction="#unexpand" style="-fx-background-color: transparent;" text="Annuler " textFill="#e00000">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Button>
-                  <ComboBox fx:id="BoxTypeVehicule" layoutX="46.0" layoutY="317.0" prefHeight="39.0" prefWidth="555.0" promptText="Choisir le type de la vehicule" styleClass="SearchBar" />
-                  <Label layoutX="48.0" layoutY="192.0" text="Nom Station" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="AdressText" editable="false" layoutX="352.0" layoutY="234.0" prefHeight="39.0" prefWidth="272.0" styleClass="SearchBar">
-                     <font>
-                        <Font name="Souliyo Unicode" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="352.0" layoutY="192.0" text="Localisation" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="46.0" layoutY="279.0" text="Type de Vehicule" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="Ajouter_imageBtn" layoutX="385.0" layoutY="113.0" mnemonicParsing="false" onAction="#insert_Image" prefHeight="41.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
-                     <font>
-                        <Font name="Souliyo Unicode" size="25.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="199.0" layoutY="121.0" prefHeight="41.0" prefWidth="188.0" text="Photo du Vehicule" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="Image" fitHeight="106.0" fitWidth="126.0" layoutX="46.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../javaFX/src/main/resources/img/rrrtt.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="247.0" layoutY="21.0" prefHeight="50.0" prefWidth="142.0" text="Mise a jour">
-                     <font>
-                        <Font name="Souliyo Unicode" size="30.0" />
-                     </font>
-                  </Label>
+                  <AnchorPane fx:id="loadinPage1" minWidth="-Infinity" prefHeight="510.0" prefWidth="370.0">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="104.0" layoutX="148.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="217.39999999999998" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="147.39999999999998" AnchorPane.topAnchor="218.0">
+                           <image>
+                              <Image url="@../../../img/marketPlace/grey-9026_256.gif" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <HBox fx:id="formBox1" prefHeight="510.0" prefWidth="564.0" spacing="15.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;">
+                     <children>
+                        <VBox fx:id="Box11" alignment="CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="130.0" prefWidth="336.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#insert_Image" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                                       <graphic>
+                                          <ImageView fx:id="Image" fitHeight="127.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/userIcons/image128B.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="First Name :">
+                                       <font>
+                                          <Font name="System Italic" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                                       <children>
+                                          <TextField fx:id="NomStationText1" minWidth="239.0" prefHeight="38.0" prefWidth="305.0" promptText="Your Name here !!!" styleClass="text-field">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets top="4.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Last Name :">
+                                       <font>
+                                          <Font name="System Italic" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="formBox21" prefHeight="30.0" prefWidth="305.0">
+                                       <children>
+                                          <TextField fx:id="AdressText1" editable="false" prefHeight="42.0" prefWidth="305.0" promptText="Your Price here !!!" styleClass="text-field">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button mnemonicParsing="false" onAction="#adressNow" prefHeight="23.0" prefWidth="26.0" style="-fx-background-color: transparent;">
+                                             <graphic>
+                                                <ImageView fitHeight="24.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../../icons/marketPlace/direct.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </graphic>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox minHeight="68.0" minWidth="300.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Type :">
+                                       <font>
+                                          <Font name="System Italic" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="BoxTypeVehicule1" minHeight="34.0" prefHeight="34.0" prefWidth="305.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="336.0" spacing="30.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#insert_action">
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/marketPlace/tab.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#clear_form_ins">
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/marketPlace/broom24.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#close_insert">
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/marketPlace/paper.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
-            </Pane>
+               <stylesheets>
+                  <URL value="@../../../style/marketPlace/Buttons.css" />
+                  <URL value="@../../../style/marketPlace/formLayout.css" />
+                  <URL value="@../../../style/marketPlace/formLayout.css" />
+               </stylesheets>
+            </StackPane>
          </children>
       </Pane>
-      <Pane fx:id="UpdatePane1" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: gray;" styleClass="pane">
+      <Pane fx:id="UpdatePane" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: gray;" styleClass="pane">
          <children>
-            <Pane fx:id="updateBox1" layoutX="203.0" layoutY="109.0" prefHeight="452.0" prefWidth="634.0" style="-fx-background-color: C8C8C8; -fx-border-color: 000000; -fx-border-radius: 10px; -fx-background-radius: 10px;">
+            <StackPane alignment="TOP_LEFT" layoutX="335.0" layoutY="80.0" prefHeight="510.0" prefWidth="300.0">
                <children>
-                  <TextField fx:id="NomStationText1" editable="false" layoutX="46.0" layoutY="234.0" onKeyPressed="#onTextChanged" onKeyReleased="#onTextChanged" prefHeight="39.0" prefWidth="272.0" promptText="Entrer la reference" styleClass="SearchBar">
-                     <font>
-                        <Font name="Souliyo Unicode" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Button layoutX="390.0" layoutY="388.0" minWidth="-Infinity" mnemonicParsing="false" onAction="#update_action" prefHeight="39.0" prefWidth="171.0" styleClass="Button_ajouter" text="Insert" textFill="WHITE">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Button>
-                  <Button layoutX="117.0" layoutY="387.0" mnemonicParsing="false" onAction="#unexpand" style="-fx-background-color: transparent;" text="Annuler " textFill="#e00000">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Button>
-                  <ComboBox fx:id="BoxTypeVehicule1" layoutX="46.0" layoutY="317.0" prefHeight="39.0" prefWidth="555.0" promptText="Choisir le type de la vehicule" styleClass="SearchBar" />
-                  <Label layoutX="48.0" layoutY="192.0" text="Nom Station" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="AdressText1" editable="false" layoutX="352.0" layoutY="234.0" prefHeight="39.0" prefWidth="272.0" styleClass="SearchBar">
-                     <font>
-                        <Font name="Souliyo Unicode" size="15.0" />
-                     </font>
-                  </TextField>
-                  <Label layoutX="352.0" layoutY="192.0" text="Localisation" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="46.0" layoutY="279.0" text="Type de Vehicule" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="Ajouter_imageBtn1" layoutX="385.0" layoutY="113.0" mnemonicParsing="false" onAction="#insert_Image" prefHeight="41.0" prefWidth="216.0" style="-fx-background-color: transparent;" text="Changer Photo" textFill="#20749c">
-                     <font>
-                        <Font name="Souliyo Unicode" size="25.0" />
-                     </font>
-                  </Button>
-                  <Label layoutX="199.0" layoutY="121.0" prefHeight="41.0" prefWidth="188.0" text="Photo du Vehicule" textFill="#494949">
-                     <font>
-                        <Font name="Souliyo Unicode" size="20.0" />
-                     </font>
-                  </Label>
-                  <ImageView fx:id="Image1" fitHeight="106.0" fitWidth="126.0" layoutX="46.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../../javaFX/src/main/resources/img/rrrtt.png" />
-                     </image>
-                  </ImageView>
-                  <Label layoutX="232.0" layoutY="26.0" prefHeight="50.0" prefWidth="240.0" text="Insert Station">
-                     <font>
-                        <Font name="Souliyo Unicode" size="30.0" />
-                     </font>
-                  </Label>
+                  <AnchorPane fx:id="loadinPage" minWidth="-Infinity" prefHeight="510.0" prefWidth="370.0">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="104.0" layoutX="148.0" layoutY="218.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="217.39999999999998" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="147.39999999999998" AnchorPane.topAnchor="218.0">
+                           <image>
+                              <Image url="@../../../img/marketPlace/grey-9026_256.gif" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </AnchorPane>
+                  <HBox fx:id="formBox" prefHeight="510.0" prefWidth="564.0" spacing="15.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;">
+                     <children>
+                        <VBox fx:id="Box1" alignment="CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="130.0" prefWidth="336.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#insert_Image_1" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                                       <graphic>
+                                          <ImageView fx:id="Image1" fitHeight="127.0" fitWidth="126.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/userIcons/image128B.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="First Name :">
+                                       <font>
+                                          <Font name="System Italic" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                                       <children>
+                                          <TextField fx:id="NomStationText" minWidth="239.0" prefHeight="38.0" prefWidth="305.0" promptText="Your Name here !!!" styleClass="text-field">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                                 <VBox.margin>
+                                    <Insets top="4.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Last Name :">
+                                       <font>
+                                          <Font name="System Italic" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <HBox fx:id="formBox2" prefHeight="30.0" prefWidth="305.0">
+                                       <children>
+                                          <TextField fx:id="AdressText" prefHeight="42.0" prefWidth="305.0" promptText="Your Price here !!!" styleClass="text-field">
+                                             <font>
+                                                <Font size="16.0" />
+                                             </font>
+                                             <HBox.margin>
+                                                <Insets left="10.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox minHeight="68.0" minWidth="300.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Type :">
+                                       <font>
+                                          <Font name="System Italic" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox fx:id="BoxTypeVehicule" minHeight="34.0" prefHeight="34.0" prefWidth="305.0">
+                                       <VBox.margin>
+                                          <Insets left="10.0" />
+                                       </VBox.margin>
+                                    </ComboBox>
+                                 </children>
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                              <HBox alignment="CENTER" prefHeight="50.0" prefWidth="336.0" spacing="30.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#update_action">
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/marketPlace/tab.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#clear_form">
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/marketPlace/broom24.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button mnemonicParsing="false" onAction="#close_update">
+                                       <graphic>
+                                          <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../icons/marketPlace/paper.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" right="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
                </children>
-            </Pane>
+               <stylesheets>
+                  <URL value="@../../../style/marketPlace/Buttons.css" />
+                  <URL value="@../../../style/marketPlace/formLayout.css" />
+               </stylesheets>
+            </StackPane>
          </children>
       </Pane>
       <Pane fx:id="displayTransport" layoutX="-1.0" layoutY="1.0" prefHeight="670.0" prefWidth="1040.0" styleClass="pane" stylesheets="@../../../style/transport/Transport.css">
@@ -171,22 +349,12 @@
                   <Font name="Souliyo Unicode" size="13.0" />
                </font>
             </TextField>
-            <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="915.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../javaFX/src/main/resources/icons/202.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="28.0" fitWidth="28.0" layoutX="50.0" layoutY="134.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../../../../../javaFX/src/main/resources/icons/436.png" />
-               </image>
-            </ImageView>
             <ComboBox layoutX="84.0" layoutY="131.0" prefHeight="33.0" prefWidth="118.0" promptText="By Name" styleClass="SearchBar" />
-            <Button fx:id="insertStation" layoutX="253.0" layoutY="133.0" mnemonicParsing="false" onAction="#onInsertStationClicked" prefHeight="31.0" prefWidth="26.0" styleClass="SearchBar">
+            <Button fx:id="insertStation" layoutX="253.0" layoutY="133.0" mnemonicParsing="false" onAction="#load_insert" prefHeight="31.0" prefWidth="26.0" styleClass="SearchBar">
                <graphic>
                   <ImageView fitHeight="22.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../../../../../../../javaFX/src/main/resources/icons/231.png" />
+                        <Image url="@../../../icons/marketPlace/more.png" />
                      </image>
                   </ImageView>
                </graphic>
@@ -215,7 +383,7 @@
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../../../javaFX/src/main/resources/icons/Delete-button.svg.png" />
+                                    <Image url="@../../../icons/marketPlace/trash.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -224,27 +392,15 @@
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../../../../../../../javaFX/src/main/resources/namedIcons/update.png" />
+                                    <Image url="@../../../icons/marketPlace/update24COL.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
                      </children>
                   </HBox>
-                  <HBox layoutX="12.0" layoutY="122.0" prefHeight="280.0" prefWidth="619.0">
+                  <HBox layoutX="64.0" layoutY="115.0" prefHeight="280.0" prefWidth="507.0">
                      <children>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="44.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../../../../javaFX/src/main/resources/namedIcons/left-arrow.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets top="130.0" />
-                           </HBox.margin>
-                        </Button>
                         <Pane fx:id="statsPane">
                            <children>
                               <BarChart fx:id="series1" layoutX="2.0" prefHeight="287.0" prefWidth="506.0" style="-fx-background-color: transparent;">
@@ -257,25 +413,13 @@
                               </BarChart>
                            </children>
                         </Pane>
-                        <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="44.0" style="-fx-background-color: transparent;">
-                           <graphic>
-                              <ImageView fitHeight="30.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../../../../../../../javaFX/src/main/resources/namedIcons/right-arrow.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <HBox.margin>
-                              <Insets top="130.0" />
-                           </HBox.margin>
-                        </Button>
                      </children>
                   </HBox>
                   <Pane layoutX="498.0" layoutY="14.0" prefHeight="87.0" prefWidth="122.0" style="-fx-background-color: transparent; -fx-border-color: #000000; -fx-border-radius: 10px;">
                      <children>
                         <ImageView fitHeight="76.0" fitWidth="90.0" layoutX="17.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../javaFX/src/main/resources/citizenHub/rrrtt.png" />
+                              <Image url="@../../../citizenHub/Sans%20titre-5.png" />
                            </image>
                         </ImageView>
                      </children>
