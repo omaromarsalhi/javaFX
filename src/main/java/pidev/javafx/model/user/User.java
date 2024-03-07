@@ -21,6 +21,7 @@ public class User {
     private String photos;
     private String gender;
     private int state;
+    private Boolean isPassReseted=false;
 
 
     public User(int idUser, String firstname, String email, String password, String cin, int age, int num, String adresse, String dob, String lastName, String status, String date, Role role, String photos, String gender) {
