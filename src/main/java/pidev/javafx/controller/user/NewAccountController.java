@@ -94,6 +94,8 @@ public class NewAccountController implements Initializable {
         EventBus.getInstance().subscribe( "showReclamation",this::showDetailsReclamation );
         EventBus.getInstance().subscribe( "exitFormUser",this::onExitFormBtnClicked );
         EventBus.getInstance().subscribe( "loadBlog", event -> loadBlog() );
+        EventBus.getInstance().subscribe( "showReponse",this:: showFormReclamationReponse );
+
 
 
     }
@@ -273,5 +275,24 @@ public class NewAccountController implements Initializable {
         });
         return new Thread(myTask);
     }
+
+
+    public void showFormReclamationReponse(MouseEvent event){
+        StackPane form=null;
+        secondInterface.getChildren().clear();
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationReponse.fxml" ));
+        try {
+            form = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+
+        firstinterface.setOpacity( 0.4 );
+        secondInterface.setVisible( true );
+        secondInterface.getChildren().add(form);
+        MyTools.getInstance().showAnimation( form );
+    }
+
 
 }

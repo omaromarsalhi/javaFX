@@ -416,8 +416,8 @@ public class BlogController implements Initializable {
             stage.show();
             scene.getRoot().setEffect(blur);
             parent.setVisible(false);
-            stage.setY(200);
-            stage.setX(650);
+            stage.setY(250);
+            stage.setX(900);
             parent.setVisible(true);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
             transition.setFromY(600);
@@ -545,10 +545,9 @@ public class BlogController implements Initializable {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
 
-            Scene sc = new Scene(parent);
-            stage.setScene(sc);
+            stage.setScene(new Scene(parent,Color.TRANSPARENT));
             stage.setTitle("Modifier la Publication");
-            sc.setFill(Color.TRANSPARENT);
+
             stage.initStyle(StageStyle.TRANSPARENT);
             Scene scene = postsContainer.getScene();
             Stage mainWindow = (Stage) scene.getWindow();
@@ -559,8 +558,8 @@ public class BlogController implements Initializable {
             scene.getRoot().setEffect(blur);
             parent.setVisible(false);
             stage.show();
-            stage.setY(200);
-            stage.setX(513);
+            stage.setY(230);
+            stage.setX(760);
             parent.setVisible(true);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
             transition.setFromY(600);

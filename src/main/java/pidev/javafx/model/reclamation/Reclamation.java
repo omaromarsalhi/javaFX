@@ -1,7 +1,5 @@
 package pidev.javafx.model.reclamation;
 
-import java.util.Date;
-
 public class Reclamation {
 
     private int idReclamation;
@@ -10,9 +8,11 @@ public class Reclamation {
     private String date;
     private String description;
     private String imagePath;
+    private int userId;
 
-    public Reclamation(int idReclamation,String privateKey, String subject, String date, String description,String imagePath){
+    public Reclamation(int idReclamation,int userId,String privateKey, String subject, String date, String description,String imagePath){
         this.idReclamation = idReclamation;
+        this.userId=userId;
         this.subject = subject;
         this.date = date;
         this.description = description;
@@ -20,12 +20,22 @@ public class Reclamation {
         this.imagePath = imagePath;
     }
 
-    public Reclamation() { }
 
+    public Reclamation() {
+
+    }
 
 
     public int getId() {
         return idReclamation;
+    }
+
+    public int getUser() {
+        return userId;
+    }
+
+    public void setUser(int userId) {
+        this.userId = userId;
     }
 
     public void setId(int idReclamation) {

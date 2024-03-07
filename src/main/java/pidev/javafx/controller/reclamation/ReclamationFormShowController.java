@@ -13,15 +13,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
-import pidev.javafx.model.MarketPlace.Product;
 import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
-import pidev.javafx.tools.marketPlace.MyListener;
-import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -33,7 +29,6 @@ import com.itextpdf.tool.xml.XMLWorkerHelper;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.net.URISyntaxException;
 
 
 public class ReclamationFormShowController implements Initializable {
@@ -56,6 +51,8 @@ public class ReclamationFormShowController implements Initializable {
 
     @FXML
     private TextField privatekey1;
+    @FXML
+    private TextArea Pdescretion11;
 
     private HBox buttonsBox;
     private boolean isAllInpulValid;
@@ -122,9 +119,14 @@ public class ReclamationFormShowController implements Initializable {
 
 
     public void onAddClicked(MouseEvent event) {
-            ServiceReclamation.getInstance().supprimer(rec.getIdReclamation());
+        ServiceReclamation.getInstance().supprimer(rec.getIdReclamation());
     }
+    public void showFormReclamationReponse(MouseEvent event) {
+        EventBus.getInstance().publish("showReponse", event);
+        System.out.println(rec);
+        EventBus.getInstance().publish( "senddata", new CustomMouseEvent<Reclamation>(rec));
 
+    }
 
 
 
@@ -135,7 +137,18 @@ public class ReclamationFormShowController implements Initializable {
         date1.setText(rec.getDate());
         Pname1.setText(rec.getDescription());
         Pdescretion1.setText(rec.getDescription());
-//        generatePdf(rec);
+            if(ServiceReclamation.getInstance().getReponsebyid(rec.getIdReclamation())!=null) {
+                Pdescretion11.setText(ServiceReclamation.getInstance().getReponsebyid(rec.getIdReclamation()));
+                Pdescretion11.setStyle("-fx-text-fill: #3de516");
+
+            }
+            else
+            {
+                Pdescretion11.setText("accune reponse");
+                Pdescretion11.setStyle("-fx-text-fill: red");
+            }
+
+        generatePdf(rec);
     }
 
 

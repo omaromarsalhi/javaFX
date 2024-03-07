@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" prefHeight="106.0" prefWidth="311.0" style="-fx-background-color: #889696;" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.ReclamationBoxController">
+<HBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="92.0" prefWidth="305.0" spacing="15.0" style="-fx-background-color: #889696;" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.ReclamationBoxController">
    <children>
-      <ImageView fx:id="img" fitHeight="64.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="img" fitHeight="64.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../img/userImg/6324913.jpg" />
          </image>
@@ -21,7 +21,7 @@
       </ImageView>
       <VBox prefHeight="116.0" prefWidth="166.0">
          <children>
-            <Label fx:id="subject" alignment="CENTER" prefHeight="57.0" prefWidth="167.0" text="How to grow you" textFill="#d1d1d1" wrapText="true">
+            <Label fx:id="subject" alignment="CENTER" prefHeight="48.0" prefWidth="142.0" text="How to grow you" textFill="#d1d1d1" wrapText="true">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
@@ -39,21 +39,21 @@
             </Label>
          </children>
       </VBox>
-      <VBox alignment="CENTER" prefHeight="106.0" prefWidth="48.0" spacing="5.0" stylesheets="@../../style/marketPlace/Buttons.css">
+      <VBox alignment="CENTER" prefHeight="92.0" prefWidth="79.0" spacing="5.0" stylesheets="@../../style/marketPlace/Buttons.css">
          <HBox.margin>
             <Insets />
          </HBox.margin>
          <children>
-            <ImageView fitHeight="25.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../img/userImg/clock.png" />
                </image>
             </ImageView>
-            <Button fx:id="Popup" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#showDetailsReclamation" prefHeight="34.0" prefWidth="24.0" style="-fx-background-color: transparent;" textFill="#fff8f8">
+            <Button fx:id="Popup" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#showDetailsReclamation" prefHeight="34.0" prefWidth="39.0" style="-fx-background-color: transparent;" textFill="#fff8f8">
                <graphic>
-                  <ImageView fitHeight="17.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../icons/marketPlace/application24.png" />
+                        <Image url="@../../icons/marketPlace/morermila.png" />
                      </image>
                   </ImageView>
                </graphic></Button>

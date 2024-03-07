@@ -1,7 +1,6 @@
 package pidev.javafx.crud.reclamation;
 
 import pidev.javafx.crud.ConnectionDB;
-import pidev.javafx.model.reclamation.Reclamation;
 import pidev.javafx.model.reclamation.Reponse;
 
 import java.sql.Connection;
@@ -13,14 +12,19 @@ import java.util.Set;
 
 public class ServiceReponse implements Iservice<Reponse> {
     Connection cnx = ConnectionDB.getInstance().getCnx();
-
+    private static ServiceReponse instance;
+    public static ServiceReponse getInstance() {
+        if (instance == null)
+            instance = new ServiceReponse();
+        return instance;
+    }
 
     public void ajouter(Reponse response) {
         String req = "INSERT INTO `response`(`id`, `id_reclamation`, `description`) VALUES (?,?,?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setInt(1, response.getId());
-            ps.setInt(2, response.getReclamation().getIdReclamation());
+            ps.setInt(2, response.getReclamation());
             ps.setString(3, response.getDescription());
             ps.executeUpdate();
             System.out.println("Response added !");
@@ -32,7 +36,7 @@ public class ServiceReponse implements Iservice<Reponse> {
         String req = "UPDATE `response` SET `id_reclamation`=?, `description`=? WHERE `id`=?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
-            ps.setInt(1, response.getReclamation().getIdReclamation());
+            ps.setInt(1, response.getReclamation());
             ps.setString(2, response.getDescription());
             ps.setInt(3, response.getId());
             ps.executeUpdate();
@@ -77,8 +81,7 @@ public class ServiceReponse implements Iservice<Reponse> {
             ResultSet res = ps.executeQuery();
             if (res.next()) {
                 String description = res.getString("description");
-                Reclamation reclamation = new Reclamation();
-                reclamation.setIdReclamation(res.getInt("id_reclamation"));
+                int reclamation = res.getInt("id_reclamation");
                 return new Reponse(id, reclamation, description);
             }
         } catch (SQLException e) {
@@ -95,12 +98,7 @@ public class ServiceReponse implements Iservice<Reponse> {
             while (res.next()){
                 int id = res.getInt("id");
                 String description = res.getString("description");
-                Reclamation reclamation = new Reclamation();
-                reclamation.setIdReclamation(res.getInt("idReclamtion"));
-                reclamation.setPrivateKey(res.getString("PrivateKey"));
-                reclamation.setDate(String.valueOf(res.getDate("Date")));
-                reclamation.setSubject(res.getString("Subject"));
-                reclamation.setDescription(res.getString("Description"));
+                int reclamation = res.getInt("id_reclamation");
                 Reponse r = new Reponse(id, reclamation, description);
                 responses.add(r);
             }

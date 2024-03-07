@@ -138,8 +138,14 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public void onNewsBtnClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPane.setCenter(showEmpAnchorPane);
+        centerContainer.getChildren().clear();
+        StackPane stations = null;
+        try {
+            stations = FXMLLoader.load( getClass().getResource( "/fxml/blog/newsPage.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(stations);
     }
 
 

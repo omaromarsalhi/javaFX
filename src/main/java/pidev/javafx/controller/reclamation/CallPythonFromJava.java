@@ -7,10 +7,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class CallPythonFromJava {
-    public static String run(String url)  {
-        String pythonScriptPath = "reco.py";
+    public static String run()  {
+        String pythonScriptPath = "src/main/java/pidev/javafx/python/reco.py";
 
-        ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath, "voice", url);
+        ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath, "voice");
         processBuilder.redirectErrorStream(true);
         Process process = null;
         try {
