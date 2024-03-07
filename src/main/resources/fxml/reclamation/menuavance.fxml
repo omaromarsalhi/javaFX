@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -23,26 +17,8 @@
     <!-- Central Area -->
     <center>
         <VBox style="-fx-background-radius: 20; -fx-border-color: black;">
-            <Label text="Home">
-            <VBox.margin>
-               <Insets left="350.0" />
-            </VBox.margin></Label>
          <Separator orientation="VERTICAL" prefHeight="126.0" prefWidth="58.0" visible="false" />
-            <Label text="Hello , welcome!" />
-         <HBox alignment="CENTER">
-            <children>
-                  <TextField fx:id="searchBar" prefHeight="35.0" prefWidth="690.0" promptText="Search bar ..." />
-               <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="45.0">
-                  <graphic>
-                     <ImageView fitHeight="35.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                        <image>
-                           <Image url="@../../namedIcons/icons8-chercher-32.png" />
-                        </image>
-                     </ImageView>
-                  </graphic>
-               </Button>
-            </children>
-         </HBox>
+         <HBox alignment="CENTER" />
          <Separator orientation="VERTICAL" prefHeight="35.0" prefWidth="5.0" visible="false" />
             <!-- Folder Icons -->
             <GridPane alignment="CENTER" prefHeight="93.0" prefWidth="585.0">
@@ -96,46 +72,6 @@
             </rowConstraints>
                 <!-- Add other folders as needed -->
             </GridPane>
-            <!-- Recent Files -->
-            <!-- Recent Files -->
-            <!-- Recent Files -->
-            <VBox style="-fx-background-color: #F0F0F0; -fx-padding: 10;">
-            <Separator orientation="VERTICAL" prefHeight="61.0" prefWidth="0.0" visible="false" />
-            <HBox alignment="CENTER">
-               <children>
-                      <Label prefHeight="30.0" prefWidth="276.0" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Recent Reclamation" />
-                  <Separator prefHeight="6.0" prefWidth="390.0" visible="false" />
-                   <Button fx:id="recordButton" text="Start Recording" onAction="#handleRecordButton" />
-               </children>
-            </HBox>
-            </VBox>
-             <TableView fx:id="lista" onMouseClicked="#displayDetailsInTableView" style="-fx-background-color: #FFFFFF; -fx-border-color: #D0D0D0;" stylesheets="@../../styles/tableview.css">
-                 <columns>
-                     <TableColumn fx:id="image" style="-fx-background-color: #F0F0F0;" text="Reclamation">
-                            <!-- Add cell value factory -->
-                        </TableColumn>
-                     <TableColumn fx:id="titrec" style="-fx-background-color: #F0F0F0;" text="Titre">
-                            <!-- Add cell value factory -->
-                        </TableColumn>
-                     <TableColumn fx:id="categoriec" style="-fx-background-color: #F0F0F0;" text="Categorie">
-                            <!-- Add cell value factory -->
-                        </TableColumn>
-                 </columns>
-            <columnResizePolicy>
-               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-            </columnResizePolicy>
-            <styleClass>
-               <String fx:value="column-header" />
-               <String fx:value="btn" />
-               <String fx:value="column-header-background" />
-               <String fx:value="filler" />
-               <String fx:value="label" />
-               <String fx:value="table-cell" />
-               <String fx:value="table-row-cell" />
-               <String fx:value="table-view" />
-            </styleClass>
-                 <!-- Add items -->
-             </TableView>
 
 
         </VBox>
@@ -146,64 +82,4 @@
     <right>
 
     </right>
-   <right>
-      <VBox alignment="TOP_CENTER" prefHeight="670.0" prefWidth="286.0" BorderPane.alignment="CENTER">
-         <children>
-            <Separator orientation="VERTICAL" prefHeight="7.0" prefWidth="15.0" visible="false" />
-            <Label text="Preview reclamation" />
-            <Separator orientation="VERTICAL" prefHeight="22.0" prefWidth="0.0" visible="false" />
-            <Button mnemonicParsing="false" prefHeight="263.0" prefWidth="282.0">
-               <graphic>
-                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-               </graphic>
-            </Button>
-            <VBox prefHeight="356.0" prefWidth="286.0">
-               <children>
-                  <Label text="Private key" />
-                  <TextField fx:id="privateKey" />
-                  <Label text="Titre" />
-                  <TextField fx:id="titre" />
-                  <Label text="Categorie" />
-                  <TextField fx:id="categorie" />
-                  <Label text="Date" />
-                  <TextField fx:id="date" />
-                  <Label text="Description" />
-                  <TextArea fx:id="desciption" prefHeight="105.0" prefWidth="286.0" />
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
-                     <children>
-                        <Button mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../namedIcons/trash.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#exportToPDF">
-                           <graphic>
-                              <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../citizenHub/Sans%20titre-7.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                        <Button mnemonicParsing="false">
-                           <graphic>
-                              <ImageView fitHeight="31.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../citizenHub/img1.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </Button>
-                     </children>
-                  </HBox>
-                  
-               </children>
-            </VBox>
-         </children>
-      </VBox>
-   </right>
 </BorderPane>
