@@ -21,7 +21,7 @@ public class ServiceReclamation  {
 
     private static ServiceReclamation instance;
 
-    private ServiceReclamation() {}
+    public ServiceReclamation() {}
 
     public static ServiceReclamation getInstance() {
         if (instance == null)

@@ -19,6 +19,7 @@
          <children>
             <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="959.0" spacing="110.0" stylesheets="@../../style/marketPlace/toolBarStyle.css">
                <children>
+                  <Button mnemonicParsing="false" text="Reclamation" />
                   <HBox fx:id="searchHbox" alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="279.0" style="-fx-background-color: transparent;" stylesheets="@../../../style/marketPlace/toolBarStyle.css">
                      <children>
                         <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />

@@ -46,7 +46,7 @@
                         </MenuBar>
                         <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="43.0" prefWidth="235.0" style="-fx-background-color: transparent;" stylesheets="@../../style/marketPlace/toolBarStyle.css">
                            <children>
-                              <TextField fx:id="searchTextField" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: transparent;" />
+                              <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: transparent;" />
                               <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0" style="-fx-background-color: transparent;">
                                  <graphic>
                                     <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">

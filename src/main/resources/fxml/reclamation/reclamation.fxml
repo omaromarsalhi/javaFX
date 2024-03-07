@@ -44,11 +44,14 @@
             <Insets />
          </HBox.margin>
          <children>
-            <ImageView fitHeight="36.0" fitWidth="41.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../img/userImg/clock.png" />
-               </image>
-            </ImageView>
+            <Button fx:id="delete" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#showDetailsReclamation" prefHeight="34.0" prefWidth="39.0" style="-fx-background-color: transparent;" textFill="#fff8f8">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/marketPlace/delete24BL.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
             <Button fx:id="Popup" alignment="BASELINE_LEFT" mnemonicParsing="false" onMouseClicked="#showDetailsReclamation" prefHeight="34.0" prefWidth="39.0" style="-fx-background-color: transparent;" textFill="#fff8f8">
                <graphic>
                   <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -56,7 +59,8 @@
                         <Image url="@../../icons/marketPlace/morermila.png" />
                      </image>
                   </ImageView>
-               </graphic></Button>
+               </graphic>
+            </Button>
          </children>
       </VBox>
    </children>

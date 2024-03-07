@@ -11,6 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import pidev.javafx.tools.UserController;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.io.IOException;
@@ -77,18 +79,29 @@ public class MainWindowAdminController implements Initializable {
 
 
 
+//    @FXML
+//    void onAccountBtnClicked(ActionEvent event) {
+//        centerContainer.getChildren().clear();
+//        AnchorPane dashbord = null;
+//        try {
+//            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/user/ListeUser.fxml" ));
+//        } catch (IOException e) {
+//            throw new RuntimeException( e );
+//        }
+//        centerContainer.getChildren().add(dashbord);
+//    }
     @FXML
     void onAccountBtnClicked(ActionEvent event) {
         centerContainer.getChildren().clear();
-        AnchorPane dashbord = null;
+        BorderPane dashbord = null;
+
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/user/ListeUser.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/reclamation/menuavance.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
         centerContainer.getChildren().add(dashbord);
     }
-
 
 
     @FXML
@@ -97,6 +110,18 @@ public class MainWindowAdminController implements Initializable {
         AnchorPane dashbord = null;
         try {
             dashbord = FXMLLoader.load(getClass().getResource( "/fxml/Transport/Gui_Abonnement/AbonnementAdmin.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(dashbord);
+    }
+
+    @FXML
+    void onReclamationBtnClicked(ActionEvent event) {
+        centerContainer.getChildren().clear();
+        StackPane dashbord = null;
+        try {
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/reclamation/menuavance.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
@@ -124,7 +149,7 @@ public class MainWindowAdminController implements Initializable {
         centerContainer.getChildren().clear();
         StackPane dashbord = null;
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
@@ -173,6 +198,19 @@ public class MainWindowAdminController implements Initializable {
         Stage currentStage = (Stage) agrendirBtn.getScene().getWindow();
         boolean etatFenetre = currentStage.isMaximized();
         currentStage.setMaximized(!etatFenetre);
+    }
+
+    @FXML
+    public void onBlogBtnClicked(ActionEvent event) throws IOException {
+        centerContainer.getChildren().clear();
+        AnchorPane blog = null;
+        try {
+            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/blog.fxml" ) );
+            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/post.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(blog);
     }
 
 

@@ -82,33 +82,30 @@ public class ReclamationFormShowController implements Initializable {
     }
 
     public void createFormBtns(){
-        Button addProd= new Button();
         Button clearProd = new Button();
         Button cancel= new Button();
 
         buttonsBox =new HBox();
 
-        addProd.setPrefWidth( 50 );
         clearProd.setPrefWidth( 50 );
         cancel.setPrefWidth( 50 );
 
-        addProd.setPrefHeight( 32 );
         clearProd.setPrefHeight( 32 );
         cancel.setPrefHeight( 32 );
 
         Image  img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/tab2.png" ) ));
-        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/broom.png" )));
+        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/pdf-file.png" )));
         Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/paper.png" )));
 
-        addProd.setGraphic( new ImageView( img1 ));
+
         clearProd.setGraphic( new ImageView( img2 ));
         cancel.setGraphic( new ImageView( img3 ));
 
-        addProd.setOnMouseClicked( this::onAddClicked);
+        clearProd.setOnMouseClicked( this::onAddClicked);
 
         cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitFormUser",event ) );
 
-        buttonsBox.getChildren().addAll( addProd,clearProd,cancel );
+        buttonsBox.getChildren().addAll( clearProd,cancel );
         buttonsBox.setSpacing( 20 );
         buttonsBox.setAlignment( Pos.CENTER);
         buttonsBox.setId( "itemInfo" );
@@ -119,7 +116,7 @@ public class ReclamationFormShowController implements Initializable {
 
 
     public void onAddClicked(MouseEvent event) {
-        ServiceReclamation.getInstance().supprimer(rec.getIdReclamation());
+        generatePdf(rec);
     }
     public void showFormReclamationReponse(MouseEvent event) {
         EventBus.getInstance().publish("showReponse", event);
@@ -148,7 +145,7 @@ public class ReclamationFormShowController implements Initializable {
                 Pdescretion11.setStyle("-fx-text-fill: red");
             }
 
-        generatePdf(rec);
+        //generatePdf(rec);
     }
 
 

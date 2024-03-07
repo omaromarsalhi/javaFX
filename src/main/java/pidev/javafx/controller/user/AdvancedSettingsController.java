@@ -79,7 +79,7 @@ public class AdvancedSettingsController implements Initializable {
             submit.setOnAction( event ->{
                 updatePassword();
                 loadingPane.setVisible( true );
-                sleepThread().start();
+                sleepThread(usage).start();
             } );
         }
         else {
@@ -88,13 +88,13 @@ public class AdvancedSettingsController implements Initializable {
             submit.setOnAction( event -> {
                 updateEmail();
                 loadingPane.setVisible( true );
-                sleepThread().start();
+                sleepThread(usage).start();
             } );
         }
     }
 
 
-    private Thread sleepThread() {
+    private Thread sleepThread(String usage) {
         Task<Void> myTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -105,6 +105,11 @@ public class AdvancedSettingsController implements Initializable {
         myTask.setOnSucceeded(e -> {
             loadingPane.setVisible( false );
             EventBus.getInstance().publish( "loadBlog",e );
+            if(usage.equals("updatePassword"))
+                MyTools.getInstance().getTextNotif().setText( "Password Has Been Modified Successfully" );
+            else
+                MyTools.getInstance().getTextNotif().setText( "Email Has Been Modified Successfully" );
+            MyTools.getInstance().showNotif();
         });
         return new Thread(myTask);
     }

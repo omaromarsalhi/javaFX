@@ -96,8 +96,8 @@
                                           </MenuBar>
                                           <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="39.0" prefWidth="286.0" style="-fx-background-color: #f4f4f4;">
                                              <children>
-                                                <TextField fx:id="searchTextField" prefHeight="38.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
-                                                <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="34.0">
+                                                <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
+                                                <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
                                                    <graphic>
                                                       <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
                                                          <image>

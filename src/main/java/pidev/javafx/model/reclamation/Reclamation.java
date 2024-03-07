@@ -1,6 +1,8 @@
 package pidev.javafx.model.reclamation;
 
-public class Reclamation {
+import javafx.scene.Node;
+
+public class Reclamation extends Node {
 
     private int idReclamation;
     private String privateKey;
@@ -26,9 +28,7 @@ public class Reclamation {
     }
 
 
-    public int getId() {
-        return idReclamation;
-    }
+
 
     public int getUser() {
         return userId;

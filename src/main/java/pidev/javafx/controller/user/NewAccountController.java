@@ -17,6 +17,7 @@ import javafx.scene.layout.VBox;
 //import pidev.javafx.controller.blog.BlogController;
 import javafx.stage.Stage;
 import pidev.javafx.controller.reclamation.ReclamationBoxController;
+import pidev.javafx.controller.reclamation.ReclamationFormController;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.crud.user.ServiceUser;
 import pidev.javafx.model.blog.Post;
@@ -84,6 +85,11 @@ public class NewAccountController implements Initializable {
                 reclamations = fxmlLoader.load( );
                 ReclamationBoxController reclamationBoxController=fxmlLoader.getController();
                 reclamationBoxController.setData( reclamationData );
+                HBox finalReclamations = reclamations;
+                reclamationBoxController.getDelete().setOnMouseClicked( event1 -> {
+                    ServiceReclamation.getInstance().supprimer(reclamationData.getIdReclamation());
+                    MyTools.getInstance().deleteAnimation( finalReclamations,reclamsSection );
+                } );
             } catch (IOException e) {
                 throw new RuntimeException( e );
             }
@@ -95,6 +101,7 @@ public class NewAccountController implements Initializable {
         EventBus.getInstance().subscribe( "exitFormUser",this::onExitFormBtnClicked );
         EventBus.getInstance().subscribe( "loadBlog", event -> loadBlog() );
         EventBus.getInstance().subscribe( "showReponse",this:: showFormReclamationReponse );
+        EventBus.getInstance().subscribe( "refresh",this:: refresh );
 
 
 
@@ -219,6 +226,27 @@ public class NewAccountController implements Initializable {
         MyTools.getInstance().showAnimation( form );
     }
 
+    public void refresh(CustomMouseEvent<Reclamation> customMouseEvent){
+        HBox reclamations = null;
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
+            try {
+                reclamations = fxmlLoader.load( );
+                ReclamationBoxController reclamationBoxController=fxmlLoader.getController();
+                reclamationBoxController.setData( customMouseEvent.getEventData() );
+                HBox finalReclamations = reclamations;
+                reclamationBoxController.getDelete().setOnMouseClicked( event1 -> {
+                    ServiceReclamation.getInstance().supprimer(customMouseEvent.getEventData().getIdReclamation());
+                    MyTools.getInstance().deleteAnimation( finalReclamations,reclamsSection );
+                } );
+            } catch (IOException e) {
+                throw new RuntimeException( e );
+            }
+            reclamsSection.getChildren().add(reclamations);
+        MyTools.getInstance().showAnimation( reclamations );
+
+    }
+
 
     public void showFormadvancedSettings(String usage) {
         StackPane form=null;
@@ -247,6 +275,8 @@ public class NewAccountController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
+//        ReclamationFormController reclamationBoxController=fxmlLoader.getController();
+//        StackPane finalForm = form;
         firstinterface.setOpacity( 0.4 );
         secondInterface.setVisible( true );
         secondInterface.getChildren().add(form);

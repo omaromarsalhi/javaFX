@@ -93,7 +93,13 @@ public class MarketController implements Initializable {
         searchBtn.setStyle( "-fx-border-radius: 20;" +
                 "-fx-background-radius:20;" );
 
-        searchBtn.setOnMouseClicked(event -> animateSearchBar());
+        searchBtn.setOnMouseClicked(event ->{
+            if(searchBarState.equals("opened")&&!searchTextField.getText().isEmpty())
+                parseData(searchTextField.getText());
+            else
+                animateSearchBar();
+        } );
+
 
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
@@ -109,6 +115,13 @@ public class MarketController implements Initializable {
             grid.setMaxWidth((Double)newValue-25);
         } );
         loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
+    }
+
+
+    public void parseData(String data){
+        if(!data.isEmpty()){
+            loadingAllProductsThread( CrudBien.getInstance().searchItems("name", data ) ).start();
+        }
     }
 
 
@@ -139,8 +152,7 @@ public class MarketController implements Initializable {
         menuBar.getMenus().get(0).getItems().addAll(allProducts,todayProducts);
 
         var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
-        menuBar.getMenus().get( 1 ).getItems().addAll(filterProd ,filterService);
+        menuBar.getMenus().get( 1 ).getItems().addAll(filterProd);
 
 
         filterProd.setOnAction( event -> {

@@ -158,7 +158,7 @@ public class MainDashbordController implements Initializable {
         EventBus.getInstance().subscribe( "doUpdateTabprodAfterAIverif",this::doUpdateTabprodAfterAIverif);
         EventBus.getInstance().subscribe( "showChat",this::openChatWindow);
 
-        loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
+        loadingAllProductsThread(CrudBien.getInstance().selectItemsById()).start();
 
     }
 
@@ -213,7 +213,7 @@ public class MainDashbordController implements Initializable {
         showAllProduct.setOnAction( event -> {
             deleteFavorite();
             scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, eventHandler4ScrollPane);
-            loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
+            loadingAllProductsThread(CrudBien.getInstance().selectItemsById()).start();
         } );
         showForPushasedProduct.setOnAction( event -> loadSelledOrPurchsedProducts("PURCHSED"));
         showForSelledProduct.setOnAction( event -> loadSelledOrPurchsedProducts("SELLED") );
@@ -581,12 +581,17 @@ public class MainDashbordController implements Initializable {
                 myTask.getValue().getFirst().lookup( "#deleteBtn" ).setOnMouseClicked( event -> {
                     MyTools.getInstance().deleteAnimation( myTask.getValue().getFirst(), showAllProdsInfo );
                     CrudBien.getInstance().deleteItem( prod.getId() );
+                    MyTools.getInstance().getTextNotif().setText( "Prod Has Been Deleted Successfully" );
+                    MyTools.getInstance().showNotif();
                 } );
 
                 myTask.getValue().getFirst().lookup( "#updateBtn" ).setOnMouseClicked( event -> {
                     doUpdate( prod );
-                    EventBus.getInstance().subscribe( "refreshProdContainer", event1 ->
-                            myTask.getValue().getSecond().setData( CrudBien.getInstance().selectItemById( prod.getId() ) )
+                    EventBus.getInstance().subscribe( "refreshProdContainer", event1 -> {
+                                myTask.getValue().getSecond().setData( CrudBien.getInstance().selectItemById( prod.getId() ) );
+                                MyTools.getInstance().getTextNotif().setText( "Table Has Been Updated Successfully" );
+                                MyTools.getInstance().showNotif();
+                            }
                     );
                 } );
                 myTask.getValue().getFirst().setOnMouseClicked( event -> loadInfoItem( prod ) );

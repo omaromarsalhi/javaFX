@@ -42,6 +42,7 @@ import java.sql.Timestamp;
 import java.util.*;
 
 import org.json.JSONObject;
+import pidev.javafx.model.user.Role;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
@@ -145,9 +146,17 @@ public class BlogController implements Initializable {
         }
 
 
-        if (post.getIdCompte() == ConnectedAccount) {
+
+        if (UserController.getInstance().getCurrentUser().getRole() == Role.admin) {
             postController.getMenuBtnPost().setVisible(true);
-        } else {
+            postController.getModifierPost().setVisible( false );
+            if (post.getIdCompte() == ConnectedAccount) {
+                postController.getModifierPost().setVisible( true );
+            }
+        }
+        else if (post.getIdCompte() == ConnectedAccount) {
+            postController.getMenuBtnPost().setVisible(true);
+        } else if (post.getIdCompte() != ConnectedAccount)  {
             postController.getMenuBtnPost().setVisible(false);
         }
 
@@ -416,8 +425,8 @@ public class BlogController implements Initializable {
             stage.show();
             scene.getRoot().setEffect(blur);
             parent.setVisible(false);
-            stage.setY(250);
-            stage.setX(900);
+            stage.setY(150);
+            stage.setX(650);
             parent.setVisible(true);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
             transition.setFromY(600);
@@ -558,8 +567,8 @@ public class BlogController implements Initializable {
             scene.getRoot().setEffect(blur);
             parent.setVisible(false);
             stage.show();
-            stage.setY(230);
-            stage.setX(760);
+            stage.setY(150);
+            stage.setX(650);
             parent.setVisible(true);
             TranslateTransition transition = new TranslateTransition(Duration.seconds(0.3), parent);
             transition.setFromY(600);

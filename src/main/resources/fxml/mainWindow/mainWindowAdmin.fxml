@@ -32,7 +32,7 @@
                 </HBox>
                 <VBox alignment="CENTER" prefHeight="286.0" prefWidth="235.0" spacing="15.0">
                     <children>
-                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  Blogs" textFill="WHITE">
+                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onBlogBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Blogs" textFill="WHITE">
                             <VBox.margin>
                                 <Insets />
                             </VBox.margin>
@@ -95,7 +95,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="propertyBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketplaceDashbordBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Property" textFill="WHITE">
+                        <Button fx:id="propertyBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketplaceDashbordBtnClicked" prefHeight="52.0" prefWidth="190.0" text=" Market Dashbord" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -110,6 +110,18 @@
                                 <Insets left="1.0" />
                             </VBox.margin>
                         </Button>
+                  <Button fx:id="propertyBtn1" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onReclamationBtnClicked" prefHeight="52.0" prefWidth="190.0" text="Reclamations" textFill="WHITE">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../icons/blogIcons/demande.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
                     </children>
                     <VBox.margin>
                         <Insets />

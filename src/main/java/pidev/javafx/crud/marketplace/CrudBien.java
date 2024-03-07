@@ -8,6 +8,7 @@ import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.UserController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,6 +179,42 @@ public class CrudBien implements CrudInterface<Bien> {
         } catch (SQLException e) {
             System.out.println("Error updating item: " + e.getMessage());
         }
+    }
+
+
+    public ObservableList<Bien> selectItemsById() {
+        Bien bien = null;
+        String sql = "SELECT * FROM products  where isDeleted=false and idUser= ? order by idProd desc"; // Retrieve all items
+
+        connect = ConnectionDB.getInstance().getCnx();
+        ObservableList<Bien> BienList = FXCollections.observableArrayList();
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setInt( 1, UserController.getInstance().getCurrentUser().getId() );
+            result = prepare.executeQuery();
+            while (result.next()) {
+                bien=new Bien(result.getInt("idProd"),
+                        result.getInt("idUser"),
+                        result.getString("name"),
+                        result.getString("descreption"),
+                        "",
+                        result.getFloat("price"),
+                        result.getFloat("quantity"),
+                        result.getString("state"),
+                        result.getTimestamp("timestamp"),
+                        Categorie.valueOf(result.getString("category")));
+                bien.setAllImagesSources( selectImagesById(bien.getId()) );
+                if(bien.getAllImagesSources().size()>0) {
+                    bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 40, 40, false, false ) ) );
+                }
+                BienList.add(bien);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error selecting items: " + e.getMessage());
+        }
+
+        return BienList;
     }
 
     @Override

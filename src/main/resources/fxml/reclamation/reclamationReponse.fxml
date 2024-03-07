@@ -126,7 +126,7 @@
             </VBox>
             <VBox fx:id="Box12" alignment="TOP_CENTER" prefHeight="506.0" prefWidth="298.0" spacing="10.0">
                <children>
-                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
+                  <HBox fx:id="box12" alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
                         <Label prefHeight="36.0" prefWidth="160.0" text="Reponse :">
                            <font>
