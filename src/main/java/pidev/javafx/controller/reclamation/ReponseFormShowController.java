@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -13,11 +14,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReponse;
 import pidev.javafx.model.Reclamation.Reclamation;
 import pidev.javafx.model.Reclamation.Reponse;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -45,6 +49,8 @@ public class ReponseFormShowController implements Initializable {
 
     @FXML
     private TextField privatekey1;
+    @FXML
+    private VBox Box12;
 
 
     private HBox buttonsBox;
@@ -85,8 +91,43 @@ public class ReponseFormShowController implements Initializable {
         createFormBtns();
         Box1.getChildren().add( buttonsBox );
         EventBus.getInstance().subscribe("senddata",this::first_fonction);
+        setRegEx();
     }
+    private void setRegEx() {
+        Popup popup4Regex = MyTools.getInstance().createPopUp();
 
+        reponsetext.setOnKeyTyped(event -> {
+            isAllInpulValid = reponsetext.getText().matches("^[A-Za-z0-9 ]*$");
+            String color = (isAllInpulValid) ? "green" : "red";
+            if (reponsetext.getText().isEmpty()) {
+                reponsetext.setStyle("");
+                Box12.setStyle(formLayoutBeforRegexCheck);
+                isAllInpulValid = true;
+            } else {
+                reponsetext.setStyle("-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0");
+                Box12.setStyle("-fx-border-color:" + color + ";" +
+                        formLayoutAfterRegexCheck);
+            }
+            if ((!isAllInpulValid && !reponsetext.getText().isEmpty()))
+                Box12.setStyle("-fx-border-color:red;" +
+                        formLayoutAfterRegexCheck);
+        });
+
+        reponsetext.setOnMouseEntered(event -> {
+            if (!isAllInpulValid && !reponsetext.getText().isEmpty()) {
+                ((Label) popup4Regex.getContent().get(0)).setText("ONLY CHARACTERS AND NUMBERS ARE ALLOWED");
+                popup4Regex.getContent().get(0).setStyle(popup4Regex.getContent().get(0).getStyle() + "-fx-background-color: #ed1c27;");
+                popup4Regex.show(Stage.getWindows().get(0), event.getScreenX() + 40, event.getScreenY() - 40);
+            }
+        });
+
+        reponsetext.setOnMouseExited(event -> {
+//            if(isAllInpulValid[3])
+            popup4Regex.hide();
+        });
+    }
     public void createFormBtns(){
         Button addProd1= new Button();
         Button clearProd = new Button();
