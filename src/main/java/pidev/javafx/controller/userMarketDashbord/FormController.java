@@ -376,6 +376,7 @@ public class FormController implements Initializable {
 
 
     public void onAddOrUpdateBienClicked(MouseEvent event) {
+//        System.out.println(UserController.getInstance().getCurrentUser());
         if(isAllInpulValid[0]&&isAllInpulValid[1]&&isAllInpulValid[2]) {
             Bien bien = new Bien( (product == null) ? 0 : product.getId(),
                     UserController.getInstance().getCurrentUser().getId(),

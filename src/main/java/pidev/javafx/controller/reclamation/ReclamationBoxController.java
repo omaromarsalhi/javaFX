@@ -43,4 +43,9 @@ private Reclamation rec;
     public Button getDelete() {
         return delete;
     }
+
+
+    public Button getPopup() {
+        return Popup;
+    }
 }

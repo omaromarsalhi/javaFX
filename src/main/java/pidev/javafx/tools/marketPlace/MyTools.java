@@ -183,8 +183,8 @@ public class MyTools {
                         checkIfProductIsValid = false;
                 } else
                     checkIfProductIsValid = false;
-//                if (checkIfProductIsValid)
-//                    PhoneSMS.getInstance().sendSMS( "+21629624921", "A New Product Was Added" );
+                if (checkIfProductIsValid)
+                    PhoneSMS.getInstance().sendSMS( "+21629624921", "A New Product Was Added" );
                 checkIfProductIsValid = true;
             }
         }
@@ -276,8 +276,8 @@ public class MyTools {
     }
 
     public void showNotif(){
-        showAndHideAnimation( notifHbox,1,1500 );
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(10000), event1 -> {
+        showAndHideAnimation( notifHbox,1,500 );
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(6000), event1 -> {
             showAndHideAnimation( notifHbox,0,0 );
         }) );
         timeline.setCycleCount( Animation.INDEFINITE);

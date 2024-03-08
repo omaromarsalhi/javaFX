@@ -61,5 +61,7 @@ module pidev.javafx{
     opens pidev.javafx.tools.marketPlace to javafx.fxml;
     opens pidev.javafx.tools to javafx.fxml;
     exports pidev.javafx.tools;
+    exports pidev.javafx.model.Transport;
+    opens pidev.javafx.model.Transport;
 }
 

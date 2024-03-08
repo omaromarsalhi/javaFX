@@ -93,10 +93,10 @@ public class MainWindowAdminController implements Initializable {
     @FXML
     void onAccountBtnClicked(ActionEvent event) {
         centerContainer.getChildren().clear();
-        BorderPane dashbord = null;
+        StackPane dashbord = null;
 
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/reclamation/menuavance.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/user/ListeUser.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
@@ -169,11 +169,11 @@ public class MainWindowAdminController implements Initializable {
     }
 
     @FXML
-    void onNewsBtnClicked(ActionEvent event) {
+    void onTransportBtnClicked(ActionEvent event) {
         centerContainer.getChildren().clear();
-        StackPane dashbord = null;
+        AnchorPane dashbord = null;
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/Transport/Gui_Transport/Display_Transport.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

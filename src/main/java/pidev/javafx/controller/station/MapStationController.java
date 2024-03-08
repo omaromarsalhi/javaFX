@@ -113,12 +113,9 @@ public class MapStationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         EventBus.getInstance().subscribe("close_List", this::openTitle);
-
         data = FXCollections.observableArrayList(ss.getAll());
         EventBus.getInstance().subscribe("sendTransport", this::handleCustomEvent);
-
         showAddresses();
-
         searchBarState="closed";
         animTimer = new Timer();
         searchTextField.setVisible( false );

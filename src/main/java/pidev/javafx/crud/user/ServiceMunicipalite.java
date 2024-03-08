@@ -85,5 +85,26 @@ public class ServiceMunicipalite implements IserviceUser<Municipalite> {
 
 
     }
+    public List<Municipalite> rechercherMunicipalite(String recherche) {
+        Connection cnx = ConnectionDB.getInstance().getCnx();
+        Municipalite muni=new Municipalite();
+        List<Municipalite> resultat = new ArrayList<>();
+        String req = "SELECT * FROM municipalite WHERE CONCAT(name, ' ', adresse) LIKE ? ";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, "%" + recherche + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String name = rs.getString("name");
+                String adresse = rs.getString("adresse");
+                muni = new Municipalite(name,adresse);
+                resultat.add(muni);
+                System.out.println(resultat);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return resultat;
+    }
 }
 

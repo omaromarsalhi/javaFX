@@ -14,6 +14,7 @@ import pidev.javafx.model.Transport.Station;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.transport.DataHolder;
 import pidev.javafx.tools.transport.rateStation;
 
 import java.net.URL;
@@ -30,7 +31,6 @@ public class stationStats implements Initializable {
     private Label rateLabel;
 
 
-    Station receivedStation = new Station();
 
     public stationStats() {
         rating = r.getRating( UserController.getInstance().getCurrentUser().getId());
@@ -71,14 +71,16 @@ public class stationStats implements Initializable {
             }
         }
         if (a) {
-            r.addItem(rating, UserController.getInstance().getCurrentUser().getId(), receivedStation.getIdStation());
-            rateLabel.setText(Float.toString(r.calculateAverageRatingForStation(receivedStation.getIdStation())));
-            raters.setText(Integer.toString(r.calculateRaters(receivedStation.getIdStation())));
-            busLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(receivedStation.getIdStation())[0]));
-            metroLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(receivedStation.getIdStation())[1]));
-        }
-        EventBus.getInstance().subscribe("Station", this::first_function);
 
+            r.addItem(rating, UserController.getInstance().getCurrentUser().getId(), DataHolder.getStation().getIdStation());
+            rateLabel.setText(Float.toString(r.calculateAverageRatingForStation(DataHolder.getStation().getIdStation())));
+            raters.setText(Integer.toString(r.calculateRaters(DataHolder.getStation().getIdStation())));
+            busLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(DataHolder.getStation().getIdStation())[0]));
+            metroLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(DataHolder.getStation().getIdStation())[1]));
+
+        }
+
+      //  EventBus.getInstance().subscribe("Station", this::first_function);
 
     }
 
@@ -100,8 +102,8 @@ public class stationStats implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        EventBus.getInstance().subscribe("Station", this::first_function);
-        first_function(new CustomMouseEvent<>(receivedStation));
+        System.out.println(DataHolder.getStation());
+        first_function();
 
         root.setAlignment(Pos.CENTER);
 
@@ -114,14 +116,14 @@ public class stationStats implements Initializable {
     }
 
 
-    public void first_function(CustomMouseEvent<Station> T) {
-        receivedStation = T.getEventData();
-        rateLabel.setText(Float.toString(r.calculateAverageRatingForStation(receivedStation.getIdStation())));
-        raters.setText(Integer.toString(r.calculateRaters(receivedStation.getIdStation())));
-        busLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(receivedStation.getIdStation())[0]));
-        metroLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(receivedStation.getIdStation())[1]));
-        arrivalsLabel.setText(Integer.toString(r.countBusAndMetroStations(receivedStation.getIdStation())[0]));
-        departureLabel.setText(Integer.toString(r.countBusAndMetroStations(receivedStation.getIdStation())[1]));
+    public void first_function( ) {
+        DataHolder.getStation() ;
+        rateLabel.setText(Float.toString(r.calculateAverageRatingForStation(DataHolder.getStation().getIdStation())));
+        raters.setText(Integer.toString(r.calculateRaters(DataHolder.getStation().getIdStation())));
+        busLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(DataHolder.getStation().getIdStation())[0]));
+        metroLabel.setText(Integer.toString(r.countDepartureAndArrivalStations(DataHolder.getStation().getIdStation())[1]));
+        arrivalsLabel.setText(Integer.toString(r.countBusAndMetroStations(DataHolder.getStation().getIdStation())[0]));
+        departureLabel.setText(Integer.toString(r.countBusAndMetroStations(DataHolder.getStation().getIdStation())[1]));
 
     }
 

@@ -71,7 +71,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="transportBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onNewsBtnClicked" prefHeight="52.0" prefWidth="190.0" text=" Transport" textFill="WHITE">
+                        <Button fx:id="transportBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onTransportBtnClicked" prefHeight="52.0" prefWidth="190.0" text=" Transport" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

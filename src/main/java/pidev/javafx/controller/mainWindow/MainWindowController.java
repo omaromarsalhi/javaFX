@@ -86,7 +86,7 @@ public class MainWindowController implements Initializable {
 
         StackPane dashbord = null;
         try {
-            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/user/newAccountOmar.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }

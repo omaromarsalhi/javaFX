@@ -66,6 +66,9 @@ public class AdvancedSettingsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadingPane.setVisible( false );
         setRegEx();
+        if(UserController.getInstance().getCurrentUser().getPassReseted())
+            layoutUpadatePassword.getChildren().remove( 1 );
+
 
     }
 
@@ -92,6 +95,8 @@ public class AdvancedSettingsController implements Initializable {
             } );
         }
     }
+
+
 
 
     private Thread sleepThread(String usage) {
@@ -136,15 +141,21 @@ public class AdvancedSettingsController implements Initializable {
     }
 
     public void updatePassword() {
-        ServiceUser serviceUser=new ServiceUser();
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-        String ancien=ancienPassword.getText();
-        if(PasswordHasher.verifyPassword(ancien,password) && nouveauPassword1.getText().matches(passwordRegex) && nouveauPassword2.getText().equals(nouveauPassword1.getText())){
-            serviceUser.modifierPassword(UserController.getInstance().getCurrentUser().getEmail(),PasswordHasher.hashPassword(nouveauPassword1.getText()));
+        ServiceUser serviceUser = new ServiceUser();
+        if(UserController.getInstance().getCurrentUser().getPassReseted()){
+            System.out.println(nouveauPassword1.getText());
+            serviceUser.modifierPassword( UserController.getInstance().getCurrentUser().getEmail(), PasswordHasher.hashPassword( nouveauPassword1.getText() ) );
             sendMailThread().start();
         }
         else {
+            String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+            String ancien = ancienPassword.getText();
+            if (PasswordHasher.verifyPassword( ancien, password ) && nouveauPassword1.getText().matches( passwordRegex ) && nouveauPassword2.getText().equals( nouveauPassword1.getText() )) {
+                serviceUser.modifierPassword( UserController.getInstance().getCurrentUser().getEmail(), PasswordHasher.hashPassword( nouveauPassword1.getText() ) );
+                sendMailThread().start();
+            } else {
 
+            }
         }
     }
     public void updateEmail() {

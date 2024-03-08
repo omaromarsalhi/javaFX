@@ -59,13 +59,13 @@ public class ReponseFormShowController implements Initializable {
     String formLayoutBeforRegexCheck;
     String formLayoutAfterRegexCheck;
     Reponse rec = new Reponse();
-     Reclamation recR = new Reclamation();
+    Reclamation recR = new Reclamation();
 
 
     //private Predictor<String, Classifications> predictor;
 
 
-//    public void analyzeText() {
+    //    public void analyzeText() {
 //        String text = Pdescretion1.getText();
 //        Classifications classifications;
 //        try {
@@ -176,7 +176,7 @@ public class ReponseFormShowController implements Initializable {
                 recR.getIdReclamation(),
                 reponsetext.getText()
         );
-            ServiceReponse.getInstance().ajouter(reponse);
+        ServiceReponse.getInstance().ajouter(reponse);
     }
     public void voice(MouseEvent event) {
         String pythonOutput = CallPythonFromJava.run();

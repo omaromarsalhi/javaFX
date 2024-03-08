@@ -183,6 +183,22 @@ public class NewAccountController implements Initializable {
 
         if(UserController.getInstance().getCurrentUser().getLastname()==null)
             editDetails.fire();
+        if(UserController.getInstance().getCurrentUser().getPassReseted()) {
+            StackPane form=null;
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("/fxml/user/advancedSettings.fxml" ));
+            try {
+                form = fxmlLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException( e );
+            }
+            AdvancedSettingsController advancedSettingsController=fxmlLoader.getController();
+            advancedSettingsController.setUsageOfThisForm("updatePassword");
+            advancedSettingsController.setData( UserController.getInstance().getCurrentUser() );
+            blogSection.getChildren().clear();
+            blogSection.getChildren().add(form);
+            MyTools.getInstance().showAnimation( form );
+        }
     }
 
 

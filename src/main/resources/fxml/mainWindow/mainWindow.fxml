@@ -165,7 +165,7 @@
                <children>
                   <HBox fx:id="notifHbox" alignment="CENTER" prefHeight="38.0">
                      <children>
-                        <Label fx:id="textNotif" alignment="CENTER" prefHeight="30.0" prefWidth="208.0" text="This is The Notif Pop Up" />
+                        <Label fx:id="textNotif" alignment="CENTER" prefHeight="30.0" prefWidth="317.0" text="This is The Notif Pop Up" />
                         <Label fx:id="imageNotif" alignment="CENTER" prefHeight="30.0" prefWidth="29.0">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">

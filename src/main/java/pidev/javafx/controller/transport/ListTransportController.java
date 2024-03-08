@@ -102,7 +102,7 @@ public class ListTransportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 //        EventBus.getInstance().subscribe("StationEvent", this::first_function);
-
+        receivedStation=DataHolder.getStation();
 
         clickedState=2;
         currentTime = LocalTime.now();
@@ -250,7 +250,7 @@ public class ListTransportController implements Initializable {
 
     @FXML
     public void openDetails() throws IOException {
-         saved_vbox=detailVbox;
+        saved_vbox=detailVbox;
 
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/StationInfos.fxml"));
@@ -258,7 +258,7 @@ public class ListTransportController implements Initializable {
         infoVbox.getChildren().setAll(loadedPane.getChildren());
         infoVbox.toFront();
 
-        EventBus.getInstance().publish("Station", new CustomMouseEvent<Station>(receivedStation));
+        //   EventBus.getInstance().publish("Station", new CustomMouseEvent<Station>(receivedStation));
     }
 
 
@@ -338,16 +338,20 @@ public class ListTransportController implements Initializable {
         showItems.getChildren().clear();
         showItems.setPrefHeight(0);
         if (receivedStation != null) {
-            T = st.getByid(receivedStation.getIdStation());
+
+            T = st.getByid(DataHolder.getStation().getIdStation());
+
 
             Iterator<Transport> iterator = T.iterator();
 
             if (clickedState == 1) {
 
                 infoVbox.toBack();
+
                 List<Transport> filteredList = T.stream()
                         .filter(Transport -> Transport.getDepart().equals(receivedStation.getNomStation()))
                         .collect(Collectors.toList());
+                System.out.println(T.size());
 
 
                 showItems.getRowConstraints().clear();
@@ -360,7 +364,6 @@ public class ListTransportController implements Initializable {
                         RowConstraints rowConstraints = new RowConstraints();
                         rowConstraints.setVgrow(Priority.ALWAYS);
                         showItems.getRowConstraints().add(rowConstraints);
-
                         FXMLLoader fxmlLoader = new FXMLLoader();
                         fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/Gui_Station/transportDetails.fxml"));
                         vBox = fxmlLoader.load();
