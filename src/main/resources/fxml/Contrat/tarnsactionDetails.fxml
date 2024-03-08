@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane prefHeight="366.0" prefWidth="200.0" scaleShape="false" style="-fx-background-color: #fdc847;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.TransactionDetailsController">
+   <children>
+      <VBox fx:id="contratDetails" prefHeight="366.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: white; -fx-background-radius: 20; -fx-border-radius: 20;">
+         <children>
+            <HBox alignment="CENTER" prefHeight="91.0" prefWidth="142.0">
+               <children>
+                  <AnchorPane prefHeight="91.0" prefWidth="99.0">
+                     <children>
+                        <ImageView fitHeight="100.0" fitWidth="50.0" layoutX="14.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../img/mySelf.jpg" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER" layoutX="64.0" layoutY="-2.0" prefHeight="67.0" prefWidth="60.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="82.0" text="Buyer" />
+                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="92.0" text="OMAR" />
+                              <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="50.0" prefWidth="92.0" text="SALHI" textAlignment="CENTER" />
+                           </children>
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </VBox>
+                        <Label alignment="CENTER" layoutX="19.0" layoutY="68.0" prefHeight="22.0" prefWidth="101.0" text="Connected" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="91.0" prefWidth="122.0">
+                     <children>
+                        <ImageView fitHeight="100.0" fitWidth="50.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../img/omar.jpg" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER" layoutX="50.0" prefHeight="68.0" prefWidth="68.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="82.0" text="Seller" />
+                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="91.0" text="ALI" />
+                              <Label alignment="CENTER" prefHeight="50.0" prefWidth="91.0" text="MSEHLI" />
+                           </children>
+                           <padding>
+                              <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </padding>
+                        </VBox>
+                        <Label alignment="CENTER" layoutX="25.0" layoutY="68.0" prefHeight="22.0" prefWidth="94.0" text="Not Connected" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="165.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="110.0" text="Total Price" />
+                  <TextField fx:id="PtotalPrice" prefHeight="46.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+               </children>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="206.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="110.0" text="Payment Method" />
+                  <TextField fx:id="PpaymentMode" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="46.0" prefWidth="254.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="46.0" prefWidth="110.0" text="Evective Date" />
+                  <TextField fx:id="PeffectivrDate" prefHeight="50.0" prefWidth="140.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </children>
+</StackPane>
