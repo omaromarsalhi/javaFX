@@ -82,6 +82,8 @@ public class BlogController implements Initializable {
     private ImageView rightArrow;
     @FXML
     private ImageView leftArrow;
+    @FXML
+    private ScrollPane scrolll;
     private int ConnectedAccount;
     List<Post> posts;
     List<String> images = new ArrayList<>();
@@ -126,6 +128,7 @@ public class BlogController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("/fxml/post.fxml"));
         VBox vBox = fxmlLoader.load();
         PostController postController = fxmlLoader.getController();
+
         postController.setIdPost(post.getId());
         postController.setIdCompte(post.getIdCompte());
         postController.setData(post, post.getIdCompte());
