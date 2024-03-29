@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.NewAccountController">
+   <children>
+      <VBox fx:id="firstinterface" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: #D9D9D9;">
+         <children>
+            <HBox fx:id="toolBar" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1040.0">
+               <children>
+                  <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="534.0">
+                     <menus>
+                        <Menu mnemonicParsing="false" text="Reclamation">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/packaging.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Appointement">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/packaging.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Posts">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/star.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Your Info">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/star.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Menu>
+                        <Menu mnemonicParsing="false" text="Chat">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/notification.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Menu>
+                     </menus>
+                  </MenuBar>
+               </children>
+               <VBox.margin>
+                  <Insets top="4.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="608.0" prefWidth="1040.0" spacing="10.0">
+               <children>
+                  <VBox prefHeight="618.0" prefWidth="1039.0">
+                     <children>
+                        <HBox fx:id="ultraBigContainer" prefHeight="596.0" prefWidth="739.0" spacing="10.0">
+                           <children>
+                              <VBox prefHeight="584.0" prefWidth="614.0">
+                                 <children>
+                                    <HBox fx:id="" alignment="CENTER" prefHeight="94.0" prefWidth="597.0" style="-fx-background-radius: 20; -fx-border-color: 20;">
+                                       <children>
+                                          <AnchorPane fx:id="accountInfo" prefHeight="86.0" prefWidth="574.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;">
+                                             <children>
+                                                <ImageView fx:id="userImage" fitHeight="66.0" fitWidth="62.0" layoutX="23.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="12.0" AnchorPane.topAnchor="12.0">
+                                                   <image>
+                                                      <Image url="@../../img/marketPlace/latifa.png" />
+                                                   </image>
+                                                </ImageView>
+                                                <VBox layoutX="108.0" layoutY="16.0" prefHeight="50.0" prefWidth="242.0">
+                                                   <children>
+                                                      <Label fx:id="username" contentDisplay="CENTER" prefHeight="34.0" prefWidth="247.0" text="omar salhi">
+                                                         <font>
+                                                            <Font name="System Bold Italic" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label fx:id="userEmail" prefHeight="34.0" prefWidth="247.0" text="omar.salhi@esprit.tn">
+                                                         <font>
+                                                            <Font name="System Italic" size="18.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                                <Line endX="-1.0000839233398438" endY="104.5999984741211" layoutX="87.0" layoutY="-27.0" startX="-1.0000929832458496" startY="35.73655700683594" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="8.0" />
+                                                <ImageView fitHeight="70.0" fitWidth="77.0" layoutX="455.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../citizenHub/Sans%20titre-4.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                             <HBox.margin>
+                                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                             </HBox.margin>
+                                          </AnchorPane>
+                                       </children>
+                                    </HBox>
+                                    <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="488.0" prefWidth="590.0" style="-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" vbarPolicy="NEVER">
+                                      <content>
+                                          <VBox fx:id="blogSection" alignment="CENTER" fillWidth="false" prefHeight="486.0" prefWidth="608.0" />
+                                      </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="563.0" prefWidth="372.0">
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </HBox.margin>
+                                 <children>
+                                    <Label alignment="CENTER" prefHeight="35.0" prefWidth="403.0" text="My Reclamations">
+                                       <font>
+                                          <Font name="System Bold" size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" prefHeight="518.0" prefWidth="410.0" style="-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" stylesheets="@../../style/reclamation/styleReclamation.css" vbarPolicy="NEVER">
+                                       <content>
+                                          <VBox fx:id="reclamsSection" alignment="TOP_CENTER" prefHeight="514.0" prefWidth="367.0" spacing="10.0" style="-fx-background-radius: 15; -fx-background-color: #D9D9D9;" stylesheets="@../../style/reclamation/styleReclamation.css">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </VBox>
+                                       </content>
+                                    </ScrollPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                     </padding>
+            
+                        </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </padding>
+            </HBox>
+         </children>
+         <stylesheets>
+            <URL value="@../../style/marketPlace/Buttons.css" />
+            <URL value="@../../style/marketPlace/toolBarStyle.css" />
+            <URL value="@../../style/marketPlace/scrollBarStlyle.css" />
+         </stylesheets>
+      </VBox>
+      <VBox fx:id="secondInterface" alignment="CENTER" fillWidth="false" prefHeight="552.0" prefWidth="406.0" />
+      <AnchorPane fx:id="loadingPage" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <ImageView fitHeight="105.0" fitWidth="126.0" layoutX="457.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

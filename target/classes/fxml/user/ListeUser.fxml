@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: #D9D9D9;" stylesheets="@../../style/user/StylelisteUsers.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.listUserController">
+   <children>
+      <VBox alignment="CENTER" layoutX="-7.0" layoutY="-12.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="46.0" prefWidth="959.0" spacing="110.0" stylesheets="@../../style/marketPlace/toolBarStyle.css">
+               <children>
+                  <Button mnemonicParsing="false" text="Reclamation" />
+                  <HBox fx:id="searchHbox" alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="279.0" style="-fx-background-color: transparent;" stylesheets="@../../../style/marketPlace/toolBarStyle.css">
+                     <children>
+                        <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
+                        <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/loupe.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets right="10.0" />
+                     </padding>
+                  </HBox>
+               </children>
+               <VBox.margin>
+                  <Insets right="10.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="606.0" prefWidth="1040.0">
+               <children>
+                  <VBox spacing="10.0">
+                     <HBox.margin>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </HBox.margin>
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="195.0" prefWidth="666.0" spacing="10.0">
+                           <children>
+                              <ImageView fx:id="boutonleft" fitHeight="62.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/left-arrow.png" />
+                                 </image>
+                              </ImageView>
+                              <HBox fx:id="municipCrds" alignment="CENTER" prefHeight="182.0" prefWidth="260.0" />
+                              <ImageView fx:id="boutonRight" fitHeight="53.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/right-arrow.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="42.0" prefWidth="646.0" style="-fx-background-color: #fdc847; -fx-background-radius: 14; -fx-border-radius: 14;">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="111.0" text="Image">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="126.0" text="First name">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="134.0" text="last name">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="167.0" text="Email">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="30.0" prefWidth="171.0" text="Actions">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="8.0" right="10.0" />
+                                 </padding>
+                                 <font>
+                                    <Font name="System Bold Italic" size="16.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets left="10.0" right="8.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <ScrollPane hbarPolicy="NEVER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="322.0" prefWidth="666.0" style="-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" styleClass="scrolpane" vbarPolicy="NEVER">
+                           <content>
+                              <VBox fx:id="Userlayout" prefHeight="338.0" prefWidth="664.0" spacing="10.0" style="-fx-background-color: #D9D9D9; -fx-border-color: #D9D9D9;">
+                                 <padding>
+                                    <Insets left="10.0" right="10.0" />
+                                 </padding>
+                              </VBox>
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </VBox>
+                  <VBox fx:id="vboxinfo" alignment="CENTER" prefHeight="566.0" prefWidth="250.0" style="-fx-background-radius: 20;" styleClass="vboxinfo">
+                     <children>
+                        <VBox alignment="CENTER">
+                           <children>
+                              <ImageView fx:id="photos" fitHeight="122.0" fitWidth="169.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../img/userImg/omarmarrakchi.png" />
+                                 </image>
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </ImageView>
+                              <Label fx:id="role" alignment="CENTER" prefHeight="36.0" prefWidth="120.0" textFill="#807d7d">
+                                 <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="20.0" />
+                                 </font>
+                                 <padding>
+                                    <Insets left="5.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </VBox>
+                        <HBox alignment="CENTER" prefHeight="61.0" prefWidth="302.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="FirstName :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="firstname" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="LastName :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="lastname" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="116.0" style="-fx-background-color: transparent;" styleClass="textf1">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="170.0" prefHeight="62.0" prefWidth="302.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="Status :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="status" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="Phone number :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="phone" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="144.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="60.0" prefWidth="323.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="E-mail :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="email" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="Address :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="adresse" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="171.0" maxHeight="-Infinity" prefHeight="59.0" prefWidth="302.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="Age :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="age" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="55.0" prefWidth="130.0">
+                                 <children>
+                                    <Label alignment="BOTTOM_LEFT" prefHeight="30.0" prefWidth="130.0" text="Cin :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField fx:id="cin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" style="-fx-background-color: transparent;">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </TextField>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="156.0" prefHeight="61.0" prefWidth="302.0" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="55.0" prefWidth="156.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="156.0" text="date of brith :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <DatePicker fx:id="dob" prefHeight="30.0" prefWidth="156.0">
+                                       <VBox.margin>
+                                          <Insets right="10.0" />
+                                       </VBox.margin>
+                                    </DatePicker>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                              <VBox alignment="CENTER" prefHeight="100.0" prefWidth="156.0">
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="156.0" text="date of enrolment :">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                       <font>
+                                          <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                                       </font>
+                                    </Label>
+                                    <DatePicker fx:id="date" prefHeight="30.0" prefWidth="156.0">
+                                       <VBox.margin>
+                                          <Insets right="10.0" />
+                                       </VBox.margin>
+                                    </DatePicker>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets left="20.0" />
+                           </padding>
+                        </HBox>
+                        <HBox alignment="CENTER" layoutX="10.0" layoutY="434.0" prefHeight="65.0" prefWidth="312.0" spacing="15.0" styleClass="hboxbtn">
+                           <children>
+                              <Button fx:id="clean" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#clean" prefHeight="40.0" prefWidth="57.0">
+                                 <graphic>
+                                    <ImageView fitHeight="19.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/userIcons/clean.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="btn_supp" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#supprimer" prefHeight="40.0" prefWidth="57.0">
+                                 <graphic>
+                                    <ImageView fitHeight="19.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../../javaFXOldVersion - Copie/src/main/resources/icons/userIcons/poubelle.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_ajouter" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#ajouterEmploye" prefHeight="40.0" prefWidth="57.0">
+                                 <graphic>
+                                    <ImageView fitHeight="19.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../icons/userIcons/envelope.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="btn_bloq" layoutX="62.0" layoutY="10.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="57.0">
+                                 <graphic>
+                                    <ImageView fitHeight="19.0" fitWidth="29.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../icons/userIcons/bloquer%20(1).png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="20.0" top="20.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane alignment="TOP_LEFT" prefHeight="510.0" prefWidth="399.0" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.reclamation.ReponseFormShowController">
+    <children>
+        <HBox fx:id="formBox" prefHeight="510.0" prefWidth="566.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
+            <children>
+                <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+                    <children>
+                  <ImageView fx:id="img" fitHeight="165.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="150.0" />
+                     </VBox.margin></ImageView>
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </VBox>
+            <VBox fx:id="Box11" alignment="TOP_RIGHT" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+               <children>
+                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Privatekey">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox1112" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="privatekey1" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Date">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox111" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="date1" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Subject :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="Pname1" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="4.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="160.0" text="Descreption :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="Pdescretion1" editable="false" minWidth="300.0" prefHeight="226.0" prefWidth="300.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextArea>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            <VBox fx:id="Box12" alignment="TOP_CENTER" prefHeight="506.0" prefWidth="298.0" spacing="10.0">
+               <children>
+                  <HBox fx:id="box12" alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
+                     <children>
+                        <Label prefHeight="36.0" prefWidth="160.0" text="Reponse :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="reponsetext" minWidth="300.0" prefHeight="386.0" prefWidth="300.0" wrapText="true">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </TextArea>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            </children>
+        </HBox>
+    </children>
+</StackPane>

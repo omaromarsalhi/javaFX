@@ -1,0 +1,376 @@
+Index: src/main/java/pidev/javafx/controller/reclamation/Menu.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.reclamation;\r\n\r\nimport com.google.api.client.testing.util.MockSleeper;\r\nimport javafx.animation.FadeTransition;\r\nimport javafx.animation.Timeline;\r\nimport javafx.application.Platform;\r\nimport javafx.collections.FXCollections;\r\nimport javafx.collections.ObservableList;\r\nimport javafx.concurrent.Task;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.Node;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.*;\r\nimport javafx.scene.web.WebEngine;\r\nimport javafx.scene.web.WebView;\r\nimport javafx.util.Duration;\r\nimport pidev.javafx.controller.contrat.CheckOutController;\r\nimport pidev.javafx.crud.marketplace.CrudBien;\r\nimport pidev.javafx.crud.reclamation.ServiceReclamation;\r\nimport pidev.javafx.model.MarketPlace.Bien;\r\nimport pidev.javafx.model.MarketPlace.Product;\r\nimport pidev.javafx.model.reclamation.Reclamation;\r\nimport pidev.javafx.tools.marketPlace.CustomMouseEvent;\r\nimport pidev.javafx.tools.marketPlace.CustomReturnItem;\r\nimport pidev.javafx.tools.marketPlace.EventBus;\r\nimport pidev.javafx.tools.marketPlace.MyTools;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URI;\r\nimport java.net.URL;\r\nimport java.time.LocalDate;\r\nimport java.time.format.DateTimeFormatter;\r\nimport java.util.*;\r\nimport java.util.concurrent.Executors;\r\n\r\npublic class Menu implements Initializable {\r\n        @FXML\r\n        private GridPane grid;\r\n        @FXML\r\n        private ScrollPane scroll;\r\n        @FXML\r\n        private HBox mainHbox;\r\n        @FXML\r\n        private Button searchBtn;\r\n        @FXML\r\n        private HBox searchHbox;\r\n        @FXML\r\n        private TextField searchTextField;\r\n        @FXML\r\n        private MenuBar menuBar;\r\n        @FXML\r\n        private AnchorPane secondInterface;\r\n        @FXML\r\n        private HBox bigContainer;\r\n        @FXML\r\n        private StackPane marketStackPane;\r\n\r\n\r\n\r\n        private VBox itemInfo;\r\n        private VBox hepfullBar;\r\n        private VBox chatBox;\r\n        private Timer animTimer;\r\n        private Image image;\r\n        private String searchBarState;\r\n        private int idProd4nextSelection;\r\n        private int currentNbrColumns;\r\n\r\n\r\n\r\n\r\n\r\n        @Override\r\n        public void initialize(URL location, ResourceBundle resources) {\r\n\r\n\r\n            setMenueBar();\r\n\r\n            searchBarState=\"closed\";\r\n            animTimer = new Timer();\r\n            searchTextField.setVisible( false );\r\n            searchBtn.setStyle( \"-fx-border-radius: 20;\" +\r\n                    \"-fx-background-radius:20;\" );\r\n\r\n            searchBtn.setOnMouseClicked(event ->{\r\n                if(searchBarState.equals(\"opened\")&&!searchTextField.getText().isEmpty())\r\n                    ;\r\n                else\r\n                    animateSearchBar();\r\n            } );\r\n\r\n\r\n\r\n            showGridPane( FXCollections.observableArrayList(ServiceReclamation.getInstance().getAll())  );\r\n        }\r\n\r\n\r\n\r\n    public void showGridPane(ObservableList<Reclamation> biens){\r\n        grid.getChildren().clear();\r\n        grid.setHgap( 20 );\r\n        grid.setVgap( 20 );\r\n        int column = 0;\r\n        int row = 1;\r\n        for (int i = 0; i < biens.size() ; i++) {\r\n            if (column == 3) {\r\n                column = 0;\r\n                row++;\r\n            }\r\n            HBox reclamations = null;\r\n            FXMLLoader fxmlLoader = new FXMLLoader();\r\n            fxmlLoader.setLocation(getClass().getResource(\"/fxml/reclamation/reclamation.fxml\"));\r\n            try {\r\n                reclamations = fxmlLoader.load( );\r\n                ReclamationBoxController reclamationBoxController=fxmlLoader.getController();\r\n                reclamationBoxController.setData( biens.get( i ) );\r\n            } catch (IOException e) {\r\n                throw new RuntimeException( e );\r\n            }\r\n            grid.add( reclamations,column++,row);\r\n        }\r\n    }\r\n\r\n\r\n\r\n        public void setMenueBar(){\r\n            var allProducts=new MenuItem(\"All Products\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n            var todayProducts=new MenuItem(\"Today's Products\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/database.png\" ))));\r\n\r\n\r\n\r\n\r\n            menuBar.getMenus().get(0).getItems().addAll(allProducts,todayProducts);\r\n\r\n            var filterProd=new MenuItem(\"Product\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/database.png\" ))));\r\n            menuBar.getMenus().get( 1 ).getItems().addAll(filterProd);\r\n\r\n\r\n\r\n        }\r\n\r\n        public void animateSearchBar(){\r\n            if(searchBarState.equals( \"closed\" )){\r\n                searchBarState=\"opened\";\r\n                animTimer.scheduleAtFixedRate(new TimerTask() {\r\n                    @Override\r\n                    public void run() {\r\n                        if(searchTextField.getWidth()==16){\r\n                            searchBtn.setStyle( \"-fx-border-radius: 0 20 20 0;\" +\r\n                                    \"-fx-border-color: black  black black transparent ;\");\r\n                            searchTextField.setVisible( true );\r\n                        }\r\n                        if (searchTextField.getWidth()<(searchHbox.getWidth()-searchBtn.getWidth()-20)) {\r\n                            searchTextField.setPrefWidth(searchTextField.getWidth()+10);\r\n                        } else\r\n                            this.cancel();\r\n                    }\r\n\r\n                }, 0, 15);\r\n            }\r\n            else if(searchBarState.equals( \"opened\" )&&searchTextField.getText().isEmpty()){\r\n                searchBarState=\"closed\";\r\n                animTimer.scheduleAtFixedRate(new TimerTask() {\r\n                    @Override\r\n                    public void run() {\r\n                        if (searchTextField.getWidth() <=16) {\r\n                            searchBtn.setStyle( \"-fx-border-radius: 20;\" +\r\n                                    \"-fx-background-radius:20;\");\r\n                            searchTextField.setVisible( false );\r\n                        }\r\n                        if (searchTextField.getWidth() > 16) {\r\n                            searchTextField.setPrefWidth( searchTextField.getWidth() - 10 );\r\n                        } else\r\n                            this.cancel();\r\n                    }\r\n                }, 0, 15);\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/Menu.java b/src/main/java/pidev/javafx/controller/reclamation/Menu.java
+--- a/src/main/java/pidev/javafx/controller/reclamation/Menu.java	(revision 74cd4cfeba5e72ebe844a08239221d23b502099c)
++++ b/src/main/java/pidev/javafx/controller/reclamation/Menu.java	(date 1709811326062)
+@@ -12,6 +12,7 @@
+ import javafx.fxml.Initializable;
+ import javafx.geometry.Insets;
+ import javafx.scene.Node;
++import javafx.scene.chart.PieChart;
+ import javafx.scene.control.*;
+ import javafx.scene.image.Image;
+ import javafx.scene.image.ImageView;
+@@ -38,6 +39,7 @@
+ import java.time.format.DateTimeFormatter;
+ import java.util.*;
+ import java.util.concurrent.Executors;
++import java.util.stream.Collectors;
+ 
+ public class Menu implements Initializable {
+         @FXML
+@@ -58,10 +60,13 @@
+         private AnchorPane secondInterface;
+         @FXML
+         private HBox bigContainer;
+-        @FXML
+-        private StackPane marketStackPane;
++    @FXML
++    private StackPane marketStackPane;
++    @FXML
++    private HBox form;
+ 
+-
++    @FXML
++    private ScrollPane scroll1;
+ 
+         private VBox itemInfo;
+         private VBox hepfullBar;
+@@ -79,7 +84,7 @@
+         @Override
+         public void initialize(URL location, ResourceBundle resources) {
+ 
+-
++            form.setVisible(false);
+             setMenueBar();
+ 
+             searchBarState="closed";
+@@ -96,11 +101,14 @@
+             } );
+ 
+ 
+-
+             showGridPane( FXCollections.observableArrayList(ServiceReclamation.getInstance().getAll())  );
++            searchTextField.textProperty().addListener((observable, oldValue, newValue) -> recherche());
++            createChart();
++
++
+         }
+ 
+-
++    private Reclamation rec;
+ 
+     public void showGridPane(ObservableList<Reclamation> biens){
+         grid.getChildren().clear();
+@@ -120,12 +128,31 @@
+                 reclamations = fxmlLoader.load( );
+                 ReclamationBoxController reclamationBoxController=fxmlLoader.getController();
+                 reclamationBoxController.setData( biens.get( i ) );
++                int finalI = i;
++                reclamationBoxController.getPopup().setOnMouseClicked(event -> {
++                    showResponse(biens.get( finalI ));
++                });
++
+             } catch (IOException e) {
+                 throw new RuntimeException( e );
+             }
+             grid.add( reclamations,column++,row);
+         }
+     }
++    public void showResponse(Reclamation rec){
++        StackPane reclamations = null;
++        FXMLLoader fxmlLoader = new FXMLLoader();
++        fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationReponse.fxml"));
++        try {
++            reclamations = fxmlLoader.load( );
++            ReponseFormShowController reponseFormShowController=fxmlLoader.getController();
++            reponseFormShowController.first_fonction( new CustomMouseEvent<>(rec) );
++        } catch (IOException e) {
++            throw new RuntimeException( e );
++        }
++        form.getChildren().add(reclamations);
++        form.setVisible(true);
++    }
+ 
+ 
+ 
+@@ -133,18 +160,16 @@
+             var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+             var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+ 
+-
+-
+-
+             menuBar.getMenus().get(0).getItems().addAll(allProducts,todayProducts);
+ 
+-            var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
++            var filterProd=new MenuItem("Date",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+             menuBar.getMenus().get( 1 ).getItems().addAll(filterProd);
+ 
+-
++        }
+ 
+-        }
+-
++    public void onAddClicked(MouseEvent event) {
++        tri();
++    }
+         public void animateSearchBar(){
+             if(searchBarState.equals( "closed" )){
+                 searchBarState="opened";
+@@ -182,8 +207,102 @@
+                 }, 0, 15);
+             }
+         }
++        public void tri()
++        {
++            ObservableList<Reclamation> biens =    FXCollections.observableArrayList(ServiceReclamation.getInstance().getAll());
++            ObservableList<Reclamation> sortedBiens = biens.stream()
++                    .sorted(Comparator.comparing(Reclamation::getDate))
++                    .collect(Collectors.toCollection(() -> FXCollections.observableArrayList()));
++
++
++
++            grid.getChildren().clear();
++            grid.setHgap( 20 );
++            grid.setVgap( 20 );
++            int column = 0;
++            int row = 1;
++            for (int i = 0; i < biens.size() ; i++) {
++                if (column == 3) {
++                    column = 0;
++                    row++;
++                }
++                HBox reclamations = null;
++                FXMLLoader fxmlLoader = new FXMLLoader();
++                fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
++                try {
++                    reclamations = fxmlLoader.load( );
++                    ReclamationBoxController reclamationBoxController=fxmlLoader.getController();
++                    reclamationBoxController.setData( sortedBiens.get( i ) );
++                } catch (IOException e) {
++                    throw new RuntimeException( e );
++                }
++                grid.add( reclamations,column++,row);
++            }
++        }
++
+ 
+ 
++    public void recherche() {
++        ObservableList<Reclamation> biens = FXCollections.observableArrayList(ServiceReclamation.getInstance().getAll());
++        ObservableList<Reclamation> sortedBiens;
++
++        // Si le champ de recherche est vide, inclure tous les éléments
++        if (searchTextField.getText().isEmpty()) {
++            sortedBiens = biens;
++        } else {
++            sortedBiens = biens.stream()
++                    .filter(reclamation -> reclamation.getSubject().equals(searchTextField.getText()) || reclamation.getDate().equals(searchTextField.getText()))
++                    .collect(Collectors.toCollection(FXCollections::observableArrayList));
++        }
++
++        grid.getChildren().clear();
++        grid.setHgap(20);
++        grid.setVgap(20);
++        int column = 0;
++        int row = 1;
++        for (int i = 0; i < sortedBiens.size(); i++) {
++            if (column == 3) {
++                column = 0;
++                row++;
++            }
++            HBox reclamations = null;
++            FXMLLoader fxmlLoader = new FXMLLoader();
++            fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
++            try {
++                reclamations = fxmlLoader.load();
++                ReclamationBoxController reclamationBoxController = fxmlLoader.getController();
++                reclamationBoxController.setData(sortedBiens.get(i));
++            } catch (IOException e) {
++                throw new RuntimeException(e);
++            }
++            grid.add(reclamations, column++, row);
++        }
++    }
++
++    public void createChart() {
++        // Récupérer les réclamations
++        ObservableList<Reclamation> biens = FXCollections.observableArrayList(ServiceReclamation.getInstance().getAll());
++
++        // Compter le nombre de réclamations pour chaque sujet
++        Map<String, Long> subjectCounts = biens.stream()
++                .collect(Collectors.groupingBy(Reclamation::getSubject, Collectors.counting()));
++
++        // Créer des données de graphique à partir des comptes de sujets
++        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
++        subjectCounts.forEach((subject, count) -> pieChartData.add(new PieChart.Data(subject, count)));
++
++        // Créer le graphique
++        PieChart chart = new PieChart(pieChartData);
++        chart.setTitle("Réclamations par sujet");
++
++        // Ajouter le graphique à votre interface utilisateur
++        // Remplacez 'yourPane' par le nom de votre conteneur où vous voulez ajouter le graphique
++        Pane pane = new Pane();
++        pane.getChildren().add(chart);
++        // Ajouter le Pane au ScrollPane
++       // ScrollPane scroll1 = new ScrollPane();
++        scroll1.setContent(pane);
++    }
+ 
+ 
+ 
+Index: src/main/java/pidev/javafx/controller/reclamation/CallPythonFromJava.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.reclamation;\r\n\r\nimport java.io.IOException;\r\n\r\nimport java.io.BufferedReader;\r\n\r\nimport java.io.InputStreamReader;\r\n\r\npublic class CallPythonFromJava {\r\n    public static String run()  {\r\n        String pythonScriptPath = \"src/main/java/pidev/javafx/python/reco.py\";\r\n\r\n        ProcessBuilder processBuilder = new ProcessBuilder(\"python\", pythonScriptPath, \"voice\");\r\n        processBuilder.redirectErrorStream(true);\r\n        Process process = null;\r\n        try {\r\n            process = processBuilder.start();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n\r\n        // Read the output from the Python script\r\n        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));\r\n        String line;\r\n        StringBuilder output = new StringBuilder();\r\n        while (true) {\r\n            try {\r\n                if (!((line = reader.readLine()) != null)) break;\r\n            } catch (IOException e) {\r\n                throw new RuntimeException( e );\r\n            }\r\n            output.append(line).append(\"\\n\");\r\n        }\r\n\r\n        int exitCode = 0;\r\n        try {\r\n            exitCode = process.waitFor();\r\n        } catch (InterruptedException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n        return output.toString();\r\n    }\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/CallPythonFromJava.java b/src/main/java/pidev/javafx/controller/reclamation/CallPythonFromJava.java
+--- a/src/main/java/pidev/javafx/controller/reclamation/CallPythonFromJava.java	(revision 74cd4cfeba5e72ebe844a08239221d23b502099c)
++++ b/src/main/java/pidev/javafx/controller/reclamation/CallPythonFromJava.java	(date 1710884504539)
+@@ -10,13 +10,14 @@
+     public static String run()  {
+         String pythonScriptPath = "src/main/java/pidev/javafx/python/reco.py";
+ 
+-        ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath, "voice");
++        ProcessBuilder processBuilder = new ProcessBuilder("C:/Users/khali/anaconda3/python.exe", pythonScriptPath, "voice");
+         processBuilder.redirectErrorStream(true);
+         Process process = null;
+         try {
+             process = processBuilder.start();
+         } catch (IOException e) {
+             throw new RuntimeException( e );
++
+         }
+ 
+         // Read the output from the Python script
+Index: src/main/resources/fxml/reclamation/menuavance.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Menu?>\r\n<?import javafx.scene.control.MenuBar?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.ColumnConstraints?>\r\n<?import javafx.scene.layout.GridPane?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.RowConstraints?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n\r\n<StackPane fx:id=\"marketStackPane\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"pidev.javafx.controller.reclamation.Menu\">\r\n    <children>\r\n        <HBox fx:id=\"mainHbox\" alignment=\"CENTER_LEFT\" prefHeight=\"670.0\" prefWidth=\"1020.0\" spacing=\"10.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: transparent;\">\r\n            <children>\r\n                <VBox prefHeight=\"670.0\" prefWidth=\"1018.0\" style=\"-fx-background-color: transparent;\">\r\n                    <children>\r\n                        <HBox fx:id=\"toolBar\" alignment=\"CENTER\" prefHeight=\"51.0\" prefWidth=\"763.0\" spacing=\"400.0\" style=\"-fx-background-color: transparent;\" stylesheets=\"@../../style/marketPlace/toolBarStyle.css\">\r\n                            <children>\r\n                                <MenuBar fx:id=\"menuBar\" prefHeight=\"34.0\" prefWidth=\"189.0\">\r\n                                    <menus>\r\n                                        <Menu mnemonicParsing=\"false\" text=\"Products\">\r\n                                            <graphic>\r\n                                                <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                                    <image>\r\n                                                        <Image url=\"@../../icons/marketPlace/packaging.png\" />\r\n                                                    </image>\r\n                                                </ImageView>\r\n                                            </graphic></Menu>\r\n                                        <Menu fx:id=\"filter\" mnemonicParsing=\"false\" text=\"Filter\">\r\n                                            <graphic>\r\n                                                <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                                    <image>\r\n                                                        <Image url=\"@../../icons/marketPlace/selective.png\" />\r\n                                                    </image>\r\n                                                </ImageView>\r\n                                            </graphic></Menu>\r\n                                    </menus>\r\n                                </MenuBar>\r\n                                <HBox fx:id=\"searchHbox\" alignment=\"CENTER\" prefHeight=\"43.0\" prefWidth=\"235.0\" style=\"-fx-background-color: transparent;\" stylesheets=\"@../../style/marketPlace/toolBarStyle.css\">\r\n                                    <children>\r\n                                        <TextField fx:id=\"searchTextField\" alignment=\"CENTER\" prefHeight=\"32.0\" prefWidth=\"16.0\" style=\"-fx-background-color: transparent;\" />\r\n                                        <Button fx:id=\"searchBtn\" mnemonicParsing=\"false\" prefHeight=\"32.0\" prefWidth=\"34.0\" style=\"-fx-background-color: transparent;\">\r\n                                            <graphic>\r\n                                                <ImageView fitHeight=\"22.0\" fitWidth=\"22.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                                    <image>\r\n                                                        <Image url=\"@../../icons/marketPlace/loupe.png\" />\r\n                                                    </image>\r\n                                                </ImageView>\r\n                                            </graphic>\r\n                                            <opaqueInsets>\r\n                                                <Insets />\r\n                                            </opaqueInsets>\r\n                                        </Button>\r\n                                    </children>\r\n                                </HBox>\r\n                            </children>\r\n                            <padding>\r\n                                <Insets right=\"22.0\" top=\"4.0\" />\r\n                            </padding>\r\n                        </HBox>\r\n                        <HBox fx:id=\"bigContainer\" alignment=\"CENTER\" maxHeight=\"-Infinity\" prefHeight=\"620.0\">\r\n                            <children>\r\n                                <ScrollPane fx:id=\"scroll\" hbarPolicy=\"NEVER\" maxHeight=\"-Infinity\" maxWidth=\"-Infinity\" prefHeight=\"620.0\" prefWidth=\"1025.0\" style=\"-fx-border-radius: 20; -fx-background-radius: 20; -fx-background: #D9D9D9; -fx-border-color: #D9D9D9;\" stylesheets=\"@../../style/marketPlace/scrollBarStlyle.css\" vbarPolicy=\"ALWAYS\">\r\n                                    <padding>\r\n                                        <Insets bottom=\"10.0\" left=\"10.0\" right=\"10.0\" top=\"10.0\" />\r\n                                    </padding>\r\n                                    <content>\r\n                                        <GridPane fx:id=\"grid\" alignment=\"CENTER\" prefHeight=\"604.0\" prefWidth=\"1004.0\" style=\"-fx-border-radius: 20; -fx-background-radius: 20;\">\r\n                                            <rowConstraints>\r\n                                                <RowConstraints minHeight=\"10.0\" prefHeight=\"30.0\" />\r\n                                            </rowConstraints>\r\n                                            <columnConstraints>\r\n                                                <ColumnConstraints />\r\n                                                <ColumnConstraints />\r\n                                            </columnConstraints>\r\n                                            <padding>\r\n                                                <Insets bottom=\"40.0\" />\r\n                                            </padding>\r\n                                        </GridPane>\r\n                                    </content>\r\n                                </ScrollPane>\r\n                            </children>\r\n                        </HBox>\r\n                    </children>\r\n                </VBox>\r\n            </children>\r\n        </HBox>\r\n    </children>\r\n</StackPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/reclamation/menuavance.fxml b/src/main/resources/fxml/reclamation/menuavance.fxml
+--- a/src/main/resources/fxml/reclamation/menuavance.fxml	(revision 74cd4cfeba5e72ebe844a08239221d23b502099c)
++++ b/src/main/resources/fxml/reclamation/menuavance.fxml	(date 1709811368941)
+@@ -11,6 +11,7 @@
+ <?import javafx.scene.layout.ColumnConstraints?>
+ <?import javafx.scene.layout.GridPane?>
+ <?import javafx.scene.layout.HBox?>
++<?import javafx.scene.layout.Pane?>
+ <?import javafx.scene.layout.RowConstraints?>
+ <?import javafx.scene.layout.StackPane?>
+ <?import javafx.scene.layout.VBox?>
+@@ -65,14 +66,30 @@
+                                 <Insets right="22.0" top="4.0" />
+                             </padding>
+                         </HBox>
+-                        <HBox fx:id="bigContainer" alignment="CENTER" maxHeight="-Infinity" prefHeight="620.0">
++                  <HBox fx:id="bigContainer1" alignment="CENTER" maxHeight="-Infinity" prefHeight="446.0" prefWidth="1018.0">
++                     <children>
++                        <ScrollPane fx:id="scroll1" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="620.0" prefWidth="1025.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" stylesheets="@../../style/marketPlace/scrollBarStlyle.css" vbarPolicy="ALWAYS">
++                           <padding>
++                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
++                           </padding>
++                           <content>
++                              <HBox alignment="CENTER">
++                                 <children>
++                                    <Pane prefHeight="302.0" prefWidth="995.0" />
++                                 </children>
++                              </HBox>
++                           </content>
++                        </ScrollPane>
++                     </children>
++                  </HBox>
++                        <HBox fx:id="bigContainer" alignment="CENTER" maxHeight="-Infinity" prefHeight="446.0" prefWidth="1018.0">
+                             <children>
+                                 <ScrollPane fx:id="scroll" hbarPolicy="NEVER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="620.0" prefWidth="1025.0" style="-fx-border-radius: 20; -fx-background-radius: 20; -fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" stylesheets="@../../style/marketPlace/scrollBarStlyle.css" vbarPolicy="ALWAYS">
+                                     <padding>
+                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                     </padding>
+                                     <content>
+-                                        <GridPane fx:id="grid" alignment="CENTER" prefHeight="604.0" prefWidth="1004.0" style="-fx-border-radius: 20; -fx-background-radius: 20;">
++                                        <GridPane fx:id="grid" alignment="CENTER" prefHeight="297.0" prefWidth="1004.0" style="-fx-border-radius: 20; -fx-background-radius: 20;">
+                                             <rowConstraints>
+                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                             </rowConstraints>
+@@ -92,5 +109,6 @@
+                 </VBox>
+             </children>
+         </HBox>
++      <HBox fx:id="form" alignment="CENTER" fillHeight="false" prefHeight="100.0" prefWidth="200.0" />
+     </children>
+ </StackPane>
+Index: src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.reclamation;\r\n\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport pidev.javafx.model.reclamation.Reclamation;\r\nimport pidev.javafx.tools.marketPlace.CustomMouseEvent;\r\nimport pidev.javafx.tools.marketPlace.EventBus;\r\n\r\npublic class ReclamationBoxController {\r\n\r\n    @FXML\r\n    private Label date;\r\n    @FXML\r\n    private ImageView img;\r\n    @FXML\r\n    private Label subject;\r\n    @FXML\r\n    private Button Popup;\r\n\r\n\r\n    @FXML\r\n    private Button delete;\r\n\r\n\r\nprivate Reclamation rec;\r\n    public void setData(Reclamation reclamation){\r\n        rec=reclamation;\r\n        img.setImage( new Image( \"file:src/main/resources\"+reclamation.getImagePath(),70,70,true,true) );\r\n        subject.setText( reclamation.getSubject() );\r\n        date.setText( reclamation.getDate() );\r\n    }\r\n\r\n    public void showDetailsReclamation(MouseEvent event) {\r\n        EventBus.getInstance().publish(\"showReclamation\", event);\r\n        System.out.println(rec);\r\n        EventBus.getInstance().publish( \"senddata\", new CustomMouseEvent<Reclamation>(rec));\r\n    }\r\n\r\n    public Button getDelete() {\r\n        return delete;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java b/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java
+--- a/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java	(revision 74cd4cfeba5e72ebe844a08239221d23b502099c)
++++ b/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java	(date 1709808789755)
+@@ -43,4 +43,9 @@
+     public Button getDelete() {
+         return delete;
+     }
++
++
++    public Button getPopup() {
++        return Popup;
++    }
+ }
+Index: src/main/resources/fxml/reclamation/reclamationFormShow.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.TextArea?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<StackPane alignment=\"TOP_LEFT\" prefHeight=\"510.0\" prefWidth=\"399.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"pidev.javafx.controller.reclamation.ReclamationFormShowController\">\r\n    <children>\r\n        <HBox fx:id=\"formBox\" prefHeight=\"510.0\" prefWidth=\"566.0\" style=\"-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;\" stylesheets=\"@../../style/marketPlace/formLayout.css\">\r\n            <children>\r\n                <VBox fx:id=\"Box1\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"30.0\">\r\n                    <children>\r\n                  <ImageView fx:id=\"img\" fitHeight=\"240.0\" fitWidth=\"215.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"70.0\" />\r\n                     </VBox.margin></ImageView>\r\n                  <Button mnemonicParsing=\"false\" onMouseClicked=\"#showFormReclamationReponse\" text=\"ajouter reponse\" />\r\n                    </children>\r\n                    <padding>\r\n                        <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n                    </padding>\r\n                </VBox>\r\n            <VBox fx:id=\"Box11\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"10.0\">\r\n               <children>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Private key\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox1111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"privatekey1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Privatekey\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Date\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"date1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Subject :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox11\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"Pname1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                     <VBox.margin>\r\n                        <Insets top=\"4.0\" />\r\n                     </VBox.margin>\r\n                  </VBox>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Descreption :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion1\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"96.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Reponse :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion11\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"96.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n               </padding>\r\n            </VBox>\r\n            </children>\r\n        </HBox>\r\n    </children>\r\n</StackPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/reclamation/reclamationFormShow.fxml b/src/main/resources/fxml/reclamation/reclamationFormShow.fxml
+--- a/src/main/resources/fxml/reclamation/reclamationFormShow.fxml	(revision 74cd4cfeba5e72ebe844a08239221d23b502099c)
++++ b/src/main/resources/fxml/reclamation/reclamationFormShow.fxml	(date 1709813084454)
+@@ -1,7 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
+ <?import javafx.geometry.Insets?>
+-<?import javafx.scene.control.Button?>
+ <?import javafx.scene.control.Label?>
+ <?import javafx.scene.control.TextArea?>
+ <?import javafx.scene.control.TextField?>
+@@ -21,7 +20,6 @@
+                      <VBox.margin>
+                         <Insets bottom="70.0" />
+                      </VBox.margin></ImageView>
+-                  <Button mnemonicParsing="false" onMouseClicked="#showFormReclamationReponse" text="ajouter reponse" />
+                     </children>
+                     <padding>
+                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"MavenProjectsManager\">\r\n    <option name=\"originalFiles\">\r\n      <list>\r\n        <option value=\"$PROJECT_DIR$/pom.xml\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_21\" default=\"true\" project-jdk-name=\"openjdk-21\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/out\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision 74cd4cfeba5e72ebe844a08239221d23b502099c)
++++ b/.idea/misc.xml	(date 1709803053884)
+@@ -7,6 +7,7 @@
+         <option value="$PROJECT_DIR$/pom.xml" />
+       </list>
+     </option>
++    <option name="workspaceImportForciblyTurnedOn" value="true" />
+   </component>
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="openjdk-21" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/out" />

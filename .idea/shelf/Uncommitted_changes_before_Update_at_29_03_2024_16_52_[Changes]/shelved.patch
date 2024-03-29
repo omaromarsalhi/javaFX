@@ -1,0 +1,1315 @@
+Index: src/main/java/pidev/javafx/model/reclamation/ReponseFormShowController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/model/reclamation/ReponseFormShowController.java b/src/main/java/pidev/javafx/model/reclamation/ReponseFormShowController.java
+deleted file mode 100644
+--- a/src/main/java/pidev/javafx/model/reclamation/ReponseFormShowController.java	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ /dev/null	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
+@@ -1,200 +0,0 @@
+-package pidev.javafx.model.reclamation;
+-
+-
+-import javafx.fxml.FXML;
+-import javafx.fxml.Initializable;
+-import javafx.geometry.Insets;
+-import javafx.geometry.Pos;
+-import javafx.scene.control.Button;
+-import javafx.scene.control.Label;
+-import javafx.scene.control.TextArea;
+-import javafx.scene.control.TextField;
+-import javafx.scene.image.Image;
+-import javafx.scene.image.ImageView;
+-import javafx.scene.input.MouseEvent;
+-import javafx.scene.layout.HBox;
+-import javafx.scene.layout.VBox;
+-import javafx.stage.Popup;
+-import javafx.stage.Stage;
+-import pidev.javafx.controller.reclamation.CallPythonFromJava;
+-import pidev.javafx.crud.reclamation.ServiceReponse;
+-import pidev.javafx.model.reclamation.Reclamation;
+-import pidev.javafx.model.reclamation.Reponse;
+-import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+-import pidev.javafx.tools.marketPlace.EventBus;
+-import pidev.javafx.tools.marketPlace.MyTools;
+-
+-import java.net.URL;
+-import java.util.ResourceBundle;
+-
+-public class ReponseFormShowController implements Initializable {
+-
+-
+-    @FXML
+-    private VBox Box1;
+-
+-    @FXML
+-    private TextArea Pdescretion1;
+-
+-    @FXML
+-    private TextField Pname1;
+-
+-    @FXML
+-    private TextField date1;
+-
+-    @FXML
+-    private ImageView img;
+-
+-    @FXML
+-    private TextArea reponsetext;
+-
+-    @FXML
+-    private TextField privatekey1;
+-    @FXML
+-    private VBox Box12;
+-
+-
+-    private HBox buttonsBox;
+-    private boolean isAllInpulValid;
+-    String formLayoutBeforRegexCheck;
+-    String formLayoutAfterRegexCheck;
+-    Reponse rec = new Reponse();
+-    Reclamation recR = new Reclamation();
+-
+-
+-    //private Predictor<String, Classifications> predictor;
+-
+-
+-    //    public void analyzeText() {
+-//        String text = Pdescretion1.getText();
+-//        Classifications classifications;
+-//        try {
+-//            classifications = predictor.predict(text);
+-//            System.out.println("The sentiment of the text is: " + classifications);
+-//        } catch (Exception e) {
+-//            e.printStackTrace();
+-//        }
+-//    }
+-    @Override
+-    public void initialize(URL location, ResourceBundle resources) {
+-        formLayoutBeforRegexCheck="-fx-border-color:black;"+"-fx-border-width: 2;" +
+-                "-fx-border-radius: 10;" +
+-                "-fx-background-color: white;" +
+-                "-fx-background-radius: 10";
+-
+-        formLayoutAfterRegexCheck="-fx-border-width: 2;" +
+-                "-fx-border-radius: 10;" +
+-                "-fx-background-color: white;" +
+-                "-fx-background-radius: 10";
+-
+-        isAllInpulValid=false;
+-
+-        createFormBtns();
+-        Box1.getChildren().add( buttonsBox );
+-        EventBus.getInstance().subscribe("senddata",this::first_fonction);
+-        setRegEx();
+-    }
+-    private void setRegEx() {
+-        Popup popup4Regex = MyTools.getInstance().createPopUp();
+-
+-        reponsetext.setOnKeyTyped(event -> {
+-            isAllInpulValid = reponsetext.getText().matches("^[A-Za-z0-9 ]*$");
+-            String color = (isAllInpulValid) ? "green" : "red";
+-            if (reponsetext.getText().isEmpty()) {
+-                reponsetext.setStyle("");
+-                Box12.setStyle(formLayoutBeforRegexCheck);
+-                isAllInpulValid = true;
+-            } else {
+-                reponsetext.setStyle("-fx-border-color: transparent transparent " + color + " transparent;" +
+-                        "-fx-border-width:0 0 2 0;" +
+-                        "-fx-border-radius: 0");
+-                Box12.setStyle("-fx-border-color:" + color + ";" +
+-                        formLayoutAfterRegexCheck);
+-            }
+-            if ((!isAllInpulValid && !reponsetext.getText().isEmpty()))
+-                Box12.setStyle("-fx-border-color:red;" +
+-                        formLayoutAfterRegexCheck);
+-        });
+-
+-        reponsetext.setOnMouseEntered(event -> {
+-            if (!isAllInpulValid && !reponsetext.getText().isEmpty()) {
+-                ((Label) popup4Regex.getContent().get(0)).setText("ONLY CHARACTERS AND NUMBERS ARE ALLOWED");
+-                popup4Regex.getContent().get(0).setStyle(popup4Regex.getContent().get(0).getStyle() + "-fx-background-color: #ed1c27;");
+-                popup4Regex.show(Stage.getWindows().get(0), event.getScreenX() + 40, event.getScreenY() - 40);
+-            }
+-        });
+-
+-        reponsetext.setOnMouseExited(event -> {
+-//            if(isAllInpulValid[3])
+-            popup4Regex.hide();
+-        });
+-    }
+-    public void createFormBtns(){
+-        Button addProd1= new Button();
+-        Button clearProd = new Button();
+-        Button cancel= new Button();
+-        Button voice= new Button();
+-
+-        buttonsBox =new HBox();
+-
+-        addProd1.setPrefWidth( 50 );
+-        clearProd.setPrefWidth( 50 );
+-        cancel.setPrefWidth( 50 );
+-        voice.setPrefWidth( 50 );
+-
+-        addProd1.setPrefHeight( 32 );
+-        clearProd.setPrefHeight( 32 );
+-        cancel.setPrefHeight( 32 );
+-        voice.setPrefHeight( 32 );
+-
+-        Image  img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/tab2.png" ) ));
+-        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/broom.png" )));
+-        Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/paper.png" )));
+-        Image img4= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/update16C.png" )));
+-
+-        addProd1.setGraphic( new ImageView( img1 ));
+-        clearProd.setGraphic( new ImageView( img2 ));
+-        cancel.setGraphic( new ImageView( img3 ));
+-        voice.setGraphic( new ImageView( img4 ));
+-
+-        addProd1.setOnMouseClicked( this::onAddClicked);
+-        voice.setOnMouseClicked(this::voice);
+-
+-        cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitFormUser",event ) );
+-
+-        buttonsBox.getChildren().addAll( addProd1,clearProd,cancel,voice );
+-        buttonsBox.setSpacing( 20 );
+-        buttonsBox.setAlignment( Pos.CENTER);
+-        buttonsBox.setId( "itemInfo" );
+-        buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
+-        buttonsBox.setPadding( new Insets( 0,0,10,0 ) );
+-    }
+-
+-    public void onAddClicked(MouseEvent event) {
+-        Reponse reponse =new Reponse(
+-                0,
+-                recR.getIdReclamation(),
+-                reponsetext.getText()
+-        );
+-        ServiceReponse.getInstance().ajouter(reponse);
+-    }
+-    public void voice(MouseEvent event) {
+-        String pythonOutput = CallPythonFromJava.run();
+-        System.out.println(pythonOutput);
+-        if (!"Sorry, I did not get that".equals(pythonOutput)) {
+-            reponsetext.setText(pythonOutput);
+-        }
+-    }
+-
+-    void first_fonction( CustomMouseEvent<Reclamation> event ) {
+-        recR =event.getEventData();
+-        System.out.println(recR.getIdReclamation());
+-        img.setImage( new Image( "file:src/main/resources"+recR.getImagePath(),70,70,true,true) );
+-        privatekey1.setText(recR.getPrivateKey());
+-        date1.setText(recR.getDate());
+-        Pname1.setText(recR.getSubject());
+-        Pdescretion1.setText(recR.getDescription());
+-
+-    }
+-
+-}
+Index: src/main/java/pidev/javafx/controller/reclamation/reco.py
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/reco.py b/src/main/java/pidev/javafx/controller/reclamation/reco.py
+deleted file mode 100644
+--- a/src/main/java/pidev/javafx/controller/reclamation/reco.py	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ /dev/null	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
+@@ -1,23 +0,0 @@
+-import speech_recognition as sr
+-
+-# Initialize recognizer class (for recognizing the speech)
+-r = sr.Recognizer()
+-
+-# Function to be called whenever a phrase is recognized
+-def callback(recognizer, audio):
+-    try:
+-        # using google speech recognition
+-        print("Text: " + recognizer.recognize_google(audio))
+-    except sr.UnknownValueError:
+-        print("Google Speech Recognition could not understand audio")
+-    except sr.RequestError as e:
+-        print("Could not request results from Google Speech Recognition service; {0}".format(e))
+-
+-# Reading Microphone as source
+-# listening the speech and store in audio_text variable
+-print("Talk")
+-r.listen_in_background(sr.Microphone(), callback)
+-print("Listening in background...")
+-
+-# Keep the program running while it's listening
+-while True: pass
+Index: src/main/java/pidev/javafx/model/reclamation/Reclamation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/model/reclamation/Reclamation.java b/src/main/java/pidev/javafx/model/reclamation/Reclamation.java
+deleted file mode 100644
+--- a/src/main/java/pidev/javafx/model/reclamation/Reclamation.java	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ /dev/null	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
+@@ -1,104 +0,0 @@
+-package pidev.javafx.model.reclamation;
+-
+-import javafx.scene.Node;
+-
+-public class Reclamation extends Node {
+-
+-    private int idReclamation;
+-    private String privateKey;
+-    private String subject;
+-    private String date;
+-    private String description;
+-    private String imagePath;
+-    private int userId;
+-
+-    public Reclamation(int idReclamation,int userId,String privateKey, String subject, String date, String description,String imagePath){
+-        this.idReclamation = idReclamation;
+-        this.userId=userId;
+-        this.subject = subject;
+-        this.date = date;
+-        this.description = description;
+-        this.privateKey = privateKey;
+-        this.imagePath = imagePath;
+-    }
+-
+-
+-    public Reclamation() {
+-
+-    }
+-
+-
+-
+-
+-    public int getUser() {
+-        return userId;
+-    }
+-
+-    public void setUser(int userId) {
+-        this.userId = userId;
+-    }
+-
+-    public void setId(int idReclamation) {
+-        this.idReclamation =idReclamation;
+-    }
+-
+-    public String getPrivateKey() {
+-        return privateKey;
+-    }
+-
+-    public void setPrivateKey(String privateKey) {
+-        this.privateKey = privateKey;
+-    }
+-
+-    public String getSubject() {
+-        return subject;
+-    }
+-
+-    public void setSubject(String subject) {
+-        this.subject = subject;
+-    }
+-
+-    public String getDate() {
+-        return date;
+-    }
+-
+-    public void setDate(String date) {
+-        this.date = date;
+-    }
+-
+-    public String getDescription() {
+-        return description;
+-    }
+-
+-    public void setDescription(String description) {
+-        this.description = description;
+-    }
+-
+-    public int getIdReclamation() {
+-        return idReclamation;
+-    }
+-
+-    public void setIdReclamation(int idReclamation) {
+-        this.idReclamation = idReclamation;
+-    }
+-
+-    public String getImagePath() {
+-        return imagePath;
+-    }
+-
+-    public void setImagePath(String imagePath) {
+-        this.imagePath = imagePath;
+-    }
+-
+-    @Override
+-    public String toString() {
+-        return "Reclamation{" +
+-                "idReclamation=" + idReclamation +
+-                ", privateKey='" + privateKey + '\'' +
+-                ", subject='" + subject + '\'' +
+-                ", date='" + date + '\'' +
+-                ", description='" + description + '\'' +
+-                ", imagePath='" + imagePath + '\'' +
+-                '}';
+-    }
+-}
+Index: src/main/resources/fxml/ticket/secondForm.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/ticket/secondForm.fxml b/src/main/resources/fxml/ticket/secondForm.fxml
+new file mode 100644
+--- /dev/null	(date 1711727378365)
++++ b/src/main/resources/fxml/ticket/secondForm.fxml	(date 1711727378365)
+@@ -0,0 +1,130 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.TextField?>
++<?import javafx.scene.image.Image?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.HBox?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.text.Font?>
++
++
++<HBox fx:id="formBox" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../../../../../Users/khali/OneDrive - ESPRIT/Bureau/javaFX/src/main/resources/style/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.ticket.GetTicket">
++   <children>
++      <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
++         <children>
++            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
++            <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
++               <children>
++                  <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Ticket Number:">
++                     <font>
++                        <Font name="System Italic" size="18.0" />
++                     </font>
++                  </Label>
++                  <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
++                     <children>
++                        <TextField fx:id="ticketNuM1" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your ticket  !!!" styleClass="text-field">
++                           <font>
++                              <Font size="16.0" />
++                           </font>
++                           <HBox.margin>
++                              <Insets left="10.0" />
++                           </HBox.margin>
++                        </TextField>
++                     </children>
++                  </HBox>
++               </children>
++               <padding>
++                  <Insets left="10.0" right="10.0" />
++               </padding>
++               <VBox.margin>
++                  <Insets top="4.0" />
++               </VBox.margin>
++            </VBox>
++            <VBox minHeight="68.0" minWidth="300.0" prefHeight="0.0" prefWidth="267.0">
++               <children>
++                  <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Custom Number:">
++                     <font>
++                        <Font name="System Italic" size="18.0" />
++                     </font>
++                  </Label>
++                  <HBox fx:id="formBox2" prefHeight="30.0">
++                     <children>
++                        <TextField fx:id="customNa1" prefHeight="42.0" prefWidth="270.0" promptText=" you nickname here" styleClass="text-field">
++                           <font>
++                              <Font size="16.0" />
++                           </font>
++                           <HBox.margin>
++                              <Insets left="10.0" />
++                           </HBox.margin>
++                        </TextField>
++                     </children>
++                  </HBox>
++               </children>
++               <padding>
++                  <Insets left="10.0" right="10.0" />
++               </padding>
++            </VBox>
++            <VBox minHeight="68.0" minWidth="300.0" prefHeight="68.0" prefWidth="270.0">
++               <children>
++                  <HBox fx:id="formBox3" prefHeight="30.0" />
++                  <VBox minHeight="68.0" minWidth="300.0">
++                     <children>
++                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Category :">
++                           <font>
++                              <Font name="System Italic" size="18.0" />
++                           </font>
++                        </Label>
++                        <TextField fx:id="typeT1" prefHeight="42.0" prefWidth="270.0" promptText="Auto selected" styleClass="text-field">
++                           <font>
++                              <Font size="16.0" />
++                           </font>
++                        </TextField>
++                     </children>
++                     <padding>
++                        <Insets left="10.0" right="10.0" />
++                     </padding>
++                  </VBox>
++               </children>
++               <padding>
++                  <Insets left="10.0" right="10.0" />
++               </padding>
++            </VBox>
++            <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="267.0" style="-fx-background-radius: 20; -fx-border-style: 20;">
++               <children>
++                  <Label prefHeight="26.0" prefWidth="90.0" text="Print PDF">
++                     <font>
++                        <Font name="System Italic" size="20.0" />
++                     </font>
++                  </Label>
++                  <Button fx:id="imageBtn" mnemonicParsing="false" onAction="#ajouterTicket" style="-fx-background-color: transparent;" stylesheets="@../../../../../../Users/khali/OneDrive - ESPRIT/Bureau/javaFX/src/main/resources/style/formLayout.css">
++                     <graphic>
++                        <ImageView fitHeight="20.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
++                           <image>
++                              <Image url="@../../../../../../Users/khali/OneDrive - ESPRIT/Bureau/javaFX/src/main/resources/namedIcons/download-pdf.png" />
++                           </image>
++                        </ImageView>
++                     </graphic>
++                  </Button>
++               </children>
++               <VBox.margin>
++                  <Insets bottom="20.0" top="20.0" />
++               </VBox.margin>
++               <padding>
++                  <Insets left="20.0" />
++               </padding>
++            </HBox>
++            <HBox alignment="CENTER_LEFT" prefHeight="54.0" prefWidth="267.0" style="-fx-background-radius: 20; -fx-border-style: 20;">
++               <padding>
++                  <Insets left="20.0" />
++               </padding>
++            </HBox>
++         </children>
++         <padding>
++            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
++         </padding>
++      </VBox>
++   </children>
++</HBox>
+Index: src/main/resources/fxml/ticket/ticket.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/ticket/ticket.fxml b/src/main/resources/fxml/ticket/ticket.fxml
+new file mode 100644
+--- /dev/null	(date 1711727378365)
++++ b/src/main/resources/fxml/ticket/ticket.fxml	(date 1711727378365)
+@@ -0,0 +1,71 @@
++<?xml version="1.0" encoding="UTF-8"?>
++
++<?import javafx.scene.control.Button?>
++<?import javafx.scene.control.Label?>
++<?import javafx.scene.control.ScrollPane?>
++<?import javafx.scene.image.ImageView?>
++<?import javafx.scene.layout.AnchorPane?>
++<?import javafx.scene.layout.HBox?>
++<?import javafx.scene.layout.Pane?>
++<?import javafx.scene.layout.VBox?>
++<?import javafx.scene.shape.Line?>
++<?import javafx.scene.text.Font?>
++
++<ScrollPane fx:id="mainBorderPain" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.ticket.First_page">
++   <content>
++      <AnchorPane fx:id="tay" prefHeight="670.0" prefWidth="1040.0" styleClass="anchor-pane">
++         <children>
++            <Pane fx:id="Pane" layoutX="4.0" prefHeight="665.0" prefWidth="1032.0" styleClass="pane">
++               <children>
++                  <Label layoutX="47.0" layoutY="22.0" text="Ticket">
++                     <font>
++                        <Font name="Souliyo Unicode" size="30.0" />
++                     </font>
++                  </Label>
++                  <Label layoutX="47.0" layoutY="67.0" text="Reserve your ticket now  just one clic ">
++                     <font>
++                        <Font size="15.0" />
++                     </font>
++                  </Label>
++                  <Line endX="46.0" layoutX="939.0" layoutY="120.0" startX="-900.0" />
++                  <HBox alignment="CENTER" layoutX="88.0" layoutY="227.0" prefHeight="184.0" prefWidth="756.0" spacing="10.0">
++                     <children>
++                        <VBox alignment="CENTER">
++                           <children>
++                              <Label prefHeight="17.0" prefWidth="165.0" styleClass="add-btn" stylesheets="@../../../../../../Users/khali/OneDrive - ESPRIT/Bureau/javaFX/src/main/resources/styles/style.css" text="sustainable manner" textAlignment="CENTER">
++                                 <font>
++                                    <Font name="System Bold" size="16.0" />
++                                 </font></Label>
++                              <ImageView fx:id="imageView2" fitHeight="203.0" fitWidth="268.0" pickOnBounds="true" preserveRatio="true" />
++                              <Button fx:id="push2" mnemonicParsing="false" onAction="#updateImage2" style="-fx-background-color: rgb(32, 116, 156)4; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0, 5.0);" text="Button" />
++                           </children>
++                        </VBox>
++                        <VBox alignment="CENTER">
++                           <children>
++                              <Label prefHeight="25.0" prefWidth="261.0" styleClass="add-btn" stylesheets="@../../../../../../Users/khali/OneDrive - ESPRIT/Bureau/javaFX/src/main/resources/styles/style.css" text=" social and economic development" textAlignment="CENTER">
++                                 <font>
++                                    <Font name="System Bold" size="16.0" />
++                                 </font></Label>
++                              <ImageView fx:id="imageView1" fitHeight="208.0" fitWidth="275.0" pickOnBounds="true" preserveRatio="true" />
++                              <Button fx:id="push21" mnemonicParsing="false" onAction="#updateImage2" style="-fx-background-color: rgb(32, 116, 156)4; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0, 5.0);" text="Button" />
++                           </children>
++                        </VBox>
++                        <VBox alignment="CENTER" prefHeight="237.0" prefWidth="256.0">
++                           <children>
++                              <Label prefHeight="25.0" prefWidth="237.0" styleClass="fruit-item" stylesheets="@../../../../../../Users/khali/OneDrive - ESPRIT/Bureau/javaFX/src/main/resources/styles/style.css" text="involvement of communities" textAlignment="CENTER">
++                                 <font>
++                                    <Font name="System Bold" size="16.0" />
++                                 </font></Label>
++                              <ImageView fx:id="imageView" fitHeight="207.0" fitWidth="286.0" pickOnBounds="true" preserveRatio="true" />
++                              <Button fx:id="push22" mnemonicParsing="false" onAction="#updateImage2" style="-fx-background-color: rgb(32, 116, 156)4; -fx-background-radius: 5; -fx-cursor: hand; -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 5.0, 0.0, 0.0, 5.0);" text="Button" />
++                           </children>
++                        </VBox>
++                     </children>
++                  </HBox>
++               </children>
++            </Pane>
++         </children>
++      </AnchorPane>
++   </content>
++
++</ScrollPane>
+Index: src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module pidev.javafx{\r\n    requires javafx.controls;\r\n    requires java.sql;\r\n    requires transitive javafx.base;\r\n    requires transitive javafx.graphics;\r\n    requires transitive java.desktop;\r\n    requires itextpdf;\r\n    requires twilio;\r\n    requires org.json;\r\n    requires org.apache.pdfbox;\r\n    requires javafx.web;\r\n    requires org.apache.httpcomponents.httpcore;\r\n    requires org.apache.httpcomponents.httpclient;\r\n    requires java.mail;\r\n    requires com.google.api.client.auth;\r\n    requires com.google.api.client;\r\n    requires google.api.client;\r\n    requires com.google.api.client.json.gson;\r\n    requires jdk.jsobject;\r\n    requires java.net.http;\r\n    requires com.google.gson;\r\n    requires okhttp3;\r\n    requires javafx.fxml;\r\n    requires com.fasterxml.jackson.databind;\r\n    requires kernel;\r\n    requires xmlworker;\r\n    requires client;\r\n\r\n\r\n    opens pidev.javafx.controller.marketPlace to javafx.fxml;\r\n    opens pidev.javafx.controller.reclamation to javafx.fxml;\r\n    opens pidev.javafx.controller.Municipalite to javafx.fxml;\r\n    opens pidev.javafx.controller.user to javafx.fxml;\r\n    opens pidev.javafx.controller.login to javafx.fxml;\r\n    opens pidev.javafx.controller.transport to javafx.fxml;\r\n    opens pidev.javafx.controller.abonnement to javafx.fxml;\r\n    opens pidev.javafx.controller.station to javafx.fxml;\r\n    exports pidev.javafx.model.MarketPlace;\r\n    opens pidev.javafx.model.MarketPlace to javafx.fxml;\r\n    exports pidev.javafx.controller.marketPlace;\r\n    exports pidev.javafx.controller.blog;\r\n    opens pidev.javafx.controller.blog;\r\n    opens pidev.javafx.controller.userMarketDashbord to javafx.fxml;\r\n    exports pidev.javafx.crud;\r\n    opens pidev.javafx.crud to javafx.fxml;\r\n    exports pidev.javafx.tools.marketPlace;\r\n    exports pidev.javafx.tools.user;\r\n    exports pidev.javafx.controller.contrat;\r\n    opens pidev.javafx.controller.contrat to javafx.fxml;\r\n    exports pidev.javafx.controller.userMarketDashbord;\r\n    opens pidev.javafx.controller.chat to javafx.fxml;\r\n    exports pidev.javafx.controller.chat;\r\n    exports pidev.javafx.test;\r\n    opens pidev.javafx.test to javafx.fxml;\r\n    exports pidev.javafx.controller.mainWindow;\r\n    opens pidev.javafx.controller.mainWindow to javafx.fxml;\r\n    exports pidev.javafx.crud.marketplace;\r\n    opens pidev.javafx.crud.marketplace to javafx.fxml;\r\n    exports pidev.javafx.controller.user;\r\n    exports pidev.javafx.model.chat;\r\n    opens pidev.javafx.tools.marketPlace to javafx.fxml;\r\n    opens pidev.javafx.tools to javafx.fxml;\r\n    exports pidev.javafx.tools;\r\n    exports pidev.javafx.model.Transport;\r\n    opens pidev.javafx.model.Transport;\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/module-info.java b/src/main/java/module-info.java
+--- a/src/main/java/module-info.java	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ b/src/main/java/module-info.java	(date 1711727378358)
+@@ -25,6 +25,8 @@
+     requires kernel;
+     requires xmlworker;
+     requires client;
++    requires aspose.imaging;
++    requires javafx.swing;
+ 
+ 
+     opens pidev.javafx.controller.marketPlace to javafx.fxml;
+Index: src/main/java/pidev/javafx/controller/ticket/GetTicket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/ticket/GetTicket.java b/src/main/java/pidev/javafx/controller/ticket/GetTicket.java
+new file mode 100644
+--- /dev/null	(date 1711727378360)
++++ b/src/main/java/pidev/javafx/controller/ticket/GetTicket.java	(date 1711727378360)
+@@ -0,0 +1,53 @@
++package pidev.javafx.controller.ticket;
++
++import javafx.event.ActionEvent;
++import javafx.fxml.FXML;
++import javafx.scene.control.Button;
++import javafx.scene.control.TextField;
++import javafx.scene.image.ImageView;
++import javafx.scene.layout.HBox;
++import javafx.scene.layout.VBox;
++import pidev.javafx.crud.ticket.ServiceTicket;
++import pidev.javafx.model.Ticket.Ticket;
++
++
++public class GetTicket {
++
++    @FXML
++    private VBox Box1;
++
++    @FXML
++    private TextField customNa1;
++
++    @FXML
++    private HBox formBox;
++
++    @FXML
++    private HBox formBox1;
++
++    @FXML
++    private HBox formBox2;
++
++    @FXML
++    private HBox formBox3;
++
++    @FXML
++    private Button imageBtn;
++
++    @FXML
++    private ImageView imageView;
++
++    @FXML
++    private TextField ticketNuM1;
++
++    @FXML
++    private TextField typeT1;
++    ServiceTicket si=new ServiceTicket();
++
++    @FXML
++    void ajouterTicket(ActionEvent event) {
++        Ticket ticket = new Ticket(customNa1.getText(),typeT1.getText(), Integer.parseInt(ticketNuM1.getText()));
++        si.addItem(ticket);
++    }
++
++}
+Index: src/main/java/pidev/javafx/controller/ticket/First_page.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/ticket/First_page.java b/src/main/java/pidev/javafx/controller/ticket/First_page.java
+new file mode 100644
+--- /dev/null	(date 1711727378360)
++++ b/src/main/java/pidev/javafx/controller/ticket/First_page.java	(date 1711727378360)
+@@ -0,0 +1,216 @@
++package pidev.javafx.controller.ticket;
++import com.aspose.imaging.internal.Exceptions.IO.IOException;
++import javafx.fxml.FXMLLoader;
++import javafx.scene.Parent;
++
++import javafx.scene.control.ListCell;
++import javafx.scene.control.ListView;
++import javafx.scene.image.ImageView;
++import javafx.embed.swing.SwingFXUtils;
++import java.awt.*;
++import java.awt.image.BufferedImage;
++import java.io.File;
++import java.util.ArrayList;
++
++
++import javafx.stage.Modality;
++import javafx.stage.Stage;
++import javafx.scene.Scene;
++
++import javafx.fxml.FXML;
++import pidev.javafx.crud.ticket.ServiceTicket;
++import pidev.javafx.model.Ticket.Ticket;
++
++
++import javax.imageio.ImageIO;
++
++
++public class First_page {
++
++    public static int counter;
++
++    private int counter1 = 0;
++    private int counter2 = 0;
++
++    @FXML
++    private ImageView imageView;
++    @FXML
++    private ImageView imageView1;
++    @FXML
++    private ImageView imageView2;
++    @FXML
++    private ListView lista;
++    ServiceTicket si = new ServiceTicket();
++    public void updateImage() {
++        First_page.counter++;
++
++        // Create a BufferedImage with RGB color components
++        BufferedImage image = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
++
++        // Create a Graphics2D object from the BufferedImage
++        Graphics2D graphic = image.createGraphics();
++
++        // Set the color and font for the text
++        java.awt.Color customColor = new java.awt.Color(239, 94, 16); // RGB values range from 0 to 255
++        java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.BOLD, 14);
++        graphic.setFont(font);
++
++        // Draw the text on the image
++        String text = "Ticket No: " + String.valueOf(counter1);
++        graphic.setColor(customColor);
++
++        // Get the FontMetrics
++        FontMetrics metrics = graphic.getFontMetrics(font);
++        // Determine the X coordinate for the text
++        int x = (image.getWidth() - metrics.stringWidth(text)) / 2;
++        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
++        int y = ((image.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
++
++        // Draw the string
++        graphic.drawString(text, x, y);
++
++        // Draw a rectangle around the Ticket
++        graphic.setColor(java.awt.Color.BLACK);
++        graphic.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
++
++        // Save the image to a file
++        try {
++            ImageIO.write(image, "png", new File("photo.png"));
++        } catch (IOException e) {
++            e.printStackTrace();
++        } catch (java.io.IOException e) {
++            throw new RuntimeException(e);
++        }
++
++        // Convert the BufferedImage to a JavaFX Image and set it on the ImageView
++        javafx.scene.image.Image fxImage = SwingFXUtils.toFXImage(image, null);
++        imageView1.setImage(fxImage);
++
++    }
++    public void updateImage1() {
++        counter1++;
++
++        // Create a BufferedImage with RGB color components
++        BufferedImage image = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
++
++        // Create a Graphics2D object from the BufferedImage
++        Graphics2D graphic = image.createGraphics();
++
++        // Set the color and font for the text
++        java.awt.Color customColor = new java.awt.Color(239, 16, 16); // RGB values range from 0 to 255
++        java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.BOLD, 14);
++        graphic.setFont(font);
++
++        // Draw the text on the image
++        String text = "Ticket No: " + String.valueOf(counter1);
++        graphic.setColor(customColor);
++
++        // Get the FontMetrics
++        FontMetrics metrics = graphic.getFontMetrics(font);
++        // Determine the X coordinate for the text
++        int x = (image.getWidth() - metrics.stringWidth(text)) / 2;
++        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
++        int y = ((image.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
++
++        // Draw the string
++        graphic.drawString(text, x, y);
++
++        // Draw a rectangle around the Ticket
++        graphic.setColor(java.awt.Color.BLACK);
++        graphic.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
++
++        // Save the image to a file
++        try {
++            ImageIO.write(image, "png", new File("photo.png"));
++        } catch (IOException e) {
++            e.printStackTrace();
++        } catch (java.io.IOException e) {
++            throw new RuntimeException(e);
++        }
++
++        // Convert the BufferedImage to a JavaFX Image and set it on the ImageView
++        javafx.scene.image.Image fxImage = SwingFXUtils.toFXImage(image, null);
++        imageView1.setImage(fxImage);
++    }
++
++    public void updateImage2() {
++        counter2++;
++
++        // Create a BufferedImage with RGB color components
++        BufferedImage image = new BufferedImage(200, 100, BufferedImage.TYPE_INT_RGB);
++
++        // Create a Graphics2D object from the BufferedImage
++        Graphics2D graphic = image.createGraphics();
++
++        // Set the color and font for the text
++        java.awt.Color customColor = new java.awt.Color(239, 16, 16); // RGB values range from 0 to 255
++        java.awt.Font font = new java.awt.Font("Arial", java.awt.Font.BOLD, 14);
++        graphic.setFont(font);
++
++        // Draw the text on the image
++        String text = "Ticket No: " + String.valueOf(counter1);
++        graphic.setColor(customColor);
++
++        // Get the FontMetrics
++        FontMetrics metrics = graphic.getFontMetrics(font);
++        // Determine the X coordinate for the text
++        int x = (image.getWidth() - metrics.stringWidth(text)) / 2;
++        // Determine the Y coordinate for the text (note we add the ascent, as in java 2d 0 is top of the screen)
++        int y = ((image.getHeight() - metrics.getHeight()) / 2) + metrics.getAscent();
++
++        // Draw the string
++        graphic.drawString(text, x, y);
++
++        // Draw a rectangle around the Ticket
++        graphic.setColor(java.awt.Color.BLACK);
++        graphic.drawRect(0, 0, image.getWidth() - 1, image.getHeight() - 1);
++
++        // Save the image to a file
++        try {
++            ImageIO.write(image, "png", new File("photo.png"));
++        } catch (IOException e) {
++            e.printStackTrace();
++        } catch (java.io.IOException e) {
++            throw new RuntimeException(e);
++        }
++
++        // Convert the BufferedImage to a JavaFX Image and set it on the ImageView
++        javafx.scene.image.Image fxImage = SwingFXUtils.toFXImage(image, null);
++        imageView1.setImage(fxImage);
++    }
++
++    public void showPopup() {
++        try {
++            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ticket/secondForm.fxml"));
++            Parent root = (Parent) fxmlLoader.load();
++            Stage stage = new Stage();
++            stage.initModality(Modality.APPLICATION_MODAL);
++            stage.setTitle("Popup Window");
++            stage.setScene(new Scene(root));
++
++            stage.show();
++        } catch (IOException e) {
++            e.printStackTrace();
++        } catch (java.io.IOException e) {
++            throw new RuntimeException(e);
++        }
++    }
++    public void initialize() {
++
++      //  List<Ticket> Tickets = new ArrayList<>(si.getAll());
++
++        //lista.getItems().addAll(Tickets);
++        lista.setCellFactory(reclamationListView -> new ListCell<Ticket>() {
++            @Override
++            protected void updateItem(Ticket ticket, boolean empty) {
++                super.updateItem(ticket, empty);
++                if (empty || ticket == null) {
++                    setText(null);
++                } else {
++                    setText(" tickt number: "+ ticket.getTicketNumber() + " | date :  " + ticket.getDate() +" |  nam : "+ticket.getCustomName() + " | type :  " + ticket.getType());
++                    setStyle("-fx-font-weight: bold; -fx-font-size: 18px;");
++                }
++            }
++        });
++    }
++}
+Index: src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.reclamation;\r\n\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport pidev.javafx.model.reclamation.Reclamation;\r\nimport pidev.javafx.tools.marketPlace.CustomMouseEvent;\r\nimport pidev.javafx.tools.marketPlace.EventBus;\r\n\r\npublic class ReclamationBoxController {\r\n\r\n    @FXML\r\n    private Label date;\r\n    @FXML\r\n    private ImageView img;\r\n    @FXML\r\n    private Label subject;\r\n    @FXML\r\n    private Button Popup;\r\n\r\n\r\n    @FXML\r\n    private Button delete;\r\n\r\n\r\nprivate Reclamation rec;\r\n    public void setData(Reclamation reclamation){\r\n        rec=reclamation;\r\n        img.setImage( new Image( \"file:src/main/resources\"+reclamation.getImagePath(),70,70,true,true) );\r\n        subject.setText( reclamation.getSubject() );\r\n        date.setText( reclamation.getDate() );\r\n    }\r\n\r\n    public void showDetailsReclamation(MouseEvent event) {\r\n        EventBus.getInstance().publish(\"showReclamation\", event);\r\n        System.out.println(rec);\r\n        EventBus.getInstance().publish( \"senddata\", new CustomMouseEvent<Reclamation>(rec));\r\n    }\r\n\r\n    public Button getDelete() {\r\n        return delete;\r\n    }\r\n\r\n\r\n    public Button getPopup() {\r\n        return Popup;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java b/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java
+--- a/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ b/src/main/java/pidev/javafx/controller/reclamation/ReclamationBoxController.java	(date 1711727378359)
+@@ -6,7 +6,7 @@
+ import javafx.scene.image.Image;
+ import javafx.scene.image.ImageView;
+ import javafx.scene.input.MouseEvent;
+-import pidev.javafx.model.reclamation.Reclamation;
++import pidev.javafx.model.Reclamation.Reclamation;
+ import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+ import pidev.javafx.tools.marketPlace.EventBus;
+ 
+Index: src/main/java/pidev/javafx/model/Ticket/Ticket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/model/Ticket/Ticket.java b/src/main/java/pidev/javafx/model/Ticket/Ticket.java
+new file mode 100644
+--- /dev/null	(date 1711727378363)
++++ b/src/main/java/pidev/javafx/model/Ticket/Ticket.java	(date 1711727378363)
+@@ -0,0 +1,94 @@
++package pidev.javafx.model.Ticket;
++
++import java.util.Date;
++import java.util.Objects;
++
++public class Ticket {
++    public static int idTicket;
++    private static String customName;
++    private static Date date;
++    private static String type;
++    private static int ticketNumber;
++
++    public Ticket(int idTicket, String customName, String type, int ticketNumber) {
++        this.idTicket = idTicket;
++        this.customName = customName;
++
++        this.type = type;
++        this.ticketNumber = ticketNumber;
++    }
++
++    public Ticket() {
++    }
++
++    public Ticket(String customName, String type, int ticketNumber) {
++        this.customName = customName;
++        this.type = type;
++        this.ticketNumber = ticketNumber;
++    }
++
++    public static int getIdTicket() {
++        return idTicket;
++    }
++
++    public void setIdTicket(int idTicket) {
++        this.idTicket = idTicket;
++    }
++
++    public static String getCustomName() {
++        return customName;
++    }
++
++    public void setCustomName(String customName) {
++        this.customName = customName;
++    }
++
++    public static Date getDate() {
++        return date;
++    }
++
++    public void setDate(Date date) {
++        this.date = date;
++    }
++
++    public static String getType() {
++        return type;
++    }
++
++    public void setType(String type) {
++        this.type = type;
++    }
++
++    public static int getTicketNumber() {
++        return ticketNumber;
++    }
++
++    public void setTicketNumber(int ticketNumber) {
++        this.ticketNumber = ticketNumber;
++    }
++
++    @Override
++    public boolean equals(Object o) {
++        if (this == o) return true;
++        if (o == null || getClass() != o.getClass()) return false;
++        Ticket ticket = (Ticket) o;
++        return idTicket == ticket.idTicket && ticketNumber == ticket.ticketNumber && Objects.equals(customName, ticket.customName) && Objects.equals(date, ticket.date) && type == ticket.type;
++    }
++
++    @Override
++    public int hashCode() {
++        return Objects.hash(idTicket, customName, date, type, ticketNumber);
++    }
++
++    @Override
++    public String toString() {
++        return "Ticket{" +
++                "idTicket=" + idTicket +
++                ", customName='" + customName + '\'' +
++                ", date=" + date +
++                ", type=" + type +
++                ", ticketNumber=" + ticketNumber +
++                '}';
++    }
++
++}
+Index: src/main/java/pidev/javafx/model/reclamation/Reponse.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.model.reclamation;\r\n\r\nimport java.util.Objects;\r\n\r\npublic class Reponse {\r\n    private int id;\r\n    private int idReclamation;\r\n    private String description;\r\n\r\n    public Reponse(int id, int idReclamation, String description) {\r\n        this.id = id;\r\n        this.idReclamation = idReclamation;\r\n        this.description = description;\r\n    }\r\n\r\n    public Reponse() {}\r\n\r\n    public Reponse(int id ,String description) {\r\n        this.id = id;\r\n        this.description=description;\r\n    }\r\n\r\n\r\n\r\n    public int getId() {\r\n        return id;\r\n    }\r\n\r\n    public void setId(int id) {\r\n        this.id = id;\r\n    }\r\n\r\n    public int getReclamation() {\r\n        return idReclamation;\r\n    }\r\n\r\n    public void setReclamation(int idReclamation) {\r\n        this.idReclamation = idReclamation;\r\n    }\r\n\r\n    public String getDescription() {\r\n        return description;\r\n    }\r\n\r\n    public void setDescription(String description) {\r\n        this.description = description;\r\n    }\r\n\r\n    @Override\r\n    public boolean equals(Object o) {\r\n        if (this == o) return true;\r\n        if (o == null || getClass() != o.getClass()) return false;\r\n        Reponse response = (Reponse) o;\r\n        return id == response.id && Objects.equals(idReclamation, response.idReclamation);\r\n    }\r\n\r\n    @Override\r\n    public int hashCode() {\r\n        return Objects.hash(id, idReclamation, description);\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Reponse{\" +\r\n                \"id=\" + id +\r\n                \", reclamation=\" + idReclamation + '\\'' +\r\n                \", description='\" + description + '\\'' +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/model/reclamation/Reponse.java b/src/main/java/pidev/javafx/model/Reclamation/Reponse.java
+rename from src/main/java/pidev/javafx/model/reclamation/Reponse.java
+rename to src/main/java/pidev/javafx/model/Reclamation/Reponse.java
+--- a/src/main/java/pidev/javafx/model/reclamation/Reponse.java	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ b/src/main/java/pidev/javafx/model/Reclamation/Reponse.java	(date 1711727378363)
+@@ -1,4 +1,4 @@
+-package pidev.javafx.model.reclamation;
++package pidev.javafx.model.Reclamation;
+ 
+ import java.util.Objects;
+ 
+Index: pom.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project xmlns=\"http://maven.apache.org/POM/4.0.0\"\r\n         xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\r\n         xsi:schemaLocation=\"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd\">\r\n  <modelVersion>4.0.0</modelVersion>\r\n\r\n  <groupId>pidev.javaFX</groupId>\r\n  <artifactId>javaFX</artifactId>\r\n  <version>1.0-SNAPSHOT</version>\r\n  <name>javaFX</name>\r\n\r\n  <properties>\r\n    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>\r\n    <junit.version>5.10.0</junit.version>  </properties>\r\n\r\n  <repositories>\r\n    <repository>\r\n      <id>central</id>\r\n      <url>https://repo1.maven.org/maven2/</url>\r\n      <releases>\r\n        <enabled>true</enabled>\r\n      </releases>\r\n      <snapshots>\r\n        <enabled>false</enabled>\r\n      </snapshots>\r\n\r\n    </repository>\r\n\r\n  </repositories>\r\n\r\n<!--  <dependencyManagement>-->\r\n<!--    <dependencies>-->\r\n<!--      <dependency>-->\r\n<!--        <groupId>com.google.cloud</groupId>-->\r\n<!--        <artifactId>libraries-bom</artifactId>-->\r\n<!--        <version>26.33.0</version>-->\r\n<!--        <type>pom</type>-->\r\n<!--        <scope>import</scope>-->\r\n<!--      </dependency>-->\r\n<!--    </dependencies>-->\r\n\r\n<!--  </dependencyManagement>-->\r\n\r\n  <dependencies>\r\n\r\n    <dependency>\r\n      <groupId>org.openjfx</groupId>\r\n      <artifactId>javafx-controls</artifactId>\r\n      <version>21</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>com.stripe</groupId>\r\n      <artifactId>stripe-java</artifactId>\r\n      <version>24.0.0</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>com.itextpdf</groupId>\r\n      <artifactId>itext7-core</artifactId>\r\n      <version>7.2.0</version>\r\n      <type>pom</type>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>com.squareup.okhttp3</groupId>\r\n      <artifactId>okhttp</artifactId>\r\n      <version>4.9.3</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>org.json</groupId>\r\n      <artifactId>json</artifactId>\r\n      <version>20230618</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>mysql</groupId>\r\n      <artifactId>mysql-connector-java</artifactId>\r\n      <version>8.0.29</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n    <groupId>com.itextpdf</groupId>\r\n    <artifactId>itext7-core</artifactId>\r\n    <version>7.2.0</version>\r\n    <type>pom</type>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>com.itextpdf</groupId>\r\n      <artifactId>itextpdf</artifactId>\r\n      <version>5.5.13.3</version>\r\n    </dependency>\r\n    <dependency>\r\n      <groupId>com.itextpdf</groupId>\r\n      <artifactId>itextpdf</artifactId>\r\n      <version>5.5.13.3</version>\r\n    </dependency>\r\n    <dependency>\r\n      <groupId>com.itextpdf.tool</groupId>\r\n      <artifactId>xmlworker</artifactId>\r\n      <version>5.5.13</version> <!-- replace with your desired version -->\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>com.vonage</groupId>\r\n      <artifactId>client</artifactId>\r\n      <version>6.1.0</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>org.apache.pdfbox</groupId>\r\n      <artifactId>pdfbox</artifactId>\r\n      <version>2.0.29</version>\r\n    </dependency>\r\n\r\n\r\n\r\n    <dependency>\r\n      <groupId>com.google.api-client</groupId>\r\n      <artifactId>google-api-client</artifactId>\r\n      <version>1.31.1</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>com.google.oauth-client</groupId>\r\n      <artifactId>google-oauth-client</artifactId>\r\n      <version>1.35.0</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>org.apache.commons</groupId>\r\n      <artifactId>commons-imaging</artifactId>\r\n      <version>1.0-alpha3</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>com.squareup.okhttp3</groupId>\r\n      <artifactId>okhttp</artifactId>\r\n      <version>4.9.3</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>org.openjfx</groupId>\r\n      <artifactId>javafx-web</artifactId>\r\n      <version>20.0.2</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>com.sun.mail</groupId>\r\n      <artifactId>javax.mail</artifactId>\r\n      <version>1.6.2</version>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>org.apache.httpcomponents</groupId>\r\n      <artifactId>httpclient</artifactId>\r\n      <version>4.5.13</version>\r\n    </dependency>\r\n\r\n<!--    <dependency>-->\r\n<!--      <groupId>com.google.cloud</groupId>-->\r\n<!--      <artifactId>google-cloud-vision</artifactId>-->\r\n<!--      <version>3.8.0</version>-->\r\n<!--    </dependency>-->\r\n\r\n    <dependency>\r\n      <groupId>com.twilio.sdk</groupId>\r\n      <artifactId>twilio</artifactId>\r\n      <version>10.0.0</version>\r\n      <scope>compile</scope>\r\n    </dependency>\r\n\r\n    <dependency>\r\n      <groupId>org.junit.jupiter</groupId>\r\n      <artifactId>junit-jupiter-api</artifactId>\r\n      <version>${junit.version}</version>\r\n      <scope>test</scope>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>pidev.javaFX</groupId>\r\n      <artifactId>javaFX</artifactId>\r\n      <version>1.0-SNAPSHOT</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>com.itextpdf</groupId>\r\n      <artifactId>itextpdf</artifactId>\r\n      <version>5.5.13.3</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>org.jetbrains</groupId>\r\n      <artifactId>annotations</artifactId>\r\n      <version>RELEASE</version>\r\n      <scope>compile</scope>\r\n    </dependency>\r\n\r\n\r\n\r\n    <dependency>\r\n      <groupId>com.google.http-client</groupId>\r\n      <artifactId>google-http-client-jackson2</artifactId>\r\n      <version>1.41.5</version>\r\n    </dependency>\r\n\r\n\r\n    <dependency>\r\n      <groupId>org.openjfx</groupId>\r\n      <artifactId>javafx-fxml</artifactId>\r\n      <version>20.0.2</version>\r\n    </dependency>\r\n\r\n<!--    <dependency>-->\r\n<!--      <groupId>com.google.cloud</groupId>-->\r\n<!--      <artifactId>google-cloud-storage</artifactId>-->\r\n<!--    </dependency>-->\r\n\r\n<!--        <dependency>-->\r\n<!--          <groupId>com.google.cloud</groupId>-->\r\n<!--          <artifactId>google-cloud-vision</artifactId>-->\r\n<!--          <version>3.8.0</version>-->\r\n<!--        </dependency>-->\r\n<!--    <dependency>-->\r\n<!--      <groupId>com.google.cloud</groupId>-->\r\n<!--      <artifactId>google-cloud-vision</artifactId>-->\r\n<!--      <version>2.0.0</version>-->\r\n<!--    </dependency>-->\r\n\r\n\r\n  </dependencies>\r\n\r\n  <build>\r\n    <plugins>\r\n      <plugin>\r\n        <groupId>org.apache.maven.plugins</groupId>\r\n        <artifactId>maven-compiler-plugin</artifactId>\r\n        <version>3.11.0</version>\r\n        <configuration>\r\n          <source>21</source>\r\n          <target>21</target>\r\n            <compilerArgs>--enable-preview</compilerArgs>\r\n        </configuration>\r\n      </plugin>\r\n      <plugin>\r\n        <groupId>org.openjfx</groupId>\r\n        <artifactId>javafx-maven-plugin</artifactId>\r\n        <version>0.0.8</version>\r\n        <executions>\r\n          <execution>\r\n            <!-- Default configuration for running with: mvn clean javafx:run -->\r\n            <id>default-cli</id>\r\n            <configuration>\r\n              <mainClass>pidev.javafx.javafx/pidev.javafx.Main</mainClass>\r\n              <launcher>app</launcher>\r\n              <jlinkZipName>app</jlinkZipName>\r\n              <jlinkImageName>app</jlinkImageName>\r\n              <noManPages>true</noManPages>\r\n              <stripDebug>true</stripDebug>\r\n              <noHeaderFiles>true</noHeaderFiles>\r\n            </configuration>\r\n          </execution>\r\n        </executions>\r\n      </plugin>\r\n\r\n    </plugins>\r\n  </build>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/pom.xml b/pom.xml
+--- a/pom.xml	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ b/pom.xml	(date 1711727378358)
+@@ -23,9 +23,36 @@
+       <snapshots>
+         <enabled>false</enabled>
+       </snapshots>
+-
+     </repository>
+-
++    <repository>
++      <id>djl.ai</id>
++      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
++    </repository>
++    <repository>
++      <id>jzy3d-snapshots</id>
++      <name>Jzy3d Snapshots</name>
++      <url>https://maven.jzy3d.org/snapshots/</url>
++    </repository>
++    <repository>
++      <id>jzy3d-releases</id>
++      <name>Jzy3d Releases</name>
++      <url>https://maven.jzy3d.org/releases/</url>
++    </repository>
++    <repository>
++      <id>jzy3d-snapshots</id>
++      <name>Jzy3d Snapshots</name>
++      <url>5</url>
++    </repository>
++    <repository>
++      <id>jzy3d-releases</id>
++      <name>Jzy3d Releases</name>
++      <url>6</url>
++    </repository>
++    <repository>
++      <id>AsposeJavaAPI</id>
++      <name>Aspose Java API</name>
++      <url>https://repository.aspose.com/repo/</url>
++    </repository>
+   </repositories>
+ 
+ <!--  <dependencyManagement>-->
+@@ -42,12 +69,43 @@
+ <!--  </dependencyManagement>-->
+ 
+   <dependencies>
+-
++    <dependency>
++      <groupId>org.openjfx</groupId>
++      <artifactId>javafx-swing</artifactId>
++      <version>17.0.2</version>
++    </dependency>
++    <!-- DJL Model Zoo -->
++    <dependency>
++      <groupId>ai.djl</groupId>
++      <artifactId>model-zoo</artifactId>
++      <version>0.26.0</version>
++    </dependency>
++    <dependency>
++      <groupId>org.openjfx</groupId>
++      <artifactId>javafx-swing</artifactId>
++      <version>17.0.2</version>
++    </dependency>
++    <dependency>
++      <groupId>com.aspose</groupId>
++      <artifactId>aspose-imaging</artifactId>
++      <version>23.10</version>
++      <classifier>jdk16</classifier>
++    </dependency>
+     <dependency>
+       <groupId>org.openjfx</groupId>
+       <artifactId>javafx-controls</artifactId>
+       <version>21</version>
+     </dependency>
++    <dependency>
++      <groupId>org.jzy3d</groupId>
++      <artifactId>jzy3d-emul-gl-awt</artifactId>
++      <version>2.1.0</version>
++    </dependency>
++    <dependency>
++      <groupId>org.jzy3d</groupId>
++      <artifactId>jzy3d-everything</artifactId>
++      <version>2.1.1-SNAPSHOT</version>
++    </dependency>
+ 
+     <dependency>
+       <groupId>com.stripe</groupId>
+Index: src/main/java/pidev/javafx/tools/reclamation/ReclamationController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/tools/reclamation/ReclamationController.java b/src/main/java/pidev/javafx/tools/reclamation/ReclamationController.java
+new file mode 100644
+--- /dev/null	(date 1711727378364)
++++ b/src/main/java/pidev/javafx/tools/reclamation/ReclamationController.java	(date 1711727378364)
+@@ -0,0 +1,27 @@
++package pidev.javafx.tools.reclamation;
++
++
++import pidev.javafx.model.Reclamation.Reclamation;
++
++public class ReclamationController {
++    private Reclamation rec;
++    private static ReclamationController instance;
++
++    private ReclamationController() {}
++
++
++    public static ReclamationController getInstance(){
++        if(instance==null)
++            instance=new ReclamationController();
++        return instance;
++    }
++
++    public Reclamation getCurrentUser(){
++        return instance.rec;
++    }
++
++    public static void setUser(Reclamation user){
++        getInstance().rec=user;
++    }
++
++}
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1711727378357)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1711727378357)
+@@ -0,0 +1,10 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
++      <Languages>
++        <language minSize="79" name="Java" />
++      </Languages>
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
+Index: src/main/java/pidev/javafx/crud/ticket/ServiceTicket.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/crud/ticket/ServiceTicket.java b/src/main/java/pidev/javafx/crud/ticket/ServiceTicket.java
+new file mode 100644
+--- /dev/null	(date 1711727378362)
++++ b/src/main/java/pidev/javafx/crud/ticket/ServiceTicket.java	(date 1711727378362)
+@@ -0,0 +1,103 @@
++package pidev.javafx.crud.ticket;
++
++import javafx.collections.ObservableList;
++import pidev.javafx.crud.ConnectionDB;
++import pidev.javafx.crud.CrudInterface;
++import pidev.javafx.model.Ticket.Ticket;
++
++import java.sql.Connection;
++import java.sql.PreparedStatement;
++import java.sql.ResultSet;
++import java.sql.SQLException;
++import java.util.HashSet;
++import java.util.Set;
++
++import static pidev.javafx.model.Ticket.Ticket.idTicket;
++
++public class ServiceTicket implements CrudInterface<Ticket> {
++
++    Connection cnx = ConnectionDB.getInstance().getCnx();
++
++    @Override
++    public void addItem(Ticket variable) {
++        String req = "INSERT INTO `ticket`( `customName`, `type`, `ticketNumber`) VALUES (?,?,?)";
++        try {
++            PreparedStatement ps = cnx.prepareStatement(req);
++            ps.setString(1, Ticket.getCustomName());
++            ps.setString(2, Ticket.getType().toString());
++            ps.setInt(3, Ticket.getTicketNumber());
++            ps.executeUpdate();
++            System.out.println("Ticket added !");
++        } catch (SQLException e) {
++            System.out.println(e.getMessage());
++        }
++    }
++
++    @Override
++    public void updateItem(Ticket variable) {
++        String req = "UPDATE `ticket` SET `customName`=?, `date`=?, `type`=?, `ticketNumber`=? WHERE `idTicket`=?";
++        try {
++            PreparedStatement ps = cnx.prepareStatement(req);
++            ps.setString(1, Ticket.getCustomName());
++            ps.setDate(2, new java.sql.Date(Ticket.getDate().getTime()));
++            ps.setString(3, Ticket.getType());
++            ps.setInt(4, Ticket.getTicketNumber());
++            ps.setInt(5, Ticket.getIdTicket());
++            ps.executeUpdate();
++            System.out.println("Ticket updated !");
++        } catch (SQLException e) {
++            System.out.println(e.getMessage());
++        }
++    }
++
++    @Override
++    public ObservableList<Ticket> selectItems() {
++        Set<Ticket> Tickets = new HashSet<>();
++        String req = "SELECT * FROM `ticket`";
++        try {
++            PreparedStatement ps = cnx.prepareStatement(req);
++            ResultSet rs = ps.executeQuery();
++            while (rs.next()) {
++                Tickets.add(new Ticket(rs.getInt("idTicket"), rs.getString("customName"),  rs.getString("type"), rs.getInt("ticketNumber")));
++            }
++        } catch (SQLException e) {
++            System.out.println(e.getMessage());
++        }
++        return (ObservableList<Ticket>) Tickets;
++    }
++
++    @Override
++    public Ticket findById(int id) {
++        Ticket ticket = null;
++        String req = "SELECT * FROM `ticket` WHERE `idTicket`=?";
++        try {
++            PreparedStatement ps = cnx.prepareStatement(req);
++            ps.setInt(1, id);
++            ResultSet rs = ps.executeQuery();
++            if (rs.next()) {
++                ticket = new Ticket(rs.getInt("idTicket"), rs.getString("customName"), rs.getString("type"), rs.getInt("ticketNumber"));
++            }
++        } catch (SQLException e) {
++            System.out.println(e.getMessage());
++        }
++        return ticket;
++    }
++
++    @Override
++    public Ticket selectFirstItem() {
++        return null;
++    }
++
++    @Override
++    public void deleteItem(int id) {
++        String req = "DELETE FROM `ticket` WHERE `idTicket`=?";
++        try {
++            PreparedStatement ps = cnx.prepareStatement(req);
++            ps.setInt(1, id);
++            ps.executeUpdate();
++            System.out.println("Ticket deleted !");
++        } catch (SQLException e) {
++            System.out.println(e.getMessage());
++        }
++    }
++}
+Index: src/main/resources/fxml/reclamation/reclamationFormShow.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.TextArea?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<StackPane alignment=\"TOP_LEFT\" prefHeight=\"510.0\" prefWidth=\"399.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"pidev.javafx.controller.reclamation.ReclamationFormShowController\">\r\n    <children>\r\n        <HBox fx:id=\"formBox\" prefHeight=\"510.0\" prefWidth=\"566.0\" style=\"-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;\" stylesheets=\"@../../style/marketPlace/formLayout.css\">\r\n            <children>\r\n                <VBox fx:id=\"Box1\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"30.0\">\r\n                    <children>\r\n                  <ImageView fx:id=\"img\" fitHeight=\"240.0\" fitWidth=\"215.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"70.0\" />\r\n                     </VBox.margin></ImageView>\r\n                    </children>\r\n                    <padding>\r\n                        <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n                    </padding>\r\n                </VBox>\r\n            <VBox fx:id=\"Box11\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"10.0\">\r\n               <children>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Private key\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox1111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"privatekey1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Privatekey\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Date\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"date1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Subject :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox11\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"Pname1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                     <VBox.margin>\r\n                        <Insets top=\"4.0\" />\r\n                     </VBox.margin>\r\n                  </VBox>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Descreption :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion1\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"96.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Reponse :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion11\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"96.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n               </padding>\r\n            </VBox>\r\n            </children>\r\n        </HBox>\r\n    </children>\r\n</StackPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/reclamation/reclamationFormShow.fxml b/src/main/resources/fxml/reclamation/reclamationFormShow.fxml
+--- a/src/main/resources/fxml/reclamation/reclamationFormShow.fxml	(revision d7b9c32afdab14105ae4e807a3e46d808e5db8b8)
++++ b/src/main/resources/fxml/reclamation/reclamationFormShow.fxml	(date 1711727378364)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
+ <?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
+ <?import javafx.scene.control.Label?>
+ <?import javafx.scene.control.TextArea?>
+ <?import javafx.scene.control.TextField?>
+@@ -20,6 +21,7 @@
+                      <VBox.margin>
+                         <Insets bottom="70.0" />
+                      </VBox.margin></ImageView>
++                  <Button mnemonicParsing="false" onMouseClicked="#showFormReclamationReponse" text="ajouter reponse" />
+                     </children>
+                     <padding>
+                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

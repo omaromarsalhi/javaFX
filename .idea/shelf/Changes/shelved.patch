@@ -1,0 +1,981 @@
+Index: src/main/java/pidev/javafx/controller/user/NewAccountController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.user;\r\nimport javafx.application.Platform;\r\nimport javafx.concurrent.Task;\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.FXMLLoader;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.geometry.Insets;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.StackPane;\r\nimport javafx.scene.layout.VBox;\r\n//import pidev.javafx.controller.blog.BlogController;\r\nimport javafx.stage.Stage;\r\nimport pidev.javafx.controller.reclamation.ReclamationBoxController;\r\nimport pidev.javafx.controller.reclamation.ReclamationFormController;\r\nimport pidev.javafx.crud.reclamation.ServiceReclamation;\r\nimport pidev.javafx.crud.user.ServiceUser;\r\nimport pidev.javafx.model.blog.Post;\r\nimport pidev.javafx.model.reclamation.Reclamation;\r\nimport pidev.javafx.tools.UserController;\r\nimport pidev.javafx.tools.marketPlace.CustomMouseEvent;\r\nimport pidev.javafx.tools.marketPlace.EventBus;\r\nimport pidev.javafx.tools.marketPlace.MyTools;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URL;\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Objects;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class NewAccountController implements Initializable {\r\n\r\n\r\n    @FXML\r\n    private AnchorPane accountSection;\r\n    @FXML\r\n    private AnchorPane loadingPage;\r\n    @FXML\r\n    private VBox blogSection;\r\n    @FXML\r\n    private MenuBar menuBar;\r\n    @FXML\r\n    private VBox reclamsSection;\r\n    @FXML\r\n    private ScrollPane scroll;\r\n    @FXML\r\n    private Button searchBtn;\r\n    @FXML\r\n    private HBox searchHbox;\r\n    @FXML\r\n    private ImageView searchInfoBtn;\r\n    @FXML\r\n    private TextField searchTextField;\r\n    @FXML\r\n    private HBox toolBar;\r\n    @FXML\r\n    private HBox ultraBigContainer;\r\n    @FXML\r\n    private VBox firstinterface;\r\n    @FXML\r\n    private VBox secondInterface;\r\n\r\n\r\n\r\n    //BlogController blogController;\r\n    //List<Post> posts;\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        secondInterface.setVisible( false );\r\n        loadingPage.setVisible( false );\r\n        HBox reclamations = null;\r\n\r\n        loadBlog();\r\n        for (Reclamation reclamationData: ServiceReclamation.getInstance().getAll()){\r\n            FXMLLoader fxmlLoader = new FXMLLoader();\r\n            fxmlLoader.setLocation(getClass().getResource(\"/fxml/reclamation/reclamation.fxml\"));\r\n            try {\r\n                reclamations = fxmlLoader.load( );\r\n                ReclamationBoxController reclamationBoxController=fxmlLoader.getController();\r\n                reclamationBoxController.setData( reclamationData );\r\n                HBox finalReclamations = reclamations;\r\n                reclamationBoxController.getDelete().setOnMouseClicked( event1 -> {\r\n                    ServiceReclamation.getInstance().supprimer(reclamationData.getIdReclamation());\r\n                    MyTools.getInstance().deleteAnimation( finalReclamations,reclamsSection );\r\n                } );\r\n            } catch (IOException e) {\r\n                throw new RuntimeException( e );\r\n            }\r\n            reclamsSection.getChildren().add(reclamations);\r\n        }\r\n        setMenueBar();\r\n\r\n        EventBus.getInstance().subscribe( \"showReclamation\",this::showDetailsReclamation );\r\n        EventBus.getInstance().subscribe( \"exitFormUser\",this::onExitFormBtnClicked );\r\n        EventBus.getInstance().subscribe( \"loadBlog\", event -> loadBlog() );\r\n        EventBus.getInstance().subscribe( \"showReponse\",this:: showFormReclamationReponse );\r\n        EventBus.getInstance().subscribe( \"refresh\",this:: refresh );\r\n\r\n\r\n\r\n    }\r\n\r\n\r\n    public void loadBlog(){\r\n\r\n        blogSection.getChildren().clear();\r\n        VBox blog = null;\r\n        try {\r\n            blog = FXMLLoader.load( getClass().getResource( \"/fxml/blog/resizedBlog.fxml\" )  );\r\n            scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);\r\n            EventBus.getInstance().publish( \"loadPosts\",new CustomMouseEvent<>(\"/fxml/blog/resizedPost.fxml\" ) );\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n        blogSection.getChildren().add(blog);\r\n    }\r\n\r\n    public void setMenueBar(){\r\n\r\n        var addReclamation=new MenuItem(\"Add Reclamation\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n        addReclamation.setOnAction( event -> showFormReclamation() );\r\n        menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);\r\n\r\n\r\n        var editDetails=new MenuItem(\"Edit My Details\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n        var showDetails=new MenuItem(\"Show My Details\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n\r\n        var posts=new MenuItem(\"My Posts\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n        menuBar.getMenus().get( 2 ).getItems().addAll(posts);\r\n        posts.setOnAction( event -> loadBlog() );\r\n\r\n\r\n        Menu advancedSettings = new Menu(\"Advanced Settings\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n\r\n        // Create submenu for \"File\" menu\r\n        Menu updateCredentials= new Menu(\"Update Credentials\");\r\n        Menu account = new Menu(\"Account\");\r\n\r\n        MenuItem updatePassword = new MenuItem(\"Update Password\");\r\n        MenuItem updateEmail = new MenuItem(\"Update Email\");\r\n        updateCredentials.getItems().addAll(updatePassword, updateEmail);\r\n\r\n        MenuItem disconnect = new MenuItem(\"Disconnect\");\r\n        MenuItem deleteAccount = new MenuItem(\"Delete Account\");\r\n        account.getItems().addAll(disconnect, deleteAccount);\r\n\r\n        // Add submenus to \"File\" menu\r\n        advancedSettings.getItems().addAll(updateCredentials,account);\r\n\r\n        editDetails.setOnAction( event -> showFormUser(\"editDetails\") );\r\n        showDetails.setOnAction( event -> showFormUser(\"showDetails\") );\r\n\r\n\r\n        disconnect.setOnAction( event ->disconnetcThread().start());\r\n        deleteAccount.setOnAction( event -> {\r\n            ServiceUser serviceUser = new ServiceUser();\r\n            serviceUser.supprimer(Integer.parseInt(UserController.getInstance().getCurrentUser().getCin()));\r\n            disconnetcThread().start();\r\n        });\r\n\r\n\r\n\r\n        updatePassword.setOnAction( event -> showFormadvancedSettings(\"updatePassword\") );\r\n        updateEmail.setOnAction( event -> showFormadvancedSettings(\"updateEmail\") );\r\n\r\n        menuBar.getMenus().get( 3 ).getItems().addAll(editDetails,showDetails,advancedSettings);\r\n\r\n\r\n\r\n\r\n        var openChat=new MenuItem(\"Open Chat\",new ImageView(new Image(getClass().getResourceAsStream( \"/icons/marketPlace/more.png\" ))));\r\n\r\n        menuBar.getMenus().get( 4 ).getItems().addAll(openChat);\r\n        openChat.setOnAction( event -> EventBus.getInstance().publish( \"showChat\",event ) );\r\n\r\n\r\n        if(UserController.getInstance().getCurrentUser().getLastname()==null)\r\n            editDetails.fire();\r\n        if(UserController.getInstance().getCurrentUser().getPassReseted()) {\r\n            StackPane form=null;\r\n            FXMLLoader fxmlLoader = new FXMLLoader();\r\n            fxmlLoader.setLocation(getClass().getResource(\"/fxml/user/advancedSettings.fxml\" ));\r\n            try {\r\n                form = fxmlLoader.load();\r\n            } catch (IOException e) {\r\n                throw new RuntimeException( e );\r\n            }\r\n            AdvancedSettingsController advancedSettingsController=fxmlLoader.getController();\r\n            advancedSettingsController.setUsageOfThisForm(\"updatePassword\");\r\n            advancedSettingsController.setData( UserController.getInstance().getCurrentUser() );\r\n            blogSection.getChildren().clear();\r\n            blogSection.getChildren().add(form);\r\n            MyTools.getInstance().showAnimation( form );\r\n        }\r\n    }\r\n\r\n\r\n    public void onExitFormBtnClicked(MouseEvent event){\r\n        firstinterface.setOpacity( 1);\r\n        secondInterface.setVisible( false );\r\n        secondInterface.getChildren().clear();\r\n    }\r\n\r\n    public void showFormUser(String usage){\r\n        StackPane form=null;\r\n        FXMLLoader fxmlLoader = new FXMLLoader();\r\n        fxmlLoader.setLocation(getClass().getResource(\"/fxml/user/form.fxml\" ));\r\n        try {\r\n            form = fxmlLoader.load();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n        UserFormController userFormController=fxmlLoader.getController();\r\n        userFormController.setUsageOfThisForm( usage );\r\n        userFormController.setDataUser( UserController.getInstance().getCurrentUser() );\r\n        firstinterface.setOpacity( 0.4 );\r\n        secondInterface.setVisible( true );\r\n        secondInterface.getChildren().add(form);\r\n        MyTools.getInstance().showAnimation( form );\r\n    }\r\n\r\n    public void showFormReclamation(){\r\n        StackPane form=null;\r\n        FXMLLoader fxmlLoader = new FXMLLoader();\r\n        fxmlLoader.setLocation(getClass().getResource(\"/fxml/reclamation/reclamationForm.fxml\" ));\r\n        try {\r\n            form = fxmlLoader.load();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n\r\n        firstinterface.setOpacity( 0.4 );\r\n        secondInterface.setVisible( true );\r\n        secondInterface.getChildren().add(form);\r\n        MyTools.getInstance().showAnimation( form );\r\n    }\r\n\r\n    public void refresh(CustomMouseEvent<Reclamation> customMouseEvent){\r\n        HBox reclamations = null;\r\n            FXMLLoader fxmlLoader = new FXMLLoader();\r\n            fxmlLoader.setLocation(getClass().getResource(\"/fxml/reclamation/reclamation.fxml\"));\r\n            try {\r\n                reclamations = fxmlLoader.load( );\r\n                ReclamationBoxController reclamationBoxController=fxmlLoader.getController();\r\n                reclamationBoxController.setData( customMouseEvent.getEventData() );\r\n                HBox finalReclamations = reclamations;\r\n                reclamationBoxController.getDelete().setOnMouseClicked( event1 -> {\r\n                    ServiceReclamation.getInstance().supprimer(customMouseEvent.getEventData().getIdReclamation());\r\n                    MyTools.getInstance().deleteAnimation( finalReclamations,reclamsSection );\r\n                } );\r\n            } catch (IOException e) {\r\n                throw new RuntimeException( e );\r\n            }\r\n            reclamsSection.getChildren().add(reclamations);\r\n        MyTools.getInstance().showAnimation( reclamations );\r\n\r\n    }\r\n\r\n\r\n    public void showFormadvancedSettings(String usage) {\r\n        StackPane form=null;\r\n        FXMLLoader fxmlLoader = new FXMLLoader();\r\n        fxmlLoader.setLocation(getClass().getResource(\"/fxml/user/advancedSettings.fxml\" ));\r\n        try {\r\n            form = fxmlLoader.load();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n        AdvancedSettingsController advancedSettingsController=fxmlLoader.getController();\r\n        advancedSettingsController.setUsageOfThisForm(usage);\r\n        advancedSettingsController.setData( UserController.getInstance().getCurrentUser() );\r\n        blogSection.getChildren().clear();\r\n        blogSection.getChildren().add(form);\r\n        MyTools.getInstance().showAnimation( form );\r\n    }\r\n\r\n\r\n    public void showDetailsReclamation(MouseEvent event){\r\n        StackPane form=null;\r\n        FXMLLoader fxmlLoader = new FXMLLoader();\r\n        fxmlLoader.setLocation(getClass().getResource(\"/fxml/reclamation/reclamationFormShow.fxml\" ));\r\n        try {\r\n            form = fxmlLoader.load();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n//        ReclamationFormController reclamationBoxController=fxmlLoader.getController();\r\n//        StackPane finalForm = form;\r\n        firstinterface.setOpacity( 0.4 );\r\n        secondInterface.setVisible( true );\r\n        secondInterface.getChildren().add(form);\r\n        MyTools.getInstance().showAnimation( form );\r\n    }\r\n\r\n\r\n\r\n    private Thread disconnetcThread() {\r\n        Task<Void> myTask = new Task<>() {\r\n            @Override\r\n            protected Void call() throws Exception {\r\n                firstinterface.setOpacity( 0.6 );\r\n                loadingPage.setVisible( true );\r\n                Thread.sleep(3000);\r\n                return null;\r\n            }\r\n        };\r\n        myTask.setOnSucceeded(e -> {\r\n            Platform.runLater( ()->{\r\n//        ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());\r\n                Stage stage=null;\r\n                stage=(Stage) blogSection.getScene().getWindow();\r\n                stage.close();\r\n            } );\r\n        });\r\n        return new Thread(myTask);\r\n    }\r\n\r\n\r\n    public void showFormReclamationReponse(MouseEvent event){\r\n        StackPane form=null;\r\n        secondInterface.getChildren().clear();\r\n        FXMLLoader fxmlLoader = new FXMLLoader();\r\n        fxmlLoader.setLocation(getClass().getResource(\"/fxml/reclamation/reclamationReponse.fxml\" ));\r\n        try {\r\n            form = fxmlLoader.load();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException( e );\r\n        }\r\n\r\n        firstinterface.setOpacity( 0.4 );\r\n        secondInterface.setVisible( true );\r\n        secondInterface.getChildren().add(form);\r\n        MyTools.getInstance().showAnimation( form );\r\n    }\r\n\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/user/NewAccountController.java b/src/main/java/pidev/javafx/controller/user/NewAccountController.java
+--- a/src/main/java/pidev/javafx/controller/user/NewAccountController.java	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/java/pidev/javafx/controller/user/NewAccountController.java	(date 1711727569164)
+@@ -1,6 +1,4 @@
+ package pidev.javafx.controller.user;
+-import javafx.application.Platform;
+-import javafx.concurrent.Task;
+ import javafx.event.ActionEvent;
+ import javafx.fxml.FXML;
+ import javafx.fxml.FXMLLoader;
+@@ -15,11 +13,8 @@
+ import javafx.scene.layout.StackPane;
+ import javafx.scene.layout.VBox;
+ //import pidev.javafx.controller.blog.BlogController;
+-import javafx.stage.Stage;
+ import pidev.javafx.controller.reclamation.ReclamationBoxController;
+-import pidev.javafx.controller.reclamation.ReclamationFormController;
+ import pidev.javafx.crud.reclamation.ServiceReclamation;
+-import pidev.javafx.crud.user.ServiceUser;
+ import pidev.javafx.model.blog.Post;
+ import pidev.javafx.model.reclamation.Reclamation;
+ import pidev.javafx.tools.UserController;
+@@ -39,8 +34,6 @@
+ 
+     @FXML
+     private AnchorPane accountSection;
+-    @FXML
+-    private AnchorPane loadingPage;
+     @FXML
+     private VBox blogSection;
+     @FXML
+@@ -74,68 +67,41 @@
+     @Override
+     public void initialize(URL location, ResourceBundle resources) {
+         secondInterface.setVisible( false );
+-        loadingPage.setVisible( false );
++        VBox blog = null;
++//        AnchorPane account = null;
+         HBox reclamations = null;
++        try {
++            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/resizedBlog.fxml" )  );
++            scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);
++            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/resizedPost.fxml" ) );
+ 
+-        loadBlog();
+-        for (Reclamation reclamationData: ServiceReclamation.getInstance().getAll()){
++        } catch (IOException e) {
++            throw new RuntimeException( e );
++        }
++        blogSection.getChildren().add(blog);
++        for (Reclamation reclamationData: ServiceReclamation.getInstance().getAllbyid(UserController.getInstance().getCurrentUser().getId())){
+             FXMLLoader fxmlLoader = new FXMLLoader();
+             fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
+             try {
+                 reclamations = fxmlLoader.load( );
+                 ReclamationBoxController reclamationBoxController=fxmlLoader.getController();
+                 reclamationBoxController.setData( reclamationData );
+-                HBox finalReclamations = reclamations;
+-                reclamationBoxController.getDelete().setOnMouseClicked( event1 -> {
+-                    ServiceReclamation.getInstance().supprimer(reclamationData.getIdReclamation());
+-                    MyTools.getInstance().deleteAnimation( finalReclamations,reclamsSection );
+-                } );
+             } catch (IOException e) {
+                 throw new RuntimeException( e );
+             }
+             reclamsSection.getChildren().add(reclamations);
+         }
+         setMenueBar();
+-
++        EventBus.getInstance().subscribe( "showReponse",this:: showFormReclamationReponse );
+         EventBus.getInstance().subscribe( "showReclamation",this::showDetailsReclamation );
+         EventBus.getInstance().subscribe( "exitFormUser",this::onExitFormBtnClicked );
+-        EventBus.getInstance().subscribe( "loadBlog", event -> loadBlog() );
+-        EventBus.getInstance().subscribe( "showReponse",this:: showFormReclamationReponse );
+-        EventBus.getInstance().subscribe( "refresh",this:: refresh );
+-
+-
+-
+     }
+ 
+-
+-    public void loadBlog(){
+-
+-        blogSection.getChildren().clear();
+-        VBox blog = null;
+-        try {
+-            blog = FXMLLoader.load( getClass().getResource( "/fxml/blog/resizedBlog.fxml" )  );
+-            scroll.removeEventFilter(MouseEvent.MOUSE_PRESSED, MouseEvent::consume);
+-            EventBus.getInstance().publish( "loadPosts",new CustomMouseEvent<>("/fxml/blog/resizedPost.fxml" ) );
+-        } catch (IOException e) {
+-            throw new RuntimeException( e );
+-        }
+-        blogSection.getChildren().add(blog);
+-    }
+ 
+     public void setMenueBar(){
+-
+-        var addReclamation=new MenuItem("Add Reclamation",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+-        addReclamation.setOnAction( event -> showFormReclamation() );
+-        menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
+-
+-
+         var editDetails=new MenuItem("Edit My Details",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+         var showDetails=new MenuItem("Show My Details",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+ 
+-        var posts=new MenuItem("My Posts",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+-        menuBar.getMenus().get( 2 ).getItems().addAll(posts);
+-        posts.setOnAction( event -> loadBlog() );
+-
+ 
+         Menu advancedSettings = new Menu("Advanced Settings",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+ 
+@@ -157,48 +123,19 @@
+         editDetails.setOnAction( event -> showFormUser("editDetails") );
+         showDetails.setOnAction( event -> showFormUser("showDetails") );
+ 
+-
+-        disconnect.setOnAction( event ->disconnetcThread().start());
+-        deleteAccount.setOnAction( event -> {
+-            ServiceUser serviceUser = new ServiceUser();
+-            serviceUser.supprimer(Integer.parseInt(UserController.getInstance().getCurrentUser().getCin()));
+-            disconnetcThread().start();
+-        });
+-
+-
+-
+         updatePassword.setOnAction( event -> showFormadvancedSettings("updatePassword") );
+         updateEmail.setOnAction( event -> showFormadvancedSettings("updateEmail") );
+ 
+         menuBar.getMenus().get( 3 ).getItems().addAll(editDetails,showDetails,advancedSettings);
+ 
+ 
+-
++        var addReclamation=new MenuItem("Add Reclamation",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+ 
+-        var openChat=new MenuItem("Open Chat",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
++        addReclamation.setOnAction( event -> showFormReclamation() );
+ 
+-        menuBar.getMenus().get( 4 ).getItems().addAll(openChat);
+-        openChat.setOnAction( event -> EventBus.getInstance().publish( "showChat",event ) );
++        menuBar.getMenus().get( 0 ).getItems().addAll(addReclamation);
+ 
+-
+-        if(UserController.getInstance().getCurrentUser().getLastname()==null)
+-            editDetails.fire();
+-        if(UserController.getInstance().getCurrentUser().getPassReseted()) {
+-            StackPane form=null;
+-            FXMLLoader fxmlLoader = new FXMLLoader();
+-            fxmlLoader.setLocation(getClass().getResource("/fxml/user/advancedSettings.fxml" ));
+-            try {
+-                form = fxmlLoader.load();
+-            } catch (IOException e) {
+-                throw new RuntimeException( e );
+-            }
+-            AdvancedSettingsController advancedSettingsController=fxmlLoader.getController();
+-            advancedSettingsController.setUsageOfThisForm("updatePassword");
+-            advancedSettingsController.setData( UserController.getInstance().getCurrentUser() );
+-            blogSection.getChildren().clear();
+-            blogSection.getChildren().add(form);
+-            MyTools.getInstance().showAnimation( form );
+-        }
++//        editDetails.fire();
+     }
+ 
+ 
+@@ -241,30 +178,26 @@
+         secondInterface.getChildren().add(form);
+         MyTools.getInstance().showAnimation( form );
+     }
+-
+-    public void refresh(CustomMouseEvent<Reclamation> customMouseEvent){
+-        HBox reclamations = null;
+-            FXMLLoader fxmlLoader = new FXMLLoader();
+-            fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamation.fxml"));
+-            try {
+-                reclamations = fxmlLoader.load( );
+-                ReclamationBoxController reclamationBoxController=fxmlLoader.getController();
+-                reclamationBoxController.setData( customMouseEvent.getEventData() );
+-                HBox finalReclamations = reclamations;
+-                reclamationBoxController.getDelete().setOnMouseClicked( event1 -> {
+-                    ServiceReclamation.getInstance().supprimer(customMouseEvent.getEventData().getIdReclamation());
+-                    MyTools.getInstance().deleteAnimation( finalReclamations,reclamsSection );
+-                } );
+-            } catch (IOException e) {
+-                throw new RuntimeException( e );
+-            }
+-            reclamsSection.getChildren().add(reclamations);
+-        MyTools.getInstance().showAnimation( reclamations );
++    public void showFormReclamationReponse(MouseEvent event){
++        StackPane form=null;
++        secondInterface.getChildren().clear();
++        FXMLLoader fxmlLoader = new FXMLLoader();
++        fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationReponse.fxml" ));
++        try {
++            form = fxmlLoader.load();
++        } catch (IOException e) {
++            throw new RuntimeException( e );
++        }
+ 
++        firstinterface.setOpacity( 0.4 );
++        secondInterface.setVisible( true );
++        secondInterface.getChildren().add(form);
++        MyTools.getInstance().showAnimation( form );
+     }
+ 
+ 
+-    public void showFormadvancedSettings(String usage) {
++    public void showFormadvancedSettings(String usage)
++    {
+         StackPane form=null;
+         FXMLLoader fxmlLoader = new FXMLLoader();
+         fxmlLoader.setLocation(getClass().getResource("/fxml/user/advancedSettings.fxml" ));
+@@ -291,49 +224,6 @@
+         } catch (IOException e) {
+             throw new RuntimeException( e );
+         }
+-//        ReclamationFormController reclamationBoxController=fxmlLoader.getController();
+-//        StackPane finalForm = form;
+-        firstinterface.setOpacity( 0.4 );
+-        secondInterface.setVisible( true );
+-        secondInterface.getChildren().add(form);
+-        MyTools.getInstance().showAnimation( form );
+-    }
+-
+-
+-
+-    private Thread disconnetcThread() {
+-        Task<Void> myTask = new Task<>() {
+-            @Override
+-            protected Void call() throws Exception {
+-                firstinterface.setOpacity( 0.6 );
+-                loadingPage.setVisible( true );
+-                Thread.sleep(3000);
+-                return null;
+-            }
+-        };
+-        myTask.setOnSucceeded(e -> {
+-            Platform.runLater( ()->{
+-//        ChatClient.getInstance().closeConnection(UserController.getInstance().getCurrentUser().getId());
+-                Stage stage=null;
+-                stage=(Stage) blogSection.getScene().getWindow();
+-                stage.close();
+-            } );
+-        });
+-        return new Thread(myTask);
+-    }
+-
+-
+-    public void showFormReclamationReponse(MouseEvent event){
+-        StackPane form=null;
+-        secondInterface.getChildren().clear();
+-        FXMLLoader fxmlLoader = new FXMLLoader();
+-        fxmlLoader.setLocation(getClass().getResource("/fxml/reclamation/reclamationReponse.fxml" ));
+-        try {
+-            form = fxmlLoader.load();
+-        } catch (IOException e) {
+-            throw new RuntimeException( e );
+-        }
+-
+         firstinterface.setOpacity( 0.4 );
+         secondInterface.setVisible( true );
+         secondInterface.getChildren().add(form);
+Index: src/main/java/pidev/javafx/controller/reclamation/ReclamationFormController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.reclamation;\r\n\r\n\r\nimport javafx.concurrent.Task;\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.geometry.Insets;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.control.*;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.AnchorPane;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.FileChooser;\r\nimport javafx.stage.Popup;\r\nimport javafx.stage.Stage;\r\nimport pidev.javafx.crud.reclamation.ServiceReclamation;\r\nimport pidev.javafx.model.MarketPlace.Product;\r\nimport pidev.javafx.model.reclamation.Reclamation;\r\nimport pidev.javafx.tools.UserController;\r\nimport pidev.javafx.tools.marketPlace.CustomMouseEvent;\r\nimport pidev.javafx.tools.marketPlace.EventBus;\r\nimport pidev.javafx.tools.marketPlace.MyListener;\r\nimport pidev.javafx.tools.marketPlace.MyTools;\r\n\r\nimport java.io.File;\r\nimport java.net.URL;\r\nimport java.nio.file.Files;\r\nimport java.nio.file.Paths;\r\nimport java.util.Random;\r\nimport java.util.ResourceBundle;\r\n\r\nimport com.vonage.client.VonageClient;\r\nimport com.vonage.client.sms.MessageStatus;\r\nimport com.vonage.client.sms.SmsSubmissionResponse;\r\nimport com.vonage.client.sms.messages.TextMessage;\r\n\r\n\r\n\r\nimport java.io.IOException;\r\n\r\npublic class ReclamationFormController implements Initializable {\r\n\r\n    @FXML\r\n    private VBox Box1;\r\n    @FXML\r\n    private TextArea Pdescretion;\r\n    @FXML\r\n    private TextField Pname;\r\n    @FXML\r\n    private HBox formBox;\r\n    @FXML\r\n    private Button imageBtn;\r\n\r\n    @FXML\r\n    private AnchorPane loadingPage;\r\n\r\n\r\n    private File chosenFile;\r\n    private MyListener listener;\r\n    private static String usageOfThisForm;\r\n    private HBox buttonsBox;\r\n    private boolean isImageUpdated;\r\n    private Product product;\r\n    private boolean isAllInpulValid;\r\n    String formLayoutBeforRegexCheck;\r\n    String formLayoutAfterRegexCheck;\r\n    Reclamation reclamation;\r\n\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        loadingPage.setVisible(false);\r\n\r\n        formLayoutBeforRegexCheck = \"-fx-border-color:black;\" + \"-fx-border-width: 2;\" +\r\n                \"-fx-border-radius: 10;\" +\r\n                \"-fx-background-color: white;\" +\r\n                \"-fx-background-radius: 10\";\r\n\r\n        formLayoutAfterRegexCheck = \"-fx-border-width: 2;\" +\r\n                \"-fx-border-radius: 10;\" +\r\n                \"-fx-background-color: white;\" +\r\n                \"-fx-background-radius: 10\";\r\n\r\n        isAllInpulValid = false;\r\n\r\n        createFormBtns();\r\n        Box1.getChildren().add(buttonsBox);\r\n\r\n\r\n        imageBtn.setOnAction(event -> {\r\n            FileChooser fileChooser = new FileChooser();\r\n            setExtFilters(fileChooser);\r\n            fileChooser.setTitle(\"Save Image\");\r\n            chosenFile = fileChooser.showOpenDialog(Stage.getWindows().get(0));\r\n        });\r\n        setRegEx();\r\n    }\r\n\r\n\r\n    private void setExtFilters(FileChooser chooser) {\r\n        chooser.getExtensionFilters().addAll(\r\n                new FileChooser.ExtensionFilter(\"All Images\", \"*.*\"),\r\n                new FileChooser.ExtensionFilter(\"PNG\", \"*.png\")\r\n        );\r\n    }\r\n\r\n\r\n    private void setRegEx() {\r\n        Popup popup4Regex = MyTools.getInstance().createPopUp();\r\n\r\n        Pname.setOnKeyTyped(event -> {\r\n            isAllInpulValid = Pname.getText().matches(\"^[A-Za-z0-9 ]*$\");\r\n            String color = (isAllInpulValid) ? \"green\" : \"red\";\r\n            if (Pname.getText().isEmpty()) {\r\n                Pname.setStyle(\"\");\r\n                formBox.setStyle(formLayoutBeforRegexCheck);\r\n                isAllInpulValid = true;\r\n            } else {\r\n                Pname.setStyle(\"-fx-border-color: transparent transparent \" + color + \" transparent;\" +\r\n                        \"-fx-border-width:0 0 2 0;\" +\r\n                        \"-fx-border-radius: 0\");\r\n                formBox.setStyle(\"-fx-border-color:\" + color + \";\" +\r\n                        formLayoutAfterRegexCheck);\r\n            }\r\n            if ((!isAllInpulValid && !Pname.getText().isEmpty()))\r\n                formBox.setStyle(\"-fx-border-color:red;\" +\r\n                        formLayoutAfterRegexCheck);\r\n        });\r\n\r\n        Pname.setOnMouseEntered(event -> {\r\n            if (!isAllInpulValid && !Pname.getText().isEmpty()) {\r\n                ((Label) popup4Regex.getContent().get(0)).setText(\"ONLY CHARACTERS AND NUMBERS ARE ALLOWED\");\r\n                popup4Regex.getContent().get(0).setStyle(popup4Regex.getContent().get(0).getStyle() + \"-fx-background-color: #ed1c27;\");\r\n                popup4Regex.show(Stage.getWindows().get(0), event.getScreenX() + 40, event.getScreenY() - 40);\r\n            }\r\n        });\r\n\r\n        Pname.setOnMouseExited(event -> {\r\n//            if(isAllInpulValid[3])\r\n            popup4Regex.hide();\r\n        });\r\n    }\r\n\r\n    private String generateRandomString(int length) {\r\n        String characters = \"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789\";\r\n        Random rnd = new Random();\r\n        StringBuilder sb = new StringBuilder(length);\r\n\r\n        for (int i = 0; i < length; i++) {\r\n            int index = rnd.nextInt(characters.length());\r\n            sb.append(characters.charAt(index));\r\n        }\r\n\r\n        return sb.toString();\r\n    }\r\n\r\n    public void onAddClicked(MouseEvent event)  {\r\n        if (isAllInpulValid && !Pdescretion.getText().isEmpty()) {\r\n            reclamation = new Reclamation(\r\n                    0,\r\n                    UserController.getInstance().getCurrentUser().getId(),\r\n                    generateRandomString(20),\r\n                    Pname.getText(),\r\n                    \"\",\r\n                    Pdescretion.getText(),\r\n                    \"\"\r\n            );\r\n\r\n            if (chosenFile != null)\r\n                reclamation.setImagePath(MyTools.getInstance().getPathAndSaveIMG(chosenFile.getAbsolutePath()));\r\n            System.out.println(reclamation);\r\n            ServiceReclamation.getInstance().ajouter(reclamation);\r\n            String htmlContent = null;\r\n            try {\r\n                htmlContent = new String(Files.readAllBytes(Paths.get(\"src/main/java/pidev/javafx/controller/reclamation/AAAA.html\")));\r\n            } catch (IOException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n            String dynamicText = \"This is some dynamic text.\";\r\n            String htmlEmailBody = EmailController.addDynamicText(htmlContent, dynamicText);\r\n            EmailController.sendEmail(\"khalil.rmila@esprit.tn\", \"HTML Email Test\", htmlEmailBody);\r\n//            Content content = new Content(\"text/plain\", \"and easy to do anywhere, even with Java\");\r\n\r\n\r\n            Thread thread = sleepThread(event);\r\n            loadingPage.setVisible(true);\r\n            thread.start();\r\n\r\n        } else {\r\n            Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);\r\n            confirmationAlert.setTitle(\"Error\");\r\n            confirmationAlert.setHeaderText(null);\r\n            confirmationAlert.setGraphic(null);\r\n            confirmationAlert.getDialogPane().getStylesheets().add(\"file:src/main/resources/style/alertStyle.css\");\r\n            confirmationAlert.setContentText(\"There is some wrong Data please fix it !!!\");\r\n            confirmationAlert.show();\r\n        }\r\n    }\r\n\r\n\r\n    private Thread sleepThread(MouseEvent event) {\r\n        Task<Void> myTask = new Task<>() {\r\n            @Override\r\n            protected Void call() throws Exception {\r\n                Thread.sleep(2000);\r\n                return null;\r\n            }\r\n        };\r\n\r\n        myTask.setOnSucceeded(e -> {\r\n            loadingPage.setVisible(false);\r\n            EventBus.getInstance().publish( \"refresh\",new CustomMouseEvent<>(reclamation ) );\r\n            EventBus.getInstance().publish(\"exitFormUser\", event);\r\n        });\r\n        return new Thread(myTask);\r\n    }\r\n\r\n\r\n    public void createFormBtns() {\r\n        Button addProd = new Button();\r\n        Button clearProd = new Button();\r\n        Button cancel = new Button();\r\n\r\n        buttonsBox = new HBox();\r\n\r\n        addProd.setPrefWidth(50);\r\n        clearProd.setPrefWidth(50);\r\n        cancel.setPrefWidth(50);\r\n\r\n        addProd.setPrefHeight(32);\r\n        clearProd.setPrefHeight(32);\r\n        cancel.setPrefHeight(32);\r\n\r\n        Image img1 = new Image(String.valueOf(getClass().getResource(\"/icons/marketPlace/tab2.png\")));\r\n        Image img2 = new Image(String.valueOf(getClass().getResource(\"/icons/marketPlace/broom.png\")));\r\n        Image img3 = new Image(String.valueOf(getClass().getResource(\"/icons/marketPlace/paper.png\")));\r\n\r\n        addProd.setGraphic(new ImageView(img1));\r\n        clearProd.setGraphic(new ImageView(img2));\r\n        cancel.setGraphic(new ImageView(img3));\r\n\r\n        addProd.setOnMouseClicked(this::onAddClicked);\r\n\r\n        clearProd.setOnMouseClicked(event -> {\r\n            Pdescretion.setText(\"\");\r\n            Pname.setText(\"\");\r\n        });\r\n        cancel.setOnMouseClicked(event -> EventBus.getInstance().publish(\"exitFormUser\", event));\r\n\r\n        buttonsBox.getChildren().addAll(addProd, clearProd, cancel);\r\n        buttonsBox.setSpacing(20);\r\n        buttonsBox.setAlignment(Pos.CENTER);\r\n        buttonsBox.setId(\"itemInfo\");\r\n        buttonsBox.getStylesheets().add(String.valueOf(getClass().getResource(\"/style/marketPlace/Buttons.css\")));\r\n        buttonsBox.setPadding(new Insets(0, 0, 10, 0));\r\n    }\r\n\r\n    VonageClient client = VonageClient.builder().apiKey(\"65a7971e\").apiSecret(\"9sH4i1gwIDqSOw91\").build();\r\n\r\n    private void sendSMSToUser(String recipientPhoneNumber, String TP) {\r\n        TextMessage message = new TextMessage(\r\n                \"Vonage APIs\", // This should be your Vonage virtual number\r\n                recipientPhoneNumber,\r\n                \"Your temporary password is: \" + TP\r\n        );\r\n        SmsSubmissionResponse response = client.getSmsClient().submitMessage(message);\r\n        if (response.getMessages().get(0).getStatus() == MessageStatus.OK) {\r\n            System.out.println(\"Message sent successfully.\");\r\n        } else {\r\n            System.out.println(\"Message failed with error: \" + response.getMessages().get(0).getErrorText());\r\n        }\r\n    }\r\n\r\n//    public static void sendEmail(Mail mail) throws IOException {\r\n//        SendGrid sg = new SendGrid(System.getenv(\"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\\n\"));\r\n//        Request request = new Request();\r\n//        try {\r\n//            request.setMethod(Method.POST);\r\n//            request.setEndpoint(\"mail/send\");\r\n//            request.setBody(mail.build());\r\n//            Response response = sg.api(request);\r\n//            System.out.println(response.getStatusCode());\r\n//            System.out.println(response.getBody());\r\n//            System.out.println(response.getHeaders());\r\n//        } catch (IOException ex) {\r\n//            throw ex;\r\n//        }\r\n//    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/ReclamationFormController.java b/src/main/java/pidev/javafx/controller/reclamation/ReclamationFormController.java
+--- a/src/main/java/pidev/javafx/controller/reclamation/ReclamationFormController.java	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/java/pidev/javafx/controller/reclamation/ReclamationFormController.java	(date 1711727570888)
+@@ -67,7 +67,6 @@
+     private boolean isAllInpulValid;
+     String formLayoutBeforRegexCheck;
+     String formLayoutAfterRegexCheck;
+-    Reclamation reclamation;
+ 
+     @Override
+     public void initialize(URL location, ResourceBundle resources) {
+@@ -158,7 +157,7 @@
+ 
+     public void onAddClicked(MouseEvent event)  {
+         if (isAllInpulValid && !Pdescretion.getText().isEmpty()) {
+-            reclamation = new Reclamation(
++            Reclamation reclamation = new Reclamation(
+                     0,
+                     UserController.getInstance().getCurrentUser().getId(),
+                     generateRandomString(20),
+@@ -210,9 +209,8 @@
+         };
+ 
+         myTask.setOnSucceeded(e -> {
+-            loadingPage.setVisible(false);
+-            EventBus.getInstance().publish( "refresh",new CustomMouseEvent<>(reclamation ) );
+             EventBus.getInstance().publish("exitFormUser", event);
++            loadingPage.setVisible(false);
+         });
+         return new Thread(myTask);
+     }
+Index: src/main/java/pidev/javafx/model/reclamation/Reclamation.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.model.reclamation;\r\n\r\nimport javafx.scene.Node;\r\n\r\npublic class Reclamation extends Node {\r\n\r\n    private int idReclamation;\r\n    private String privateKey;\r\n    private String subject;\r\n    private String date;\r\n    private String description;\r\n    private String imagePath;\r\n    private int userId;\r\n\r\n    public Reclamation(int idReclamation,int userId,String privateKey, String subject, String date, String description,String imagePath){\r\n        this.idReclamation = idReclamation;\r\n        this.userId=userId;\r\n        this.subject = subject;\r\n        this.date = date;\r\n        this.description = description;\r\n        this.privateKey = privateKey;\r\n        this.imagePath = imagePath;\r\n    }\r\n\r\n\r\n    public Reclamation() {\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n    public int getUser() {\r\n        return userId;\r\n    }\r\n\r\n    public void setUser(int userId) {\r\n        this.userId = userId;\r\n    }\r\n\r\n    public void setId(int idReclamation) {\r\n        this.idReclamation =idReclamation;\r\n    }\r\n\r\n    public String getPrivateKey() {\r\n        return privateKey;\r\n    }\r\n\r\n    public void setPrivateKey(String privateKey) {\r\n        this.privateKey = privateKey;\r\n    }\r\n\r\n    public String getSubject() {\r\n        return subject;\r\n    }\r\n\r\n    public void setSubject(String subject) {\r\n        this.subject = subject;\r\n    }\r\n\r\n    public String getDate() {\r\n        return date;\r\n    }\r\n\r\n    public void setDate(String date) {\r\n        this.date = date;\r\n    }\r\n\r\n    public String getDescription() {\r\n        return description;\r\n    }\r\n\r\n    public void setDescription(String description) {\r\n        this.description = description;\r\n    }\r\n\r\n    public int getIdReclamation() {\r\n        return idReclamation;\r\n    }\r\n\r\n    public void setIdReclamation(int idReclamation) {\r\n        this.idReclamation = idReclamation;\r\n    }\r\n\r\n    public String getImagePath() {\r\n        return imagePath;\r\n    }\r\n\r\n    public void setImagePath(String imagePath) {\r\n        this.imagePath = imagePath;\r\n    }\r\n\r\n    @Override\r\n    public String toString() {\r\n        return \"Reclamation{\" +\r\n                \"idReclamation=\" + idReclamation +\r\n                \", privateKey='\" + privateKey + '\\'' +\r\n                \", subject='\" + subject + '\\'' +\r\n                \", date='\" + date + '\\'' +\r\n                \", description='\" + description + '\\'' +\r\n                \", imagePath='\" + imagePath + '\\'' +\r\n                '}';\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/model/reclamation/Reclamation.java b/src/main/java/pidev/javafx/model/reclamation/Reclamation.java
+--- a/src/main/java/pidev/javafx/model/reclamation/Reclamation.java	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/java/pidev/javafx/model/reclamation/Reclamation.java	(date 1711727615633)
+@@ -1,6 +1,12 @@
+ package pidev.javafx.model.reclamation;
+ 
++<<<<<<< HEAD
+ import javafx.scene.Node;
++=======
++import pidev.javafx.model.user.User;
++
++import java.util.Date;
++>>>>>>> d54de21 (new work)
+ 
+ public class Reclamation extends Node {
+ 
+@@ -22,6 +28,13 @@
+         this.imagePath = imagePath;
+     }
+ 
++<<<<<<< HEAD
++
++    public Reclamation() {
++
++    }
++=======
++>>>>>>> d54de21 (new work)
+ 
+     public Reclamation() {
+ 
+@@ -29,6 +42,13 @@
+ 
+ 
+ 
++    public int getUser() {
++        return userId;
++    }
++
++    public void setUser(int userId) {
++        this.userId = userId;
++    }
+ 
+     public int getUser() {
+         return userId;
+@@ -102,3 +122,6 @@
+                 '}';
+     }
+ }
++
++public void main() {
++}
+Index: src/main/resources/fxml/user/newAccountOmar.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import java.net.URL?>\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.Menu?>\r\n<?import javafx.scene.control.MenuBar?>\r\n<?import javafx.scene.control.ScrollPane?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.shape.Line?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<StackPane xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"pidev.javafx.controller.user.NewAccountController\">\r\n   <children>\r\n      <VBox fx:id=\"firstinterface\" prefHeight=\"670.0\" prefWidth=\"1040.0\" style=\"-fx-background-color: #D9D9D9;\">\r\n         <children>\r\n            <HBox fx:id=\"toolBar\" alignment=\"CENTER_LEFT\" prefHeight=\"74.0\" prefWidth=\"1040.0\">\r\n               <children>\r\n                  <MenuBar fx:id=\"menuBar\" prefHeight=\"38.0\" prefWidth=\"534.0\">\r\n                     <menus>\r\n                        <Menu mnemonicParsing=\"false\" text=\"Reclamation\">\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@../../icons/marketPlace/packaging.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Menu>\r\n                        <Menu mnemonicParsing=\"false\" text=\"Appointement\">\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@../../icons/marketPlace/packaging.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Menu>\r\n                        <Menu mnemonicParsing=\"false\" text=\"Posts\">\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@../../icons/marketPlace/star.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Menu>\r\n                        <Menu mnemonicParsing=\"false\" text=\"Your Info\">\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@../../icons/marketPlace/star.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Menu>\r\n                        <Menu mnemonicParsing=\"false\" text=\"Chat\">\r\n                           <graphic>\r\n                              <ImageView fitHeight=\"16.0\" fitWidth=\"16.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                 <image>\r\n                                    <Image url=\"@../../icons/marketPlace/notification.png\" />\r\n                                 </image>\r\n                              </ImageView>\r\n                           </graphic>\r\n                        </Menu>\r\n                     </menus>\r\n                  </MenuBar>\r\n               </children>\r\n               <VBox.margin>\r\n                  <Insets top=\"4.0\" />\r\n               </VBox.margin>\r\n               <padding>\r\n                  <Insets left=\"20.0\" />\r\n               </padding>\r\n            </HBox>\r\n            <HBox prefHeight=\"608.0\" prefWidth=\"1040.0\" spacing=\"10.0\">\r\n               <children>\r\n                  <VBox prefHeight=\"618.0\" prefWidth=\"1039.0\">\r\n                     <children>\r\n                        <HBox fx:id=\"ultraBigContainer\" prefHeight=\"596.0\" prefWidth=\"739.0\" spacing=\"10.0\">\r\n                           <children>\r\n                              <VBox prefHeight=\"584.0\" prefWidth=\"614.0\">\r\n                                 <children>\r\n                                    <HBox fx:id=\"\" alignment=\"CENTER\" prefHeight=\"94.0\" prefWidth=\"597.0\" style=\"-fx-background-radius: 20; -fx-border-color: 20;\">\r\n                                       <children>\r\n                                          <AnchorPane fx:id=\"accountInfo\" prefHeight=\"86.0\" prefWidth=\"574.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;\">\r\n                                             <children>\r\n                                                <ImageView fx:id=\"userImage\" fitHeight=\"66.0\" fitWidth=\"62.0\" layoutX=\"23.0\" layoutY=\"12.0\" pickOnBounds=\"true\" preserveRatio=\"true\" AnchorPane.bottomAnchor=\"12.0\" AnchorPane.topAnchor=\"12.0\">\r\n                                                   <image>\r\n                                                      <Image url=\"@../../img/marketPlace/latifa.png\" />\r\n                                                   </image>\r\n                                                </ImageView>\r\n                                                <VBox layoutX=\"108.0\" layoutY=\"16.0\" prefHeight=\"50.0\" prefWidth=\"242.0\">\r\n                                                   <children>\r\n                                                      <Label fx:id=\"username\" contentDisplay=\"CENTER\" prefHeight=\"34.0\" prefWidth=\"247.0\" text=\"omar salhi\">\r\n                                                         <font>\r\n                                                            <Font name=\"System Bold Italic\" size=\"18.0\" />\r\n                                                         </font>\r\n                                                      </Label>\r\n                                                      <Label fx:id=\"userEmail\" prefHeight=\"34.0\" prefWidth=\"247.0\" text=\"omar.salhi@esprit.tn\">\r\n                                                         <font>\r\n                                                            <Font name=\"System Italic\" size=\"18.0\" />\r\n                                                         </font>\r\n                                                      </Label>\r\n                                                   </children>\r\n                                                </VBox>\r\n                                                <Line endX=\"-1.0000839233398438\" endY=\"104.5999984741211\" layoutX=\"87.0\" layoutY=\"-27.0\" startX=\"-1.0000929832458496\" startY=\"35.73655700683594\" AnchorPane.bottomAnchor=\"8.0\" AnchorPane.topAnchor=\"8.0\" />\r\n                                                <ImageView fitHeight=\"70.0\" fitWidth=\"77.0\" layoutX=\"455.0\" layoutY=\"8.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                                                   <image>\r\n                                                      <Image url=\"@../../citizenHub/Sans%20titre-4.png\" />\r\n                                                   </image>\r\n                                                </ImageView>\r\n                                             </children>\r\n                                             <HBox.margin>\r\n                                                <Insets bottom=\"4.0\" left=\"4.0\" right=\"4.0\" top=\"4.0\" />\r\n                                             </HBox.margin>\r\n                                          </AnchorPane>\r\n                                       </children>\r\n                                    </HBox>\r\n                                    <ScrollPane fx:id=\"scroll\" hbarPolicy=\"NEVER\" prefHeight=\"488.0\" prefWidth=\"590.0\" style=\"-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;\" vbarPolicy=\"NEVER\">\r\n                                      <content>\r\n                                          <VBox fx:id=\"blogSection\" alignment=\"CENTER\" fillWidth=\"false\" prefHeight=\"486.0\" prefWidth=\"608.0\" />\r\n                                      </content>\r\n                                    </ScrollPane>\r\n                                 </children>\r\n                              </VBox>\r\n                              <VBox alignment=\"TOP_CENTER\" prefHeight=\"563.0\" prefWidth=\"372.0\">\r\n                                 <HBox.margin>\r\n                                    <Insets bottom=\"10.0\" left=\"10.0\" right=\"10.0\" top=\"10.0\" />\r\n                                 </HBox.margin>\r\n                                 <children>\r\n                                    <Label alignment=\"CENTER\" prefHeight=\"35.0\" prefWidth=\"403.0\" text=\"My Reclamations\">\r\n                                       <font>\r\n                                          <Font name=\"System Bold\" size=\"18.0\" />\r\n                                       </font>\r\n                                    </Label>\r\n                                    <ScrollPane hbarPolicy=\"NEVER\" maxWidth=\"410.0\" prefHeight=\"518.0\" prefWidth=\"410.0\" style=\"-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;\" stylesheets=\"@../../style/reclamation/styleReclamation.css\" vbarPolicy=\"NEVER\">\r\n                                       <content>\r\n                                          <VBox fx:id=\"reclamsSection\" alignment=\"TOP_CENTER\" prefHeight=\"514.0\" prefWidth=\"367.0\" spacing=\"10.0\" style=\"-fx-background-radius: 15; -fx-background-color: #D9D9D9;\" stylesheets=\"@../../style/reclamation/styleReclamation.css\">\r\n                                             <padding>\r\n                                                <Insets bottom=\"10.0\" left=\"10.0\" right=\"10.0\" top=\"10.0\" />\r\n                                             </padding>\r\n                                          </VBox>\r\n                                       </content>\r\n                                    </ScrollPane>\r\n                                 </children>\r\n                              </VBox>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets bottom=\"4.0\" left=\"4.0\" right=\"4.0\" top=\"4.0\" />\r\n                     </padding>\r\n            \r\n                        </VBox>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"4.0\" left=\"4.0\" right=\"4.0\" top=\"4.0\" />\r\n               </padding>\r\n            </HBox>\r\n         </children>\r\n         <stylesheets>\r\n            <URL value=\"@../../style/marketPlace/Buttons.css\" />\r\n            <URL value=\"@../../style/marketPlace/toolBarStyle.css\" />\r\n            <URL value=\"@../../style/marketPlace/scrollBarStlyle.css\" />\r\n         </stylesheets>\r\n      </VBox>\r\n      <VBox fx:id=\"secondInterface\" alignment=\"CENTER\" fillWidth=\"false\" prefHeight=\"552.0\" prefWidth=\"406.0\" />\r\n      <AnchorPane fx:id=\"loadingPage\" prefHeight=\"200.0\" prefWidth=\"200.0\" style=\"-fx-background-color: transparent;\">\r\n         <children>\r\n            <ImageView fitHeight=\"105.0\" fitWidth=\"126.0\" layoutX=\"457.0\" layoutY=\"283.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n               <image>\r\n                  <Image url=\"@../../img/marketPlace/grey-9026_256.gif\" />\r\n               </image>\r\n            </ImageView>\r\n         </children>\r\n      </AnchorPane>\r\n   </children>\r\n</StackPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/user/newAccountOmar.fxml b/src/main/resources/fxml/user/newAccountOmar.fxml
+--- a/src/main/resources/fxml/user/newAccountOmar.fxml	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/resources/fxml/user/newAccountOmar.fxml	(date 1711727569935)
+@@ -2,10 +2,12 @@
+ 
+ <?import java.net.URL?>
+ <?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
+ <?import javafx.scene.control.Label?>
+ <?import javafx.scene.control.Menu?>
+ <?import javafx.scene.control.MenuBar?>
+ <?import javafx.scene.control.ScrollPane?>
++<?import javafx.scene.control.TextField?>
+ <?import javafx.scene.image.Image?>
+ <?import javafx.scene.image.ImageView?>
+ <?import javafx.scene.layout.AnchorPane?>
+@@ -17,9 +19,9 @@
+ 
+ <StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.NewAccountController">
+    <children>
+-      <VBox fx:id="firstinterface" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: #D9D9D9;">
++      <VBox fx:id="firstinterface" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: transparent;">
+          <children>
+-            <HBox fx:id="toolBar" alignment="CENTER_LEFT" prefHeight="74.0" prefWidth="1040.0">
++            <HBox fx:id="toolBar" alignment="CENTER" prefHeight="74.0" prefWidth="1040.0" spacing="170.0">
+                <children>
+                   <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="534.0">
+                      <menus>
+@@ -70,13 +72,38 @@
+                         </Menu>
+                      </menus>
+                   </MenuBar>
++                  <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="39.0" prefWidth="286.0" style="-fx-background-color: transparent;">
++                     <children>
++                        <TextField fx:id="searchTextField" prefHeight="38.0" prefWidth="197.0" style="-fx-background-color: transparent;" />
++                        <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="34.0" style="-fx-background-color: transparent;">
++                           <graphic>
++                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
++                                 <image>
++                                    <Image url="@../../icons/marketPlace/loupe.png" />
++                                 </image>
++                              </ImageView>
++                           </graphic>
++                           <opaqueInsets>
++                              <Insets />
++                           </opaqueInsets>
++                        </Button>
++                        <ImageView fx:id="searchInfoBtn" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
++                           <image>
++                              <Image url="@../../../../../../javaFX - Copy/src/main/resources/namedIcons/info16w.png" />
++                           </image>
++                           <HBox.margin>
++                              <Insets left="10.0" />
++                           </HBox.margin>
++                        </ImageView>
++                     </children>
++                  </HBox>
+                </children>
++               <padding>
++                  <Insets right="22.0" />
++               </padding>
+                <VBox.margin>
+                   <Insets top="4.0" />
+                </VBox.margin>
+-               <padding>
+-                  <Insets left="20.0" />
+-               </padding>
+             </HBox>
+             <HBox prefHeight="608.0" prefWidth="1040.0" spacing="10.0">
+                <children>
+@@ -84,7 +111,7 @@
+                      <children>
+                         <HBox fx:id="ultraBigContainer" prefHeight="596.0" prefWidth="739.0" spacing="10.0">
+                            <children>
+-                              <VBox prefHeight="584.0" prefWidth="614.0">
++                              <VBox>
+                                  <children>
+                                     <HBox fx:id="" alignment="CENTER" prefHeight="94.0" prefWidth="597.0" style="-fx-background-radius: 20; -fx-border-color: 20;">
+                                        <children>
+@@ -97,20 +124,20 @@
+                                                 </ImageView>
+                                                 <VBox layoutX="108.0" layoutY="16.0" prefHeight="50.0" prefWidth="242.0">
+                                                    <children>
+-                                                      <Label fx:id="username" contentDisplay="CENTER" prefHeight="34.0" prefWidth="247.0" text="omar salhi">
++                                                      <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="247.0" text="omar salhi">
+                                                          <font>
+                                                             <Font name="System Bold Italic" size="18.0" />
+                                                          </font>
+                                                       </Label>
+-                                                      <Label fx:id="userEmail" prefHeight="34.0" prefWidth="247.0" text="omar.salhi@esprit.tn">
++                                                      <Label fx:id="userEmail" alignment="CENTER" prefHeight="34.0" prefWidth="247.0" text="omar.salhi@esprit.tn">
+                                                          <font>
+-                                                            <Font name="System Italic" size="18.0" />
++                                                            <Font name="System Bold Italic" size="18.0" />
+                                                          </font>
+                                                       </Label>
+                                                    </children>
+                                                 </VBox>
+                                                 <Line endX="-1.0000839233398438" endY="104.5999984741211" layoutX="87.0" layoutY="-27.0" startX="-1.0000929832458496" startY="35.73655700683594" AnchorPane.bottomAnchor="8.0" AnchorPane.topAnchor="8.0" />
+-                                                <ImageView fitHeight="70.0" fitWidth="77.0" layoutX="455.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
++                                                <ImageView fitHeight="70.0" fitWidth="77.0" layoutX="371.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                                                    <image>
+                                                       <Image url="@../../citizenHub/Sans%20titre-4.png" />
+                                                    </image>
+@@ -122,34 +149,28 @@
+                                           </AnchorPane>
+                                        </children>
+                                     </HBox>
+-                                    <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="488.0" prefWidth="590.0" style="-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" vbarPolicy="NEVER">
++                                    <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="488.0" prefWidth="590.0" vbarPolicy="NEVER">
+                                       <content>
+-                                          <VBox fx:id="blogSection" alignment="CENTER" fillWidth="false" prefHeight="486.0" prefWidth="608.0" />
++                                          <VBox fx:id="blogSection" alignment="CENTER" fillWidth="false" prefHeight="486.0" prefWidth="585.0" />
+                                       </content>
+                                     </ScrollPane>
+                                  </children>
+                               </VBox>
+-                              <VBox alignment="TOP_CENTER" prefHeight="563.0" prefWidth="372.0">
+-                                 <HBox.margin>
+-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+-                                 </HBox.margin>
+-                                 <children>
+-                                    <Label alignment="CENTER" prefHeight="35.0" prefWidth="403.0" text="My Reclamations">
+-                                       <font>
+-                                          <Font name="System Bold" size="18.0" />
+-                                       </font>
+-                                    </Label>
+-                                    <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" prefHeight="518.0" prefWidth="410.0" style="-fx-background: #D9D9D9; -fx-border-color: #D9D9D9;" stylesheets="@../../style/reclamation/styleReclamation.css" vbarPolicy="NEVER">
+-                                       <content>
+-                                          <VBox fx:id="reclamsSection" alignment="TOP_CENTER" prefHeight="514.0" prefWidth="367.0" spacing="10.0" style="-fx-background-radius: 15; -fx-background-color: #D9D9D9;" stylesheets="@../../style/reclamation/styleReclamation.css">
+-                                             <padding>
+-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+-                                             </padding>
+-                                          </VBox>
+-                                       </content>
+-                                    </ScrollPane>
+-                                 </children>
+-                              </VBox>
++                              <ScrollPane hbarPolicy="NEVER" maxWidth="410.0" prefHeight="518.0" prefWidth="410.0" styleClass="hbox" stylesheets="@../../style/reclamation/styleReclamation.css" vbarPolicy="NEVER">
++                                 <content>
++                                    <VBox fx:id="reclamsSection" alignment="TOP_CENTER" prefHeight="564.0" prefWidth="394.0" spacing="10.0" style="-fx-background-radius: 15;" stylesheets="@../../style/reclamation/styleReclamation.css">
++                                       <padding>
++                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
++                                       </padding>
++                                       <children>
++                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;" />
++                                       </children>
++                                    </VBox>
++                                 </content>
++                                 <HBox.margin>
++                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
++                                 </HBox.margin>
++                              </ScrollPane>
+                            </children>
+                         </HBox>
+                      </children>
+@@ -171,14 +192,5 @@
+          </stylesheets>
+       </VBox>
+       <VBox fx:id="secondInterface" alignment="CENTER" fillWidth="false" prefHeight="552.0" prefWidth="406.0" />
+-      <AnchorPane fx:id="loadingPage" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+-         <children>
+-            <ImageView fitHeight="105.0" fitWidth="126.0" layoutX="457.0" layoutY="283.0" pickOnBounds="true" preserveRatio="true">
+-               <image>
+-                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
+-               </image>
+-            </ImageView>
+-         </children>
+-      </AnchorPane>
+    </children>
+ </StackPane>
+Index: src/main/resources/fxml/reclamation/reclamationReponse.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.TextArea?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<StackPane alignment=\"TOP_LEFT\" prefHeight=\"510.0\" prefWidth=\"399.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"pidev.javafx.controller.reclamation.ReponseFormShowController\">\r\n    <children>\r\n        <HBox fx:id=\"formBox\" prefHeight=\"510.0\" prefWidth=\"566.0\" style=\"-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;\" stylesheets=\"@../../style/marketPlace/formLayout.css\">\r\n            <children>\r\n                <VBox fx:id=\"Box1\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"10.0\">\r\n                    <children>\r\n                  <ImageView fx:id=\"img\" fitHeight=\"165.0\" fitWidth=\"201.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"150.0\" />\r\n                     </VBox.margin></ImageView>\r\n                    </children>\r\n                    <padding>\r\n                        <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n                    </padding>\r\n                </VBox>\r\n            <VBox fx:id=\"Box11\" alignment=\"TOP_RIGHT\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"10.0\">\r\n               <children>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Privatekey\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox1112\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"privatekey1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Date\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"date1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Subject :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox11\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"Pname1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                     <VBox.margin>\r\n                        <Insets top=\"4.0\" />\r\n                     </VBox.margin>\r\n                  </VBox>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Descreption :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion1\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"226.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n               </padding>\r\n            </VBox>\r\n            <VBox fx:id=\"Box12\" alignment=\"TOP_CENTER\" prefHeight=\"506.0\" prefWidth=\"298.0\" spacing=\"10.0\">\r\n               <children>\r\n                  <HBox fx:id=\"box12\" alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Reponse :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"reponsetext\" minWidth=\"300.0\" prefHeight=\"386.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n               </padding>\r\n            </VBox>\r\n            </children>\r\n        </HBox>\r\n    </children>\r\n</StackPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/reclamation/reclamationReponse.fxml b/src/main/resources/fxml/reclamation/reclamationReponse.fxml
+--- a/src/main/resources/fxml/reclamation/reclamationReponse.fxml	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/resources/fxml/reclamation/reclamationReponse.fxml	(date 1711727571413)
+@@ -14,12 +14,9 @@
+     <children>
+         <HBox fx:id="formBox" prefHeight="510.0" prefWidth="566.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
+             <children>
+-                <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
++                <VBox fx:id="Box1" alignment="CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+                     <children>
+-                  <ImageView fx:id="img" fitHeight="165.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
+-                     <VBox.margin>
+-                        <Insets bottom="150.0" />
+-                     </VBox.margin></ImageView>
++                  <ImageView fx:id="img" fitHeight="165.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" />
+                     </children>
+                     <padding>
+                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+@@ -29,30 +26,6 @@
+                <children>
+                   <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                      <children>
+-                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Privatekey">
+-                           <font>
+-                              <Font name="System Italic" size="18.0" />
+-                           </font>
+-                        </Label>
+-                        <HBox fx:id="formBox1112" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+-                           <children>
+-                              <TextField fx:id="privatekey1" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+-                                 <font>
+-                                    <Font size="16.0" />
+-                                 </font>
+-                                 <HBox.margin>
+-                                    <Insets left="10.0" />
+-                                 </HBox.margin>
+-                              </TextField>
+-                           </children>
+-                        </HBox>
+-                     </children>
+-                     <padding>
+-                        <Insets left="10.0" right="10.0" />
+-                     </padding>
+-                  </VBox>
+-                  <VBox minHeight="68.0" minWidth="300.0" prefHeight="48.0" prefWidth="266.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+-                     <children>
+                         <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Date">
+                            <font>
+                               <Font name="System Italic" size="18.0" />
+@@ -60,7 +33,7 @@
+                         </Label>
+                         <HBox fx:id="formBox111" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                            <children>
+-                              <TextField fx:id="date1" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
++                              <TextField fx:id="date1" disable="true" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font>
+@@ -84,7 +57,7 @@
+                         </Label>
+                         <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                            <children>
+-                              <TextField fx:id="Pname1" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
++                              <TextField fx:id="Pname1" disable="true" editable="false" minWidth="239.0" prefHeight="38.0" prefWidth="322.0" promptText="Your Name here !!!" styleClass="text-field">
+                                  <font>
+                                     <Font size="16.0" />
+                                  </font>
+@@ -111,7 +84,7 @@
+                         </Label>
+                      </children>
+                   </HBox>
+-                  <TextArea fx:id="Pdescretion1" editable="false" minWidth="300.0" prefHeight="226.0" prefWidth="300.0" wrapText="true">
++                  <TextArea fx:id="Pdescretion1" disable="true" editable="false" minWidth="300.0" prefHeight="226.0" prefWidth="300.0" wrapText="true">
+                      <VBox.margin>
+                         <Insets />
+                      </VBox.margin>
+@@ -126,7 +99,7 @@
+             </VBox>
+             <VBox fx:id="Box12" alignment="TOP_CENTER" prefHeight="506.0" prefWidth="298.0" spacing="10.0">
+                <children>
+-                  <HBox fx:id="box12" alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
++                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
+                      <children>
+                         <Label prefHeight="36.0" prefWidth="160.0" text="Reponse :">
+                            <font>
+@@ -135,7 +108,7 @@
+                         </Label>
+                      </children>
+                   </HBox>
+-                  <TextArea fx:id="reponsetext" minWidth="300.0" prefHeight="386.0" prefWidth="300.0" wrapText="true">
++                  <TextArea fx:id="Reponse" minWidth="300.0" prefHeight="386.0" prefWidth="300.0" wrapText="true">
+                      <font>
+                         <Font size="16.0" />
+                      </font>
+Index: src/main/java/pidev/javafx/controller/reclamation/ReponseFormShowController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package pidev.javafx.controller.reclamation;\r\n\r\n\r\nimport javafx.fxml.FXML;\r\nimport javafx.fxml.Initializable;\r\nimport javafx.geometry.Insets;\r\nimport javafx.geometry.Pos;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.Label;\r\nimport javafx.scene.control.TextArea;\r\nimport javafx.scene.control.TextField;\r\nimport javafx.scene.image.Image;\r\nimport javafx.scene.image.ImageView;\r\nimport javafx.scene.input.MouseEvent;\r\nimport javafx.scene.layout.HBox;\r\nimport javafx.scene.layout.VBox;\r\nimport javafx.stage.Popup;\r\nimport javafx.stage.Stage;\r\nimport pidev.javafx.crud.reclamation.ServiceReponse;\r\nimport pidev.javafx.model.reclamation.Reclamation;\r\nimport pidev.javafx.model.reclamation.Reponse;\r\nimport pidev.javafx.tools.marketPlace.CustomMouseEvent;\r\nimport pidev.javafx.tools.marketPlace.EventBus;\r\nimport pidev.javafx.tools.marketPlace.MyTools;\r\n\r\nimport java.net.URL;\r\nimport java.util.ResourceBundle;\r\n\r\npublic class ReponseFormShowController implements Initializable {\r\n\r\n\r\n    @FXML\r\n    private VBox Box1;\r\n\r\n    @FXML\r\n    private TextArea Pdescretion1;\r\n\r\n    @FXML\r\n    private TextField Pname1;\r\n\r\n    @FXML\r\n    private TextField date1;\r\n\r\n    @FXML\r\n    private ImageView img;\r\n\r\n    @FXML\r\n    private TextArea reponsetext;\r\n\r\n    @FXML\r\n    private TextField privatekey1;\r\n    @FXML\r\n    private VBox Box12;\r\n\r\n\r\n    private HBox buttonsBox;\r\n    private boolean isAllInpulValid;\r\n    String formLayoutBeforRegexCheck;\r\n    String formLayoutAfterRegexCheck;\r\n    Reponse rec = new Reponse();\r\n     Reclamation recR = new Reclamation();\r\n\r\n\r\n    //private Predictor<String, Classifications> predictor;\r\n\r\n\r\n//    public void analyzeText() {\r\n//        String text = Pdescretion1.getText();\r\n//        Classifications classifications;\r\n//        try {\r\n//            classifications = predictor.predict(text);\r\n//            System.out.println(\"The sentiment of the text is: \" + classifications);\r\n//        } catch (Exception e) {\r\n//            e.printStackTrace();\r\n//        }\r\n//    }\r\n    @Override\r\n    public void initialize(URL location, ResourceBundle resources) {\r\n        formLayoutBeforRegexCheck=\"-fx-border-color:black;\"+\"-fx-border-width: 2;\" +\r\n                \"-fx-border-radius: 10;\" +\r\n                \"-fx-background-color: white;\" +\r\n                \"-fx-background-radius: 10\";\r\n\r\n        formLayoutAfterRegexCheck=\"-fx-border-width: 2;\" +\r\n                \"-fx-border-radius: 10;\" +\r\n                \"-fx-background-color: white;\" +\r\n                \"-fx-background-radius: 10\";\r\n\r\n        isAllInpulValid=false;\r\n\r\n        createFormBtns();\r\n        Box1.getChildren().add( buttonsBox );\r\n        EventBus.getInstance().subscribe(\"senddata\",this::first_fonction);\r\n        setRegEx();\r\n    }\r\n    private void setRegEx() {\r\n        Popup popup4Regex = MyTools.getInstance().createPopUp();\r\n\r\n        reponsetext.setOnKeyTyped(event -> {\r\n            isAllInpulValid = reponsetext.getText().matches(\"^[A-Za-z0-9 ]*$\");\r\n            String color = (isAllInpulValid) ? \"green\" : \"red\";\r\n            if (reponsetext.getText().isEmpty()) {\r\n                reponsetext.setStyle(\"\");\r\n                reponsetext.setStyle(formLayoutBeforRegexCheck);\r\n                isAllInpulValid = true;\r\n            } else {\r\n                reponsetext.setStyle(\"-fx-border-color: transparent transparent \" + color + \" transparent;\" +\r\n                        \"-fx-border-width:0 0 2 0;\" +\r\n                        \"-fx-border-radius: 0\");\r\n                reponsetext.setStyle(\"-fx-border-color:\" + color + \";\" +\r\n                        formLayoutAfterRegexCheck);\r\n            }\r\n            if ((!isAllInpulValid && !reponsetext.getText().isEmpty()))\r\n                reponsetext.setStyle(\"-fx-border-color:red;\" +\r\n                        formLayoutAfterRegexCheck);\r\n        });\r\n\r\n        reponsetext.setOnMouseEntered(event -> {\r\n            if (!isAllInpulValid && !reponsetext.getText().isEmpty()) {\r\n                ((Label) popup4Regex.getContent().get(0)).setText(\"ONLY CHARACTERS AND NUMBERS ARE ALLOWED\");\r\n                popup4Regex.getContent().get(0).setStyle(popup4Regex.getContent().get(0).getStyle() + \"-fx-background-color: #ed1c27;\");\r\n                popup4Regex.show(Stage.getWindows().get(0), event.getScreenX() + 40, event.getScreenY() - 40);\r\n            }\r\n        });\r\n\r\n        reponsetext.setOnMouseExited(event -> {\r\n//            if(isAllInpulValid[3])\r\n            popup4Regex.hide();\r\n        });\r\n    }\r\n    public void createFormBtns(){\r\n        Button addProd1= new Button();\r\n        Button clearProd = new Button();\r\n        Button cancel= new Button();\r\n        Button voice= new Button();\r\n\r\n        buttonsBox =new HBox();\r\n\r\n        addProd1.setPrefWidth( 50 );\r\n        clearProd.setPrefWidth( 50 );\r\n        cancel.setPrefWidth( 50 );\r\n        voice.setPrefWidth( 50 );\r\n\r\n        addProd1.setPrefHeight( 32 );\r\n        clearProd.setPrefHeight( 32 );\r\n        cancel.setPrefHeight( 32 );\r\n        voice.setPrefHeight( 32 );\r\n\r\n        Image  img1= new Image(String.valueOf( getClass().getResource( \"/icons/marketPlace/tab2.png\" ) ));\r\n        Image img2= new Image(String.valueOf( getClass().getResource( \"/icons/marketPlace/broom.png\" )));\r\n        Image img3= new Image(String.valueOf( getClass().getResource( \"/icons/marketPlace/paper.png\" )));\r\n        Image img4= new Image(String.valueOf( getClass().getResource( \"/icons/marketPlace/update16C.png\" )));\r\n\r\n        addProd1.setGraphic( new ImageView( img1 ));\r\n        clearProd.setGraphic( new ImageView( img2 ));\r\n        cancel.setGraphic( new ImageView( img3 ));\r\n        voice.setGraphic( new ImageView( img4 ));\r\n\r\n        addProd1.setOnMouseClicked( this::onAddClicked);\r\n        voice.setOnMouseClicked(this::voice);\r\n\r\n        cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( \"exitFormUser\",event ) );\r\n\r\n        clearProd.setOnMouseClicked(event -> {\r\n            reponsetext.setText(\"\");\r\n        });\r\n        buttonsBox.getChildren().addAll( addProd1,clearProd,cancel,voice );\r\n        buttonsBox.setSpacing( 20 );\r\n        buttonsBox.setAlignment( Pos.CENTER);\r\n        buttonsBox.setId( \"itemInfo\" );\r\n        buttonsBox.getStylesheets().add( String.valueOf( getClass().getResource( \"/style/marketPlace/Buttons.css\" ) ) );\r\n        buttonsBox.setPadding( new Insets( 0,0,10,0 ) );\r\n    }\r\n\r\n    public void onAddClicked(MouseEvent event) {\r\n        Reponse reponse =new Reponse(\r\n                0,\r\n                recR.getIdReclamation(),\r\n                reponsetext.getText()\r\n        );\r\n            ServiceReponse.getInstance().ajouter(reponse);\r\n    }\r\n    public void voice(MouseEvent event) {\r\n        String pythonOutput = CallPythonFromJava.run();\r\n        System.out.println(pythonOutput);\r\n        if (!\"Sorry, I did not get that\".equals(pythonOutput)) {\r\n            reponsetext.setText(pythonOutput);\r\n        }\r\n    }\r\n\r\n    void first_fonction( CustomMouseEvent<Reclamation> event ) {\r\n        recR =event.getEventData();\r\n        System.out.println(recR.getIdReclamation());\r\n        img.setImage( new Image( \"file:src/main/resources\"+recR.getImagePath(),70,70,true,true) );\r\n        privatekey1.setText(recR.getPrivateKey());\r\n        date1.setText(recR.getDate());\r\n        Pname1.setText(recR.getSubject());\r\n        Pdescretion1.setText(recR.getDescription());\r\n\r\n    }\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/pidev/javafx/controller/reclamation/ReponseFormShowController.java b/src/main/java/pidev/javafx/controller/reclamation/ReponseFormShowController.java
+--- a/src/main/java/pidev/javafx/controller/reclamation/ReponseFormShowController.java	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/java/pidev/javafx/controller/reclamation/ReponseFormShowController.java	(date 1711727571740)
+@@ -1,12 +1,14 @@
+ package pidev.javafx.controller.reclamation;
+ 
+-
++import com.itextpdf.text.Document;
++import com.itextpdf.text.DocumentException;
++import com.itextpdf.text.pdf.PdfWriter;
++import com.itextpdf.tool.xml.XMLWorkerHelper;
+ import javafx.fxml.FXML;
+ import javafx.fxml.Initializable;
+ import javafx.geometry.Insets;
+ import javafx.geometry.Pos;
+ import javafx.scene.control.Button;
+-import javafx.scene.control.Label;
+ import javafx.scene.control.TextArea;
+ import javafx.scene.control.TextField;
+ import javafx.scene.image.Image;
+@@ -14,18 +16,23 @@
+ import javafx.scene.input.MouseEvent;
+ import javafx.scene.layout.HBox;
+ import javafx.scene.layout.VBox;
+-import javafx.stage.Popup;
++import javafx.stage.FileChooser;
+ import javafx.stage.Stage;
+-import pidev.javafx.crud.reclamation.ServiceReponse;
++import pidev.javafx.crud.reclamation.ServiceReclamation;
+ import pidev.javafx.model.reclamation.Reclamation;
+-import pidev.javafx.model.reclamation.Reponse;
+ import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+ import pidev.javafx.tools.marketPlace.EventBus;
+-import pidev.javafx.tools.marketPlace.MyTools;
+ 
++import java.io.ByteArrayInputStream;
++import java.io.File;
++import java.io.FileOutputStream;
++import java.io.IOException;
+ import java.net.URL;
++import java.nio.file.Files;
++import java.nio.file.Paths;
+ import java.util.ResourceBundle;
+ 
++
+ public class ReponseFormShowController implements Initializable {
+ 
+ 
+@@ -44,36 +51,17 @@
+     @FXML
+     private ImageView img;
+ 
+-    @FXML
+-    private TextArea reponsetext;
+-
+     @FXML
+     private TextField privatekey1;
+-    @FXML
+-    private VBox Box12;
+-
+ 
+     private HBox buttonsBox;
+     private boolean isAllInpulValid;
+     String formLayoutBeforRegexCheck;
+     String formLayoutAfterRegexCheck;
+-    Reponse rec = new Reponse();
+-     Reclamation recR = new Reclamation();
++    Reclamation rec = new Reclamation();
+ 
+ 
+-    //private Predictor<String, Classifications> predictor;
+ 
+-
+-//    public void analyzeText() {
+-//        String text = Pdescretion1.getText();
+-//        Classifications classifications;
+-//        try {
+-//            classifications = predictor.predict(text);
+-//            System.out.println("The sentiment of the text is: " + classifications);
+-//        } catch (Exception e) {
+-//            e.printStackTrace();
+-//        }
+-//    }
+     @Override
+     public void initialize(URL location, ResourceBundle resources) {
+         formLayoutBeforRegexCheck="-fx-border-color:black;"+"-fx-border-width: 2;" +
+@@ -91,80 +79,36 @@
+         createFormBtns();
+         Box1.getChildren().add( buttonsBox );
+         EventBus.getInstance().subscribe("senddata",this::first_fonction);
+-        setRegEx();
+     }
+-    private void setRegEx() {
+-        Popup popup4Regex = MyTools.getInstance().createPopUp();
+-
+-        reponsetext.setOnKeyTyped(event -> {
+-            isAllInpulValid = reponsetext.getText().matches("^[A-Za-z0-9 ]*$");
+-            String color = (isAllInpulValid) ? "green" : "red";
+-            if (reponsetext.getText().isEmpty()) {
+-                reponsetext.setStyle("");
+-                reponsetext.setStyle(formLayoutBeforRegexCheck);
+-                isAllInpulValid = true;
+-            } else {
+-                reponsetext.setStyle("-fx-border-color: transparent transparent " + color + " transparent;" +
+-                        "-fx-border-width:0 0 2 0;" +
+-                        "-fx-border-radius: 0");
+-                reponsetext.setStyle("-fx-border-color:" + color + ";" +
+-                        formLayoutAfterRegexCheck);
+-            }
+-            if ((!isAllInpulValid && !reponsetext.getText().isEmpty()))
+-                reponsetext.setStyle("-fx-border-color:red;" +
+-                        formLayoutAfterRegexCheck);
+-        });
+ 
+-        reponsetext.setOnMouseEntered(event -> {
+-            if (!isAllInpulValid && !reponsetext.getText().isEmpty()) {
+-                ((Label) popup4Regex.getContent().get(0)).setText("ONLY CHARACTERS AND NUMBERS ARE ALLOWED");
+-                popup4Regex.getContent().get(0).setStyle(popup4Regex.getContent().get(0).getStyle() + "-fx-background-color: #ed1c27;");
+-                popup4Regex.show(Stage.getWindows().get(0), event.getScreenX() + 40, event.getScreenY() - 40);
+-            }
+-        });
+-
+-        reponsetext.setOnMouseExited(event -> {
+-//            if(isAllInpulValid[3])
+-            popup4Regex.hide();
+-        });
+-    }
+     public void createFormBtns(){
+-        Button addProd1= new Button();
++        Button addProd= new Button();
+         Button clearProd = new Button();
+         Button cancel= new Button();
+-        Button voice= new Button();
+ 
+         buttonsBox =new HBox();
+ 
+-        addProd1.setPrefWidth( 50 );
++        addProd.setPrefWidth( 50 );
+         clearProd.setPrefWidth( 50 );
+         cancel.setPrefWidth( 50 );
+-        voice.setPrefWidth( 50 );
+ 
+-        addProd1.setPrefHeight( 32 );
++        addProd.setPrefHeight( 32 );
+         clearProd.setPrefHeight( 32 );
+         cancel.setPrefHeight( 32 );
+-        voice.setPrefHeight( 32 );
+ 
+         Image  img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/tab2.png" ) ));
+         Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/broom.png" )));
+         Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/paper.png" )));
+-        Image img4= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/update16C.png" )));
+ 
+-        addProd1.setGraphic( new ImageView( img1 ));
++        addProd.setGraphic( new ImageView( img1 ));
+         clearProd.setGraphic( new ImageView( img2 ));
+         cancel.setGraphic( new ImageView( img3 ));
+-        voice.setGraphic( new ImageView( img4 ));
+ 
+-        addProd1.setOnMouseClicked( this::onAddClicked);
+-        voice.setOnMouseClicked(this::voice);
++        addProd.setOnMouseClicked( this::onAddClicked);
+ 
+         cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitFormUser",event ) );
+ 
+-        clearProd.setOnMouseClicked(event -> {
+-            reponsetext.setText("");
+-        });
+-        buttonsBox.getChildren().addAll( addProd1,clearProd,cancel,voice );
++        buttonsBox.getChildren().addAll( addProd,clearProd,cancel );
+         buttonsBox.setSpacing( 20 );
+         buttonsBox.setAlignment( Pos.CENTER);
+         buttonsBox.setId( "itemInfo" );
+@@ -172,31 +116,60 @@
+         buttonsBox.setPadding( new Insets( 0,0,10,0 ) );
+     }
+ 
++
++
+     public void onAddClicked(MouseEvent event) {
+-        Reponse reponse =new Reponse(
+-                0,
+-                recR.getIdReclamation(),
+-                reponsetext.getText()
+-        );
+-            ServiceReponse.getInstance().ajouter(reponse);
++            ServiceReclamation.getInstance().supprimer(rec.getIdReclamation());
+     }
+-    public void voice(MouseEvent event) {
+-        String pythonOutput = CallPythonFromJava.run();
+-        System.out.println(pythonOutput);
+-        if (!"Sorry, I did not get that".equals(pythonOutput)) {
+-            reponsetext.setText(pythonOutput);
+-        }
++    public void showFormReclamationReponse(MouseEvent event) {
++        EventBus.getInstance().publish("showReponse", event);
++        System.out.println(rec);
++        EventBus.getInstance().publish( "senddata", new CustomMouseEvent<Reclamation>(rec));
++
+     }
++
++
+ 
+     void first_fonction( CustomMouseEvent<Reclamation> event ) {
+-        recR =event.getEventData();
+-        System.out.println(recR.getIdReclamation());
+-        img.setImage( new Image( "file:src/main/resources"+recR.getImagePath(),70,70,true,true) );
+-        privatekey1.setText(recR.getPrivateKey());
+-        date1.setText(recR.getDate());
+-        Pname1.setText(recR.getSubject());
+-        Pdescretion1.setText(recR.getDescription());
+-
++        rec =event.getEventData();
++        img.setImage( new Image( "file:src/main/resources"+rec.getImagePath(),70,70,true,true) );
++        //privatekey1.setText(rec.getPrivateKey());
++        date1.setText(rec.getDate());
++        Pname1.setText(rec.getSubject());
++        Pdescretion1.setText(rec.getDescription());
++//        generatePdf(rec);
+     }
+ 
++
++    public static void generatePdf(Reclamation rec) {
++        // Create a FileChooser
++        FileChooser fileChooser = new FileChooser();
++        // Set extension filter for PDF files
++        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
++        fileChooser.getExtensionFilters().add(extFilter);
++        // Show save file dialog
++        File file = fileChooser.showSaveDialog(new Stage());
++
++        if (file != null) {
++            Document document = new Document();
++            try {
++                PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(file));
++                document.open();
++// Read HTML file
++                String html = new String(Files.readAllBytes(Paths.get("src/main/java/pidev/javafx/controller/reclamation/new-email.html")));
++// Replace placeholders in HTML
++                html = html.replace("KEY_VALUE", rec.getPrivateKey());
++                html = html.replace("DATE_VALUE", rec.getDate());
++                html = html.replace("NAME_VALUE", rec.getDescription());
++                html = html.replace("DESCRIPTION_VALUE", rec.getDescription());
++
++// Convert HTML to PDF
++                XMLWorkerHelper.getInstance().parseXHtml(writer, document, new ByteArrayInputStream(html.getBytes()));
++
++                document.close();
++            } catch (DocumentException | IOException e) {
++                throw new RuntimeException(e);
++            }
++        }
++    }
+ }
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+--- /dev/null	(date 1711727566510)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1711727566510)
+@@ -0,0 +1,10 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="DuplicatedCode" enabled="true" level="WEAK WARNING" enabled_by_default="true">
++      <Languages>
++        <language minSize="79" name="Java" />
++      </Languages>
++    </inspection_tool>
++  </profile>
++</component>
+\ No newline at end of file
+Index: src/main/resources/fxml/reclamation/reclamationFormShow.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.geometry.Insets?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.TextArea?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.HBox?>\r\n<?import javafx.scene.layout.StackPane?>\r\n<?import javafx.scene.layout.VBox?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<StackPane alignment=\"TOP_LEFT\" prefHeight=\"510.0\" prefWidth=\"399.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\" xmlns=\"http://javafx.com/javafx/21\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"pidev.javafx.controller.reclamation.ReclamationFormShowController\">\r\n    <children>\r\n        <HBox fx:id=\"formBox\" prefHeight=\"510.0\" prefWidth=\"566.0\" style=\"-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;\" stylesheets=\"@../../style/marketPlace/formLayout.css\">\r\n            <children>\r\n                <VBox fx:id=\"Box1\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"30.0\">\r\n                    <children>\r\n                  <ImageView fx:id=\"img\" fitHeight=\"240.0\" fitWidth=\"215.0\" pickOnBounds=\"true\" preserveRatio=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets bottom=\"70.0\" />\r\n                     </VBox.margin></ImageView>\r\n                    </children>\r\n                    <padding>\r\n                        <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n                    </padding>\r\n                </VBox>\r\n            <VBox fx:id=\"Box11\" alignment=\"BOTTOM_CENTER\" prefHeight=\"503.0\" prefWidth=\"384.0\" spacing=\"10.0\">\r\n               <children>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Private key\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox1111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"privatekey1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Privatekey\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Date\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox111\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"date1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </VBox>\r\n                  <VBox minHeight=\"68.0\" minWidth=\"300.0\" prefHeight=\"48.0\" prefWidth=\"266.0\" style=\"-fx-background-radius: 20; -fx-border-radius: 20;\">\r\n                     <children>\r\n                        <Label alignment=\"BOTTOM_LEFT\" prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Subject :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                        <HBox fx:id=\"formBox11\" maxWidth=\"332.0\" prefHeight=\"38.0\" prefWidth=\"361.0\">\r\n                           <children>\r\n                              <TextField fx:id=\"Pname1\" editable=\"false\" minWidth=\"239.0\" prefHeight=\"38.0\" prefWidth=\"322.0\" promptText=\"Your Name here !!!\" styleClass=\"text-field\">\r\n                                 <font>\r\n                                    <Font size=\"16.0\" />\r\n                                 </font>\r\n                                 <HBox.margin>\r\n                                    <Insets left=\"10.0\" />\r\n                                 </HBox.margin>\r\n                              </TextField>\r\n                           </children>\r\n                        </HBox>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                     <VBox.margin>\r\n                        <Insets top=\"4.0\" />\r\n                     </VBox.margin>\r\n                  </VBox>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Descreption :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion1\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"96.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <VBox.margin>\r\n                        <Insets />\r\n                     </VBox.margin>\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n                  <HBox alignment=\"CENTER_LEFT\" spacing=\"150.0\" stylesheets=\"@../../style/marketPlace/Buttons.css\">\r\n                     <children>\r\n                        <Label prefHeight=\"36.0\" prefWidth=\"160.0\" text=\"Reponse :\">\r\n                           <font>\r\n                              <Font name=\"System Italic\" size=\"18.0\" />\r\n                           </font>\r\n                        </Label>\r\n                     </children>\r\n                     <padding>\r\n                        <Insets left=\"10.0\" right=\"10.0\" />\r\n                     </padding>\r\n                  </HBox>\r\n                  <TextArea fx:id=\"Pdescretion11\" editable=\"false\" minWidth=\"300.0\" prefHeight=\"96.0\" prefWidth=\"300.0\" wrapText=\"true\">\r\n                     <font>\r\n                        <Font size=\"16.0\" />\r\n                     </font>\r\n                  </TextArea>\r\n               </children>\r\n               <padding>\r\n                  <Insets bottom=\"15.0\" left=\"15.0\" right=\"15.0\" top=\"15.0\" />\r\n               </padding>\r\n            </VBox>\r\n            </children>\r\n        </HBox>\r\n    </children>\r\n</StackPane>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/resources/fxml/reclamation/reclamationFormShow.fxml b/src/main/resources/fxml/reclamation/reclamationFormShow.fxml
+--- a/src/main/resources/fxml/reclamation/reclamationFormShow.fxml	(revision 0690b341d711dadce685ab539c10550bf920ef0a)
++++ b/src/main/resources/fxml/reclamation/reclamationFormShow.fxml	(date 1711727571128)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ 
+ <?import javafx.geometry.Insets?>
++<?import javafx.scene.control.Button?>
+ <?import javafx.scene.control.Label?>
+ <?import javafx.scene.control.TextArea?>
+ <?import javafx.scene.control.TextField?>
+@@ -20,6 +21,7 @@
+                      <VBox.margin>
+                         <Insets bottom="70.0" />
+                      </VBox.margin></ImageView>
++                  <Button mnemonicParsing="false" onMouseClicked="#showFormReclamationReponse" text="ajouter reponse" />
+                     </children>
+                     <padding>
+                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+@@ -117,27 +119,10 @@
+                         <Insets left="10.0" right="10.0" />
+                      </padding>
+                   </HBox>
+-                  <TextArea fx:id="Pdescretion1" editable="false" minWidth="300.0" prefHeight="96.0" prefWidth="300.0" wrapText="true">
++                  <TextArea fx:id="Pdescretion1" editable="false" minWidth="300.0" prefHeight="354.0" prefWidth="354.0" wrapText="true">
+                      <VBox.margin>
+                         <Insets />
+                      </VBox.margin>
+-                     <font>
+-                        <Font size="16.0" />
+-                     </font>
+-                  </TextArea>
+-                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
+-                     <children>
+-                        <Label prefHeight="36.0" prefWidth="160.0" text="Reponse :">
+-                           <font>
+-                              <Font name="System Italic" size="18.0" />
+-                           </font>
+-                        </Label>
+-                     </children>
+-                     <padding>
+-                        <Insets left="10.0" right="10.0" />
+-                     </padding>
+-                  </HBox>
+-                  <TextArea fx:id="Pdescretion11" editable="false" minWidth="300.0" prefHeight="96.0" prefWidth="300.0" wrapText="true">
+                      <font>
+                         <Font size="16.0" />
+                      </font>
