@@ -16,9 +16,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
+import pidev.javafx.tools.UserController;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
@@ -47,65 +47,28 @@ public class ItemController implements Initializable {
 
 
     private Bien bien;
-    private MyListener myListener;
     private HBox hbox;
     private int imageIndex;
 
 
-
-//    private static Timeline fiveSecondsWonder;
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        fiveSecondsWonder=new Timeline();
+
     }
 
-//    public static void stopTimeLine() {
-//        fiveSecondsWonder.stop();
-//    }
-//
-//    public static void startTimeLine() {
-//        TranslateTransition translateTransition=new TranslateTransition( Duration.seconds( 0.6 ), img);
-//
-//        translateTransition.setByX( -200 );
-//        animateImagesKeyFrame= new KeyFrame(Duration.seconds(5), event -> {
-//            System.out.println("This is called every 5 seconds on the UI thread");
-//            translateTransition.setByX( -200 );
-//            translateTransition.play();
-//            translateTransition.setOnFinished( event1 -> {
-//                img.setImage(new Image("file:src/main/resources"+bien.getImageSourceByIndex(imageIndex++)));
-//                translateTransition.setByX(200);
-//                translateTransition.play();
-//                translateTransition.setOnFinished( null );
-//                if(bien.getAllImagesSources().size()==imageIndex)
-//                    imageIndex=0;
-//            } );
-//        } );
-//        fiveSecondsWonder.getKeyFrames().add(animateImagesKeyFrame);
-//        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-//        fiveSecondsWonder.play();
-//    }
 
-    public void setData(Bien bien, MyListener myListener) {
+    public void setData(Bien bien) {
         this.imageIndex=1;
         this.bien = bien;
-        this.myListener = myListener;
         nameLabel.setText(bien.getName());
         priceLable.setText( "$"+bien.getPrice());
-        stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
+//        stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
         categoryLable.setText(bien.getCategorie().name());
         Image image = new Image("file:src/main/resources"+bien.getImgSource());
         img.setImage(image);
         hbox=createItemsBtns();
     }
-    public void setData(Bien bien) {
-        nameLabel.setText(bien.getName());
-        priceLable.setText( "$"+bien.getPrice());
-        stateLabel.setText((bien.getState())?"In Stock":"Out Of Stock");
-        categoryLable.setText(bien.getCategorie().name());
-        Image image = new Image("file:src/main/resources"+bien.getImgSource());
-        img.setImage(image);
-    }
+
 
     public void animateImages(Timeline fiveSecondsWonder,Bien bien) {
         if(bien.getAllImagesSources().size()>1) {
@@ -154,41 +117,41 @@ public class ItemController implements Initializable {
 
     public HBox createItemsBtns(){
         Button add2Card= new Button();
-        Button trade = new Button();
         Button info= new Button();
 
         HBox hbox=new HBox();
 
-        trade.setPrefWidth( 40 );
-        info.setPrefWidth( 40 );
-        add2Card.setPrefWidth( 40 );
+        info.setPrefWidth( 42 );
+        info.setMinHeight( 32 );
 
-        trade.setPrefHeight( 30 );
-        info.setPrefHeight( 30 );
-        add2Card.setPrefHeight( 30 );
-
-        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/buy.png")),28,28,true,true );
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/exchange.png")),28,28,true,true );
-        Image img3= new Image(String.valueOf( getClass().getResource("/namedIcons/interface.png")),28,28,true,true );
-
-        add2Card.setGraphic( new ImageView( img1 ));
-        trade.setGraphic( new ImageView( img2 ));
+        Image img3= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/information.png" )),24,24,true,true );
         info.setGraphic( new ImageView( img3 ));
 
+        info.setOnMouseClicked( event -> {
+            CustomMouseEvent<Product> customMouseEvent=new CustomMouseEvent<>( bien );
+            EventBus.getInstance().publish( "showAndSetItemInfo",customMouseEvent );
+        } );
 
-        add2Card.setOnMouseClicked( event -> {
-            CustomMouseEvent<Product> customEvent = new CustomMouseEvent<>(bien);
-            EventBus.getInstance().publish( "laodCheckOut",customEvent);
-        });
-        info.setOnMouseClicked( event -> myListener.onClickListener( bien ) );
+        if(UserController.getInstance().getCurrentUser().getId()!=bien.getIdUser()){
+            add2Card.setMinHeight( 32 );
+            add2Card.setPrefWidth( 42 );
+            Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/newBuy.png" )),24,24,true,true );
+            add2Card.setGraphic( new ImageView( img1 ));
+            add2Card.setOnMouseClicked( event -> {
+                CustomMouseEvent<Product> customEvent = new CustomMouseEvent<>(bien);
+                EventBus.getInstance().publish( "loadCheckout",customEvent);
+            });
+            hbox.getChildren().addAll( add2Card,info );
+        }
+        else
+            hbox.getChildren().add( info );
 
-        hbox.getChildren().addAll( add2Card,trade,info );
-        hbox.setSpacing( 10 );
+
+        hbox.setSpacing( 25 );
         hbox.setAlignment(Pos.CENTER);
         hbox.setId( "itemInfo" );
-        hbox.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
+        hbox.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/Buttons.css" ) ) );
         return hbox;
     }
-
 
 }

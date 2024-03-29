@@ -18,34 +18,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="653.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.helpfullBarController">
+<VBox fx:id="helpfullBarContainer" alignment="CENTER" prefHeight="400.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.helpfullBarController">
    <children>
-      <AnchorPane fx:id="animationAnchor" prefHeight="220.0" prefWidth="200.0" style="-fx-background-radius: 10;">
+      <AnchorPane fx:id="designAnchor" prefHeight="125.0" prefWidth="234.0" style="-fx-background-radius: 10;">
          <children>
-            <ImageView fx:id="animationImageView" fitHeight="158.0" fitWidth="188.0" layoutX="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.4000000000000057" AnchorPane.topAnchor="0.0">
+            <ImageView fx:id="animationImageView" fitHeight="92.0" fitWidth="107.0" layoutX="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                <image>
                   <Image url="@../../citizenHub/img1.png" />
-               </image></ImageView>
-         </children></AnchorPane>
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
       <StackPane prefHeight="542.0" prefWidth="234.0">
          <children>
             <VBox>
                <children>
-                  <AnchorPane fx:id="chart1" prefHeight="276.0" prefWidth="234.0">
-                     <children>
-                        <StackedBarChart fx:id="stachBarChart" layoutX="3.0" layoutY="2.0" prefHeight="230.0" prefWidth="230.0">
-                           <xAxis>
-                              <CategoryAxis tickLabelFill="#1b1a1a" />
-                           </xAxis>
-                           <yAxis>
-                              <NumberAxis prefHeight="200.0" prefWidth="40.0" side="LEFT" tickLabelFill="#181717" />
-                           </yAxis>
-                           <padding>
-                              <Insets left="-10.0" />
-                           </padding>
-                        </StackedBarChart>
-                     </children>
-                  </AnchorPane>
                   <AnchorPane fx:id="chart2" prefHeight="220.0" prefWidth="200.0">
                      <children>
                         <LineChart fx:id="lineChart" layoutX="1.0" layoutY="1.0" prefHeight="230.0" prefWidth="230.0" title="New Products/Day ">
@@ -61,16 +48,31 @@
                         </LineChart>
                      </children>
                   </AnchorPane>
+                  <AnchorPane fx:id="chart1" prefHeight="276.0" prefWidth="234.0">
+                     <children>
+                        <StackedBarChart fx:id="stachBarChart" layoutX="3.0" layoutY="2.0" prefHeight="230.0" prefWidth="230.0">
+                           <xAxis>
+                              <CategoryAxis tickLabelFill="#1b1a1a" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis prefHeight="200.0" prefWidth="40.0" side="LEFT" tickLabelFill="#181717" />
+                           </yAxis>
+                           <padding>
+                              <Insets left="-10.0" />
+                           </padding>
+                        </StackedBarChart>
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
-            <VBox fx:id="filterAnchorPane" alignment="CENTER" style="-fx-background-radius: 10; -fx-background-color: white; -fx-background-color: #fdc847;" stylesheets="@../../style/FilterStyle.css">
+            <VBox fx:id="filterAnchorPane" alignment="CENTER" prefHeight="461.0" prefWidth="234.0" style="-fx-background-radius: 10; -fx-background-color: white; -fx-background-color: #fdc847;" stylesheets="@../../style/marketPlace/FilterStyle.css">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="125.0" text="Products Filter" textAlignment="CENTER">
+                  <Label fx:id="filterTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="217.0" text="Products Filter" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets bottom="22.0" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                   </Label>
                   <Label contentDisplay="CENTER" prefHeight="35.0" prefWidth="290.0" text="Filter By Date">
@@ -135,7 +137,7 @@
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="234.0">
                      <children>
                         <Slider fx:id="minPriceSlider" />
-                        <Label fx:id="minPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="100dt" textAlignment="CENTER">
+                        <Label fx:id="minPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="0dt" textAlignment="CENTER">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
@@ -156,7 +158,7 @@
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="234.0">
                      <children>
                         <Slider fx:id="maxPriceSlider" />
-                        <Label fx:id="maxPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="100dt" textAlignment="CENTER">
+                        <Label fx:id="maxPriceL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="0dt" textAlignment="CENTER">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
@@ -186,7 +188,7 @@
                   <HBox alignment="CENTER" prefHeight="35.0" prefWidth="234.0">
                      <children>
                         <Slider fx:id="quantitySlider" />
-                        <Label fx:id="quantityL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="10" textAlignment="CENTER">
+                        <Label fx:id="quantityL" alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="85.0" text="0" textAlignment="CENTER">
                            <font>
                               <Font name="System Italic" size="14.0" />
                            </font>
@@ -196,10 +198,10 @@
                         <Insets left="8.0" />
                      </padding>
                   </HBox>
-                  <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="234.0" spacing="6.0" stylesheets="@../../style/Buttons.css">
+                  <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="234.0" spacing="6.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
-                        <Button mnemonicParsing="false" text="Cancel" />
-                        <Button mnemonicParsing="false" onMouseClicked="#onFilterClicked" text="Filter" />
+                        <Button mnemonicParsing="false" onMouseClicked="#onCancelFilterClicked" text="Cancel" />
+                        <Button fx:id="filterOrAddBtn" mnemonicParsing="false" onMouseClicked="#onFilterClicked" text="Filter" />
                      </children>
                      <VBox.margin>
                         <Insets right="6.0" />

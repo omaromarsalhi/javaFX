@@ -2,6 +2,7 @@ package pidev.javafx.crud.marketplace;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.model.Contrat.Contract;
 import pidev.javafx.model.Contrat.PaymentMethod;
 import pidev.javafx.model.MarketPlace.*;
@@ -27,9 +28,9 @@ public class CrudLocalWrapper{
         String id=(trasactionMode.equals("PURCHSED"))?"t.idBuyer":"t.idSeller";
         String sql = "SELECT * FROM transactions t JOIN products p ON t.idProd=p.idProd" +
                 " JOIN contracts c on t.idContract=c.idContract" +
-                " where "+id+" = ? ";
+                " where "+id+" = ? and isdeleted = 0";
 
-        connect = ConnectionDB.connectDb();
+        connect = ConnectionDB.getInstance().getCnx();
         ObservableList<LocalWrapper> wrapperList = FXCollections.observableArrayList();
         Product product=null;
         Transaction transaction=null;
@@ -50,7 +51,7 @@ public class CrudLocalWrapper{
                             "",
                             result.getFloat("price"),
                             result.getFloat("quantity"),
-                            result.getBoolean("state"),
+                            result.getString("state"),
                             result.getTimestamp("timestamp"),
                             Categorie.valueOf(result.getString("category")));
                     product.setAllImagesSources(CrudBien.getInstance().selectImagesById( product.getId() ) );

@@ -1,8 +1,11 @@
 package pidev.javafx.controller.marketPlace;
 
+import com.google.api.client.testing.util.MockSleeper;
 import javafx.animation.FadeTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,20 +16,25 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.util.Duration;
+import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.CustomReturnItem;
+import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.Executors;
 
 public class MarketController implements Initializable {
 
@@ -37,22 +45,6 @@ public class MarketController implements Initializable {
     @FXML
     private HBox mainHbox;
     @FXML
-    private VBox hepfullBar;
-    @FXML
-    private Button addBien;
-    @FXML
-    private Button exitBtn;
-    @FXML
-    private ImageView relativeImageVieur;
-    @FXML
-    private AnchorPane ImageAnchorPane;
-    @FXML
-    private Button leftArrow;
-    @FXML
-    private Button rightArrow;
-    @FXML
-    private Button exitImageBtn;
-    @FXML
     private Button searchBtn;
     @FXML
     private HBox searchHbox;
@@ -61,18 +53,22 @@ public class MarketController implements Initializable {
     @FXML
     private MenuBar menuBar;
     @FXML
-    private Menu filter;
+    private AnchorPane secondInterface;
+    @FXML
+    private HBox bigContainer;
+    @FXML
+    private StackPane marketStackPane;
 
-    private VBox vBox;
+
+
+    private VBox itemInfo;
+    private VBox hepfullBar;
     private VBox chatBox;
     private Timer animTimer;
     private Image image;
-    private MyListener myListener;
-    private MyListener MainWindowListener;
-    private Timeline fiveSecondsWonder;
     private String searchBarState;
     private int idProd4nextSelection;
-    private boolean isChatActivated;
+    private int currentNbrColumns;
 
 
 
@@ -80,33 +76,16 @@ public class MarketController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        fiveSecondsWonder=new Timeline();
-        isChatActivated=false;
-        vBox=null;
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
+        secondInterface.setVisible( false );
+
+        itemInfo=null;
         try {
-            VBox chatBox = fxmlLoader.load();
-            animateChanges(hepfullBar,chatBox);
+            itemInfo = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ));
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        try {
-            hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
-            chatBox = FXMLLoader.load(getClass().getResource( "/fxml/chat/chat.fxml" ));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-
-        showGridPane(CrudBien.getInstance().selectItems() );
         setMenueBar();
-
-        ImageAnchorPane.setVisible( false );
-        exitImageBtn.setOnAction( event -> {
-            ImageAnchorPane.setVisible( false );
-            grid.setOpacity( 1 );
-        } );
 
         searchBarState="closed";
         animTimer = new Timer();
@@ -114,47 +93,72 @@ public class MarketController implements Initializable {
         searchBtn.setStyle( "-fx-border-radius: 20;" +
                 "-fx-background-radius:20;" );
 
-        searchBtn.setOnMouseClicked(event -> animateSearchBar());
+        searchBtn.setOnMouseClicked(event ->{
+            if(searchBarState.equals("opened")&&!searchTextField.getText().isEmpty())
+                parseData(searchTextField.getText());
+            else
+                animateSearchBar();
+        } );
+
 
         EventBus.getInstance().subscribe( "loadChat",this::loadChat);
         EventBus.getInstance().subscribe( "filterProducts",this::onFilterClicked);
+        EventBus.getInstance().subscribe( "showAndSetItemInfo",this::loadAndSetItemInfo);
+        EventBus.getInstance().subscribe( "exitItemInfo",this::exitItemInfo);
+        EventBus.getInstance().subscribe( "exitFilter",this::onFilterExit);
+        EventBus.getInstance().subscribe( "loadCheckout",this::loadCheckout);
+        EventBus.getInstance().subscribe( "loadPayment",this::loadPayment);
+        EventBus.getInstance().subscribe( "exitCheckout",event -> marketStackPane.getChildren().remove( 2 ));
+
+        currentNbrColumns=4;
+        scroll.widthProperty().addListener( (observable, oldValue, newValue) -> {
+            grid.setMaxWidth((Double)newValue-25);
+        } );
+        loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
+    }
+
+
+    public void parseData(String data){
+        if(!data.isEmpty()){
+            loadingAllProductsThread( CrudBien.getInstance().searchItems("name", data ) ).start();
+        }
     }
 
 
 
-
+    public Thread loadingAllProductsThread(ObservableList<Bien> prods){
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                showGridPane(prods);
+                return null;
+            }
+        };
+        return new Thread(myTask);
+    }
 
     public void setMenueBar(){
-        var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/more.png"))));
-        var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
+        var allProducts=new MenuItem("All Products",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/more.png" ))));
+        var todayProducts=new MenuItem("Today's Products",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
         allProducts.setOnAction( event -> {
-            showGridPane(CrudBien.getInstance().selectItems() );
+            loadingAllProductsThread(CrudBien.getInstance().selectItems()).start();
         } );
+
+
         todayProducts.setOnAction( event -> {
-            showGridPane(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" ));
+            loadingAllProductsThread(CrudBien.getInstance().filterItems( LocalDate.now().format( DateTimeFormatter.ofPattern( "yyyy-MM-dd" ) ),"",-1,-1,-1,"" )).start();
         } );
 
-        menuBar.getMenus().get( 0 ).getItems().addAll(allProducts,todayProducts);
+        menuBar.getMenus().get(0).getItems().addAll(allProducts,todayProducts);
 
+        var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream( "/icons/marketPlace/database.png" ))));
+        menuBar.getMenus().get( 1 ).getItems().addAll(filterProd);
 
-        var allServices=new MenuItem("All Services",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var todayServices=new MenuItem("Today's Services",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        menuBar.getMenus().get( 1 ).getItems().addAll(allServices ,todayServices);
-
-
-        var filterProd=new MenuItem("Product",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        var filterService=new MenuItem("Service",new ImageView(new Image(getClass().getResourceAsStream("/namedIcons/database.png"))));
-        menuBar.getMenus().get( 2 ).getItems().addAll(filterProd ,filterService);
 
         filterProd.setOnAction( event -> {
+            loadFilter();
             EventBus.getInstance().publish( "filter",event );
-//            if(isChatActivated) {
-//                animateChanges( chatBox, hepfullBar );
-//                isChatActivated=false;
-//            }
         } );
-
-
     }
 
     public void animateSearchBar(){
@@ -203,6 +207,20 @@ public class MarketController implements Initializable {
         } );
     }
 
+    public void loadCheckout(CustomMouseEvent<Bien> customMouseEvent) {
+        HBox checkout=null;
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("/fxml/Contract/checkOut.fxml"));
+        try {
+            checkout = fxmlLoader.load();
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        CheckOutController checkOutController = fxmlLoader.getController();
+        checkOutController.setData(customMouseEvent.getEventData());
+        marketStackPane.getChildren().add(checkout);
+    }
+
 
 
     public void animateChanges(Node node1, Node node2){
@@ -223,112 +241,131 @@ public class MarketController implements Initializable {
 
 
     public void onFilterClicked(CustomMouseEvent<ObservableList<Bien>> customMouseEvent){
-        showGridPane(customMouseEvent.getEventData());
+        loadingAllProductsThread(customMouseEvent.getEventData()).start();
     }
+
+    public void loadFilter(){
+        try {
+            hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        bigContainer.getChildren().add(hepfullBar);
+        currentNbrColumns=3;
+        refreshGridPane();
+    }
+
+    public void onFilterExit(MouseEvent event){
+        bigContainer.getChildren().remove(hepfullBar);
+        currentNbrColumns=4;
+        refreshGridPane();
+    }
+
+
+    public void loadAndSetItemInfo(CustomMouseEvent<Product> customMouseEvent){
+        EventBus.getInstance().publish( "setItemInfoData", customMouseEvent);
+        mainHbox.setOpacity( 0.4 );
+        secondInterface.setVisible( true );
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().add(itemInfo );
+    }
+
+
+    public void exitItemInfo(MouseEvent event){
+        ((HBox)secondInterface.getChildren().get( 0 )).getChildren().clear();
+        mainHbox.setOpacity( 1 );
+        secondInterface.setVisible( false );
+    }
+
 
 
     public void showGridPane(ObservableList<Bien> biens){
-        grid.getChildren().clear();
-        if (biens.size() > 0) {
-            try {
-                hepfullBar = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/helpfullBar.fxml" ));
-                mainHbox.getChildren().add(hepfullBar);
-            } catch (IOException e) {
-                throw new RuntimeException( e );
-            }
-            myListener = new MyListener<Product>() {
-                @Override
-                public void onClickListener(Product arg){
-                    mainHbox.getChildren().remove(vBox);
-                    try {
-                        FXMLLoader fxmlLoader = new FXMLLoader();
-                        fxmlLoader.setLocation( getClass().getResource( "/fxml/marketPlace/itemInfo.fxml" ) );
-                        vBox = fxmlLoader.load();
-                        ItemInfoController itemInfoController = fxmlLoader.getController();
-                        myListener = new MyListener<Product>() {
-                            @Override
-                            public void exit() {
-                                animateChanges(vBox,hepfullBar);
-                            }
-                        };
-                        itemInfoController.setData( arg, myListener );
-                        animateChanges(hepfullBar,vBox);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-        }
+        Platform.runLater( () -> {
+            grid.getChildren().clear();
+            grid.setHgap( 20 );
+            grid.setVgap( 20 );
+        } );
         int column = 0;
         int row = 1;
-        try {
-            for (int i = 0; i < biens.size(); i++) {
+        var executer= Executors.newFixedThreadPool(6);
+        for (int i = 0; i < biens.size() ; i++) {
+            if (column == currentNbrColumns) {
+                column = 0;
+                row++;
+            }
+            executer.submit(loadingItemsThread(biens.get( i ),column++,row));
+        }
+        executer.shutdown();
+    }
+
+
+    private Task<CustomReturnItem>  loadingItemsThread(Product prod, int column, int row) {
+        Task<CustomReturnItem> myTask = new Task<>() {
+            @Override
+            protected CustomReturnItem call() throws Exception {
                 FXMLLoader fxmlLoader = new FXMLLoader();
                 fxmlLoader.setLocation(getClass().getResource("/fxml/marketPlace/item.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-
-                ItemController itemController = fxmlLoader.getController();
-                itemController.setData(biens.get(i),myListener);
-                itemController.setData(biens.get( i ));
-                itemController.animateImages(fiveSecondsWonder,biens.get( i ));
-                int finalI = i;
-                anchorPane.setOnMouseClicked( event -> showRelativeImages(biens.get( finalI )) );
-                getProduct(anchorPane,itemController);
-
-                if (column == 3) {
-                    column = 0;
-                    row++;
+                AnchorPane anchorPane = null;
+                try {
+                    anchorPane = fxmlLoader.load();
+                    anchorPane.setPrefWidth( anchorPane.getPrefWidth()+30 );
+                } catch (IOException e) {
+                    throw new RuntimeException( e );
                 }
-                grid.setHgap( 25 );
-                grid.setVgap( 25 );
-                grid.add(anchorPane, column++, row);
-
+                ItemController itemController = fxmlLoader.getController();
+                return new CustomReturnItem(anchorPane,itemController);
             }
-            grid.setPadding( new Insets( 0,0,40,0 ));
-        } catch (IOException e) {
-            e.printStackTrace();
+        };
+
+        myTask.setOnSucceeded(e ->
+            Platform.runLater( () -> {
+                Timeline fiveSecondsWonder=new Timeline();
+                myTask.getValue().getSecond().setData((Bien) prod);
+                myTask.getValue().getSecond().animateImages(fiveSecondsWonder,(Bien) prod);
+                getProduct(myTask.getValue().getFirst(),myTask.getValue().getSecond());
+                grid.add(myTask.getValue().getFirst(), column, row);
+                MyTools.getInstance().showAnimation( myTask.getValue().getFirst() );
+            } )
+        );
+        return myTask;
+    }
+
+    public void refreshGridPane(){
+        int columns=0;
+        int row=1;
+        for (Node node : grid.getChildren()){
+            if(columns==currentNbrColumns) {
+                columns = 0;
+                row++;
+            }
+            GridPane.setColumnIndex( node,columns++);
+            GridPane.setRowIndex(node, row );
         }
     }
 
-    public void showRelativeImages(Bien bien){
-        AtomicInteger imageIndex= new AtomicInteger(0);
-        ImageAnchorPane.setVisible( true );
-        grid.setOpacity( 0.2 );
-        relativeImageVieur.setImage(new Image("file:src/main/resources"+ bien.getImageSourceByIndex( imageIndex.get() ) ) );
-        rightArrow.setOnAction( event -> {
-            imageIndex.getAndIncrement();
-            if(imageIndex.get() >=bien.getAllImagesSources().size())
-                imageIndex.set( 0 );
-            relativeImageVieur.setImage( new Image( "file:src/main/resources"+bien.getImageSourceByIndex( imageIndex.get() ) ) );
-
-        } );
-        leftArrow.setOnAction( event -> {
-            imageIndex.getAndDecrement();
-            if(imageIndex.get() <=0)
-                imageIndex.set( bien.getAllImagesSources().size() - 1 );
-            relativeImageVieur.setImage( new Image("file:src/main/resources"+ bien.getImageSourceByIndex( imageIndex.get() ) ) );
-        } );
-    }
-
-
-    public void setMainWindowListener(MyListener listener){
-        MainWindowListener=listener;
-    }
 
     public void loadChat(MouseEvent event){
-//        FXMLLoader fxmlLoader = new FXMLLoader();
-//        fxmlLoader.setLocation(getClass().getResource("/fxml/chat/chat.fxml"));
-//        try {
-//            VBox chatBox = fxmlLoader.load();
-//            animateChanges(hepfullBar,chatBox);
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-//        ChatController chatController = fxmlLoader.getController();
-        isChatActivated=true;
-        animateChanges(vBox,chatBox);
+
     }
 
 
+    public void loadPayment(CustomMouseEvent<URL> customMouseEvent){
+        WebView webView = new WebView();
+        webView.setStyle( "-fx-border-radius: 20;" +
+                "-fx-background-radius: 20;" +
+                "-fx-padding: 20;" +
+                "-fx-background-color: red" );
 
+        WebEngine webEngine = webView.getEngine();
+        System.out.println(customMouseEvent.getEventData().toString());
+
+        webEngine.load(customMouseEvent.getEventData().toString());
+        webEngine.locationProperty().addListener( (observableValue, s, t1) -> {
+            if(t1.contains( "Paymentsuccessful21" )){
+                marketStackPane.getChildren().remove( webView );
+                marketStackPane.getChildren().remove( 2);
+                EventBus.getInstance().publish( "generatePDF",customMouseEvent);
+            }
+        } );
+        marketStackPane.getChildren().add(webView);
+    }
 }

@@ -2,6 +2,7 @@ package pidev.javafx.controller.marketPlace;
 
 
 import javafx.animation.*;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,18 +17,22 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.marketplace.CrudBien;
+import pidev.javafx.crud.marketplace.CrudFavorite;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Categorie;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
+import pidev.javafx.model.MarketPlace.Favorite;
+import pidev.javafx.tools.UserController;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class helpfullBarController implements Initializable {
 
     @FXML
-    private AnchorPane animationAnchor;
+    private AnchorPane designAnchor;
     @FXML
     private ImageView animationImageView;
     @FXML
@@ -58,6 +63,12 @@ public class helpfullBarController implements Initializable {
     private Slider minPriceSlider;
     @FXML
     private Slider maxPriceSlider;
+    @FXML
+    private Button filterOrAddBtn;
+    @FXML
+    private Label filterTitle;
+    @FXML
+    private VBox helpfullBarContainer;
 
 
     private Timeline fiveSecondsWonder;
@@ -72,23 +83,33 @@ public class helpfullBarController implements Initializable {
 //        animateImages();
         filterAnchorPane.setVisible( false );
         EventBus.getInstance().subscribe( "filter",this::showFilter);
-
+        EventBus.getInstance().subscribe( "showFavorite",this::showFavoriteFilter);
     }
 
 
+    public void showFavoriteFilter(ActionEvent event) {
+        helpfullBarContainer.getChildren().remove(designAnchor );
+        filterOrAddBtn.setText("Add");
+        filterTitle.setText( "Product Criteria" );
+        showFilter(event);
+    }
+
     public void showFilter(ActionEvent event){
+        String result=CrudBien.getInstance().selectMaxValues4Filter();
+        System.out.println(result);
+        String[] parts=result.split( "_" );
         filterAnchorPane.setVisible( true );
         minPriceSlider.setMin( 0 );
-        minPriceSlider.setMax(2000 );
-        minPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> minPriceL.setText(Integer.toString(observable.getValue().intValue() )+" Dt" ));
+        minPriceSlider.setMax( Float.parseFloat( parts[0]  ) );
+        minPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> minPriceL.setText(Float.toString(observable.getValue().intValue() )+" Dt" ));
 
         maxPriceSlider.setMin( 0 );
-        maxPriceSlider.setMax(2000 );
-        maxPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> maxPriceL.setText(Integer.toString(observable.getValue().intValue() )+" Dt" ));
+        maxPriceSlider.setMax(Float.parseFloat( parts[0]  ) );
+        maxPriceSlider.valueProperty().addListener( (observable, oldValue, newValue) -> maxPriceL.setText(Float.toString(observable.getValue().intValue() )+" Dt" ));
 
 
         quantitySlider.setMin( 0 );
-        quantitySlider.setMax(20 );
+        quantitySlider.setMax(Float.parseFloat( parts[1]  ) );
         quantitySlider.valueProperty().addListener( (observable, oldValue, newValue) -> quantityL.setText(Integer.toString(observable.getValue().intValue() )));
 
         categoryChoice.getItems().add("ALL");
@@ -96,32 +117,68 @@ public class helpfullBarController implements Initializable {
         for(Categorie cat:Categorie.values())
             categoryChoice.getItems().add(cat.toString());
     }
+
+
     @FXML
     public void onFilterClicked(MouseEvent event){
-        String fromDateResult=(fromDate.getValue()==null)?"":fromDate.getValue().toString();
-        String toDateResult=(toDate.getValue()==null)?"":toDate.getValue().toString();
-        int minPriceSliderResult=(int)minPriceSlider.getValue();
-        int maxPriceSliderResult=(int)maxPriceSlider.getValue();
-        int quantitySliderResult=(int)quantitySlider.getValue();
-        String categoryChoiceResult=categoryChoice.getValue();
+        String fromDateResult = (fromDate.getValue() == null) ? "" : fromDate.getValue().toString();
+        String toDateResult = (toDate.getValue() == null) ? "" : toDate.getValue().toString();
+        int minPriceSliderResult = (int) minPriceSlider.getValue();
+        int maxPriceSliderResult = (int) maxPriceSlider.getValue();
+        int quantitySliderResult = (int) quantitySlider.getValue();
+        String categoryChoiceResult = categoryChoice.getValue();
 
-        if(minPriceSliderResult==0)
-            minPriceSliderResult=-1;
-        if(maxPriceSliderResult==0)
-            maxPriceSliderResult=-1;
-        if(quantitySliderResult==0)
-            quantitySliderResult=-1;
+        if (minPriceSliderResult == 0)
+            minPriceSliderResult = -1;
+        if (maxPriceSliderResult == 0)
+            maxPriceSliderResult = -1;
+        if (quantitySliderResult == 0)
+            quantitySliderResult = -1;
 
-        var list= CrudBien.getInstance().filterItems(fromDateResult,toDateResult, minPriceSliderResult,maxPriceSliderResult,quantitySliderResult,categoryChoiceResult );
-        CustomMouseEvent<ObservableList<Bien>>  customMouseEvent=new CustomMouseEvent<>(list);
-        EventBus.getInstance().publish( "filterProducts",customMouseEvent);
-        System.out.println(list.size());
+        if(filterOrAddBtn.getText().equals("Add" )){
+            String specifications="";
+            specifications+=(fromDateResult.isEmpty())?LocalDate.now():fromDateResult;
+            specifications+="__";
+            specifications+=toDateResult;
+            specifications+="__";
+            specifications+=minPriceSliderResult;
+            specifications+="__";
+            specifications+=maxPriceSliderResult;
+            specifications+="__";
+            specifications+=quantitySliderResult;
+            specifications+="__";
+            specifications+=categoryChoiceResult;
+
+            Favorite favorite=new Favorite(0, UserController.getInstance().getCurrentUser().getId(),specifications);
+            CrudFavorite.getInstance().addItem(favorite);
+            favorite.setIdFavorite( CrudFavorite.getInstance().selectIdLastItem());
+            EventBus.getInstance().publish( "add2Grid",new CustomMouseEvent<>( FXCollections.observableArrayList(favorite)));
+        }
+        else {
+            var list = CrudBien.getInstance().filterItems( fromDateResult, toDateResult, minPriceSliderResult, maxPriceSliderResult, quantitySliderResult, categoryChoiceResult );
+            CustomMouseEvent<ObservableList<Bien>> customMouseEvent = new CustomMouseEvent<>( list );
+            EventBus.getInstance().publish( "filterProducts", customMouseEvent );
+        }
+    }
+
+
+    @FXML
+    public void onCancelFilterClicked(MouseEvent event){
+        if(filterOrAddBtn.getText().equals("Add" )){
+            fromDate.setValue( null );
+            toDate.setValue( null );
+            minPriceSlider.setValue( 0 );
+            maxPriceSlider.setValue( 0 );
+            quantitySlider.setValue( 0 );
+            categoryChoice.setValue("ALL");
+        }
+        else
+            EventBus.getInstance().publish( "exitFilter",event );
     }
 
 
     public void animateImages(){
         animationImageView.setImage( new Image( "file:src/main/resources/newanim/"+imageIndex+".gif",animationImageView.getFitWidth(), animationImageView.getFitHeight(),true,true) );
-
 //        RotateTransition rotateTransition = new RotateTransition(Duration.seconds(3), animationImageView);
 //        rotateTransition.setByAngle(360); // Rotate by 360 degrees
 //        rotateTransition.setCycleCount( Animation.INDEFINITE); // Continuous rotation
@@ -161,7 +218,7 @@ public class helpfullBarController implements Initializable {
         serie.getData().add(new XYChart.Data("Su", 13 ));
 
         lineChart.getData().addAll(serie);
-        lineChart.getStylesheets().add( String.valueOf( getClass().getResource("/style/lineChartStyle.css") ) );
+        lineChart.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/lineChartStyle.css" ) ) );
 
 
         stachBarChart.getYAxis().setLabel("value in $");
@@ -198,7 +255,7 @@ public class helpfullBarController implements Initializable {
 
 
         stachBarChart.getData().addAll(selled,purshased,traded);
-        stachBarChart.getStylesheets().add( String.valueOf( getClass().getResource("/style/lineChartStyle.css") ) );
+        stachBarChart.getStylesheets().add( String.valueOf( getClass().getResource( "/style/marketPlace/lineChartStyle.css" ) ) );
 
     }
 

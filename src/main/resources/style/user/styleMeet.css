@@ -1,0 +1,26 @@
+/* Style du DatePicker */
+.date-picker-popup {
+    -fx-background-color: white; /* Couleur de fond de la popup */
+}
+
+/* Style du calendrier */
+.calendar {
+    -fx-background-color: white; /* Couleur de fond du calendrier */
+    -fx-padding: 10px; /* Espacement intérieur du calendrier */
+}
+
+/* Style des cellules de date désactivées */
+.calendar .day-cell:disabled {
+    -fx-background-color: #eeeeee; /* Couleur de fond des cellules de date désactivées */
+}
+
+/* Style au survol des cellules de date */
+.calendar .day-cell:hover {
+    -fx-background-color: #f0f0f0; /* Couleur de fond au survol des cellules de date */
+}
+
+/* Style des cellules de date sélectionnées */
+.calendar .day-cell:selected {
+    -fx-background-color: #007bff; /* Couleur de fond des cellules de date sélectionnées */
+    -fx-text-fill: white; /* Couleur du texte des cellules de date sélectionnées */
+}

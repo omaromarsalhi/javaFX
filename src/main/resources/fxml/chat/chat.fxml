@@ -19,8 +19,8 @@
 
 <VBox fx:id="itemDeatails" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefHeight="632.0" prefWidth="250.0" style="-fx-background-color: #f4f4f4;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.chat.ChatController">
     <stylesheets>
-        <URL value="@../../style/Buttons.css" />
-        <URL value="@../../style/chatStyle.css" />
+        <URL value="@../../style/marketPlace/Buttons.css" />
+        <URL value="@../../style/marketPlace/chatStyle.css" />
     </stylesheets>
    <children>
       <AnchorPane prefHeight="174.0" prefWidth="242.0">
@@ -33,13 +33,13 @@
          </children></AnchorPane>
       <StackPane fx:id="chatStackPane">
          <children>
-            <VBox fx:id="chat" stylesheets="@../../style/scrollBarStlyle.css">
+            <VBox fx:id="chat" stylesheets="@../../style/marketPlace/scrollBarStlyle.css">
                <children>
                   <HBox fx:id="userBox" alignment="CENTER_LEFT" prefHeight="43.0" prefWidth="249.0">
                      <children>
                         <ImageView fitHeight="51.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../img/latifa.png" />
+                              <Image url="@../../img/marketPlace/latifa.png" />
                            </image>
                         </ImageView>
                         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="40.0" prefWidth="166.0" text="Latefa  Ben Zaied">
@@ -48,7 +48,7 @@
                            </font></Label>
                         <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../namedIcons/button.png" />
+                              <Image url="@../../icons/marketPlace/button.png" />
                            </image>
                         </ImageView>
                      </children>
@@ -56,7 +56,7 @@
                         <Insets left="8.0" />
                      </padding>
                   </HBox>
-                  <ScrollPane hbarPolicy="NEVER" prefHeight="361.0" prefWidth="232.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
+                  <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="361.0" prefWidth="232.0" style="-fx-background-color: transparent;" vbarPolicy="NEVER">
                      <content>
                         <VBox fx:id="chatContainer" alignment="BOTTOM_CENTER" prefHeight="354.0" prefWidth="238.0" spacing="6.0" style="-fx-background-color: transparent;">
                            <padding>
@@ -74,7 +74,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="6.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../namedIcons/threeDots.png" />
+                                    <Image url="@../../icons/marketPlace/threeDots.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -83,7 +83,7 @@
                            <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../../namedIcons/image.png" />
+                                    <Image url="@../../icons/marketPlace/image.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -95,7 +95,7 @@
                                  <graphic>
                                     <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../namedIcons/direct.png" />
+                                          <Image url="@../../icons/marketPlace/direct.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -104,7 +104,7 @@
                                  <graphic>
                                     <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
-                                          <Image url="@../../namedIcons/broom24.png" />
+                                          <Image url="@../../icons/marketPlace/broom24.png" />
                                        </image>
                                     </ImageView>
                                  </graphic>
@@ -223,7 +223,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../namedIcons/threeDots.png" />
+                              <Image url="@../../icons/marketPlace/threeDots.png" />
                            </image>
                         </ImageView>
                      </graphic>

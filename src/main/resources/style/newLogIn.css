@@ -1,0 +1,58 @@
+#yellowSide{
+    -fx-background-radius: 0 10 10 0;
+    -fx-border-radius: 0 10 10 0;
+    -fx-background-color:  #fdc847;
+}
+
+
+.text-field{
+    -fx-border-color: transparent transparent #494949 transparent;
+    -fx-background-color: transparent transparent #131313 transparent;/* Couleur de la bordure */
+    -fx-border-width: 1px; /* Largeur de la bordure */
+    /*-fx-border-radius: 9px; !* Rayon des coins de la bordure *!*/
+    -fx-padding: 5px; /* Espacement interne */
+    -fx-font-size: 14px; /* Taille de police */
+    -fx-background-radius: 9px;
+    -fx-text-fill: white;
+}
+
+
+#btn{
+    -fx-border-width: 1px;
+    -fx-border-color: #20749C  ;
+    /*-fx-text-fill: #000000;*/
+    -fx-background-color:#20749C;
+    -fx-font-size: 15px;
+    /*-fx-padding: 5px 5px;*/
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+
+}
+
+#btn2{
+    -fx-border-width: 1px;
+    /*-fx-border-color: black  ;*/
+    -fx-text-fill: #050505;
+    -fx-background-color: #20749C;
+    -fx-font-size: 15px;
+    /*-fx-padding: 5px 5px;*/
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+#btn2:hover{
+
+    -fx-border-width: 1px;
+    /*-fx-text-fill: #fdc847;*/
+    -fx-background-color: #20749C;
+    -fx-font-size: 15px;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow( gaussian , rgba(30, 30, 30, 0.6), 10, 0.5 , 0 , 2 );
+}
+
+#layoutUpdateEmail{
+    -fx-background-image: url('../citizenHub/Sans titre-5.png');
+    /*-fx-background-size: cover;*/
+    /*-fx-background-repeat: no-repeat;*/
+}
+

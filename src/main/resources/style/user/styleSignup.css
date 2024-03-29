@@ -1,0 +1,70 @@
+.custom-vbox .button {
+    -fx-background-color: #F1F1F124;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-fill-width:  85;
+    -fx-border-radius: 5px;
+}
+#btnsignup{
+    -fx-background-color: #20749C;
+   /*-fx-alignment: center;
+    -fx-alignment: center;*/
+}
+.passwordd{
+
+    -fx-background-color: #f2f2f2; /* Couleur de fond */
+    -fx-border-color: #ccc; /* Couleur de la bordure */
+    -fx-border-radius: 5px; /* Rayon des coins de la bordure */
+    -fx-prompt-text-fill: #999; /* Couleur du texte de l'invite */
+    -fx-font-size: 14px; /* Taille de la police */
+    -fx-padding: 5px; /* Remplissage intérieur */
+}
+.confirmpass{
+
+    -fx-background-color: #F1F1F124;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-fill-width:  85;
+    -fx-border-radius: 5px;
+}
+.split-pane-divider {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+.alert {
+      -fx-background-color: #232323; /* Couleur de fond */
+    -fx-border-color: #3d3d3d; /* Couleur de la bordure */
+    -fx-fill-width: 40;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-font-size: 13;
+    -fx-text-fill: #171718;
+
+
+
+ }
+.alert .button {
+    -fx-background-color: transparent transparent #20749C transparent ;
+    -fx-text-fill: #fff;
+    -fx-border-color: transparent transparent #20749C transparent ;
+    -fx-cursor: hand;
+}
+
+
+
+.alert .dialog-pane {
+     -fx-background-color: transparent; /* Fond transparent */
+}
+.alert .header-panel {
+    -fx-background-color: #525252; /* Couleur de fond de l'en-tête */
+}
+
+
+
+.alert .dialog-pane .icon {
+    -fx-background-image: url('../img/gmail.png');
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: left;
+    -fx-background-size: 24px;
+}

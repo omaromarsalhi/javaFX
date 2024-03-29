@@ -1,0 +1,47 @@
+.dialog-pane {
+    -fx-background-color: #333;
+    -fx-border-color: #444;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.button-bar .button {
+    -fx-background-color: #666;
+    -fx-text-fill: white;
+    -fx-border-radius: 15;
+    -fx-background-radius: 15;
+}
+
+.button-bar {
+    -fx-button-order: 000;
+    -fx-alignment: center;
+}
+
+.label {
+    -fx-text-fill: white;
+    -fx-wrap-text: true;
+    -fx-alignment: center;
+}
+
+.header-panel .header {
+    -fx-alignment: center;
+}
+
+.header-panel {
+    -fx-background-color: transparent;
+}
+
+.content-panel {
+    -fx-background-color: transparent;
+    -fx-alignment: center;
+}
+
+/* Cacher l'icône par défaut */
+.alert > .dialog-pane > .header-panel > .container {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.alert .icon {
+    -fx-opacity: 0;
+}

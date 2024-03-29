@@ -5,4 +5,6 @@ public enum Categorie {
     REAL_ESTATE,
     FOOD,
     SPORT,
+    VEHICLE,
+    FURNITURE
 }

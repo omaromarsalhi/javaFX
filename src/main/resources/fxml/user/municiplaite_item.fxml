@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="vbox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="163.0" spacing="8.0" style="-fx-background-color: #6C757D; -fx-background-radius: 20; -fx-border-radius: 20;" styleClass="sex" stylesheets="@../../style/user/StylelisteUsers.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.Municipalite.municipaliteitemController">
+   <children>
+      <ImageView fitHeight="78.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../img/userImg/municipalite.jpg" />
+         </image>
+      </ImageView>
+      <VBox alignment="TOP_CENTER" prefHeight="37.0" prefWidth="110.0" spacing="2.0">
+         <children>
+            <Label fx:id="label1" alignment="CENTER" prefHeight="18.0" prefWidth="110.0" text="Label">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="label2" alignment="CENTER" prefHeight="18.0" prefWidth="112.0" text="Label">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</VBox>

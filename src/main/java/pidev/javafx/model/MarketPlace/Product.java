@@ -14,7 +14,7 @@ public class Product {
     private String imgSource;
     private Float price;
     private Float quantity;
-    private Boolean state;
+    private String state;
     private Timestamp timestamp;
     private ImageView image;
     private String type;
@@ -23,7 +23,7 @@ public class Product {
 
     public Product() {}
 
-    public Product(int id, int idUser, String name, String descreption, String imgSource, Float price, Float quantity, Boolean state, Timestamp timestamp, String type) {
+    public Product(int id, int idUser, String name, String descreption, String imgSource, Float price, Float quantity, String state, Timestamp timestamp, String type) {
         this.id = id;
         this.idUser = idUser;
         this.name = name;
@@ -47,6 +47,12 @@ public class Product {
 
     public void setAllImagesSources(List<String> allImagesSources) {
         this.allImagesSources = allImagesSources;
+    }
+    public void deleteFromImagesSources(int index) {
+        this.allImagesSources.remove( index );
+    }
+    public void addFromImagesSources(String path) {
+        this.allImagesSources.add( path );
     }
 
     public int getId() {
@@ -93,11 +99,11 @@ public class Product {
         this.quantity = quantity;
     }
 
-    public Boolean getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(String state) {
         this.state = state;
     }
 
@@ -132,8 +138,21 @@ public class Product {
         this.type = type;
     }
 
-
-
-
-
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", idUser=" + idUser +
+                ", name='" + name + '\'' +
+                ", descreption='" + descreption + '\'' +
+                ", imgSource='" + imgSource + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", state='" + state + '\'' +
+                ", timestamp=" + timestamp +
+                ", image=" + image +
+                ", type='" + type + '\'' +
+                ", allImagesSources=" + allImagesSources +
+                '}';
+    }
 }

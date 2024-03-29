@@ -1,0 +1,323 @@
+.hbox {
+    -fx-background-color: #2f4f4f;
+    -fx-padding: 15;
+    -fx-spacing: 10;
+}
+
+.anchor-pane {
+    -fx-background-color: #F1F1F1;
+
+}
+
+.pane {
+    -fx-background-color: #D9D9D9;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+}
+
+.SearchBar {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: #474749;
+}
+.FormInputs{
+    -fx-border-radius: 5px;
+    -fx-border-color: #494949;
+    -fx-border-width: 1px;
+    -fx-background-color: transparent;
+
+
+}
+.Image-View{
+    -fx-border-radius: 50%; /* Set to 50% to create a circular shape */
+    -fx-background-radius: 50%; /* Additional property for background */
+    -fx-background-color: #bb2020;
+}
+.TableView {
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-border-color: #474749;
+}
+
+
+
+
+.TableView .column-header-background {
+    -fx-alignment:center;
+
+    -fx-background-color: #333;
+    -fx-border-color: transparent;
+}
+
+
+
+.TableView .column-header,
+.TableView .filler,
+.TableView .column-header-background {
+    -fx-alignment: center;
+    -fx-font-size: 25px;
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 0.5px;
+}
+
+.ListeTrnsports{
+    -fx-background-color: #303030;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+
+}
+
+.body_pane  {
+    -fx-background-radius: 10 10 10 10;
+    -fx-background-color: #f9f9fb; /* Set the background color */
+    -fx-border-color: #d1d0d0;
+}
+.header_pane  {
+    -fx-background-radius: 10 10 0 0;
+    -fx-background-color: #d1d0d0; /* Set the background color */
+    -fx-border-color: transparent;
+}
+
+
+.ListeTrnsportInside{
+    -fx-background-color: #ffffff;
+}
+
+/*.TableView .table-row-cell:odd {*/
+/*    -fx-font-size: 20px;*/
+/*    -fx-background-color: transparent;*/
+/*    -fx-border-color: transparent;*/
+/*    -fx-text-fill: #000000;*/
+
+/*    -fx-border-width: 0.5px;*/
+/*    -fx-font-family: "Souliyo Unicode", sans-serif;*/
+/*    -fx-background-radius: 20px;*/
+/*    -fx-border-radius: 10;*/
+/* }*/
+
+/*.TableView .table-row-cell {*/
+
+
+/*    -fx-font-family: "Souliyo Unicode", sans-serif;*/
+/*    -fx-background-color: #C8C8C8;*/
+/*    -fx-font-size: 20px;*/
+/*    -fx-text-fill: #000000;*/
+/*    -fx-border-radius: 20px;*/
+/*    -fx-border: transparent;*/
+/*    -fx-background-radius: 10;*/
+
+/*}*/
+.rounded-image {
+    -fx-background-radius: 10; /* Adjust the corner radius as needed */
+}
+
+.roundedPane {
+    -fx-background-radius: 50%;
+    -fx-background-insets: 0 0 0 0, 0 0 0 0, 0 0 0 0, 0 0 0 0;
+    -fx-border-radius: 50%;
+    -fx-border-color: grey;
+    -fx-border-width: 2;
+}
+.TableView .table-row-cell {
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-font-size: 20px;
+    -fx-text-fill: #000000;
+    -fx-background-color: #C8C8C8;
+    -fx-border-radius: 20px;
+    -fx-background-radius: 10;
+ }
+
+.TableView .table-row-cell:odd {
+    -fx-background-color: transparent;
+}
+
+
+.TableView .table-row-cell:selected {
+
+
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-background-color: #ffce1a;
+    -fx-font-size: 20px;
+    -fx-text-fill: #000000;
+    -fx-border-radius: 20px;
+    -fx-border: transparent;
+    -fx-background-radius: 10;
+
+}
+
+.TableView .table-cell{
+    -fx-alignment:center;
+    -fx-border-color: transparent;
+
+}
+
+
+.Spinner{
+
+    -fx-background-color: transparent;
+    -fx-border-radius: 15;
+}
+.Button_abonnement {
+    -fx-background-color: transparent;
+}
+
+.rounded-image {
+    -fx-background-radius: 200px;
+}
+
+.Button_ajouter {
+    -fx-background-color: #20749C;
+    -fx-border-radius: 15px;
+    -fx-border-color: transparent;
+}
+.paney{
+    -fx-background-color: #20749C;
+    -fx-border-width: 2px;
+    -fx-background-radius: 10px;
+}
+.dialog{
+    -fx-background-color: #ffce1b;
+    -fx-border-radius: 19px;
+}
+.form{
+    -fx-background-color: #ffffff;
+    -fx-border-radius: 19px;
+    -fx-background-radius: 19px;
+}
+
+
+.stat-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+
+.stat-bar {
+    -fx-pref-width: 200px;
+    -fx-pref-height: 20px;
+    -fx-accent: green;
+    -fx-background-color: black;
+}
+#yourButton {
+    -fx-background-color: transparent;
+}
+
+#yourButton:pressed {
+    -fx-background-color: transparent;
+}
+
+#yourImageView {
+    -fx-image: url('../../img_transport/circul_button1.png');
+}
+
+#yourButton:selected #yourImageView {
+    -fx-image: url('../../img_transport/circul_button.png'); /* Provide the correct path for the pressed state image */
+}
+
+#btnImageview {
+    -fx-image: url('../../img_transport/DOWN.png');
+}
+#Dropdownbtn:selected #btnImageview {
+
+    -fx-image: url('../../img_transport/UP.png');
+}
+#Dropdownbtn{
+
+    -fx-background-color: transparent;
+}
+
+
+/* styles.css */
+
+/* styles.css */
+
+.scroll-pane1{
+    -fx-background-color: transparent;
+}
+.scroll-pane1 .scroll-bar:vertical {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane1 .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane1 .scroll-bar .thumb {
+    -fx-background-color: #d8ab25;
+    -fx-background-radius: 10px;
+}
+
+.scroll-pane1 .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+#btn:hover #btnImageview1{
+    -fx-image: url('../../img_transport/Untitled-2.png');
+
+}
+#btn #btnImageview1{
+    -fx-image: url('../../img_transport/Untitled-1.png');
+
+}
+#btn #ArriveImageView{
+    -fx-image: url('../../img_transport/arrive.png');
+}
+
+#btn:hover #ArriveImageView{
+    -fx-image: url('../../img_transport/arrive1.png');
+}
+
+#btn:hover #DepartImageView{
+    -fx-image: url('../../img_transport/depart1.png');
+
+}
+#btn #DepartImageView{
+    -fx-image: url('../../img_transport/depart.png');
+}
+
+#btn #StationImageView{
+    -fx-image: url('../../img_transport/station.png');
+}
+#btn:hover #StationImageView{
+    -fx-image: url('../../img_transport/station1.png');
+}
+/* styles.css */
+.rounded-image {
+    -fx-background-radius: 50%; /* Set the corner radius (50% for a circle) */
+    -fx-border-radius: 50%;
+    -fx-border-color: #000; /* Optional: Add a border */
+    -fx-border-width: 2px;
+}
+
+
+/* styles.css */
+
+/*.list-view {*/
+/*    -fx-background-color: #f4f4f4;*/
+/*    -fx-padding: 10px;*/
+/*}*/
+
+/*.list-view .list-cell {*/
+/*    -fx-background-color: #ffffff;*/
+/*    -fx-padding: 10px;*/
+/*    -fx-border-radius: 5px;*/
+/*    -fx-border-color: #dddddd;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-cursor: hand;*/
+/*    -fx-transition: background-color 0.3s;*/
+/*}*/
+
+/*.list-view .list-cell:hover {*/
+/*    -fx-background-color: #e0e0e0;*/
+/*    -fx-transform: scale(2.2); !* Add scaling effect on hover *!*/
+/*}*/
+
+
+
+#mainanchor{
+    -fx-background-color: #333;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+}

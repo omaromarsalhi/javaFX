@@ -2,8 +2,7 @@ package pidev.javafx.controller.marketPlace;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -13,40 +12,38 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import pidev.javafx.crud.marketplace.CrudBien;
-import pidev.javafx.tools.CustomMouseEvent;
-import pidev.javafx.tools.EventBus;
-import pidev.javafx.tools.MyListener;
+import pidev.javafx.crud.user.ServiceUser;
+import pidev.javafx.model.user.User;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.model.MarketPlace.Bien;
 import pidev.javafx.model.MarketPlace.Product;
 
 import java.io.File;
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class ItemInfoController {
+public class ItemInfoController implements Initializable {
 
     @FXML
     private Label categoryLable;
-
     @FXML
     private Button exit;
-
     @FXML
     private VBox itemDeatails;
-
+    @FXML
+    private VBox btnBox;
     @FXML
     private TextArea itemDesc;
-
     @FXML
     private ImageView itemImage;
-
     @FXML
     private Label priceLable;
-
     @FXML
     private Label quantityLable;
-
     @FXML
     private Label stateLabel;
-
     @FXML
     private ImageView userImage;
     @FXML
@@ -54,51 +51,85 @@ public class ItemInfoController {
     @FXML
     private Label userName;
     @FXML
-    private HBox userInfo;
-    @FXML
     private Button openChatBtn;
+    @FXML
+    private Button leftArrow;
+    @FXML
+    private Button rightArrow;
+    @FXML
+    private Button exitImageBtn;
 
 
-
-    private MyListener myListener;
     private Product product;
     private HBox infoTemplateBtn;
+    private String whereAmI;
 
-    public void setData(Product product,MyListener myListener) {
-        this.product=product;
-        this.myListener=myListener;
-        userName.setText("Omar Salhi");
-        prodName.setText( product.getName() );
-        itemImage.setImage(new Image("file:src/main/resources"+product.getImgSource()));
-        itemDesc.setText( "qsfdgoauiehrtgpbea ufhgae ouifehg dfvb ae rhtgqfvhbj aert qfvhuaerçtg" );
-        priceLable.setText( Float.toString(product.getPrice()) );
-        quantityLable.setText(Float.toString(product.getQuantity())   );
-        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        EventBus.getInstance().subscribe( "setItemInfoData",this::setData );
+        EventBus.getInstance().subscribe( "setItemInfoData4LocalUser",this::setDataForLocalUser );
+
     }
 
-    public void setDataForLocalUser(Product product, double width) {
-        itemDeatails.getChildren().remove(exit);
-        itemDeatails.getChildren().remove(userInfo);
-        itemDeatails.setPrefHeight( itemDeatails.getPrefHeight()-100 );
-        this.product=product;
-        prodName.setStyle( "-fx-font-size: 20;" );
-        prodName.setText( product.getName().toUpperCase() );
 
-        itemImage.setFitWidth( width );
-        if(!product.getImgSource().isEmpty())
-            itemImage.setImage(new Image("file:src/main/resources"+product.getImgSource(),width,width-20,false,false));
+    public void setData(CustomMouseEvent<Product> customMouseEvent) {
+        whereAmI="show4AllUsers";
+        this.product=customMouseEvent.getEventData();
+        var service=new ServiceUser();
+        User user=service.getUserById( customMouseEvent.getEventData().getIdUser() );
+        userName.setText(user.getFirstname()+" "+user.getLastname());
+        prodName.setText( product.getName().toUpperCase() );
+        itemImage.setImage(new Image("file:src/main/resources"+product.getImgSource()));
         itemDesc.setText( product.getDescreption() );
         priceLable.setText( Float.toString(product.getPrice()) );
         quantityLable.setText(Float.toString(product.getQuantity())   );
-        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
-        if(infoTemplateBtn==null) {
-            createUpdateAndDeleteBtns();
-            itemDeatails.getChildren().add( infoTemplateBtn );
-        }
+        userImage.setImage(new Image("file:src/main/resources"+user.getPhotos()));
+//        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
+        scroollImages();
+    }
+
+
+    public void scroollImages(){
+        AtomicInteger imageIndex= new AtomicInteger(0);
+        itemImage.setImage(new Image("file:src/main/resources"+ product.getImageSourceByIndex( imageIndex.get() ) ) );
+        rightArrow.setOnAction( event -> {
+            imageIndex.getAndIncrement();
+            if(imageIndex.get() >=product.getAllImagesSources().size())
+                imageIndex.set( 0 );
+            itemImage.setImage( new Image( "file:src/main/resources"+product.getImageSourceByIndex( imageIndex.get() ) ) );
+        } );
+        leftArrow.setOnAction( event -> {
+            imageIndex.getAndDecrement();
+            if(imageIndex.get() <=0)
+                imageIndex.set( product.getAllImagesSources().size() - 1 );
+            itemImage.setImage( new Image("file:src/main/resources"+ product.getImageSourceByIndex( imageIndex.get() ) ) );
+        } );
+
+        exitImageBtn.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitItemInfo",event));
+    }
+
+
+    public void setDataForLocalUser(CustomMouseEvent<Product> customMouseEvent) {
+        whereAmI="show4TheOwner";
+        this.product=customMouseEvent.getEventData();
+        userName.setText("Omar Salhi");
+        prodName.setText( product.getName().toUpperCase() );
+        itemImage.setImage(new Image("file:src/main/resources"+product.getImgSource()));
+        itemDesc.setText( product.getDescreption() );
+        priceLable.setText( Float.toString(product.getPrice()) );
+        quantityLable.setText(Float.toString(product.getQuantity())   );
+//        stateLabel.setText((product.getState())?"In Stock":"Out Of Stock");
+        scroollImages();
+
+        createUpdateAndDeleteBtns();
+        exitImageBtn.setOnMouseClicked( event ->  {
+            EventBus.getInstance().publish( "onExitForm",event );
+        } );
     }
 
     public void createUpdateAndDeleteBtns(){
-        infoTemplateBtn=new HBox();
 
         Button update= new Button();
         Button delete = new Button();
@@ -109,40 +140,43 @@ public class ItemInfoController {
         update.setPrefHeight( 32 );
         delete.setPrefHeight( 32 );
 
-        Image img1= new Image(String.valueOf( getClass().getResource("/namedIcons/refresh.png") ));
-        Image img2= new Image(String.valueOf( getClass().getResource("/namedIcons/delete.png")));
+        Image img1= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/sync24.png" ) ),24,24,true,true);
+        Image img2= new Image(String.valueOf( getClass().getResource( "/icons/marketPlace/delete24c.png" )),24,24,true,true);
 
         update.setGraphic( new ImageView( img1 ));
         delete.setGraphic( new ImageView( img2 ));
 
-        update.setOnAction( event -> {
+        update.setOnMouseClicked( event -> {
             CustomMouseEvent<Bien> customMouseEvent=new CustomMouseEvent<>((Bien) product);
             EventBus.getInstance().publish( "updateProd",customMouseEvent);
         } );
-        delete.setOnAction( event -> {
+
+        delete.setOnMouseClicked( event -> {
             CustomMouseEvent<Bien> customMouseEvent=new CustomMouseEvent<>((Bien) product);
             CrudBien.getInstance().deleteItem( product.getId());
             for(String path :product.getAllImagesSources())
                 new File("src/main/resources"+path).delete();
+
             EventBus.getInstance().publish( "refreshTableOnDelete",customMouseEvent);
+//            onExitBtnClicked(event);
         } );
 
+        btnBox.getChildren().add(3, update );
+        btnBox.getChildren().add(4, delete );
+    }
 
-        infoTemplateBtn.getChildren().addAll( update,delete );
-        infoTemplateBtn.setSpacing( 20 );
-        infoTemplateBtn.setAlignment( Pos.CENTER);
-        infoTemplateBtn.setId( "itemInfo" );
-        infoTemplateBtn.getStylesheets().add( String.valueOf( getClass().getResource("/style/Buttons.css") ) );
-        infoTemplateBtn.setPadding( new Insets( 20,0,0,0 ) );
+    public void onExitBtnClicked(MouseEvent event){
+//        if(whereAmI.equals("show4TheOwner"))
+            EventBus.getInstance().publish( "onExitForm",event );
+//        else
+//            EventBus.getInstance().publish( "showHelfullBar",event );
     }
 
     @FXML
-    public void onExitBtnClicked(ActionEvent event){
-       myListener.exit();
+    public void onOpenChatBtnClicked(ActionEvent event){
+        var service=new ServiceUser();
+        EventBus.getInstance().publish( "showChat",new CustomMouseEvent<User>( service.getUserById( product.getIdUser() )));
     }
 
-    @FXML
-    public void onOpenChatBtnClicked(MouseEvent event){
-        EventBus.getInstance().publish( "loadChat",event);
-    }
+
 }

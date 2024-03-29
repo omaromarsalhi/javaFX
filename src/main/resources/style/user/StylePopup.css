@@ -1,0 +1,29 @@
+.popup-style .button:hover{
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 2px;
+-fx-background-radius: 11px;
+    -fx-border-radius: 11px;
+
+}
+/*.popup-style .button{
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-border-color: #4CAF50;
+    -fx-border-width: 2px;
+    -fx-background-radius: 11px;
+    -fx-border-radius: 11px;
+
+}*/
+.popup-style {
+     -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+    -fx-background-radius: 11px;
+    -fx-border-radius: 11px;
+}
+
+

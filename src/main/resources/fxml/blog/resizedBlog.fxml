@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+    <VBox fx:id="postsContainer" alignment="TOP_CENTER" fillWidth="false" prefHeight="668.0" prefWidth="585.0" spacing="15.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.blog.BlogController">
+        <children>
+            <VBox fx:id="vboxStatutBlog" alignment="CENTER" fillWidth="false" prefHeight="324.0" prefWidth="468.0" spacing="15.0" styleClass="post-background" stylesheets="@../../Style/blog/Blog.css">
+                <children>
+                    <HBox alignment="CENTER" prefHeight="61.0" prefWidth="740.0" spacing="10.0">
+                        <children>
+                            <ImageView fx:id="ProfileImg" fitHeight="42.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" />
+                            <TextArea fx:id="captionText" minHeight="49.0" prefHeight="53.0" prefWidth="325.0" promptText="Exprimer vous !" style="-fx-background-color: #F0F2F5; -fx-background-radius: 10;" styleClass="text-area" stylesheets="@../../Style/blog/Blog.css" wrapText="true">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </TextArea>
+                        </children>
+                        <VBox.margin>
+                            <Insets />
+                        </VBox.margin>
+                        <padding>
+                            <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                        </padding>
+                    </HBox>
+                    <VBox alignment="CENTER" prefWidth="740.0" spacing="5.0">
+                        <children>
+                            <HBox alignment="CENTER" prefWidth="720.0" spacing="15.0">
+                                <VBox.margin>
+                                    <Insets right="22.0" />
+                                </VBox.margin>
+                                <children>
+                                    <ImageView fx:id="leftArrow" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#leftArrowClicked" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+                                        <image>
+                                            <Image url="@../../icons/blogIcons/left-arrow.png" />
+                                        </image>
+                                    </ImageView>
+                                    <ImageView fx:id="postPreviewImg" fitHeight="150.0" fitWidth="327.0" pickOnBounds="true" preserveRatio="true" />
+                                    <ImageView fx:id="rightArrow" fitHeight="15.0" fitWidth="15.0" onMouseClicked="#rightArrowClicked" pickOnBounds="true" preserveRatio="true" styleClass="removeImg">
+                                        <image>
+                                            <Image url="@../../icons/blogIcons/right-arrow.png" />
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </HBox>
+                            <Label fx:id="enlverImgBtn" alignment="CENTER" onMouseClicked="#enleverImgBtnClicked" prefHeight="18.0" prefWidth="102.0" styleClass="removeImg" text="Enlever les images" textFill="#7b7b7b">
+                                <VBox.margin>
+                                    <Insets right="22.0" />
+                                </VBox.margin>
+                            </Label>
+                        </children>
+                    </VBox>
+                    <HBox alignment="CENTER" prefHeight="40.0" prefWidth="740.0" spacing="80.0">
+                        <children>
+                            <Button fx:id="addImgBtn" minWidth="138.0" mnemonicParsing="false" onMouseClicked="#onAddImgBtnClicked" prefHeight="40.0" prefWidth="138.0" styleClass="addImgBtn" text="Ajouter une Photo">
+                                <graphic>
+                                    <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@../../icons/blogIcons/addImg.png" />
+                                        </image>
+                                    </ImageView>
+                                </graphic>
+                            </Button>
+                            <Button fx:id="publierBtn" mnemonicParsing="false" onMouseClicked="#onPublierClicked" prefHeight="34.0" prefWidth="101.0" styleClass="publierBtn" text="Publier" textFill="#fafafa" />
+                        </children>
+                        <padding>
+                            <Insets right="35.0" />
+                        </padding>
+                    </HBox>
+                </children>
+                <VBox.margin>
+                    <Insets />
+                </VBox.margin>
+                <padding>
+                    <Insets bottom="10.0" top="10.0" />
+                </padding>
+            </VBox>
+        </children>
+        <opaqueInsets>
+            <Insets />
+        </opaqueInsets>
+        <padding>
+            <Insets top="15.0" />
+        </padding>
+    </VBox>

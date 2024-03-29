@@ -1,0 +1,24 @@
+.AnchorPane {
+    -fx-background-radius: 11;
+    -fx-border-radius: 11;
+    -fx-background-color: #171718;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+.text-area .scroll-pane .content {
+    -fx-background-color: transparent;
+}
+
+.ModifierBtn {
+    -fx-background-color: rgb(32, 116, 156);
+    -fx-background-radius: 5px;
+}
+
+.removeImg {
+    -fx-cursor: hand;
+}
