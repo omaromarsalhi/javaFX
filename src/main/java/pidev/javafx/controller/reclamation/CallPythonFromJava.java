@@ -10,13 +10,14 @@ public class CallPythonFromJava {
     public static String run()  {
         String pythonScriptPath = "src/main/java/pidev/javafx/python/reco.py";
 
-        ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath, "voice");
+        ProcessBuilder processBuilder = new ProcessBuilder("C:/Users/khali/anaconda3/python.exe", pythonScriptPath, "voice");
         processBuilder.redirectErrorStream(true);
         Process process = null;
         try {
             process = processBuilder.start();
         } catch (IOException e) {
             throw new RuntimeException( e );
+
         }
 
         // Read the output from the Python script
