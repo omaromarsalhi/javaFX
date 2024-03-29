@@ -1,0 +1,31 @@
+.split-pane-divider {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+.Vbox-details .text-field{
+    -fx-background-color: #D9D9D9; /* Couleur de fond */
+    -fx-border-color: #494949; /* Couleur de la bordure */
+
+    -fx-border-radius: 10px; /* Rayon des coins de la bordure */
+
+    -fx-font-size: 15px; /* Taille de la police */
+}
+
+
+
+.Vbox-details .text-field:focused {
+    -fx-border-color: #007bff;
+    -fx-border-width: 2px;
+}
+#fermer{
+
+    -fx-background-color:#20749C;
+    -fx-border-radius: 20px ;
+    -fx-border-width: 1px;
+    -fx-text-fill:#E7E7E7;
+    -fx-font-size: 12px;
+
+}
+.root {
+    -fx-border-radius: 10px ;
+}

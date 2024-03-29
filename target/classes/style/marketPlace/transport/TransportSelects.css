@@ -1,0 +1,21 @@
+
+
+
+.list-cell {
+    -fx-font-family: "Souliyo Unicode", sans-serif;
+    -fx-font-size: 15px;
+    -fx-text-fill: #494949;
+    -fx-padding: 5px; /* Optional: Adjust padding as needed */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 10;
+}
+
+/*.list-cell:odd {*/
+/*    -fx-background-color: #C8C8C8; !* Background color for odd cells *!*/
+/*    -fx-border-radius: 5px;*/
+/*    -fx-background-radius: 10;*/
+/*}*/
+
+.list-view .list-cell:selected {
+    -fx-background-color: #ffce1a; /* Background color for selected cells */
+}

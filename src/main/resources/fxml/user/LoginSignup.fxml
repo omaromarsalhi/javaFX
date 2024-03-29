@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.login.NewLogInController">
+   <children>
+      <AnchorPane fx:id="firstLayout" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="700.0" style="-fx-background-color: #171718; -fx-background-radius: 10; -fx-border-color: 10;" stylesheets="@../../style/newLogIn.css">
+         <children>
+            <AnchorPane fx:id="yellowSide" layoutX="400.0" prefHeight="450.0" prefWidth="300.0">
+               <children>
+                  <ImageView fitHeight="183.0" fitWidth="292.0" layoutX="4.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/userImg/gif.png" />
+                     </image>
+                  </ImageView>
+                  <Button id="btn2" fx:id="signupBtn" layoutX="108.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Sign up" textFill="#eae4e4" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" />
+                  <Button id="btn2" fx:id="signinBtn" layoutX="107.0" layoutY="352.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Sign in" textFill="#eae4e4" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" />
+               </children>
+            </AnchorPane>
+            <StackPane fx:id="blackSide" prefHeight="450.0" prefWidth="400.0">
+               <children>
+                  <AnchorPane fx:id="layoutSignup" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="238.0" layoutX="81.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0">
+                           <image>
+                              <Image url="@../../img/userImg/logo.png" />
+                           </image>
+                        </ImageView>
+                        <VBox fx:id="vboxSignup" alignment="CENTER" layoutX="105.0" layoutY="99.0" prefHeight="252.0" prefWidth="215.0" spacing="10.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0" AnchorPane.topAnchor="99.0">
+                           <children>
+                              <TextField id="textField1" fx:id="firstname" prefHeight="40.0" prefWidth="182.0" promptText="FIRSTA NAME">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField id="textField1" fx:id="emailSignUp" prefHeight="40.0" prefWidth="182.0" promptText="E-MAIL">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField id="textField1" fx:id="adresse" prefHeight="40.0" prefWidth="182.0" promptText="ADDRESS">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField id="textField1" fx:id="passwordSignUp" prefHeight="40.0" prefWidth="182.0" promptText="PASSWORD">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <Button id="btn" fx:id="signup" layoutX="120.0" layoutY="352.0" mnemonicParsing="false" onAction="#signUp" prefHeight="34.0" prefWidth="160.0" text="sign up" AnchorPane.bottomAnchor="65.0" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.79999999999995" />
+                        <HBox alignment="CENTER" layoutX="120.0" layoutY="401.0" prefHeight="34.0" prefWidth="160.0" spacing="10.0" stylesheets="@../../style/marketPlace/Buttons.css" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0">
+                           <children>
+                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-background-radius: 50; -fx-border-radius: 50;">
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../icons/userIcons/status24C.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="googleSignup" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signupWithGoogle" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-background-radius: 50; -fx-border-radius: 50;">
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../icons/userIcons/google-symbol24C.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="layoutSignin" prefHeight="302.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="238.0" layoutX="81.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0">
+                           <image>
+                              <Image url="@../../img/userImg/logo.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="TOP_CENTER" layoutX="91.2" layoutY="155.2" prefHeight="196.0" prefWidth="218.0" spacing="10.0" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="91.0" AnchorPane.topAnchor="155.0">
+                           <children>
+                              <TextField id="textField1" fx:id="email" prefHeight="40.0" prefWidth="182.0" promptText="E-MAIL">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                              <TextField id="textField1" fx:id="password" prefHeight="40.0" prefWidth="182.0" promptText="PASSWORD">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="78.0" layoutY="291.0" prefHeight="90.0" prefWidth="244.0" spacing="10.0">
+                           <children>
+                              <Button id="btn" fx:id="signin" mnemonicParsing="false" onAction="#logIn" prefHeight="34.0" prefWidth="159.0" text="sign in" />
+                              <Label fx:id="resetPassword" prefHeight="25.0" prefWidth="108.0" text="RESET PASSWORD" textFill="#9f9f9f">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </VBox>
+                        <HBox alignment="CENTER" layoutX="120.0" layoutY="401.0" prefHeight="34.0" prefWidth="160.0" spacing="10.0" stylesheets="@../../style/marketPlace/Buttons.css" AnchorPane.leftAnchor="120.0" AnchorPane.rightAnchor="120.0">
+                           <children>
+                              <Button minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-background-radius: 50; -fx-border-radius: 50;">
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../icons/userIcons/status24C.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                              <Button fx:id="google" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#signInWithGoogle" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: transparent; -fx-background-radius: 50; -fx-border-radius: 50;">
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../icons/userIcons/google-symbol24C.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane fx:id="layoutReset" prefHeight="302.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="50.0" fitWidth="238.0" layoutX="81.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="81.0" AnchorPane.rightAnchor="81.0">
+                           <image>
+                              <Image url="@../../img/userImg/logo.png" />
+                           </image>
+                        </ImageView>
+                        <VBox alignment="CENTER" layoutX="91.0" layoutY="127.0" prefHeight="196.0" prefWidth="218.0" spacing="10.0" AnchorPane.leftAnchor="91.0" AnchorPane.rightAnchor="91.39999999999998" AnchorPane.topAnchor="127.0">
+                           <children>
+                              <TextField id="textField1" fx:id="emailReset" prefHeight="40.0" prefWidth="182.0" promptText="E-MAIL">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </TextField>
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" layoutX="78.0" layoutY="291.0" prefHeight="90.0" prefWidth="244.0" spacing="10.0">
+                           <children>
+                              <Button id="btn" fx:id="resetBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="159.0" text="Rest" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </StackPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="layoutCode" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <VBox alignment="CENTER" layoutX="240.0" layoutY="102.0" prefHeight="271.0" prefWidth="220.0" spacing="10.0" style="-fx-background-color: #171718; -fx-border-radius: 10; -fx-background-radius: 10;" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="240.0" AnchorPane.topAnchor="102.0">
+               <children>
+                  <ImageView fitHeight="85.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../img/userImg/e-mail64C.png" />
+                     </image>
+                  </ImageView>
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="136.0" text="CHECK YOUR E-MAIL !!" textFill="#d2d2d2">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField id="textField1" fx:id="code" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="34.0" prefWidth="182.0" promptText="CODE">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button id="btn" fx:id="verifier" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Verifier">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

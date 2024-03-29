@@ -1,0 +1,56 @@
+.scroll-pane{
+    /*-fx-border-color: black transparent black transparent;*/
+    /*-fx-border-color:white;*/
+    /*-fx-border-width: 1px;*/
+}
+
+/*#userBox , #topBox{*/
+/*}*/
+#btnContainer{
+    -fx-background-radius: 0 0 15 15;
+}
+
+#chat ,#userBox {
+    /*-fx-background-color: #f2f2f2;*/
+    /*-fx-background-radius: 15;*/
+    /*-fx-border-radius: 15;*/
+    /*-fx-border-color: #f2f2f2;*/
+}
+
+#ancherPaneOfgridPane {
+    -fx-background-image: url('../../icons/marketPlace/bubble9.png');
+    -fx-background-size: cover;
+}
+
+#lisUsers{
+    -fx-background-image: url('../../citizenHub/discussion.png');
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+}
+
+
+
+#searchHbox .button{
+    -fx-background-color:  #f2f2f2;
+    -fx-border-width: 1px;
+    -fx-border-radius: 0 20 20 0;
+    -fx-border-color: black ;
+    -fx-background-radius: 0 20 20 0 ;
+}
+#searchHbox .text-field{
+    -fx-background-color:  #f2f2f2;
+    -fx-border-color: black transparent black black;
+    -fx-border-width: 1px;
+    -fx-border-radius: 20 0 0 20 ;
+    -fx-background-radius: 20 0 0 20 ;
+}
+
+#searchTextField{
+    -fx-background-color:  #5F7470;
+}
+
+
+#searchHbox .button:hover {
+    -fx-border-color:  #fdc847 ;
+    -fx-background-color:  #fdc847 ;
+}

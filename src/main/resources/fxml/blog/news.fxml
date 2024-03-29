@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="newsContainer" alignment="TOP_RIGHT" maxWidth="-Infinity" prefHeight="602.0" prefWidth="740.0" spacing="10.0" styleClass="post-background" stylesheets="@../Style/Blog.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.blog.NewsController">
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="10.0">
+            <children>
+                <ImageView fx:id="imgProfile" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/marketPlace/article.png" />
+               </image></ImageView>
+                <VBox alignment="CENTER" prefHeight="60.0">
+                    <children>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label fx:id="newsName">
+                                    <font>
+                                        <Font name="Segoe UI Semibold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fx:id="imgVerified" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../icon/ic_verified.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets left="5.0" right="5.0" />
+                                    </HBox.margin>
+                                </ImageView>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT">
+                            <children>
+                                <Label fx:id="date" textFill="#616770">
+                                    <font>
+                                        <Font name="Segoe UI Historic" size="12.0" />
+                                    </font>
+                                </Label>
+                                <ImageView fx:id="audience" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../img/ic_time.png" />
+                                    </image>
+                                    <HBox.margin>
+                                        <Insets left="5.0" right="5.0" />
+                                    </HBox.margin>
+                                </ImageView>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets left="20.0" right="20.0" />
+            </padding>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+        </HBox>
+      <VBox fx:id="captionContainer" prefHeight="47.0" prefWidth="699.0" spacing="8.0">
+         <VBox.margin>
+            <Insets left="20.0" right="20.0" />
+         </VBox.margin>
+         <children>
+            <Label fx:id="titleLabel" prefHeight="29.0" prefWidth="666.0" text="ssppp" wrapText="true" VBox.vgrow="ALWAYS">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+              <Label fx:id="caption" prefWidth="699.0" text="jjjjjjjjjjjjjjjjjjjj" wrapText="true" VBox.vgrow="ALWAYS">
+                  <font>
+                      <Font name="Segoe UI Historic" size="12.0" />
+                  </font>
+               <cursor>
+                  <Cursor fx:constant="TEXT" />
+               </cursor>
+              </Label>
+            <Hyperlink fx:id="link" onAction="#handleLinkClick" prefHeight="24.0" prefWidth="677.0" style="-fx-text-fill: #20749c; -fx-border-color: transparent;" text="Hyperlink" />
+            <Button fx:id="translateBtn" alignment="TOP_LEFT" minHeight="24.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="124.0" style="-fx-background-color: transperent;" styleClass="buttonTranslate" text=" Traduire" textFill="#606266">
+               <graphic>
+                  <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/blogIcons/translateIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <padding>
+                  <Insets right="17.0" />
+               </padding>
+               <font>
+                  <Font size="10.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <HBox fx:id="imageContainer" alignment="CENTER" spacing="20.0">
+         <children>
+            <VBox alignment="CENTER" minWidth="510.0">
+               <children>
+                    <ImageView fx:id="imgPost" fitHeight="352.0" fitWidth="672.0" pickOnBounds="true" preserveRatio="true" styleClass="imagePost" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+    </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</VBox>

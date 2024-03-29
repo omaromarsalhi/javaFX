@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.userMarketDashbord.MainDashbordController">
+   <children>
+      <HBox fx:id="firstInterface" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="670.0" prefWidth="1040.0" spacing="10.0" style="-fx-background-color: #f4f4f4; -fx-border-radius: 20; -fx-background-radius: 20;">
+         <children>
+            <VBox prefHeight="664.0" prefWidth="1018.0">
+               <children>
+                  <VBox prefHeight="171.0">
+                     <children>
+                        <HBox>
+                           <children>
+                              <AnchorPane fx:id="accountInfo" prefHeight="143.0" prefWidth="236.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;">
+                                 <children>
+                                    <ImageView fx:id="userImage" fitHeight="94.0" fitWidth="83.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../../../../../../javaFX - Copy/src/main/resources/img/mySelf.jpg" />
+                                       </image>
+                                    </ImageView>
+                                    <Line endX="-1.0000381469726562" endY="77.0" layoutX="101.0" layoutY="30.0" startX="-1.0000228881835938" startY="-14.799995422363281" />
+                                    <VBox layoutX="120.0" layoutY="27.0" prefHeight="67.0" prefWidth="107.0">
+                                       <children>
+                                          <Label fx:id="username" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="122.0" text="omar">
+                                             <font>
+                                                <Font name="System Bold Italic" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="userlasteName" alignment="CENTER" contentDisplay="CENTER" prefHeight="34.0" prefWidth="122.0" text="salhi">
+                                             <font>
+                                                <Font name="System Bold Italic" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <Label fx:id="userEmail" alignment="CENTER" layoutX="18.0" layoutY="109.0" prefHeight="34.0" prefWidth="200.0" text="omar.salhi@esprit.tn">
+                                       <font>
+                                          <Font size="14.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="4.0" />
+                                 </HBox.margin>
+                              </AnchorPane>
+                              <VBox>
+                                 <children>
+                                    <HBox fx:id="toolBar" alignment="CENTER" prefHeight="64.0" prefWidth="763.0" spacing="150.0" stylesheets="@../../../../../../javaFX - Copy/src/main/resources/style/toolBarStyle.css">
+                                       <children>
+                                          <MenuBar fx:id="menuBar" prefHeight="38.0" prefWidth="289.0">
+                                            <menus>
+                                              <Menu mnemonicParsing="false" text="Products">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../icons/marketPlace/packaging.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                                <Menu mnemonicParsing="false" text="Favorite">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../icons/marketPlace/star.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                                <Menu mnemonicParsing="false" text="Chat">
+                                                   <graphic>
+                                                      <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../icons/marketPlace/notification.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                </Menu>
+                                            </menus>
+                                          </MenuBar>
+                                          <HBox fx:id="searchHbox" alignment="CENTER" prefHeight="39.0" prefWidth="286.0" style="-fx-background-color: #f4f4f4;">
+                                             <children>
+                                                <TextField fx:id="searchTextField" alignment="CENTER" prefHeight="32.0" prefWidth="16.0" style="-fx-background-color: #f4f4f4;" />
+                                                <Button fx:id="searchBtn" mnemonicParsing="false" prefHeight="32.0" prefWidth="34.0">
+                                                   <graphic>
+                                                      <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                                         <image>
+                                                            <Image url="@../../icons/marketPlace/loupe.png" />
+                                                         </image>
+                                                      </ImageView>
+                                                   </graphic>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </Button>
+                                                <ImageView fx:id="searchInfoBtn" fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@../../icons/marketPlace/info16w.png" />
+                                                   </image>
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin>
+                                                </ImageView>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                       <padding>
+                                          <Insets right="22.0" />
+                                       </padding>
+                                       <VBox.margin>
+                                          <Insets top="4.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <HBox prefHeight="120.0" prefWidth="763.0" spacing="10.0">
+                                       <children>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="17.0" layoutY="7.0" prefHeight="86.0" prefWidth="143.0" AnchorPane.bottomAnchor="7.400000000000006" AnchorPane.leftAnchor="17.0" AnchorPane.rightAnchor="18.200000000000017" AnchorPane.topAnchor="7.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="150.0" text="144">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Number of all posted Items" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="142.0" text="44" textAlignment="CENTER">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Numbers Of Selled ItemsThis Year" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="145.0" text="1547$">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Price of selled Items This Week" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #fdc847; -fx-background-radius: 20;">
+                                             <children>
+                                                <VBox alignment="CENTER" layoutX="25.0" layoutY="7.0" prefHeight="86.0" prefWidth="128.0">
+                                                   <padding>
+                                                      <Insets top="10.0" />
+                                                   </padding>
+                                                   <children>
+                                                      <Label prefHeight="36.0" prefWidth="166.0" text="15">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="36.0" />
+                                                         </font>
+                                                      </Label>
+                                                      <Label prefHeight="39.0" prefWidth="121.0" text="Not Sold Items This Year" textAlignment="CENTER" wrapText="true">
+                                                         <font>
+                                                            <Font name="Britannic Bold" size="14.0" />
+                                                         </font>
+                                                      </Label>
+                                                   </children>
+                                                </VBox>
+                                             </children>
+                                          </AnchorPane>
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets top="4.0" />
+                     </padding>
+                  </VBox>
+                  <HBox fx:id="ultraBigContainer">
+                     <children>
+                        <VBox fx:id="bigContainer" alignment="CENTER" prefHeight="528.0" prefWidth="1018.0" spacing="4.0">
+                           <children>
+                              <StackPane>
+                                 <children>
+                                    <HBox fx:id="tableHead" alignment="CENTER" prefHeight="50.0" prefWidth="995.0" spacing="20.0" style="-fx-background-color: #171718; -fx-background-radius: 20; -fx-border-radius: 20;">
+                                       <children>
+                                          <Label fx:id="name1" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Image" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="name" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Prod Name" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="descreption" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Descreption" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="price" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Price" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="quantity" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="Quantity" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="state" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="State" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="creationDate" alignment="CENTER" prefHeight="46.0" prefWidth="129.0" text="Creation Date" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="category" alignment="CENTER" prefHeight="45.0" prefWidth="100.0" text="category" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="category1" alignment="CENTER" prefHeight="46.0" prefWidth="118.0" text="Actions" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox fx:id="transactionsHead" alignment="CENTER" prefHeight="50.0" prefWidth="995.0" spacing="20.0" style="-fx-background-color: #171718; -fx-background-radius: 20; -fx-border-radius: 20;">
+                                       <children>
+                                          <Label alignment="CENTER" prefHeight="46.0" prefWidth="594.0" textFill="WHITE" wrapText="true">
+                                             <font>
+                                                <Font name="Calisto MT" size="16.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </StackPane>
+                              <ScrollPane fx:id="scroll" hbarPolicy="NEVER" prefHeight="438.0" prefWidth="1002.0" style="-fx-background-image: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20; -fx-border-color: transparent; -fx-background-color: transparent;" vbarPolicy="NEVER">
+                                 <content>
+                                    <VBox fx:id="showAllProdsInfo" alignment="TOP_CENTER" prefHeight="434.0" prefWidth="998.0" spacing="5.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                           <padding>
+                              <Insets bottom="2.0" left="8.0" right="8.0" top="2.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="4.0" />
+               </padding>
+               <stylesheets>
+                  <URL value="@../../style/marketPlace/Buttons.css" />
+                  <URL value="@../../style/marketPlace/chatStyle.css" />
+                  <URL value="@../../style/marketPlace/scrollBarStlyle.css" />
+                  <URL value="@../../style/marketPlace/toolBarStyle.css" />
+               </stylesheets>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="2.0" top="2.0" />
+         </padding>
+      </HBox>
+      <AnchorPane fx:id="secondInterface" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent;">
+         <children>
+            <HBox fx:id="secondIHbox" alignment="CENTER" layoutX="51.0" layoutY="119.0" prefHeight="432.0" prefWidth="918.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="51.0" AnchorPane.rightAnchor="51.40000000000009" />
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="718.0" prefWidth="1300.0" styleClass="borderPane" stylesheets="@../../style/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.mainWindow.MainWindowController">
+    <left>
+        <VBox fx:id="sideBar" prefHeight="890.0" prefWidth="235.0" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="235.0">
+                    <children>
+                        <ImageView fitHeight="52.0" fitWidth="188.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../img/blogImg/nameApp.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                    <VBox.margin>
+                        <Insets bottom="20.0" />
+                    </VBox.margin>
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                </HBox>
+                <VBox alignment="CENTER" prefHeight="286.0" prefWidth="235.0" spacing="15.0">
+                    <children>
+                        <Button fx:id="blogBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onBlogBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Blogs" textFill="WHITE">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                            <graphic>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/dashBoard.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="transportBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onAbonnementBtnClicked" prefHeight="52.0" prefWidth="190.0" text=" Abonnement" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/facture.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="stationBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onStationsBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Stations" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/transport.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="newsBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onNewsBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  News" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/icons8-nouvelles-50.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="marketplacebtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketPlaceBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Market Place" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/marketSpace.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="dashbordBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onMarketplaceDashbordBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Market Dashbord" textFill="WHITE">
+                            <graphic>
+                                <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/demande.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets left="1.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="59.0" prefWidth="235.0">
+                    <children>
+                        <Button fx:id="accountBtn" alignment="CENTER" mnemonicParsing="false" onAction="#onAccountBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  Compte" textFill="WHITE">
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                            <graphic>
+                                <ImageView fx:id="accountImg" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../icons/blogIcons/compte.png" />
+                                    </image>
+                                </ImageView>
+                            </graphic>
+                            <font>
+                                <Font size="20.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <padding>
+                        <Insets top="165.0" />
+                    </padding>
+                </VBox>
+            </children>
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" />
+            </BorderPane.margin>
+        </VBox>
+    </left>
+
+    <top>
+        <HBox fx:id="header" alignment="CENTER_RIGHT" prefHeight="42.0" prefWidth="1285.0" spacing="8.0" BorderPane.alignment="CENTER_LEFT">
+            <BorderPane.margin>
+                <Insets right="15.0" />
+            </BorderPane.margin>
+            <children>
+                <Label prefHeight="38.0" prefWidth="136.0" text="CitizenHub">
+                    <font>
+                        <Font size="13.0" />
+                    </font>
+                    <HBox.margin>
+                        <Insets />
+                    </HBox.margin>
+                </Label>
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="38.0" prefWidth="978.0" stylesheets="@../../style/marketPlace/notifStyle.css">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+               <children>
+                  <HBox fx:id="notifHbox" alignment="CENTER" prefHeight="38.0">
+                     <children>
+                        <Label fx:id="textNotif" alignment="CENTER" prefHeight="30.0" prefWidth="317.0" text="This is The Notif Pop Up" />
+                        <Label fx:id="imageNotif" alignment="CENTER" prefHeight="30.0" prefWidth="29.0">
+                           <graphic>
+                              <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../icons/marketPlace/checked.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="38.0" prefWidth="136.0" spacing="4.0">
+               <children>
+                      <Button fx:id="reduireBtn" mnemonicParsing="false" onAction="#onReduireBtnClicked" prefHeight="32.0" prefWidth="32.0">
+                          <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../icons/blogIcons/reduire.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <Button fx:id="agrendirBtn" mnemonicParsing="false" onAction="#onAgrendirBtnClicked" prefHeight="32.0" prefWidth="32.0">
+                          <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../icons/blogIcons/resize.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+                      <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#onCloseBtnClicked" prefHeight="32.0" prefWidth="32.0" styleClass="button-close">
+                          <graphic>
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                  <image>
+                                      <Image url="@../../icons/blogIcons/close.png" />
+                                  </image>
+                              </ImageView>
+                          </graphic>
+                      </Button>
+               </children>
+            </HBox>
+            </children>
+        </HBox>
+    </top>
+   <center>
+      <AnchorPane fx:id="centerContainer" prefHeight="670.0" prefWidth="1040.0" style="-fx-background-color: #D9D9D9; -fx-background-radius: 20; -fx-border-radius: 20;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="15.0" right="15.0" />
+         </BorderPane.margin>
+      </AnchorPane>
+   </center>
+</BorderPane>

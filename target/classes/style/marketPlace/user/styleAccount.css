@@ -1,0 +1,164 @@
+.custom-vbox .button {
+        -fx-background-color: #F1F1F124;
+        -fx-text-fill: white;
+        -fx-font-size: 14px;
+        -fx-fill-width:  85;
+        -fx-border-radius: 2px;
+
+
+    }
+.custom-pane .text-field{
+
+-fx-background-color: #D9D9D9;
+    -fx-border-radius: 7px ;
+    -fx-border-width: 1px;
+    -fx-border-color: #818181;
+    -fx-font-size: 15;
+
+
+}
+.custom-pane .label{
+
+
+    -fx-font-size: 14;
+
+
+
+
+}
+.btn-supp{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill:#FF0000;
+    -fx-font-size: 14px;
+}
+.text-photo{
+    -fx-font-size: 14px;          /* Taille de la police */
+    -fx-font-family: "Souliyo Unicode";     /* Police de caractères */
+    -fx-fill: #494949;
+
+}
+.btn-changer-photo{
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill:#20749C;
+    -fx-font-size: 14px;
+}
+.custom-pane{
+    -fx-background-radius: 5px;
+}
+.custom-vbox{
+    -fx-background-radius: 5px;
+    -fx-background-color: #f0f0f0; /* Couleur de fond */
+
+
+}
+
+.btn_retour{
+
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+
+}
+/*.custom-dob {
+    -fx-background-color: #D9D9D9;
+    -fx-border-radius: 2px;
+
+    -fx-border-color: #818181;
+
+}*/
+.btn-Transaprent{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+#btn_reglage{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+.date-picker-container {
+    position: relative;
+    display: inline-block;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+
+}
+.date-picker-container .date-picker:focused {
+    /* Styles lorsque le date picker est cliqué (focus) */
+    -fx-border-color: #818181; /* Bordure colorée lorsque le date picker est cliqué */
+    -fx-border-width: 1px; /* Largeur de la bordure augmentée */
+    -fx-background-color: #818181; /* Fond légèrement coloré */
+}
+.date-picker-container .date-field{
+    -fx-background-color: #D9D9D9;
+    -fx-border-color: #818181;
+
+}
+
+/* Style de l'icône du date picker */
+.date-picker-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Style du calendrier du date picker */
+.date-picker-calendar {
+    position: absolute;
+    top: calc(100% + 5px);
+    right: 0;
+    z-index: 1000;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
+}
+
+/* Style des jours du calendrier */
+.date-picker-day {
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Style des jours sélectionnés */
+.date-picker-day.selected {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Style des jours actifs */
+.date-picker-day.active {
+    background-color: #f0f0f0;
+}
+
+/* Style des flèches de navigation du calendrier */
+.date-picker-prev,
+.date-picker-next {
+    cursor: pointer;
+}
+#btn_modifier{
+
+    -fx-background-color:#20749C;
+}
+
+
+#btn_modifier :hover {
+ -fx-background-color: #000000;
+}
+
+.alerte{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+
+
+
+

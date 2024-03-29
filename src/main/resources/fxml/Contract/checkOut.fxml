@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox fx:id="mainHbox" alignment="CENTER_RIGHT" prefHeight="670.0" prefWidth="977.0" spacing="50.0" style="-fx-background-radius: 20; -fx-border-radius: 20; -fx-background-color: #D9D9D9;" stylesheets="@../../style/marketPlace/formLayout.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.contrat.CheckOutController">
+   <children>
+      <VBox alignment="TOP_CENTER" minWidth="275.0" prefHeight="670.0" prefWidth="356.0" spacing="10.0">
+         <children>
+            <HBox fx:id="mainHbox" alignment="CENTER" prefHeight="74.0" prefWidth="399.0">
+               <children>
+                  <Label fx:id="Pname" alignment="CENTER" prefHeight="54.0" prefWidth="340.0" text="Prod 1" textFill="#848e4b">
+                     <font>
+                        <Font name="System Italic" size="21.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <ImageView fx:id="Pimg" fitHeight="161.0" fitWidth="152.0" pickOnBounds="true">
+               <image>
+                  <Image url="@../../img/marketPlace/mySelf.jpg" />
+               </image>
+            </ImageView>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="218.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="150.0" text="State :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="Pstate" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="164.0" text="in Stock" textFill="#848e4b">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="185.0" text="Price :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="Pprice" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="129.0" text="\$0.99" textFill="#848e4b">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="186.0" text="Avialable Quantity :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="Pquantity" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="110.0" text="\$0.99" textFill="#848e4b">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="49.0" prefWidth="293.0" text="Category :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="Pcategroy" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="364.0" text="sport" textFill="#848e4b">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="49.0" prefWidth="289.0" text="Chosen Quantity :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="requestedQuantity" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="146.0" promptText="Give requested Quantity" style="-fx-background-color: transparent;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="49.0" prefWidth="269.0" text="Date :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="PdateTime" prefHeight="35.0" prefWidth="230.0" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="49.0" prefWidth="279.0" text="Payement method :">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="PpayementChoice" prefHeight="36.0" prefWidth="194.0" style="-fx-background-color: tranparent;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="40.0" prefWidth="222.0">
+               <children>
+                  <Label prefHeight="35.0" prefWidth="207.0" text="Reciving Address">
+                     <font>
+                        <Font name="System Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="Plocarion" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="209.0" promptText="Your Location ..." style="-fx-background-color: transparent;" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+         </padding>
+      </VBox>
+      <VBox prefHeight="670.0" prefWidth="418.0" spacing="6.0" stylesheets="@../../style/marketPlace/FilterStyle.css">
+         <children>
+            <Label alignment="CENTER" prefHeight="46.0" prefWidth="414.0" text="DESCREPTION" textAlignment="CENTER">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="Pdesc" editable="false" prefHeight="611.0" prefWidth="418.0" wrapText="true">
+               <font>
+                  <Font name="System Italic" size="16.0" />
+               </font></TextArea>
+            <Label alignment="CENTER" prefHeight="36.0" prefWidth="414.0" text="Terms and conditions" textAlignment="CENTER">
+               <font>
+                  <Font name="System Italic" size="24.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="ProlesAndTerms" editable="false" prefHeight="284.0" prefWidth="366.0" wrapText="true">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="2.0" />
+               </VBox.margin></TextArea>
+         </children>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets top="8.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="checkout" alignment="CENTER" prefHeight="670.0" prefWidth="53.0" spacing="30.0" stylesheets="@../../style/marketPlace/Buttons.css">
+         <children>
+            <Button fx:id="paymentBtn" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="36.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/marketPlace/online-payment.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="exit" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/marketPlace/close.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+         </children>
+         <HBox.margin>
+            <Insets left="20.0" />
+         </HBox.margin>
+      </VBox>
+   </children>
+</HBox>
