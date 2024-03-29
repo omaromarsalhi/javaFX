@@ -30,9 +30,6 @@
   <a href="#license">License</a>
 </p>
 
-## Login Interface
-
-![image](https://github.com/omaromarsalhi/javaFX/assets/100521806/4acc555b-4054-4596-a3e8-9cf57f01b9eb)
 
  ## Main Window
 
@@ -129,20 +126,6 @@ web (comming soon)
 
 Gang_of_SIXXXX
 
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="http://ivesvh.com"><img src="https://avatars0.githubusercontent.com/u/587016?v=3?s=100" width="100px;" alt="Ives van Hoorne"/><br /><sub><b>Khalil rmila</b></sub></a><br /><a href="#question-CompuIves" title="Answering Questions">💬</a> <a href="#blog-CompuIves" title="Blogposts">📝</a> <a href="https://github.com/codesandbox/codesandbox-client/issues?q=author%3ACompuIves" title="Bug reports">🐛</a> <a href="https://github.com/codesandbox/codesandbox-client/commits?author=CompuIves" title="Code">💻</a> <a href="#design-CompuIves" title="Design">🎨</a> <a href="https://github.com/codesandbox/codesandbox-client/commits?author=CompuIves" title="Documentation">📖</a> <a href="#example-CompuIves" title="Examples">💡</a> <a href="#infra-CompuIves" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/codesandbox/codesandbox-client/pulls?q=is%3Apr+reviewed-by%3ACompuIves" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/codesandbox/codesandbox-client/commits?author=CompuIves" title="Tests">⚠️</a> <a href="#tool-CompuIves" title="Tools">🔧</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://donavon.com"><img src="https://avatars0.githubusercontent.com/u/887639?v=3?s=100" width="100px;" alt="Donavon West"/><br /><sub><b>Omar Salhi</b></sub></a><br /><a href="https://github.com/codesandbox/codesandbox-client/commits?author=donavon" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://www.jeffallen.io/"><img src="https://avatars0.githubusercontent.com/u/5266810?v=3?s=100" width="100px;" alt="Jeff Allen"/><br /><sub><b>Latifa ben zaied</b></sub></a><br /><a href="https://github.com/codesandbox/codesandbox-client/commits?author=vueu" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/bengummer"><img src="https://avatars0.githubusercontent.com/u/1089897?v=3?s=100" width="100px;" alt="Ben Gummer"/><br /><sub><b>omar marrakchi</b></sub></a><br /><a href="https://github.com/codesandbox/codesandbox-client/commits?author=bengummer" title="Code">💻</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="http://twitter.com/faceyspacey"><img src="https://avatars3.githubusercontent.com/u/154732?v=3?s=100" width="100px;" alt="James Gillmore"/><br /><sub><b>aziz gamty</b></sub></a><br /><a href="https://github.com/codesandbox/codesandbox-client/commits?author=faceyspacey" title="Code">💻</a> <a href="https://github.com/codesandbox/codesandbox-client/issues?q=author%3Afaceyspacey" title="Bug reports">🐛</a></td>
-	    <td align="center" valign="top" width="14.28%"><a href="http://twitter.com/faceyspacey"><img src="https://avatars3.githubusercontent.com/u/154732?v=3?s=100" width="100px;" alt="James Gillmore"/><br /><sub><b>Laroussi Ghassen 
-</b></sub></a><br /><a href="https://github.com/codesandbox/codesandbox-client/commits?author=faceyspacey" title="Code">💻</a> <a href="https://github.com/codesandbox/codesandbox-client/issues?q=author%3Afaceyspacey" title="Bug reports">🐛</a></td> 
-    </tr>
-
-  </tbody>
-</table>
 ---
 
 

@@ -17,8 +17,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReponse;
-import pidev.javafx.model.reclamation.Reclamation;
-import pidev.javafx.model.reclamation.Reponse;
+import pidev.javafx.model.Reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reponse;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.tools.marketPlace.MyTools;
@@ -101,17 +101,17 @@ public class ReponseFormShowController implements Initializable {
             String color = (isAllInpulValid) ? "green" : "red";
             if (reponsetext.getText().isEmpty()) {
                 reponsetext.setStyle("");
-                reponsetext.setStyle(formLayoutBeforRegexCheck);
+                Box12.setStyle(formLayoutBeforRegexCheck);
                 isAllInpulValid = true;
             } else {
                 reponsetext.setStyle("-fx-border-color: transparent transparent " + color + " transparent;" +
                         "-fx-border-width:0 0 2 0;" +
                         "-fx-border-radius: 0");
-                reponsetext.setStyle("-fx-border-color:" + color + ";" +
+                Box12.setStyle("-fx-border-color:" + color + ";" +
                         formLayoutAfterRegexCheck);
             }
             if ((!isAllInpulValid && !reponsetext.getText().isEmpty()))
-                reponsetext.setStyle("-fx-border-color:red;" +
+                Box12.setStyle("-fx-border-color:red;" +
                         formLayoutAfterRegexCheck);
         });
 
@@ -161,9 +161,6 @@ public class ReponseFormShowController implements Initializable {
 
         cancel.setOnMouseClicked( event -> EventBus.getInstance().publish( "exitFormUser",event ) );
 
-        clearProd.setOnMouseClicked(event -> {
-            reponsetext.setText("");
-        });
         buttonsBox.getChildren().addAll( addProd1,clearProd,cancel,voice );
         buttonsBox.setSpacing( 20 );
         buttonsBox.setAlignment( Pos.CENTER);

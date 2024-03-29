@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reclamation;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 

@@ -14,12 +14,9 @@
     <children>
         <HBox fx:id="formBox" prefHeight="510.0" prefWidth="566.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
             <children>
-                <VBox fx:id="Box1" alignment="BOTTOM_CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
+                <VBox fx:id="Box1" alignment="CENTER" prefHeight="503.0" prefWidth="384.0" spacing="10.0">
                     <children>
-                  <ImageView fx:id="img" fitHeight="165.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets bottom="150.0" />
-                     </VBox.margin></ImageView>
+                  <ImageView fx:id="img" fitHeight="165.0" fitWidth="201.0" pickOnBounds="true" preserveRatio="true" />
                     </children>
                     <padding>
                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -126,7 +123,7 @@
             </VBox>
             <VBox fx:id="Box12" alignment="TOP_CENTER" prefHeight="506.0" prefWidth="298.0" spacing="10.0">
                <children>
-                  <HBox fx:id="box12" alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
+                  <HBox alignment="CENTER_LEFT" spacing="150.0" stylesheets="@../../style/marketPlace/Buttons.css">
                      <children>
                         <Label prefHeight="36.0" prefWidth="160.0" text="Reponse :">
                            <font>

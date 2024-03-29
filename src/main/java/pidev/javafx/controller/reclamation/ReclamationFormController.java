@@ -18,9 +18,8 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 import pidev.javafx.crud.reclamation.ServiceReclamation;
 import pidev.javafx.model.MarketPlace.Product;
-import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reclamation;
 import pidev.javafx.tools.UserController;
-import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
 import pidev.javafx.tools.marketPlace.MyListener;
 import pidev.javafx.tools.marketPlace.MyTools;
@@ -67,7 +66,6 @@ public class ReclamationFormController implements Initializable {
     private boolean isAllInpulValid;
     String formLayoutBeforRegexCheck;
     String formLayoutAfterRegexCheck;
-    Reclamation reclamation;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -158,7 +156,7 @@ public class ReclamationFormController implements Initializable {
 
     public void onAddClicked(MouseEvent event)  {
         if (isAllInpulValid && !Pdescretion.getText().isEmpty()) {
-            reclamation = new Reclamation(
+            Reclamation reclamation = new Reclamation(
                     0,
                     UserController.getInstance().getCurrentUser().getId(),
                     generateRandomString(20),
@@ -210,9 +208,8 @@ public class ReclamationFormController implements Initializable {
         };
 
         myTask.setOnSucceeded(e -> {
-            loadingPage.setVisible(false);
-            EventBus.getInstance().publish( "refresh",new CustomMouseEvent<>(reclamation ) );
             EventBus.getInstance().publish("exitFormUser", event);
+            loadingPage.setVisible(false);
         });
         return new Thread(myTask);
     }

@@ -23,9 +23,36 @@
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-
     </repository>
-
+    <repository>
+      <id>djl.ai</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </repository>
+    <repository>
+      <id>jzy3d-snapshots</id>
+      <name>Jzy3d Snapshots</name>
+      <url>https://maven.jzy3d.org/snapshots/</url>
+    </repository>
+    <repository>
+      <id>jzy3d-releases</id>
+      <name>Jzy3d Releases</name>
+      <url>https://maven.jzy3d.org/releases/</url>
+    </repository>
+    <repository>
+      <id>jzy3d-snapshots</id>
+      <name>Jzy3d Snapshots</name>
+      <url>5</url>
+    </repository>
+    <repository>
+      <id>jzy3d-releases</id>
+      <name>Jzy3d Releases</name>
+      <url>6</url>
+    </repository>
+    <repository>
+      <id>AsposeJavaAPI</id>
+      <name>Aspose Java API</name>
+      <url>https://repository.aspose.com/repo/</url>
+    </repository>
   </repositories>
 
 <!--  <dependencyManagement>-->
@@ -42,11 +69,42 @@
 <!--  </dependencyManagement>-->
 
   <dependencies>
-
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>17.0.2</version>
+    </dependency>
+    <!-- DJL Model Zoo -->
+    <dependency>
+      <groupId>ai.djl</groupId>
+      <artifactId>model-zoo</artifactId>
+      <version>0.26.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>17.0.2</version>
+    </dependency>
+    <dependency>
+      <groupId>com.aspose</groupId>
+      <artifactId>aspose-imaging</artifactId>
+      <version>23.10</version>
+      <classifier>jdk16</classifier>
+    </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
       <version>21</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jzy3d</groupId>
+      <artifactId>jzy3d-emul-gl-awt</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jzy3d</groupId>
+      <artifactId>jzy3d-everything</artifactId>
+      <version>2.1.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>

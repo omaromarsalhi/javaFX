@@ -1,4 +1,4 @@
-package pidev.javafx.model.reclamation;
+package pidev.javafx.model.Reclamation;
 
 import java.util.Objects;
 

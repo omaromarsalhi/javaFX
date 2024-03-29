@@ -3,7 +3,7 @@ package pidev.javafx.crud.reclamation;
 
 
 import pidev.javafx.crud.ConnectionDB;
-import pidev.javafx.model.reclamation.Reclamation;
+import pidev.javafx.model.Reclamation.Reclamation;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ public class ServiceReclamation  {
 
     private static ServiceReclamation instance;
 
-    public ServiceReclamation() {}
+    private ServiceReclamation() {}
 
     public static ServiceReclamation getInstance() {
         if (instance == null)
