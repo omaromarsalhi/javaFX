@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<StackPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.blog.NewsPageController">
+   <children>
+      <AnchorPane fx:id="blogPane" prefHeight="660.0" prefWidth="1030.0" stylesheets="@../../Style/blog/Blog.css">
+          <children>
+              <ScrollPane hbarPolicy="NEVER" layoutX="1.0" layoutY="-1.0" prefHeight="660.0" prefWidth="1030.0" style="-fx-background: transperent;">
+                  <content>
+                      <VBox fx:id="newsContainer" alignment="TOP_CENTER" fillWidth="false" prefHeight="668.0" prefWidth="1017.0" spacing="15.0" style="-fx-background-color: transparent;">
+                          <opaqueInsets>
+                              <Insets />
+                          </opaqueInsets>
+                          <padding>
+                              <Insets top="15.0" />
+                          </padding>
+                      </VBox>
+                  </content>
+              </ScrollPane>
+          </children>
+          <padding>
+              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+          </padding>
+      </AnchorPane>
+      <AnchorPane fx:id="loadingPage" prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ImageView fitHeight="132.0" fitWidth="134.0" layoutX="455.0" layoutY="268.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../img/marketPlace/Dual%20Ball-1s-398px.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</StackPane>

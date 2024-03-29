@@ -45,6 +45,7 @@ public class ServiceUser implements IserviceUser<User> {
             ps.setInt(1, idUser);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                int id = rs.getInt("idUser");
                 String firstname = rs.getString("firstName");
                 String lastName = rs.getString("lastname");
                 int age = rs.getInt("age");
@@ -58,8 +59,7 @@ public class ServiceUser implements IserviceUser<User> {
                 String photos = rs.getString("photos");
                 String gender = rs.getString("gender");
                 String  email = rs.getString("email");
-                user = new User(firstname, email, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
-                System.out.println(user);
+                user = new User(id,firstname, email,"", cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -213,17 +213,18 @@ public class ServiceUser implements IserviceUser<User> {
             ResultSet rs = stmt.executeQuery(req);
             while (((ResultSet) rs).next()) {
                 User user = new User();
+                user.setId(rs.getInt("idUser"));
                 user.setFirstname(rs.getString("firstName"));
                 user.setLastname(rs.getString("lastname"));
                 user.setEmail(rs.getString("email"));
                 user.setRole(Role.valueOf(rs.getString("role")));
                 user.setIdMunicipalite((rs.getInt("idMunicipalite")));
-                user.setAge(Integer.parseInt(rs.getString("age")));
+                user.setAge(rs.getInt("age"));
                 user.setCin(rs.getString("cin"));
                 user.setPhotos(rs.getString("photos"));
                 user.setAdresse(rs.getString("adresse"));
                 user.setStatus(rs.getString("status"));
-                user.setNum(Integer.parseInt(rs.getString("num")));
+                user.setNum(rs.getInt("num"));
                 user.setDate(rs.getString("date"));
                 user.setDob(rs.getString("dob"));
                 users.add(user);
@@ -231,6 +232,7 @@ public class ServiceUser implements IserviceUser<User> {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(users);
         return users;
 
     }
@@ -283,6 +285,7 @@ public class ServiceUser implements IserviceUser<User> {
                 int idUser = rs.getInt("idUser");
                 String firstname = rs.getString("firstName");
                 String lastName = rs.getString("lastname");
+//                email = rs.getString( "email" );
                 int age = rs.getInt("age");
                 int num = rs.getInt("num");
                 String adresse = rs.getString("adresse");
@@ -295,6 +298,7 @@ public class ServiceUser implements IserviceUser<User> {
                 String gender = rs.getString("gender");
                 String password = rs.getString("password");
                 user = new User(idUser,firstname,email, password, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
+
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -343,10 +347,13 @@ public class ServiceUser implements IserviceUser<User> {
     }
     public void modifierPassword(String email,String password) {
         Connection cnx = ConnectionDB.getInstance().getCnx();
-        String req = "UPDATE `user` SET `password`=?WHERE `email` = ?";
+        String req = "UPDATE `user` SET `password`=? WHERE `email` = ?";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
 
+
+            System.out.println("passw "+password);
+            System.out.println("email "+email);
             ps.setString(1, password);
             ps.setString(2, email);
 
@@ -388,4 +395,38 @@ public class ServiceUser implements IserviceUser<User> {
         }
         return photos;
     }
+    public List<User> rechercherUser(String recherche) {
+        Connection cnx = ConnectionDB.getInstance().getCnx();
+        User user=new User();
+        List<User> resultat = new ArrayList<>();
+        String req = "SELECT * FROM user WHERE CONCAT(firstName, ' ', lastName) LIKE ? ";
+        try {
+            PreparedStatement ps = cnx.prepareStatement(req);
+            ps.setString(1, "%" + recherche + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String firstname = rs.getString("firstName");
+                String lastName = rs.getString("lastname");
+                String email = rs.getString("email");
+                int age = rs.getInt("age");
+                int num = rs.getInt("num");
+                String adresse = rs.getString("adresse");
+                String dob = rs.getString("dob");
+                String cin = rs.getString("cin");
+                String role = rs.getString("role");
+                String status = rs.getString("status");
+                String date = rs.getString("date");
+                String photos = rs.getString("photos");
+                String gender = rs.getString("gender");
+                String password = rs.getString("password");
+                user = new User(firstname,email, password, cin, age, num, adresse, dob, lastName, status, date, Role.valueOf(role),photos,gender);
+                resultat.add(user);
+                System.out.println(resultat);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return resultat;
+    }
+
 }

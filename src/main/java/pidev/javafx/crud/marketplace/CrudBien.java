@@ -8,6 +8,7 @@ import pidev.javafx.crud.ConnectionDB;
 import pidev.javafx.crud.CrudInterface;
 import pidev.javafx.model.MarketPlace.Categorie;
 import pidev.javafx.model.MarketPlace.Bien;
+import pidev.javafx.tools.UserController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -180,6 +181,42 @@ public class CrudBien implements CrudInterface<Bien> {
         }
     }
 
+
+    public ObservableList<Bien> selectItemsById() {
+        Bien bien = null;
+        String sql = "SELECT * FROM products  where isDeleted=false and idUser= ? order by idProd desc"; // Retrieve all items
+
+        connect = ConnectionDB.getInstance().getCnx();
+        ObservableList<Bien> BienList = FXCollections.observableArrayList();
+        try {
+            prepare = connect.prepareStatement(sql);
+            prepare.setInt( 1, UserController.getInstance().getCurrentUser().getId() );
+            result = prepare.executeQuery();
+            while (result.next()) {
+                bien=new Bien(result.getInt("idProd"),
+                        result.getInt("idUser"),
+                        result.getString("name"),
+                        result.getString("descreption"),
+                        "",
+                        result.getFloat("price"),
+                        result.getFloat("quantity"),
+                        result.getString("state"),
+                        result.getTimestamp("timestamp"),
+                        Categorie.valueOf(result.getString("category")));
+                bien.setAllImagesSources( selectImagesById(bien.getId()) );
+                if(bien.getAllImagesSources().size()>0) {
+                    bien.setImgSource( bien.getImageSourceByIndex( 0 ) );
+                    bien.setImage( new ImageView( new Image( "file:src/main/resources" + bien.getImgSource(), 40, 40, false, false ) ) );
+                }
+                BienList.add(bien);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error selecting items: " + e.getMessage());
+        }
+
+        return BienList;
+    }
+
     @Override
     public ObservableList<Bien> selectItems() {
         Bien bien = null;
@@ -218,7 +255,7 @@ public class CrudBien implements CrudInterface<Bien> {
 
     public ObservableList<Bien> filterItems(String fromDate,String todate,int minPrice,int maxPrice,int quantity,String categoryChoice) {
         Bien bien = null;
-        String sql = "SELECT * FROM products where idProd >=0 " ;
+        String sql = "SELECT * FROM products where isDeleted=false  " ;
         sql+=(categoryChoice.isEmpty()||categoryChoice.equals( "ALL" ))?"":"and category = ?";
         sql+=(fromDate.isEmpty())?"":" and timestamp >= ?";
         sql+=(todate.isEmpty())?"":" and timestamp <= ?";
@@ -226,7 +263,6 @@ public class CrudBien implements CrudInterface<Bien> {
         sql+=(maxPrice==-1)?"":" and price <= ?";
         sql+=(quantity==-1)?"":" and quantity = ?";
 
-        System.out.println(sql);
         connect = ConnectionDB.getInstance().getCnx();
         ObservableList<Bien> BienList = FXCollections.observableArrayList();
         try {
@@ -246,8 +282,7 @@ public class CrudBien implements CrudInterface<Bien> {
                 prepare.setInt(  i++, quantity);
 
 
-
-
+            System.out.println(prepare.toString());
             result = prepare.executeQuery();
             while (result.next()) {
                 bien=new Bien(result.getInt("idProd"),
@@ -270,6 +305,26 @@ public class CrudBien implements CrudInterface<Bien> {
         }
 
         return BienList;
+    }
+
+
+    public String selectMaxValues4Filter() {
+        Bien bien = null;
+        String sql = "SELECT  max(price) as mPrice , max(quantity) as mQuantity FROM products  where isDeleted=0; "; // Retrieve all items
+        String res="";
+        connect = ConnectionDB.getInstance().getCnx();
+        try {
+            prepare = connect.prepareStatement(sql);
+            result = prepare.executeQuery();
+            if (result.next()) {
+                res+=result.getString( "mPrice" );
+                res+="_";
+                res+=result.getString( "mQuantity" );
+            }
+        } catch (SQLException e) {
+            System.out.println("Error selecting items: " + e.getMessage());
+        }
+        return res;
     }
 
 

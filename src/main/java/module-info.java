@@ -31,6 +31,7 @@ module pidev.javafx{
 
     opens pidev.javafx.controller.marketPlace to javafx.fxml;
     opens pidev.javafx.controller.reclamation to javafx.fxml;
+    opens pidev.javafx.controller.Municipalite to javafx.fxml;
     opens pidev.javafx.controller.user to javafx.fxml;
     opens pidev.javafx.controller.login to javafx.fxml;
     opens pidev.javafx.controller.transport to javafx.fxml;
@@ -62,5 +63,7 @@ module pidev.javafx{
     opens pidev.javafx.tools.marketPlace to javafx.fxml;
     opens pidev.javafx.tools to javafx.fxml;
     exports pidev.javafx.tools;
+    exports pidev.javafx.model.Transport;
+    opens pidev.javafx.model.Transport;
 }
 

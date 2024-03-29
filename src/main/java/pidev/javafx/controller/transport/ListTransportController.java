@@ -20,6 +20,7 @@ import pidev.javafx.model.Transport.Station;
 import pidev.javafx.model.Transport.Transport;
 import pidev.javafx.tools.marketPlace.CustomMouseEvent;
 import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.transport.DataHolder;
 
 
 import java.io.IOException;
@@ -89,6 +90,32 @@ public class ListTransportController implements Initializable {
     private ScrollPane scrollDetails;
 
 
+    int count = 0;
+    @FXML
+    private Label timeLabel;
+    @FXML
+    private Label stationName;
+    Station receivedStation = new Station();
+    LocalTime currentTime;
+    Time timeVariable;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+//        EventBus.getInstance().subscribe("StationEvent", this::first_function);
+        receivedStation=DataHolder.getStation();
+
+        clickedState=2;
+        currentTime = LocalTime.now();
+        timeVariable = Time.valueOf(currentTime);
+        create_timeline();
+        toggleButton1.setSelected(true);
+        try {
+            Station_Infos();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void Station_Infos() throws IOException {
 
         if (toggleButton1.isSelected()) {
@@ -101,7 +128,6 @@ public class ListTransportController implements Initializable {
             Pane tempreture3 = FXMLLoader.load(getClass().getResource("/fxml/Transport/Weather/Tempreture3.fxml"));
             metePane.getChildren().setAll(tempreture3);
         }
-
 
     }
 
@@ -127,10 +153,8 @@ public class ListTransportController implements Initializable {
     }
 
 
-    @FXML
-    void onDropdownClick(ActionEvent event) {
 
-    }
+
 
     @FXML
     private void handleToggleButton1() throws IOException {
@@ -158,39 +182,22 @@ public class ListTransportController implements Initializable {
         }
     }
 
-    int count = 0;
-    @FXML
-    private Label timeLabel;
-    @FXML
-    private Label stationName;
-    Station receivedStation = new Station();
-    LocalTime currentTime;
-    Time timeVariable;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        currentTime = LocalTime.now();
-        timeVariable = Time.valueOf(currentTime);
-        EventBus.getInstance().subscribe("StationEvent", this::first_function);
-        create_timeline();
-        toggleButton1.setSelected(true);
-    }
-    private void afterInitialization() {
+    private void afterInitialization() throws IOException {
         if (count < 1) {
             loadList();
             count++;
         }
     }
 
-    public void first_function(CustomMouseEvent<Station> T) {
-        receivedStation = T.getEventData();
-    }
+//    public void first_function(CustomMouseEvent<Station> T) {
+//        receivedStation = T.getEventData();
+//    }
 
-    @FXML
-    private Pane mainPain;
+
 
     public void Close() {
-        mainPain.setVisible(false);
+        mainanchor.setVisible(false);
         EventBus.getInstance().publish("close_List",new CustomMouseEvent<String> ("done"));
     }
 
@@ -221,19 +228,17 @@ public class ListTransportController implements Initializable {
             selected_cell = row;
             expand_column(row);
             cellSelected = true;
-            System.out.println(row + " -> " + selected_cell);
         } else {
             if (selected_cell == row) {
                 unexpand_column(row);
                 selected_cell = 0;
                 cellSelected = false;
-                System.out.println(row + " -> " + selected_cell);
+
 
             } else {
                 unexpand_column(selected_cell);
                 //  expand_column(row);
                 cellSelected = false;
-                System.out.println(row + " -> " + selected_cell);
 
             }
         }
@@ -241,33 +246,41 @@ public class ListTransportController implements Initializable {
 
     @FXML
     private Pane TransportPane;
+    VBox saved_vbox;
 
     @FXML
     public void openDetails() throws IOException {
+        saved_vbox=detailVbox;
+
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/StationInfos.fxml"));
         AnchorPane loadedPane = loader.load();
-        TransportPane.getChildren().setAll(loadedPane.getChildren());
+        infoVbox.getChildren().setAll(loadedPane.getChildren());
+        infoVbox.toFront();
+
+        //   EventBus.getInstance().publish("Station", new CustomMouseEvent<Station>(receivedStation));
     }
 
-    @FXML
-    public void openArrive() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/Gui_Station/ListTransports.fxml"));
-        Pane loadedPane = loader.load();
-        TransportPane.getChildren().setAll(loadedPane.getChildren());
-    }
+
 
     public void create_timeline() {
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> fillPopup()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            try {
+                fillPopup();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
 
     }
     // Create a Timeline to update the time every second
 
-    private void fillPopup() {
+    private void fillPopup() throws IOException {
         LocalDateTime currentTime = LocalDateTime.now();
         String formattedTime = currentTime.format(DateTimeFormatter.ofPattern("HH:mm"));
-        timeLabel.setText(formattedTime + " CET (UTC +01:00) | 17 Feb 2024");
+        timeLabel.setText(formattedTime + " CET (UTC +01:00) |");
         stationName.setText(receivedStation.getNomStation());
         afterInitialization();
     }
@@ -283,70 +296,66 @@ public class ListTransportController implements Initializable {
     public void handleClickedOption() {
         openArrive.setOnAction(event -> {
             clickedState = 1;
-            System.out.println(1);
-            loadList();
+
+            try {
+                loadList();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
 
         openDepart.setOnAction(event -> {
-            System.out.println(2);
+
             clickedState = 2;
-            loadList();
+            try {
+                loadList();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
         });
         openStop.setOnAction(event -> {
-            System.out.println(3);
+
             clickedState = 3;
-            loadList();
+            try {
+                loadList();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
         });
+
     }
+    @FXML
+    private VBox detailVbox;
+    @FXML
+    private VBox infoVbox;
 
     @FXML
-    public void loadList() {
+    public void loadList() throws IOException {
 
         Set<Transport> T;
         showItems.getChildren().clear();
         showItems.setPrefHeight(0);
         if (receivedStation != null) {
-            T = st.getByid(receivedStation.getIdStation());
+
+            T = st.getByid(DataHolder.getStation().getIdStation());
+
 
             Iterator<Transport> iterator = T.iterator();
 
             if (clickedState == 1) {
-//
+
+                infoVbox.toBack();
+
                 List<Transport> filteredList = T.stream()
                         .filter(Transport -> Transport.getDepart().equals(receivedStation.getNomStation()))
                         .collect(Collectors.toList());
-//                showItems.setPrefHeight(70 * filteredList.size());
-//                System.out.println(showItems.getPrefHeight());
-//                try {
-//
-//                    for (int i = 0; i < filteredList.size(); i++) {
-//                        Transport data = filteredList.get(i);
-//                        RowConstraints rowConstraints = new RowConstraints();
-//                        rowConstraints.setVgrow(Priority.ALWAYS);
-//                        showItems.getRowConstraints().add(rowConstraints);
-//                        FXMLLoader fxmlLoader = new FXMLLoader();
-//                        fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/Gui_Station/transportDetails.fxml"));
-//                        vBox = fxmlLoader.load();
-//                        transportDetailsContoller transportItem = fxmlLoader.getController();
-//                        transportItem.setData(data);
-//                        transportItem.initialize(null, null);
-//                        transportItem.onDropdownClick(new ActionEvent());
-//                        int finalI = i;
-//                        ToggleButton yourButton = transportItem.getDropToggle();
-//                        yourButton.setOnAction(event -> transportItem.onDropdownClick(event));
-//                        yourButton.setOnMouseClicked(event -> handleCellClick(vBox, finalI, 0));
-//                        showItems.add(vBox, 0, i);
-//                    }
-//                    System.out.println(showItems.getAlignment());
-//                    System.out.println(showItems.getLayoutX()+showItems.getLayoutY());
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
+                System.out.println(T.size());
 
-                showItems.getRowConstraints().clear(); // Clear existing row constraints
-                showItems.getChildren().clear(); // Clear existing children
+
+                showItems.getRowConstraints().clear();
+                showItems.getChildren().clear();
                 showItems.setPrefHeight(70 * filteredList.size());
 
                 try {
@@ -355,7 +364,6 @@ public class ListTransportController implements Initializable {
                         RowConstraints rowConstraints = new RowConstraints();
                         rowConstraints.setVgrow(Priority.ALWAYS);
                         showItems.getRowConstraints().add(rowConstraints);
-
                         FXMLLoader fxmlLoader = new FXMLLoader();
                         fxmlLoader.setLocation(getClass().getResource("/fxml/Transport/Gui_Station/transportDetails.fxml"));
                         vBox = fxmlLoader.load();
@@ -374,7 +382,7 @@ public class ListTransportController implements Initializable {
                 }
             }
             else if (clickedState == 2) {
-
+                infoVbox.toBack();
                 List<Transport> filteredList = T.stream()
                         .filter(Transport -> Transport.getArivee().equals(receivedStation.getNomStation()))
                         .collect(Collectors.toList());
@@ -406,18 +414,18 @@ public class ListTransportController implements Initializable {
                     throw new RuntimeException(e);
                 }
             } else if (clickedState == 3) {
-
+                infoVbox.toBack();
                 List<Transport> filteredList = T.stream()
                         .filter(Transport -> Transport.getArivee().equals(receivedStation.getNomStation()))
                         .filter(Transport -> Transport.getHeure().after(timeVariable))
                         .collect(Collectors.toList());
-                System.out.println(70 * filteredList.size());
+
                 showItems.setPrefHeight(70 * filteredList.size());
-                System.out.println(showItems.getPrefHeight());
 
                 try {
 
                     for (int i = 0; i < filteredList.size(); i++) {
+
 
 //                             Transport data = dataList.get(i);
                         Transport data = filteredList.get(i);

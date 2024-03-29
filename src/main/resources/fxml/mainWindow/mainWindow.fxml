@@ -71,7 +71,7 @@
                                 <Font size="20.0" />
                             </font>
                         </Button>
-                        <Button fx:id="newsBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" prefHeight="52.0" prefWidth="190.0" text="  News" textFill="WHITE">
+                        <Button fx:id="newsBtn" alignment="BASELINE_LEFT" mnemonicParsing="false" onAction="#onNewsBtnClicked" prefHeight="52.0" prefWidth="190.0" text="  News" textFill="WHITE">
                             <graphic>
                                 <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -165,7 +165,7 @@
                <children>
                   <HBox fx:id="notifHbox" alignment="CENTER" prefHeight="38.0">
                      <children>
-                        <Label fx:id="textNotif" alignment="CENTER" prefHeight="30.0" prefWidth="208.0" text="This is The Notif Pop Up" />
+                        <Label fx:id="textNotif" alignment="CENTER" prefHeight="30.0" prefWidth="317.0" text="This is The Notif Pop Up" />
                         <Label fx:id="imageNotif" alignment="CENTER" prefHeight="30.0" prefWidth="29.0">
                            <graphic>
                               <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
@@ -181,7 +181,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="38.0" prefWidth="136.0" spacing="4.0">
                <children>
-                      <Button fx:id="reduireBtn" mnemonicParsing="false" prefHeight="17.0" prefWidth="23.0">
+                      <Button fx:id="reduireBtn" mnemonicParsing="false" onAction="#onReduireBtnClicked" prefHeight="32.0" prefWidth="32.0">
                           <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
@@ -190,7 +190,7 @@
                               </ImageView>
                           </graphic>
                       </Button>
-                      <Button fx:id="agrendirBtn" mnemonicParsing="false" prefHeight="16.0" prefWidth="26.0">
+                      <Button fx:id="agrendirBtn" mnemonicParsing="false" onAction="#onAgrendirBtnClicked" prefHeight="32.0" prefWidth="32.0">
                           <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                   <image>
@@ -199,7 +199,7 @@
                               </ImageView>
                           </graphic>
                       </Button>
-                      <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#onCloseBtnClicked" prefHeight="17.0" prefWidth="24.0" styleClass="button-close">
+                      <Button fx:id="closeBtn" mnemonicParsing="false" onAction="#onCloseBtnClicked" prefHeight="32.0" prefWidth="32.0" styleClass="button-close">
                           <graphic>
                               <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                   <image>

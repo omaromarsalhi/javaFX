@@ -20,6 +20,12 @@ public class ReclamationBoxController {
     private Label subject;
     @FXML
     private Button Popup;
+
+
+    @FXML
+    private Button delete;
+
+
 private Reclamation rec;
     public void setData(Reclamation reclamation){
         rec=reclamation;
@@ -32,7 +38,14 @@ private Reclamation rec;
         EventBus.getInstance().publish("showReclamation", event);
         System.out.println(rec);
         EventBus.getInstance().publish( "senddata", new CustomMouseEvent<Reclamation>(rec));
-
     }
 
+    public Button getDelete() {
+        return delete;
+    }
+
+
+    public Button getPopup() {
+        return Popup;
+    }
 }

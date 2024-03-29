@@ -20,6 +20,8 @@ public class CallPythonFromJava {
         }
 
         // Read the output from the Python script
+
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
         String line;
         StringBuilder output = new StringBuilder();

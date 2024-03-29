@@ -51,10 +51,11 @@ public class AdvancedSettingsController implements Initializable {
 
     @FXML
     private AnchorPane loadingPane;
-
-
     @FXML
     private Button submitEmail;
+
+
+
     private  String password;
     private String email;
     private static String usageOfThisForm;
@@ -65,35 +66,40 @@ public class AdvancedSettingsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         loadingPane.setVisible( false );
         setRegEx();
+        if(UserController.getInstance().getCurrentUser().getPassReseted())
+            layoutUpadatePassword.getChildren().remove( 1 );
+
+
     }
+
+
 
     public void setUsageOfThisForm(String usage) {
         usageOfThisForm = usage;
         if (usage.equals("updatePassword")) {
            layoutUpdateEmail.setVisible(false);
            layoutUpadatePassword.setVisible(true);
-
             submit.setOnAction( event ->{
                 updatePassword();
                 loadingPane.setVisible( true );
+                sleepThread(usage).start();
             } );
-
-            sleepThread().start();
         }
         else {
             layoutUpdateEmail.setVisible(true);
             layoutUpadatePassword.setVisible(false);
-            loadingPane.setVisible( true );
             submit.setOnAction( event -> {
                 updateEmail();
                 loadingPane.setVisible( true );
+                sleepThread(usage).start();
             } );
-            sleepThread().start();
         }
     }
 
 
-    private Thread sleepThread() {
+
+
+    private Thread sleepThread(String usage) {
         Task<Void> myTask = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -103,6 +109,27 @@ public class AdvancedSettingsController implements Initializable {
         };
         myTask.setOnSucceeded(e -> {
             loadingPane.setVisible( false );
+            EventBus.getInstance().publish( "loadBlog",e );
+            if(usage.equals("updatePassword"))
+                MyTools.getInstance().getTextNotif().setText( "Password Has Been Modified Successfully" );
+            else
+                MyTools.getInstance().getTextNotif().setText( "Email Has Been Modified Successfully" );
+            MyTools.getInstance().showNotif();
+        });
+        return new Thread(myTask);
+    }
+
+
+    private Thread sendMailThread() {
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                EmailController.sendEmail("latifa.benzaied@esprit.tn","Mot de passe "," mot de passe a ete change");
+                return null;
+            }
+        };
+        myTask.setOnSucceeded(e -> {
+            System.out.println("sent succfull");
         });
         return new Thread(myTask);
     }
@@ -114,36 +141,35 @@ public class AdvancedSettingsController implements Initializable {
     }
 
     public void updatePassword() {
-        ServiceUser serviceUser=new ServiceUser();
-
-        String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-
-        String ancien=ancienPassword.getText();
-        System.out.println(PasswordHasher.hashPassword(ancien));
-
-        if(PasswordHasher.verifyPassword(ancien,password) && nouveauPassword1.getText().matches(passwordRegex) && nouveauPassword2.getText().equals(nouveauPassword1.getText())){
-            serviceUser.modifierPassword(UserController.getInstance().getCurrentUser().getEmail(),PasswordHasher.hashPassword(nouveauPassword1.getText()));
-            EmailController.sendEmail("latifa.benzaied@esprit.tn","Mot de passe "," mot de passe a ete change");
+        ServiceUser serviceUser = new ServiceUser();
+        if(UserController.getInstance().getCurrentUser().getPassReseted()){
+            System.out.println(nouveauPassword1.getText());
+            serviceUser.modifierPassword( UserController.getInstance().getCurrentUser().getEmail(), PasswordHasher.hashPassword( nouveauPassword1.getText() ) );
+            sendMailThread().start();
         }
         else {
+            String passwordRegex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+            String ancien = ancienPassword.getText();
+            if (PasswordHasher.verifyPassword( ancien, password ) && nouveauPassword1.getText().matches( passwordRegex ) && nouveauPassword2.getText().equals( nouveauPassword1.getText() )) {
+                serviceUser.modifierPassword( UserController.getInstance().getCurrentUser().getEmail(), PasswordHasher.hashPassword( nouveauPassword1.getText() ) );
+                sendMailThread().start();
+            } else {
 
+            }
         }
-
-
     }
     public void updateEmail() {
 
             String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+
             ServiceUser service =new ServiceUser();
 
             User user=new User();
 
             user=service.findParEmail(ancienEmail.getText());
 
-
             if(user!=null && newEmail.getText().matches(emailRegex) && !newEmail.getText().equals(user.getEmail())){
-
-                System.out.println("hiii1");
+                service.modifierEmail(ancienEmail.getText(),newEmail.getText());
             }
             else {
 
@@ -152,7 +178,7 @@ public class AdvancedSettingsController implements Initializable {
                 {
 
                 }
-                if(user.getEmail().equals(newEmail.getText())){
+                if(!user.getEmail().equals(newEmail.getText())){
 
                     System.out.println("hi2");
                 }

@@ -55,14 +55,14 @@ public class ServicesTransport   {
     public void updateItem(Transport T) {
         Connection cnx = ConnectionDB.getInstance().getCnx();
         String sql = "UPDATE transport\n" +
-                "SET Type_Vehicule=?, Depart=?, Arivee=?, Reference=?, Vehicule_Image=?, Prix=?, Heure=?\n" +
+                "SET Type_Vehicule=?, Station_depart=?, Station_arrive=?, Reference=?, Vehicule_Image=?, Prix=?, Heure=?\n" +
                 "WHERE idTransport=?;\n ";
 
         try {
             prepare = cnx.prepareStatement(sql);
             prepare.setString(1, T.getType_vehicule());
-            prepare.setString(2, T.getDepart());
-            prepare.setString(3, T.getArivee());
+            prepare.setInt(2,T.getStation_depart().getIdStation());
+            prepare.setInt(3, T.getStation_arrive().getIdStation());
             prepare.setString(4, T.getReference());
             prepare.setString(5, T.getVehicule_Image());
             prepare.setFloat(6, T.getPrix());
@@ -154,7 +154,7 @@ public class ServicesTransport   {
                 "FROM transport\n" +
                 "LEFT JOIN station AS station1 ON transport.Station_depart = station1.idStation \n" +
                 "LEFT JOIN station AS station2 ON transport.Station_arrive = station2.idStation\n" +
-                "WHERE transport.Station_depart = "+id+" AND transport.Station_arrive="+id+"\n" ;
+                "WHERE transport.Station_depart = "+id+" OR transport.Station_arrive="+id+"\n" ;
 
 
         try (PreparedStatement preparedStatement = cnx.prepareStatement(sql);

@@ -18,11 +18,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="helpfullBarContainer" alignment="CENTER" prefHeight="400.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: #f4f4f4; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.helpfullBarController">
+<VBox fx:id="helpfullBarContainer" alignment="CENTER" prefHeight="400.0" prefWidth="240.0" spacing="5.0" style="-fx-background-color: transparent; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.marketPlace.helpfullBarController">
    <children>
-      <AnchorPane fx:id="designAnchor" prefHeight="220.0" prefWidth="200.0" style="-fx-background-radius: 10;">
+      <AnchorPane fx:id="designAnchor" prefHeight="125.0" prefWidth="234.0" style="-fx-background-radius: 10;">
          <children>
-            <ImageView fx:id="animationImageView" fitHeight="120.0" fitWidth="112.0" layoutX="63.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="17.400000000000006" AnchorPane.topAnchor="17.0">
+            <ImageView fx:id="animationImageView" fitHeight="92.0" fitWidth="107.0" layoutX="75.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
                <image>
                   <Image url="@../../citizenHub/img1.png" />
                </image>

@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import pidev.javafx.controller.contrat.CheckOutController;
 import pidev.javafx.tools.UserController;
 import pidev.javafx.tools.marketPlace.ChatClient;
@@ -71,7 +72,6 @@ public class MainWindowController implements Initializable {
 //        EventBus.getInstance().subscribe( "laodCheckOut",this::laodCheckOut );
 //        EventBus.getInstance().subscribe( "laodMarketPlace",this::onMarketPlaceBtnClicked );
 //        mainBorderPane.getCenter())
-        System.out.println(UserController.getInstance().getCurrentUser());
         accountImg.setImage(new Image( "file:src/main/resources"+UserController.getInstance().getCurrentUser().getPhotos(),25,25,true,true)  );
         accountBtn.setText( UserController.getInstance().getCurrentUser().getFirstname()+" "+UserController.getInstance().getCurrentUser().getLastname() );
 //        ChatClient.getInstance().establishConnection();
@@ -81,6 +81,16 @@ public class MainWindowController implements Initializable {
         MyTools.getInstance().setTextNotif(textNotif);
         MyTools.getInstance().showAndHideAnimation( MyTools.getInstance().getNotifHbox(),0,0 );
         notifHbox.setVisible( true );
+
+
+
+        StackPane dashbord = null;
+        try {
+            dashbord = FXMLLoader.load(getClass().getResource( "/fxml/user/newAccountOmar.fxml" ));
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(dashbord);
     }
 
 
@@ -108,7 +118,6 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-//        mainBorderPane.setCenter(stations);
         centerContainer.getChildren().add(stations);
     }
 
@@ -122,14 +131,20 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException( e );
         }
-        mainBorderPane.setCenter(stations);
+        centerContainer.getChildren().add(stations);
     }
 
 
     @FXML
     public void onNewsBtnClicked(ActionEvent event) throws IOException {
-        VBox showEmpAnchorPane = FXMLLoader.load( Objects.requireNonNull( getClass().getResource( "/fxml/marketPlace/showItems.fxml" ) ) );
-        mainBorderPane.setCenter(showEmpAnchorPane);
+        centerContainer.getChildren().clear();
+        StackPane stations = null;
+        try {
+            stations = FXMLLoader.load( getClass().getResource( "/fxml/blog/newsPage.fxml" ) );
+        } catch (IOException e) {
+            throw new RuntimeException( e );
+        }
+        centerContainer.getChildren().add(stations);
     }
 
 
@@ -170,38 +185,6 @@ public class MainWindowController implements Initializable {
         centerContainer.getChildren().add(account);
     }
 
-//    @FXML
-//    public void onMPDClicked(ActionEvent event) throws IOException {
-//        StackPane stackPane = FXMLLoader.load(getClass().getResource( "/fxml/userMarketDashbord/userMainDashbord.fxml" ));
-//        mainBorderPane.setCenter(stackPane);
-//    }
-
-//    @FXML
-//    public void onMarketPlaceBtnClicked(ActionEvent event){
-//        try {
-//            mainhBox2 = FXMLLoader.load(getClass().getResource( "/fxml/marketPlace/myMarket.fxml" ));
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-////        mainhBox2.setMaxHeight(MainAnchorPane.getPrefHeight());
-////        mainhBox2.setMaxWidth( MainAnchorPane.getPrefWidth());
-//        mainBorderPane.setCenter(mainhBox2);
-//    }
-
-//    public void laodCheckOut(CustomMouseEvent<Bien> event) {
-//        try {
-//            FXMLLoader fxmlLoader = new FXMLLoader();
-//            fxmlLoader.setLocation(getClass().getResource( "/fxml/Contract/checkOut.fxml" ));
-//            mainhBox = fxmlLoader.load();
-//            CheckOutController checkOutController = fxmlLoader.getController();
-//            checkOutController.setData(event.getEventData());
-//        } catch (IOException e) {
-//            throw new RuntimeException( e );
-//        }
-////        mainhBox.setMaxHeight(MainAnchorPane.getPrefHeight()  );
-////        mainhBox.setMaxWidth( MainAnchorPane.getPrefWidth());
-//       mainBorderPane.setCenter(mainhBox);
-//    }
 
 
     @FXML
@@ -210,18 +193,18 @@ public class MainWindowController implements Initializable {
         System.exit(0);
     }
 
-//    @FXML
-//    void onReduireBtnClicked(ActionEvent event) {
-//        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
-//        currentStage.setIconified(true);
-//    }
+    @FXML
+    void onReduireBtnClicked(ActionEvent event) {
+        Stage currentStage = (Stage) reduireBtn.getScene().getWindow();
+        currentStage.setIconified(true);
+    }
 
-//    @FXML
-//    void onAgrendirBtnClicked(ActionEvent event) {
-//        Stage currentStage = (Stage) agrendirBtn.getScene().getWindow();
-//        boolean etatFenetre = currentStage.isMaximized();
-//        currentStage.setMaximized(!etatFenetre);
-//    }
+    @FXML
+    void onAgrendirBtnClicked(ActionEvent event) {
+        Stage currentStage = (Stage) agrendirBtn.getScene().getWindow();
+        boolean etatFenetre = currentStage.isMaximized();
+        currentStage.setMaximized(!etatFenetre);
+    }
 
 //    @FXML
 //    void onBlogClicked(MouseEvent event) throws IOException {

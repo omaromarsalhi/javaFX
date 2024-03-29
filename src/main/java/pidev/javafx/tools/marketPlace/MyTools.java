@@ -11,7 +11,10 @@ import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -180,8 +183,8 @@ public class MyTools {
                         checkIfProductIsValid = false;
                 } else
                     checkIfProductIsValid = false;
-//                if (checkIfProductIsValid)
-//                    PhoneSMS.getInstance().sendSMS( "+21629624921", "A New Product Was Added" );
+                if (checkIfProductIsValid)
+                    PhoneSMS.getInstance().sendSMS( "+21629624921", "A New Product Was Added" );
                 checkIfProductIsValid = true;
             }
         }
@@ -211,7 +214,10 @@ public class MyTools {
             scaleTransition.setOnFinished( event1 -> hBox.getChildren().remove( child ) );
         else if (parent instanceof VBox vBox)
             scaleTransition.setOnFinished( event1 -> vBox.getChildren().remove( child ) );
+        if (parent instanceof GridPane gridPane)
+            scaleTransition.setOnFinished( event1 -> gridPane.getChildren().remove( child ) );
     }
+
 
     public void showAnimation(Node child) {
         child.setVisible(false );
@@ -229,6 +235,7 @@ public class MyTools {
             scaleTransition.play();
         } );
     }
+
 
     public void showAndHideAnimation(Node child,int ttoWhat,double delay ) {
 
@@ -269,8 +276,8 @@ public class MyTools {
     }
 
     public void showNotif(){
-        showAndHideAnimation( notifHbox,1,1500 );
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(15000), event1 -> {
+        showAndHideAnimation( notifHbox,1,500 );
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(6000), event1 -> {
             showAndHideAnimation( notifHbox,0,0 );
         }) );
         timeline.setCycleCount( Animation.INDEFINITE);

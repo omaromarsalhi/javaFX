@@ -88,16 +88,24 @@ public class UserFormController implements Initializable {
     private TextField phone;
     @FXML
     private TextField status;
-    private boolean modifier = false;
-
-
     private static String usageOfThisForm;
     private boolean isImageUpdated;
     private Product product;
     private String formLayoutBeforRegexCheck;
     private String formLayoutAfterRegexCheck;
     Popup popup4Regex = MyTools.getInstance().createPopUp();
+    private boolean[] isAllInpulValid;
     private User user;
+    String regexAge = "^(?:1[8-9]|[2-9][0-9])$";
+    String regexLastName = "[a-zA-Z\\s]{3,}+";
+    String regexTelephone = "^[0-9]{8,8}$";
+    String regexCIN = "^[0-9]{8}$";
+    String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+    String aage = "Valide les ages entre 18 et 99 et il faut l age correspond a la dob ";
+    String emaill="Doit être au format standard, par exemple \"utilisateur@example.com";
+    String tel = "Valide un numéro de téléphone composé exactement de 8 chiffres.";
+    String chaine = "Accepte uniquement les chaines composés d'au moins 3 caractères alphabétiques.";
+    String cinn = "Valide un numéro de carte d'identité nationale composé exactement de 8 chiffres.";
 
 
     @Override
@@ -114,6 +122,11 @@ public class UserFormController implements Initializable {
                 "-fx-border-radius: 10;" +
                 "-fx-background-color: white;" +
                 "-fx-background-radius: 10";
+
+        isAllInpulValid=new boolean[]{false,false,false,false,false,false,false};
+        adresse.setEditable(false);
+        email.setEditable(false);
+
     }
 
     public void setUsageOfThisForm(String usage) {
@@ -168,27 +181,28 @@ public class UserFormController implements Initializable {
 
 
             updateUser.setOnMouseClicked(event -> {
-                modifierData();
-                Task<Void> task = new Task() {
-                    @Override
-                    protected Object call() throws Exception {
-                        Platform.runLater(() -> {
-                            formBox.setVisible(false);
-                            loadinPage.setOpacity(0.4);
-                            loadinPage.setVisible(true);
-                        });
-                        Thread.sleep(3000);
-                        return null;
-                    }
+                if(modifierData()){
+                    Task<Void> task = new Task() {
+                        @Override
+                        protected Object call() throws Exception {
+                            Platform.runLater(() -> {
+                                formBox.setVisible(false);
+                                loadinPage.setOpacity(0.4);
+                                loadinPage.setVisible(true);
+                            });
+                            Thread.sleep(3000);
+                            return null;
+                        }
                 };
-
                 task.setOnSucceeded(workerStateEvent -> {
                     Platform.runLater(() -> {
                         EventBus.getInstance().publish("exitFormUser", event);
+                        MyTools.getInstance().getTextNotif().setText( "User Has Been Modified Successfully" );
+                        MyTools.getInstance().showNotif();
                     });
                 });
                 new Thread(task).start();
-
+                }
             });
 
         }
@@ -218,13 +232,20 @@ public class UserFormController implements Initializable {
 
     public void setDataUser(User user) {
         name.setText(user.getFirstname());
+        if(!user.getLastname().isEmpty())
         lastName.setText(user.getLastname());
+        if(user.getAge()!=0)
         age.setText(String.valueOf(user.getAge()));
+        if(!user.getCin().isEmpty())
         cin.setText(user.getCin());
         email.setText(user.getEmail());
+        if(!user.getGender().isEmpty())
         gender.setText(user.getGender());
+        System.out.println(user.getAdresse());
         adresse.setText(user.getAdresse());
+        if(!user.getStatus().isEmpty())
         status.setText(user.getStatus());
+        if(user.getNum()!=0)
         phone.setText(String.valueOf(user.getNum()));
         if(user.getDob()!=null)
             dob.setValue( LocalDate.parse( user.getDob().formatted( DateTimeFormatter.ofPattern( "yyy/MM/DD" )) ) );
@@ -233,243 +254,198 @@ public class UserFormController implements Initializable {
 
     }
 
-    public void modifierData() {
-        User user= new User();
-        user.setFirstname(name.getText());
-        user.setEmail(email.getText());
-        user.setLastname(lastName.getText());
-        user.setAge(Integer.parseInt(age.getText()));
-        user.setCin(cin.getText());
-        if(dob!=null)
-            user.setDob(String.valueOf(dob.getValue()));
-        user.setNum(Integer.parseInt(phone.getText()));
-        user.setStatus(status.getText());
-        user.setPhotos(UserController.getInstance().getCurrentUser().getPhotos());
-        user.setGender(gender.getText());
-        ServiceUser service = new ServiceUser();
-        service.modifier(user);
-        UserController.setUser(user);
+    public boolean modifierData(){
+        testChampsBeforRegex();
+//        System.out.println("lastname"+isAllInpulValid[1]);
+//        System.out.println("name"+isAllInpulValid[0]);
+//        System.out.println("age"+isAllInpulValid[2]);
+//        System.out.println("cin"+isAllInpulValid[3]);
+//        System.out.println("phone"+isAllInpulValid[4]);
+//        System.out.println("status"+isAllInpulValid[5]);
+//        System.out.println("gender"+isAllInpulValid[6]);
 
+        if(isAllInpulValid[0] && isAllInpulValid[1] && isAllInpulValid[2] && isAllInpulValid[3] && isAllInpulValid[4] && isAllInpulValid[5] && isAllInpulValid[6]  ) {
+            User user = new User();
+            System.out.println( "wa" );
+            System.out.println(user);
+            user.setFirstname(name.getText());
+            user.setEmail(email.getText());
+            user.setLastname(lastName.getText());
+            user.setAge(Integer.parseInt(age.getText()));
+            user.setCin(cin.getText());
+            if (dob != null)
+                user.setDob(String.valueOf(dob.getValue()));
+            user.setNum(Integer.parseInt(phone.getText()));
+            user.setStatus(status.getText());
+            user.setPhotos(UserController.getInstance().getCurrentUser().getPhotos());
+            user.setGender(gender.getText());
+            ServiceUser service = new ServiceUser();
+            service.modifier(user);
+            UserController.setUser(user);
+            return true;
+        }
+          return false;
     }
 
     public void setRegEx() {
-        // String agereel;
-        String regexAge = "^(?:1[8-9]|[2-9][0-9])$";
-        String regexLastName = "[a-zA-Z\\s]{3,}+";
-        String regexTelephone = "^[0-9]{8,8}$";
-        String regexCIN = "^[0-9]{8}$";
-        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-        String aage = "Valide les ages entre 18 et 99 et il faut l age correspond a la dob ";
-        String emaill="Doit être au format standard, par exemple \"utilisateur@example.com";
-        String tel = "Valide un numéro de téléphone composé exactement de 8 chiffres.";
-        String chaine = "Accepte uniquement les chaines composés d'au moins 3 caractères alphabétiques.";
-        String cinn = "Valide un numéro de carte d'identité nationale composé exactement de 8 chiffres.";
+        String agereel;
+
+
         name.setOnKeyTyped(event -> {
+            isAllInpulValid[0]=name.getText().matches(regexLastName);
+            String color=(isAllInpulValid[0])?"green":"red";
+            System.out.println(isAllInpulValid[0]);
             if(name.getText().isEmpty()){
                 formBox.setStyle(formLayoutBeforRegexCheck);
+                name.setStyle("");
             }
 
             else
             {
-                if(name.getText().matches(regexLastName))
-                {
+                name.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
 
                     formBox.setStyle(formLayoutAfterRegexCheck);
-                    name.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
 
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    name.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                }
             }
 
 
         });
+
+
         lastName.setOnKeyTyped(event -> {
+            isAllInpulValid[1]=lastName.getText().matches(regexLastName);
+            String color=(isAllInpulValid[1])?"green":"red";
+            System.out.println(isAllInpulValid[1]);
             if(lastName.getText().isEmpty()){
-
                 formBox.setStyle(formLayoutBeforRegexCheck);
+                lastName.setStyle("");
             }
+
             else
             {
-                if(lastName.getText().matches(regexLastName))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    lastName.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
+                lastName.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
 
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    lastName.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
+                formBox.setStyle(formLayoutAfterRegexCheck);
+
             }
+
         });
-        email.setOnKeyTyped(event -> {
-            if(email.getText().isEmpty()){
 
-                formBox.setStyle(formLayoutBeforRegexCheck);
-            }
-            else
-            {
-                if(email.getText().matches(regexLastName))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    email.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    email.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
-            }
-        });
-        adresse.setOnKeyTyped(event -> {
-            if(adresse.getText().isEmpty()){
-
-                formBox.setStyle(formLayoutBeforRegexCheck);
-            }
-            else
-            {
-                if(adresse.getText().matches(regexLastName))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    adresse.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    adresse.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
-            }
-        });
         age.setOnKeyTyped(event -> {
+            if(age.getText().matches(regexAge))
+            isAllInpulValid[2]=true;
+            String color=(isAllInpulValid[2])?"green":"red";
+            System.out.println(isAllInpulValid[2]);
             if(age.getText().isEmpty()){
-
                 formBox.setStyle(formLayoutBeforRegexCheck);
+                age.setStyle("");
             }
             else
             {
-                if(age.getText().matches(regexAge))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    age.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    age.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
+                age.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
+                formBox.setStyle(formLayoutAfterRegexCheck);
             }
+
         });
-        cin.setOnKeyTyped(event -> {
-            if(cin.getText().isEmpty()){
 
+        cin.setOnKeyTyped(event -> {
+            isAllInpulValid[3]=cin.getText().matches(regexCIN);
+            String color=(isAllInpulValid[3])?"green":"red";
+            System.out.println(isAllInpulValid[3]);
+            if(cin.getText().isEmpty()){
                 formBox.setStyle(formLayoutBeforRegexCheck);
+                cin.setStyle("");
             }
+
             else
             {
-                if(cin.getText().matches(regexCIN))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    cin.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
+                cin.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
 
-                }
-                else
-                {
-                    cin.setStyle(formLayoutAfterRegexCheck);
-                    cin.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
+                formBox.setStyle(formLayoutAfterRegexCheck);
+
             }
+
         });
         phone.setOnKeyTyped(event -> {
+            isAllInpulValid[4]=phone.getText().matches(regexTelephone);
+            String color=(isAllInpulValid[4])?"green":"red";
+            System.out.println(isAllInpulValid[4]);
             if(phone.getText().isEmpty()){
-
                 formBox.setStyle(formLayoutBeforRegexCheck);
+                phone.setStyle("");
             }
+
             else
             {
-                if(phone.getText().matches(regexTelephone))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    phone.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
+                phone.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
 
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    phone.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
+                formBox.setStyle(formLayoutAfterRegexCheck);
+
             }
+
         });
         status.setOnKeyTyped(event -> {
-            if(status.getText().isEmpty()){
 
+            isAllInpulValid[5]=status.getText().matches(regexLastName);
+            String color=(isAllInpulValid[5])?"green":"red";
+            System.out.println(isAllInpulValid[5]);
+            if(status.getText().isEmpty()){
                 formBox.setStyle(formLayoutBeforRegexCheck);
+                status.setStyle("");
             }
+
             else
             {
-                if(status.getText().matches(regexLastName))
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    status.setStyle( "-fx-border-color: transparent transparent  green transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
+                status.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
 
-                }
-                else
-                {
-                    formBox.setStyle(formLayoutAfterRegexCheck);
-                    status.setStyle( "-fx-border-color: transparent transparent  red transparent;"+
-                            "-fx-border-width:0 0 2 0;" +
-                            "-fx-border-radius: 0" );
-                    modifier=false;
-                }
+                formBox.setStyle(formLayoutAfterRegexCheck);
+
             }
+
         });
         gender.setOnKeyTyped(event -> {
+            isAllInpulValid[6]=gender.getText().matches(regexLastName);
+            String color=(isAllInpulValid[6])?"green":"red";
+            System.out.println(isAllInpulValid[6]);
+            if(gender.getText().isEmpty()){
+                formBox.setStyle(formLayoutBeforRegexCheck);
+                gender.setStyle("");
+            }
+
+            else
+            {
+                gender.setStyle( "-fx-border-color: transparent transparent " + color + " transparent;" +
+                        "-fx-border-width:0 0 2 0;" +
+                        "-fx-border-radius: 0" );
+
+                formBox.setStyle(formLayoutAfterRegexCheck);
+
+            }
 
         });
+        dob.setOnKeyTyped(event -> {
+
+            System.out.println("lplkojjjh");
+            Period period = Period.between(dob.getValue(), LocalDate.now());
+            int agerel = period.getYears();
+            System.out.println(agerel);
+
+        });
+
+
+
         name.setOnMouseEntered( event -> {
             if(name.getText()!=null&&!name.getText().isEmpty()&&!name.getText().matches(regexLastName)){
                 ((Label)popup4Regex.getContent().get( 0 )).setText(chaine);
@@ -478,7 +454,6 @@ public class UserFormController implements Initializable {
             }
         } );
         name.setOnMouseExited( event -> {
-//            if(isAllInpulValid[3])
             popup4Regex.hide();
         } );
         lastName.setOnMouseEntered( event -> {
@@ -539,7 +514,7 @@ public class UserFormController implements Initializable {
         } );
         gender.setOnMouseEntered( event -> {
             if(gender.getText()!=null&&!gender.getText().isEmpty()&&!gender.getText().matches(regexLastName)){
-                ((Label)popup4Regex.getContent().get( 0 )).setText("ONLY CHARACTERS AND NUMBERS ARE ALLOWED");
+                ((Label)popup4Regex.getContent().get( 0 )).setText(chaine);
                 popup4Regex.getContent().get( 0 ).setStyle(popup4Regex.getContent().get( 0 ).getStyle()+"-fx-background-color: #ed1c27;"  );
                 popup4Regex.show(Stage.getWindows().get(0),event.getScreenX()+40,event.getScreenY()-40);
             }
@@ -582,6 +557,49 @@ public class UserFormController implements Initializable {
         } );
 
     }
+    void testChampsBeforRegex()
+    {
+        System.out.println("hiuhgytfrdesaw");
+        System.out.println(dob.getValue());
+        if(!name.getText().isEmpty() && name.getText().matches(regexLastName))
+        {
+            System.out.println(name.getText());
+           isAllInpulValid[0]=true;
+        }
+
+        if(!lastName.getText().isEmpty() && lastName.getText().matches(regexLastName))
+        {
+
+            isAllInpulValid[1]=true;
+        }
+
+        if(!age.getText().isEmpty() && age.getText().matches(regexAge))
+        {
+
+            isAllInpulValid[2]=true;
+        }
+        if(!cin.getText().isEmpty() && cin.getText().matches(regexCIN))
+        {
+            isAllInpulValid[3]=true;
+        }
+        if(!phone.getText().isEmpty() && phone.getText().matches(regexTelephone))
+        {
+            isAllInpulValid[4]=true;
+        }
+        if(!status.getText().isEmpty() && status.getText().matches(regexLastName))
+        {
+            isAllInpulValid[5]=true;
+        }
+        if(!gender.getText().isEmpty() && gender.getText().matches(regexLastName))
+        {
+            isAllInpulValid[6]=true;
+        }
+
+
+    }
+
+
+
 
 
     @FXML

@@ -16,9 +16,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
@@ -34,7 +34,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -45,6 +44,9 @@ import okhttp3.*;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import pidev.javafx.tools.marketPlace.CustomMouseEvent;
+import pidev.javafx.tools.marketPlace.EventBus;
+import pidev.javafx.tools.marketPlace.MyTools;
 
 public class AbonnementClientController implements Initializable {
 
@@ -88,6 +90,8 @@ public class AbonnementClientController implements Initializable {
     private AnchorPane loadinPage;
     @FXML
     private Pane form;
+    @FXML
+    private Pane visiolScan;
 
 
 
@@ -107,8 +111,11 @@ public class AbonnementClientController implements Initializable {
     final String destinationString = "src/main/resources/abonnementImg";
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        form.setVisible( false );
+        visiolScan.setVisible( false );
         TypeAbonnementBox.getItems().addAll("Annuel", "mensuel");
         afficher();
         if (abonnementList.size() > 0)
@@ -120,7 +127,7 @@ public class AbonnementClientController implements Initializable {
     }
 
     @FXML
-    private Pane displayAbonnement;
+    private VBox mainContainer;
 
     Map<String, Double> tagMap = new HashMap<>();
 
@@ -147,7 +154,7 @@ public class AbonnementClientController implements Initializable {
                 @Override
                 protected Map call() throws Exception {
                     Platform.runLater(() -> {
-                        showCustomDialog();
+                        visiolScan.setVisible( true );
                     });
                     return image_api(imagePath);
                 }
@@ -156,8 +163,7 @@ public class AbonnementClientController implements Initializable {
             task.setOnSucceeded(workerStateEvent -> {
                 if (!task.getValue().isEmpty() && task.getValue().containsKey("man")) {
                     Platform.runLater(() -> {
-
-                        close_dialog();
+                        visiolScan.setVisible( false );
                         imageAbn.setImage(new Image("file:///"+imagePath));
                     });
                 } else System.out.println("image should be of a humain being and in portrait mode");
@@ -171,10 +177,26 @@ public class AbonnementClientController implements Initializable {
         }
     }
 
-    public void add_load() {
-        expand();
-        UpdateBtn.setVisible(false);
+
+    @FXML
+    public void expand() {
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(10);
+        blur.setHeight(10);
+        blur.setIterations(3);
+        mainContainer.setEffect(blur);
+        form.setOpacity(0.85);
+        mainContainer.setOpacity(0.85);
+        form.setVisible( true );
     }
+
+    @FXML
+    public void unexpand() {
+        form.setVisible( false );
+        mainContainer.setVisible( true );
+        mainContainer.setEffect( null );
+    }
+
 
     public void ajouter() {
         String randomFileName = null;
@@ -185,6 +207,8 @@ public class AbonnementClientController implements Initializable {
             randomFileName = UUID.randomUUID().toString() + ".jpg";
         }
         Path destinationPath = Paths.get(destinationString, randomFileName);
+        System.out.println(sourcePath);
+        System.out.println(destinationPath);
         try {
             Files.copy(sourcePath, destinationPath);
         } catch (IOException e) {
@@ -193,11 +217,28 @@ public class AbonnementClientController implements Initializable {
         imagePath = "/abonnementImg" + "/" + randomFileName;
 
         Abonnement p = new Abonnement(NomText.getText(), PrenomText.getText(), TypeAbonnementBox.getValue().toString(), imagePath);
-
         sa.addItem(p);
         afficher();
         remplir_abonnement();
-        unexpand();
+        sleepThread().start();
+
+    }
+
+    private Thread sleepThread() {
+        Task<Void> myTask = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                loadinPage.setVisible( true );
+                Thread.sleep(2000);
+                return null;
+            }
+        };
+
+        myTask.setOnSucceeded(e -> {
+            loadinPage.setVisible( false );
+            unexpand();
+        });
+        return new Thread(myTask);
     }
 
     ;
@@ -295,33 +336,6 @@ public class AbonnementClientController implements Initializable {
 
     }
 
-    Stage dialogStage = new Stage();
-
-    @FXML
-    public void close_dialog() {
-
-        dialogStage.close();
-    }
-
-    @FXML
-    private void showCustomDialog() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/Transport/exceptions/scan_photo.fxml"));
-            AnchorPane dialogContent = loader.load();
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            dialogStage.initStyle(StageStyle.TRANSPARENT);
-            dialogStage.setTitle("Custom Dialog");
-
-            Scene dialogScene = new Scene(dialogContent);
-            dialogScene.setFill(Color.TRANSPARENT);
-            dialogStage.setScene(dialogScene);
-            dialogStage.show();
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     @FXML
     Button UpdateBtn;
@@ -381,59 +395,8 @@ public class AbonnementClientController implements Initializable {
         }
     }
 
-    @FXML
-    public void unexpand() {
-        Timeline timeline = new Timeline();
-        timeline.setCycleCount(1);
-        timeline.setAutoReverse(false);
-
-        double panelWidth = statsPannel.getWidth();
-
-        KeyValue initTranslateX = new KeyValue(statsPannel.translateXProperty(), 0);
-        KeyValue finalTranslateX = new KeyValue(statsPannel.translateXProperty(), panelWidth - 50);
-        KeyValue initWidth = new KeyValue(statsPannel.prefWidthProperty(), 404);
-        KeyValue finalWidth = new KeyValue(statsPannel.prefWidthProperty(), 50);
-
-        KeyFrame initFrame = new KeyFrame(Duration.ZERO, initWidth, initTranslateX);
-        KeyFrame finalFrame = new KeyFrame(Duration.seconds(0.3), finalWidth, finalTranslateX);
-
-        timeline.getKeyFrames().addAll(finalFrame, initFrame);
-
-        statsPane.setVisible(false);
-        expandBtn.setVisible(true);
-
-        timeline.play();
 
 
-        BoxBlur blur = new BoxBlur();
-        blur.setWidth(10);
-        blur.setHeight(10);
-        blur.setIterations(3);
-        displayAbonnement.toFront();
-        displayAbonnement.setEffect(null);
-        form.toBack();
-        displayAbonnement.setOpacity(1);
-
-
-    }
-
-
-    @FXML
-    public void expand() {
-        statsPane.setVisible(true);
-        expandBtn.setVisible(true);
-        displayAbonnement.toBack();
-        BoxBlur blur = new BoxBlur();
-        blur.setWidth(10);
-        blur.setHeight(10);
-        blur.setIterations(3);
-        displayAbonnement.toBack();
-        displayAbonnement.setEffect(blur);
-        form.toFront();
-        form.setOpacity(0.85);
-        displayAbonnement.setOpacity(0.85);
-
-    }
 
     public Map<String, Double> image_api(String s) {
         imagePath = s; // Replace with your local image path

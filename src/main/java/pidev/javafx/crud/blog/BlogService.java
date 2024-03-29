@@ -125,7 +125,7 @@ public class BlogService  {
     public List<Post> rechercherPosts(String recherche) {
         Connection cnx = ConnectionDB.getInstance().getCnx();
         List<Post> resultat = new ArrayList<>();
-        String req = "SELECT * FROM `post` WHERE `caption` LIKE ? OR `compte` IN (SELECT `id` FROM `compte` WHERE `nom` LIKE ?)";
+        String req = "SELECT * FROM post WHERE caption LIKE ? OR compte IN ( SELECT idUser FROM user WHERE CONCAT(firstName, ' ', lastName) LIKE ?)";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ps.setString(1, "%" + recherche + "%");
@@ -165,7 +165,7 @@ public class BlogService  {
     public List<Post> getPostsTriesParNbReactions() {
         Connection cnx = ConnectionDB.getInstance().getCnx();
         List<Post> posts = new ArrayList<>();
-        String req = "SELECT * FROM `post` ORDER BY `nbReactions` DESC";
+        String req = "SELECT * FROM post ORDER BY nbReactions DESC";
         try {
             PreparedStatement ps = cnx.prepareStatement(req);
             ResultSet res = ps.executeQuery();
@@ -188,7 +188,7 @@ public class BlogService  {
     public List<Post> getUnverifiedPosts() {
         Connection cnx = ConnectionDB.getInstance().getCnx();
         List<Post> unverifiedPosts = new ArrayList<>();
-        String req = "SELECT * FROM `post` p JOIN `compte` c ON p.compte = c.id WHERE c.verified = 0 ORDER BY p.date_post DESC";
+        String req = "SELECT * FROM post p JOIN user c ON p.compte = c.idUser WHERE c.role = \"Citoyen\" ORDER BY p.date_post DESC";
         try {
             Statement st = cnx.createStatement();
             ResultSet res = st.executeQuery(req);
@@ -211,7 +211,7 @@ public class BlogService  {
     public List<Post> getVerifiedPosts() {
         Connection cnx = ConnectionDB.getInstance().getCnx();
         List<Post> unverifiedPosts = new ArrayList<>();
-        String req = "SELECT * FROM `post` p JOIN `compte` c ON p.compte = c.id WHERE c.verified = 1 ORDER BY p.date_post DESC";
+        String req = "SELECT * FROM post p JOIN user c ON p.compte = c.idUser WHERE c.role = \"admin\" ORDER BY p.date_post DESC";
         try {
             Statement st = cnx.createStatement();
             ResultSet res = st.executeQuery(req);

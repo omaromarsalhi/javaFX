@@ -17,6 +17,7 @@ public class CallPythonFromJava {
             process = processBuilder.start();
         } catch (IOException e) {
             throw new RuntimeException( e );
+
         }
 
         // Read the output from the Python script

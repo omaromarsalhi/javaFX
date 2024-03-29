@@ -167,9 +167,9 @@ public class FormController implements Initializable {
     public ImageView createRegexImage(boolean isvalidated){
         ImageView imageView=new ImageView();
         if(isvalidated)
-            imageView.setImage( new Image( "file:src/main/resources/namedIcons/green.png",34,34,true,true ) );
+            imageView.setImage( new Image( "file:src/main/resources/icons/marketPlace/green.png",34,34,true,true ) );
         else
-            imageView.setImage( new Image( "file:src/main/resources/namedIcons/red.png",34,34,true,true ) );
+            imageView.setImage( new Image( "file:src/main/resources/icons/marketPlace/red.png",34,34,true,true ) );
         return imageView;
     }
 
@@ -376,6 +376,7 @@ public class FormController implements Initializable {
 
 
     public void onAddOrUpdateBienClicked(MouseEvent event) {
+//        System.out.println(UserController.getInstance().getCurrentUser());
         if(isAllInpulValid[0]&&isAllInpulValid[1]&&isAllInpulValid[2]) {
             Bien bien = new Bien( (product == null) ? 0 : product.getId(),
                     UserController.getInstance().getCurrentUser().getId(),

@@ -45,7 +45,7 @@ public class UseritemController implements Initializable
         lastname.setText(user1.getLastname());
 
         email.setText(user1.getEmail());
-        Image image1 = new Image("file:"+user1.getPhotos());
+        Image image1 = new Image("file:src/main/resources"+user1.getPhotos(),32,32,true,true);
         image.setImage(image1);
 
 

@@ -23,9 +23,14 @@ public class municipaliteitemController {
 
     @FXML
     private Label label2;
+    public void setPos(int pos) {
+        this.pos = pos;
+    }
+    private int pos;
     public void setData(Municipalite municipalite){
         label1.setText(municipalite.getName());
         label2.setText(municipalite.getAdresse());
+        System.out.println(label1.getText());
 
     }
 }

@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,6 +15,7 @@ import javafx.util.Callback;
 import pidev.javafx.crud.transport.ServicesAbonnement;
 import pidev.javafx.model.Transport.Abonnement;
 import pidev.javafx.model.Transport.Station;
+import pidev.javafx.tools.transport.allStat;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -67,6 +70,10 @@ public class abonnementAdminController implements Initializable {
     String imagePath;
     Abonnement selectedItem = new Abonnement();
     Abonnement selectedItem_1 = new Abonnement();
+    final String destinationString = "src/main/resources/";
+    allStat stat= new allStat();
+@FXML
+private Pane UpdatePane;
     public void LoadUpdate(){
         Abonnement abn=new Abonnement();
         System.out.println(abonnementListView.getSelectionModel().getSelectedItem().getIdAboonnement());
@@ -76,8 +83,8 @@ public class abonnementAdminController implements Initializable {
         NomText.setText(abn.getNom());
         PrenomText.setText( abn.getPrenom());
         TypeAbonnementBox.setValue(abn.getType());
-        imagePath= abn.getImage();
-
+        UpdatePane.setOpacity(0.85);
+        UpdatePane.toFront();
 
     }
     public void onListViewClicked(MouseEvent event) {
@@ -114,7 +121,7 @@ public class abonnementAdminController implements Initializable {
                             setGraphic(null);
                         } else {
                             setText(abs.getNom() + " " + abs.getPrenom());
-                            ImageView imageView = new ImageView(abs.getImage());
+                            ImageView imageView = new ImageView("file:"+destinationString+abs.getImage());
                             imageView.setFitWidth(70);
                             imageView.setFitHeight(70);
                             setGraphic(imageView);
@@ -134,13 +141,19 @@ public class abonnementAdminController implements Initializable {
                     setGraphic(null);
                 } else {
                     setText(item.getNom() + " " + item.getPrenom());
-                    ImageView imageView = new ImageView(item.getImage());
+                    ImageView imageView = new ImageView("file:"+destinationString+item.getImage());
                     imageView.setFitWidth(70);
                     imageView.setFitHeight(70);
                     setGraphic(imageView);
                 }
             }
         });
+    }
+
+    public void delete(){
+sa.deleteItem(abonnementListView.getSelectionModel().getSelectedItem().getIdAboonnement());
+afficher();
+
     }
     public void searchAbonnement(){
         if (SearchText.getText().isEmpty()) {
@@ -160,5 +173,15 @@ public class abonnementAdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         TypeAbonnementBox.getItems().addAll("Annuel", "mensuel");
         afficher();
+
+        int number[]=stat.statAbn();
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        series.getData().add(new XYChart.Data<>("Annual", number[0]));
+        series.getData().add(new XYChart.Data<>("Mensuel", number[1]));
+        series1.getData().add(series);
     }
+
+
+    @FXML
+    private BarChart<String, Number> series1;
 }
