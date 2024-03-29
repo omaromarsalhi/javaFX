@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<StackPane alignment="TOP_LEFT" prefHeight="511.0" prefWidth="592.0" stylesheets="@../../style/marketPlace/Buttons.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.user.UserFormController">
+   <children>
+      <AnchorPane fx:id="loadinPage" prefHeight="511.0" prefWidth="613.0">
+         <children>
+            <ImageView fitHeight="85.0" fitWidth="90.0" layoutX="343.0" layoutY="212.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="212.60000000000002" AnchorPane.leftAnchor="343.0" AnchorPane.rightAnchor="243.0" AnchorPane.topAnchor="212.0">
+               <image>
+                  <Image url="@../../img/marketPlace/grey-9026_256.gif" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <HBox fx:id="formBox" alignment="CENTER" fillHeight="false" prefHeight="511.0" prefWidth="642.0" style="-fx-background-radius: 10; -fx-border-width: 2; -fx-border-radius: 10; -fx-background-color: white; -fx-border-color: black;" stylesheets="@../../style/marketPlace/formLayout.css">
+         <children>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="506.0" prefWidth="280.0" spacing="10.0">
+               <children>
+                  <ImageView fx:id="img" fitHeight="150.0" fitWidth="134.0" onDragDropped="#imageDragDropped" onDragOver="#imageDragOver" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../icons/userIcons/image128B.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="0.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Age :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox2" prefHeight="30.0">
+                           <children>
+                              <TextField fx:id="age" minWidth="239.0" prefHeight="42.0" prefWidth="270.0" promptText="Your age" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Gender :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox3" prefHeight="30.0">
+                           <children>
+                              <TextField fx:id="gender" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="The Price here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox layoutX="25.0" layoutY="354.0" minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="200.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Phone :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox32" prefHeight="30.0">
+                           <children>
+                              <TextField fx:id="phone" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your phone number" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="48.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Status :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox12" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="status" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="8.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" layoutX="12.0" layoutY="12.0" prefHeight="506.0" prefWidth="280.0" spacing="10.0">
+               <children>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="48.0" prefWidth="200.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="First Name :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox1" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="name" minWidth="239.0" prefHeight="38.0" prefWidth="270.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="4.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="254.0" style="-fx-background-radius: 20; -fx-border-radius: 20;">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Last Name :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox11" maxWidth="332.0" prefHeight="38.0" prefWidth="361.0">
+                           <children>
+                              <TextField fx:id="lastName" minWidth="239.0" prefHeight="38.0" prefWidth="239.0" promptText="Your Name here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets top="4.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox layoutX="25.0" layoutY="348.0" minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="239.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="E-mail :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox311" prefHeight="30.0">
+                           <children>
+                              <TextField fx:id="email" minWidth="239.0" prefHeight="38.0" prefWidth="239.0" promptText="The Price here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="0.0" prefWidth="239.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Cin :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox21" prefHeight="30.0">
+                           <children>
+                              <TextField fx:id="cin" minWidth="239.0" prefHeight="42.0" prefWidth="239.0" promptText="Your Price here !!!" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox minHeight="68.0" minWidth="200.0" prefHeight="68.0" prefWidth="239.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Adresse :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox fx:id="formBox31" prefHeight="30.0">
+                           <children>
+                              <TextField fx:id="adresse" minWidth="239.0" prefHeight="38.0" prefWidth="239.0" promptText="Your Adresse" styleClass="text-field">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
+                              </TextField>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox layoutX="25.0" layoutY="430.0" minHeight="68.0" minWidth="200.0" prefWidth="239.0">
+                     <children>
+                        <Label alignment="BOTTOM_LEFT" prefHeight="36.0" prefWidth="160.0" text="Date Of Birth :">
+                           <font>
+                              <Font name="System Italic" size="18.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="dob" minWidth="239.0" prefHeight="38.0" prefWidth="239.0">
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin></DatePicker>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="24.0" />
+               </padding>
+            </VBox>
+            <VBox fx:id="itemInfo" alignment="CENTER_RIGHT" prefHeight="506.0" prefWidth="87.0" />
+         </children>
+      </HBox>
+   </children>
+</StackPane>

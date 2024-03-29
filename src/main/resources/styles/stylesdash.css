@@ -1,0 +1,237 @@
+.form_container {
+    -fx-background-color: #ffffff;
+    color: #320404;
+}
+
+.form_container .element1 {
+    background-color: #ffd721;
+    color: #774141;
+}
+
+.form_container .element2 {
+    background-color: #a97777;
+    color: #c9a43d;
+}
+
+.form_container Text {
+    -fx-font-size: 1.2em;
+    -fx-font-family: "Fira Sans";
+    -fx-fill: #ffd721; /* Use the same color as specified for the text in .form_container */
+}
+
+.form_container VBox {
+    -fx-border-color: #ffd721; /* Use the same color as specified for the text in .form_container */
+    -fx-border-width: 0 0 0 1;
+    -fx-padding: 10;
+    -fx-spacing: 10;
+}
+
+.form_container TextField {
+    -fx-pref-height: 250;
+    -fx-pref-height: 35;
+    -fx-background-color: #ffffff;
+    -fx-font-size: 1.3em;
+    -fx-effect: dropshadow(three-pass-box, #aaaaaa, 3, 0, 0, 3);
+}
+
+.form_container Button {
+    -fx-background-color: linear-gradient(to right, #ffd721, #ffe574); /* Use the specified colors */
+    -fx-effect: dropshadow(three-pass-box, #aaaaaa, 3, 0, 0, 3);
+    -fx-font-size: 1.0em;
+    -fx-pref-width: 200;
+    -fx-font-family: "Fira Sans";
+    -fx-text-fill: #c9a43d; /* Use the specified color for the text */
+}
+
+.form_container Button:hover {
+    -fx-cursor: hand;
+}
+
+.search-box {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 100;
+}
+
+.transparent {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.search-button {
+    -fx-background-color: #fce89a; /* Use the specified color */
+    -fx-background-radius: 30;
+}
+
+.right-bar {
+    -fx-background-color: #c9a43d; /* Use the specified color */
+}
+
+.shadow {
+    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10.0, 0.0, 0.0, 10.0);
+}
+
+.chosen-fruit-card {
+    -fx-background-color: #c9a43d; /* Use the specified color */
+    -fx-background-radius: 30;
+}
+
+.comboBox {
+    -fx-background-color: rgba(255, 255, 255, 0.3);
+    -fx-background-radius: 30;
+}
+
+.add-btn {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 100;
+}
+
+.free-delivery-card {
+    -fx-background-color: #fae27d; /* Use the specified color */
+    -fx-background-radius: 30;
+}
+
+.shopping-online-card {
+    -fx-background-color: #aaaaaa; /* Adjusted case for consistency */
+    -fx-background-radius: 30;
+}
+
+.fruit-item {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 30;
+}
+/* Table View Container */
+.table-view {
+    -fx-background-color: #00000019;
+    -fx-text-fill: #ffffff;
+    -fx-padding: 10;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropShadow(three-pass-box, rgba(0, 0, 0, 0.1), 10, 0, 0, 5);
+}
+
+/* Column Headers */
+.table-view .column-header-background {
+    -fx-background-color: #fadf6a;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.table-view .column-header {
+    -fx-text-fill: #ffffff;
+    -fx-padding: 5 10;
+}
+
+/* First Column Styles */
+.table-view .first-column {
+    -fx-text-fill: #ffd721; /* Text color for the first column */
+    -fx-background-color: #774141; /* Background color for the first column */
+    -fx-padding: 5 10;
+}
+
+
+/* Table Rows */
+.table-view .row-cell {
+    -fx-background-color: #778da9;
+    -fx-text-fill: #c9a43d;
+    -fx-padding: 5 10;
+}
+
+/* Alternate Row Color */
+.table-view .row-cell:odd {
+    -fx-background-color: #ffd721;
+}
+
+/* Selected Row */
+.table-view .row-cell:selected {
+    -fx-background-color: #c9a43d;
+    -fx-text-fill: #ffd721;
+}
+
+/* Hover Effect */
+.table-view .row-cell:hover {
+    -fx-background-color: #774141;
+}
+
+/* Scroll Bar */
+.table-view .scroll-bar {
+    -fx-background-color: #774141;
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+/* Scroll Bar Thumb */
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #a97777;
+}
+
+
+
+.combo-box .list-cell
+{
+    -fx-background: white;
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-base-color;
+    -fx-padding: 3 0 2 7;
+    -fx-cell-size: 1.66667em;
+}
+
+.combo-box-popup .list-view
+{
+    -fx-background-color: white, white;
+    -fx-background-insets: 0, 1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 8, 0.0 , 0 , 0 );
+}
+
+.combo-box-popup .list-view .list-cell
+{
+    -fx-padding: 4 0 4 5;
+
+    /* No alternate highlighting */
+    -fx-background-color: white;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected, .combo-box-popup .list-view .list-cell:filled:selected:hover
+{
+    -fx-background: -fx-accent;
+    -fx-background-color: -fx-selection-bar;
+    -fx-text-fill: -fx-selection-bar-text;
+}
+
+.combo-box-popup .list-view .list-cell:filled:hover
+{
+    -fx-background-color: white;
+    -fx-text-fill: -fx-text-inner-color;
+}
+
+.combo-box-base
+{
+    -fx-background-color: white, white, white, white;
+    -fx-background-radius: 5, 5, 4, 3;
+    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
+    -fx-padding: 0;
+}
+
+.combo-box-base:hover
+{
+    -fx-color: -fx-hover-base;
+}
+
+.combo-box-base:showing
+{
+    -fx-color: -fx-pressed-base;
+}
+
+.combo-box-base:focused {
+    -fx-background-color: -fx-focus-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-radius: 6.4, 4, 5, 3;
+    -fx-background-insets: -1.4, 0, 1, 2;
+}
+
+.combo-box-base:disabled {
+    -fx-opacity: .4;
+}
+
+
+.custom-button {
+    -fx-background-color: #333333;
+    -fx-text-fill: white;
+    -fx-alignment: CENTER;
+}
+

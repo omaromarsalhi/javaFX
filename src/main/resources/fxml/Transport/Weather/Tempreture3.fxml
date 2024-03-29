@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" prefHeight="90.0" prefWidth="331.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.StationInfosController">
+   <children>
+      <ImageView fitHeight="71.0" fitWidth="72.0" layoutX="147.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img_transport/D9P6S7iOYZ.gif" />
+         </image>
+      </ImageView>
+      <Label fx:id="humidityLabel" layoutX="244.0" layoutY="19.0" text="23%" textFill="#70affa">
+         <font>
+            <Font name="Souliyo Unicode" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="humidityLabel1" layoutX="14.0" layoutY="21.0" text="humidité :" textFill="#494949">
+         <font>
+            <Font name="Souliyo Unicode" size="23.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

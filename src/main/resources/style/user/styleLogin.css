@@ -1,0 +1,130 @@
+
+
+.custom-hbox .text-field{
+    -fx-background-color: #1e1e1f;
+    -fx-border-radius: 10px ;
+    -fx-border-width: 1px;
+    -fx-border-color: #494949;
+    -fx-font-size: 15;
+
+}
+.btn1{
+
+        -fx-background-color: transparent;
+        -fx-border-width: 0;
+        -fx-text-fill:#E7E7E7;
+        -fx-font-size: 10px;
+
+}
+.btn-login{
+
+    -fx-background-color:#20749C;
+    -fx-border-radius: 20px ;
+    -fx-border-width: 1px;
+    -fx-text-fill:#E7E7E7;
+    -fx-font-size: 14px;
+}
+.btn-signup{
+
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+    -fx-text-fill: #20749C;
+    -fx-padding: 0px 0px; /* Marge intérieure (haut, droite, bas, gauche) */
+    -fx-font-size: 14px;
+}
+.list-view {
+    -fx-background-color: #D9D9D9; /* Couleur de fond */
+}
+
+.list-cell {
+    -fx-background-color: #494949;
+    -fx-text-fill: #333333;
+    -fx-padding: 5px 10px;
+}
+
+.list-cell:hover {
+    -fx-background-color: #e0e0e0;
+}
+
+.list-cell:selected {
+    -fx-background-color: #b3d9ff;
+    -fx-text-fill: #000000;
+}
+.Vbox-details .text-field{
+    -fx-background-color: #D9D9D9;
+    -fx-text-fill: #333333;
+    -fx-border-color: #333333;
+    -fx-border-width: 1px;
+    -fx-border-radius: 10px;
+}
+.split-pane-divider {
+    -fx-padding: 0;
+    -fx-background-color: transparent;
+}
+.custom-layer1 .text-field{
+    -fx-background-color: #171718;
+    -fx-border-color: #494949;
+    -fx-border-radius: 5px ;
+
+    -fx-font-size: 12;
+
+}
+
+
+.custom-layer1 .label {
+    -fx-font-family: "Souliyo Unicode";
+    -fx-font-size: 9px;
+    -fx-fill: #F6F6F6;
+
+}
+.custom-layer2 .button{
+    -fx-background-color:#20749C;
+    -fx-border-radius: 20px ;
+    -fx-border-width: 1px;
+    -fx-text-fill:#E7E7E7;
+    -fx-font-size: 14px;
+}
+.custom-layer1 .button{
+    -fx-background-color:#20749C;
+    -fx-border-radius: 20px ;
+    -fx-border-width: 1px;
+    -fx-text-fill:#E7E7E7;
+    -fx-font-size: 14px;
+}
+
+.btn-alerte{
+    -fx-border-style: transparent;
+    -fx-background-color: transparent;
+}
+.time{
+
+    -fx-font-family: "Arial"; /* Police de caractères */
+    -fx-font-size: 70px; /* Taille de la police */
+    -fx-font-weight: bold; /* Gras */
+    -fx-text-fill: white; /* Couleur du texte */
+
+    -fx-padding: 5px; /* Espacement interne */
+}
+#forget{
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+#google{
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+#facebook{
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+}
+#btn-alerte{
+
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}

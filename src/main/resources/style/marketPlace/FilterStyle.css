@@ -1,0 +1,38 @@
+/*#toDate .text-field , #fromDate .text-field {*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: transparent;*/
+/*    -fx-border-radius: 10px 0 0 10px;*/
+/*    -fx-background-radius: 10px 0 0 10px;*/
+
+/*}*/
+
+/*#toDate .button , #fromDate .button {*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: transparent;*/
+/*    -fx-border-radius: 0 10px 10px 0;*/
+/*    -fx-background-radius: 0 10px 10px 0;*/
+
+/*}*/
+
+/*#toDate ,#fromDate{*/
+/*    -fx-background-color:  #deddd9;*/
+/*    !*-fx-background-radius: 10px 0 0 10px;*!*/
+/*    -fx-background-radius: 10px;*/
+/*    -fx-border-width: 1px;*/
+/*    -fx-border-color: grey;*/
+/*    !*-fx-border-radius: 10px 0 0 10px;*!*/
+/*    -fx-border-radius: 10px;*/
+/*}*/
+
+
+.date-picker:editable > .arrow-button > * {
+    -fx-opacity: 0; /* Set the node in the button to be visible */
+}
+
+.date-picker > .arrow-button {
+    -fx-background-image: url("../../icons/marketPlace/calendar.png"); /* Url of the icon */
+    -fx-background-size: 60% 60%; /* Can be `cover` or `100% 100%` ect. */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center; /* Put the icon in the center */
+    -fx-background-color: transparent;
+}

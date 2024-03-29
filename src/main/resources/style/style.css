@@ -1,0 +1,63 @@
+#sideBar {
+    -fx-background-color: #171718;
+    -fx-background-radius: 11;
+}
+
+.mainWindow {
+    -fx-background-color: #D9D9D9;
+    -fx-background-radius: 11;
+}
+
+.borderPane {
+    -fx-background-radius: 11;
+    -fx-border-radius: 11;
+    -fx-background-color: #F1F1F1;
+}
+
+/*@font-face {*/
+/*    font-family: 'sofia';*/
+/*    src: url('/fonts/SofiaProSoftLight.ttf');*/
+/*}*/
+#sideBar .text {
+    -fx-font-family: "sofia";
+}
+
+/*@font-face {*/
+/*    font-family: 'Souliyo';*/
+/*    src: url('/fonts/Souliyo-Regular.ttf');*/
+/*}*/
+#blogPane .text {
+    -fx-font-family: "Souliyo";
+}
+
+#sideBar .button {
+    -fx-font-size: 17px;
+    -fx-background-color: transparent;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+}
+
+#sideBar .button:hover {
+    -fx-background-color: rgba(241, 241, 241, 0.16);
+    -fx-border-color: #fdc847;
+}
+
+#header .button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+#header .button:hover {
+    -fx-background-color: rgba(61, 61, 61, 0.18);
+-fx-border-color: #fdc847;
+}
+
+#header .button-close:hover {
+    -fx-background-color: rgb(196, 43, 28);
+    -fx-border-radius: 5px;
+}

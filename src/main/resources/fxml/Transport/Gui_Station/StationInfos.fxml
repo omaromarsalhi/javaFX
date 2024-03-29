@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane minWidth="-Infinity" prefHeight="510.0" prefWidth="370.0" stylesheets="@../../../style/transport/Transport.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.station.stationStats">
+   <children>
+      <ImageView fitHeight="180.0" fitWidth="370.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../../img_transport/Gare_de_Tunis.jpg" />
+         </image>
+      </ImageView>
+      <ScrollPane hbarPolicy="NEVER" layoutY="180.0" prefHeight="476.0" prefWidth="370.0" styleClass="scroll-pane1">
+         <content>
+            <VBox prefHeight="461.0" prefWidth="378.0">
+               <children>
+                  <AnchorPane prefHeight="327.0" prefWidth="378.0">
+                     <children>
+                        <VBox layoutX="1.0" layoutY="206.0" prefHeight="198.0" prefWidth="369.0">
+                           <children>
+                              <Pane prefHeight="38.0" prefWidth="0.0" styleClass="header_pane">
+                                 <children>
+                                    <Label fx:id="InfoLabel1" layoutX="51.0" layoutY="6.0" prefHeight="26.0" prefWidth="268.0" text="Transport stats - Last 7 DAYS" textFill="#6a6a6a">
+                                       <font>
+                                          <Font size="17.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                              </Pane>
+                              <Pane fx:id="metePane" prefHeight="163.0" prefWidth="369.0" style="-fx-border-radius: 0 0 10 10;" styleClass="body_pane">
+                                 <children>
+                                    <VBox layoutX="8.0" layoutY="8.0">
+                                       <children>
+                                          <Label fx:id="InfoLabel" text="Number of Metros :" textFill="#6d6d6d">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="departureLabel" text="526" textFill="#78cf83">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox layoutX="212.0" layoutY="10.0">
+                                       <children>
+                                          <Label fx:id="InfoLabel3" text="Nombre de Bus :" textFill="#6d6d6d">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="arrivalsLabel" text="526" textFill="#78cf83">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox layoutX="9.0" layoutY="67.0">
+                                       <children>
+                                          <Label fx:id="InfoLabel2" prefHeight="40.0" prefWidth="278.0" text="Number of departures : " textFill="#6d6d6d">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="metroLabel" text="526" textFill="#78cf83">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                    <VBox layoutX="212.0" layoutY="67.0">
+                                       <children>
+                                          <Label fx:id="InfoLabel31" prefHeight="40.0" prefWidth="212.0" text="Number of Arrivals" textFill="#6d6d6d">
+                                             <font>
+                                                <Font name="Souliyo Unicode" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="busLabel" text="526" textFill="#78cf83">
+                                             <font>
+                                                <Font size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </Pane>
+                           </children>
+                        </VBox>
+                        <HBox layoutX="69.0" layoutY="95.0" prefHeight="33.0" prefWidth="241.0">
+                           <children>
+                              <HBox fx:id="root" prefHeight="33.0" prefWidth="253.0" spacing="8.0" />
+                           </children>
+                        </HBox>
+                        <HBox layoutX="34.0" layoutY="158.0">
+                           <children>
+                              <Text fx:id="raters" fill="#20749c" strokeType="OUTSIDE" strokeWidth="0.0" text="723" wrappingWidth="38.1005859375">
+                                 <font>
+                                    <Font name="Arial" size="21.0" />
+                                 </font>
+                              </Text>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" users have rated this station" wrappingWidth="304.1005859375">
+                                 <font>
+                                    <Font name="Arial" size="21.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="125.0" layoutY="26.0">
+                           <children>
+                              <Text fill="#20749c" strokeType="OUTSIDE" strokeWidth="0.0" text="Average Rating :" wrappingWidth="90.1005859375">
+                                 <font>
+                                    <Font name="Arial" size="21.0" />
+                                 </font>
+                              </Text>
+                              <Label fx:id="rateLabel" prefHeight="51.0" prefWidth="30.0" text="3.0">
+                                 <font>
+                                    <Font name="Souliyo Unicode" size="21.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

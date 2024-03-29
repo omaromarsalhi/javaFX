@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pidev.javafx.controller.blog.CommentController">
+   <children>
+      <Label fx:id="userName" text="Label" textFill="#868b91">
+         <VBox.margin>
+            <Insets left="40.0" />
+         </VBox.margin>
+      </Label>
+      <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="54.0" prefWidth="444.0" spacing="8.0" style="-fx-background-color: transparent;" stylesheets="@../../Style/blog/comment.css">
+         <children>
+            <ImageView fx:id="AccImg" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+            <TextArea fx:id="caption" maxHeight="50.0" prefHeight="50.0" prefWidth="282.0" style="-fx-background-color: #F0F2F5; -fx-background-radius: 0 10 10 10;" />
+            <ImageView fx:id="sendBtn" fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true" styleClass="btn">
+               <HBox.margin>
+                  <Insets top="16.0" />
+               </HBox.margin>
+               <image>
+                  <Image url="@../../icons/blogIcons/send.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox prefHeight="18.0" prefWidth="277.0">
+         <VBox.margin>
+            <Insets left="43.0" />
+         </VBox.margin>
+         <children>
+            <Label fx:id="date" prefHeight="18.0" prefWidth="159.0" style="-fx-background-color: transparent;" text="Label" textFill="#868b91" />
+            <Label fx:id="ModifierBtn" onMouseClicked="#onModifierClicked" prefHeight="18.0" prefWidth="54.0" styleClass="btn" text="Modifier" textFill="#868b91" />
+            <Label fx:id="SupprimerBtn" prefHeight="18.0" prefWidth="58.0" styleClass="btn" text="Supprimer" textFill="#868b91" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
