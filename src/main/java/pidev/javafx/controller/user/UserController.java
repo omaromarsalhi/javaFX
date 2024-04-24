@@ -1,7 +1,7 @@
 package pidev.javafx.controller.user;
 
-import pidev.javafx.model.User.Role;
-import pidev.javafx.model.User.User;
+import pidev.javafx.model.user.Role;
+import pidev.javafx.model.user.User;
 
 public class UserController {
 
@@ -10,15 +10,15 @@ public class UserController {
 
     private UserController() {
 
-        user=new User(1,
-                "omar",
-                "salhi",
-                "salhiomar362@gmail.com",
-                "12710434",
-                22,
-                29624921,
-                "beb saadoun",
-                Role.simpleutlisateur);
+//        user=new User(1,
+//                "omar",
+//                "salhi",
+//                "salhiomar362@gmail.com",
+//                "12710434",
+//                22,
+//                29624921,
+//                "beb saadoun",
+//                Role.Citoyen);
 
 //        user=new User(2,
 //                "latifa",
